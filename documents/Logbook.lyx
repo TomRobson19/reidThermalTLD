@@ -108,5 +108,25 @@ Look up if anyone has used TLD for Re-ID in colour or thermal.
  
 \end_layout
 
+\begin_layout Section*
+Summer Notes
+\end_layout
+
+\begin_layout Itemize
+Want a bash script to cmake, make and run for different purposes (testing,
+ single camera, multi camera, datasets etc) to improve usability from late
+ year.
+\end_layout
+
+\begin_layout Itemize
+Maybe have a command line parameter for starting frame and FPS for testing
+ in specific situations
+\end_layout
+
+\begin_layout Itemize
+Can I just reuse the related work section from last year and add the TLD
+ paper?
+\end_layout
+
 \end_body
 \end_document
