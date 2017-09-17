@@ -32,3 +32,19 @@
 *.app
 
 *.lyx~
+
+src/CMakeFiles/3\.5\.1/
+
+src/CMakeCache\.txt
+
+src/CMakeFiles/
+
+src/exampleVideos/
+
+src/data/
+
+src/main
+
+*.cmake
+
+src/Makefile
