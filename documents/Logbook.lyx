@@ -128,5 +128,29 @@ Can I just reuse the related work section from last year and add the TLD
  paper?
 \end_layout
 
+\begin_layout Section*
+Start of Code
+\end_layout
+
+\begin_layout Itemize
+Have used old MoG and Cascade code, along with the OpenCV TLD implementation
+ for a first pass.
+\end_layout
+
+\begin_layout Itemize
+Currently only has one tracker, have read about Multitracker but not implemented
+ yet.
+ 
+\end_layout
+
+\begin_layout Itemize
+Think i still have background in the bounding box, need to remove like last
+ year.
+\end_layout
+
+\begin_layout Itemize
+Currently very slow.
+\end_layout
+
 \end_body
 \end_document
