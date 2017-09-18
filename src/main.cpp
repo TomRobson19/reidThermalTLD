@@ -8,7 +8,10 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    Ptr<MultiTrackerTLD> allTrackers();
+    Ptr<MultiTrackerTLD> multiTracker();
+
+    vector<Rect2d> people;
+    vector<Ptr<TrackerTLD>> trackers;
 
     Ptr<TrackerTLD> tracker = TrackerTLD::create();
  
@@ -22,9 +25,6 @@ int main(int argc, char **argv)
         return 1;
     }
  
-    // Set up Mat for frame. 
-    Mat frame;
-
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
     int width = 40;
@@ -37,16 +37,17 @@ int main(int argc, char **argv)
 
     CascadeClassifier cascade = CascadeClassifier(CASCADE_TO_USE);
 
+    Mat frame;
+    
+    bool firstTime = true;
 
-    //THIS NEEDS TO BE FOR EACH NEW DETECTION
-    // Define an initial bounding box
-    Rect2d bbox;
-     
     // Initialize tracker with first frame and bounding box
     //tracker->init(frame, bbox);
  
     while(video.read(frame))
     {
+        Mat displayImage = frame.clone();
+
         Mat foreground;
         MoG->apply(frame, foreground, (double)(1.0/learning));
 
@@ -60,8 +61,7 @@ int main(int argc, char **argv)
         // get connected components from the foreground
         findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 
-        imshow("foreground",foreground);
-
+        //make new image from bitwise and of frame and foreground
 
         for(int idx = 0; idx >=0; idx = hierarchy[idx][0])
         {
@@ -87,6 +87,7 @@ int main(int argc, char **argv)
 
                 for(size_t i = 0; i < found.size(); i++ )
                 {
+                    
                     Rect rec = found[i];
 
                     rec.x += r.x;
@@ -106,22 +107,36 @@ int main(int argc, char **argv)
                     {
                       found_filtered.push_back(rec);
                     }
+                }
 
-                    rectangle(frame, rec.tl(), rec.br(), (255,0,0) , 3);
+                for (size_t i = 0; i < found_filtered.size(); i++)
+                {
+                    Rect rec = found_filtered[i];
 
-                    tracker->init(frame, rec);
+                    if (firstTime == true)
+                    {
+                        tracker->init(frame, rec);
+                        firstTime = false;
+                    }
                 }
             }
         }
 
+        Rect2d bbox;
+
         // Update tracking results
-        tracker->update(frame, bbox);
+        if(firstTime == false)
+        {
+            tracker->update(frame, bbox);
+        }
+
+        imshow("roi",frame);
  
         // Draw bounding box
-        rectangle(frame, bbox, Scalar( 255, 0, 0 ), 2, 1 );
+        rectangle(displayImage, bbox, Scalar( 255, 0, 0 ), 2, 1 );
  
         // Display result
-        imshow("Tracking", frame);
+        imshow("Tracking", displayImage);
         unsigned char key = waitKey(1);
         if (key == 'x')
         {
