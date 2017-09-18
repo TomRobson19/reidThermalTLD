@@ -140,16 +140,17 @@ Have used old MoG and Cascade code, along with the OpenCV TLD implementation
 \begin_layout Itemize
 Currently only has one tracker, have read about Multitracker but not implemented
  yet.
- 
-\end_layout
-
-\begin_layout Itemize
-Think i still have background in the bounding box, need to remove like last
- year.
+ Have set up variables
 \end_layout
 
 \begin_layout Itemize
 Currently very slow.
+\end_layout
+
+\begin_layout Itemize
+Experimented with removing backrground from bounding box, this doesn't work
+ with TLD as it then interprets any foreground pixels as the target.
+ 
 \end_layout
 
 \end_body
