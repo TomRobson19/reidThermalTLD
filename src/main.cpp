@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     vector<Vec4i> hierarchy;
     int width = 30;
     int height = 30;
-    int learning = 1000;
+    int learning = 100000;
     int padding = 40; 
 
 
@@ -123,16 +123,16 @@ int main(int argc, char **argv)
             }
         }
 
-        Rect2d bbox;
+        Rect2d target;
 
         // Update tracking results
         if(firstTime == false)
         {
-            tracker->update(frame, bbox);
+            tracker->update(frame, target);
         }
  
         // Draw bounding box
-        rectangle(displayImage, bbox, Scalar( 255, 0, 0 ), 2, 1 );
+        rectangle(displayImage, target, Scalar( 255, 0, 0 ), 2, 1 );
  
         // Display result
         imshow("Tracking", displayImage);
