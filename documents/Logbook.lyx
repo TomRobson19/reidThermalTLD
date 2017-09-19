@@ -153,5 +153,26 @@ Experimented with removing backrground from bounding box, this doesn't work
  
 \end_layout
 
+\begin_layout Itemize
+Currently relatively happy with how it functions on one target, need to
+ find a way to get the system to add more targets.
+\end_layout
+
+\begin_layout Section*
+Possible Multiple Tracker PseudoCode
+\end_layout
+
+\begin_layout Itemize
+First identification makes new target
+\end_layout
+
+\begin_layout Itemize
+Try and get a descriptor/level of certainty from it
+\end_layout
+
+\begin_layout Itemize
+If outside of a threshold then can make a new target and descriptor
+\end_layout
+
 \end_body
 \end_document

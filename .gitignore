@@ -48,3 +48,5 @@ src/main
 *.cmake
 
 src/Makefile
+
+documents/#Logbook\.lyx#
