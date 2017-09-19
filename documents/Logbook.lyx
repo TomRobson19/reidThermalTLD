@@ -158,6 +158,15 @@ Currently relatively happy with how it functions on one target, need to
  find a way to get the system to add more targets.
 \end_layout
 
+\begin_layout Itemize
+Tracking component of TLD is the Median Flow algorithm
+\end_layout
+
+\begin_layout Itemize
+Need to find some way of getting confidence level, seems to be a Featureset
+ attribute but currently unable to access this.
+\end_layout
+
 \begin_layout Section*
 Possible Multiple Tracker PseudoCode
 \end_layout

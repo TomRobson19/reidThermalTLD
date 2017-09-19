@@ -129,6 +129,8 @@ int main(int argc, char **argv)
         if(firstTime == false)
         {
             tracker->update(frame, target);
+
+            //cout << tracker.isInit << endl;
         }
  
         // Draw bounding box
