@@ -27,8 +27,8 @@ int main(int argc, char **argv)
  
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
-    int width = 40;
-    int height = 100;
+    int width = 30;
+    int height = 30;
     int learning = 1000;
     int padding = 40; 
 
@@ -40,9 +40,6 @@ int main(int argc, char **argv)
     Mat frame;
     
     bool firstTime = true;
-
-    // Initialize tracker with first frame and bounding box
-    //tracker->init(frame, bbox);
  
     while(video.read(frame))
     {
@@ -57,6 +54,8 @@ int main(int argc, char **argv)
         // perform morphological closing
         dilate(foreground, foreground, Mat(),Point(),5);
         erode(foreground, foreground, Mat(),Point(),1);
+
+        imshow("foreground",foreground);
 
         // get connected components from the foreground
         findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
@@ -82,6 +81,8 @@ int main(int argc, char **argv)
                 vector<Rect> found, found_filtered;
 
                 Mat roi = frame(r);
+
+                imshow("roi",roi);
 
                 cascade.detectMultiScale(roi, found, 1.1, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(32,64));
 
@@ -129,8 +130,6 @@ int main(int argc, char **argv)
         {
             tracker->update(frame, bbox);
         }
-
-        imshow("roi",frame);
  
         // Draw bounding box
         rectangle(displayImage, bbox, Scalar( 255, 0, 0 ), 2, 1 );
