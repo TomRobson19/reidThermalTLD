@@ -8,10 +8,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    Ptr<MultiTrackerTLD> multiTracker();
-
-    vector<Rect2d> people;
-    vector<Ptr<TrackerTLD>> trackers;
+    MultiTrackerTLD multiTracker;
 
     Ptr<TrackerTLD> tracker = TrackerTLD::create();
  
@@ -40,6 +37,8 @@ int main(int argc, char **argv)
     Mat frame;
     
     bool firstTime = true;
+
+    bool newTarget = false;
  
     while(video.read(frame))
     {
@@ -54,8 +53,6 @@ int main(int argc, char **argv)
         // perform morphological closing
         dilate(foreground, foreground, Mat(),Point(),5);
         erode(foreground, foreground, Mat(),Point(),1);
-
-        imshow("foreground",foreground);
 
         // get connected components from the foreground
         findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
@@ -81,8 +78,6 @@ int main(int argc, char **argv)
                 vector<Rect> found, found_filtered;
 
                 Mat roi = frame(r);
-
-                imshow("roi",roi);
 
                 cascade.detectMultiScale(roi, found, 1.1, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(32,64));
 
@@ -116,8 +111,16 @@ int main(int argc, char **argv)
 
                     if (firstTime == true)
                     {
-                        tracker->init(frame, rec);
+                        //tracker->init(frame, rec);
+                        multiTracker.addTarget(frame, rec, tracker);
                         firstTime = false;
+                    }
+                    else if (newTarget == true)
+                    {
+                        //tracker->init(frame, rec);
+                        Ptr<TrackerTLD> tracker = TrackerTLD::create();
+                        multiTracker.addTarget(frame, rec, tracker);
+                        newTarget = false;
                     }
                 }
             }
@@ -128,13 +131,24 @@ int main(int argc, char **argv)
         // Update tracking results
         if(firstTime == false)
         {
-            tracker->update(frame, target);
+            //tracker->update(frame, target);
+            //rectangle(displayImage, target, Scalar(255,0,0), 2, 1 );
 
-            //cout << tracker.isInit << endl;
+            multiTracker.update(frame);
+
+            cout << multiTracker.targetNum << endl;
+
+            std::vector<Rect2d> v = multiTracker.boundingBoxes;
+
+            for(int i = 0; i<v.size(); i++)
+            {
+                rectangle(displayImage, v[i], multiTracker.colors[i], 2, 1 );
+                
+            }
         }
  
         // Draw bounding box
-        rectangle(displayImage, target, Scalar( 255, 0, 0 ), 2, 1 );
+        
  
         // Display result
         imshow("Tracking", displayImage);
@@ -144,6 +158,10 @@ int main(int argc, char **argv)
             // if user presses "x" then exit
             std::cout << "Keyboard exit requested : exiting now - bye!" << std::endl;
             break;
+        }
+        else if (key == 'n')
+        {
+            newTarget = true;
         }
  
     }

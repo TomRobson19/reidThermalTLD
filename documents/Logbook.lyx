@@ -167,20 +167,9 @@ Need to find some way of getting confidence level, seems to be a Featureset
  attribute but currently unable to access this.
 \end_layout
 
-\begin_layout Section*
-Possible Multiple Tracker PseudoCode
-\end_layout
-
 \begin_layout Itemize
-First identification makes new target
-\end_layout
-
-\begin_layout Itemize
-Try and get a descriptor/level of certainty from it
-\end_layout
-
-\begin_layout Itemize
-If outside of a threshold then can make a new target and descriptor
+MultiTracker now works, but the targets are still too similar.
+ 
 \end_layout
 
 \end_body
