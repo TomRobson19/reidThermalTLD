@@ -172,5 +172,14 @@ MultiTracker now works, but the targets are still too similar.
  
 \end_layout
 
+\begin_layout Itemize
+update() and update_opt() both are not discriminative enough, but update_opt
+ is slower.
+\end_layout
+
+\begin_layout Itemize
+Downloaded a couple of alternative TLD implementations from git.
+\end_layout
+
 \end_body
 \end_document
