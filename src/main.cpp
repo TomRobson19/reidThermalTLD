@@ -136,8 +136,6 @@ int main(int argc, char **argv)
 
             multiTracker.update(frame);
 
-            cout << multiTracker.targetNum << endl;
-
             std::vector<Rect2d> v = multiTracker.boundingBoxes;
 
             for(int i = 0; i<v.size(); i++)
