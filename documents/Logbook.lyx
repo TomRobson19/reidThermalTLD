@@ -181,5 +181,23 @@ update() and update_opt() both are not discriminative enough, but update_opt
 Downloaded a couple of alternative TLD implementations from git.
 \end_layout
 
+\begin_layout Itemize
+MultiObject TLD implementation from git seems good on initial webcam tests,
+ have to try implementing with my thermal videos to see if it is up to the
+ task.
+ Also need to understand what all of the different boxes around a match
+ are, as some appear on incorrect matches but not all.
+ Note - the classifier is not loaded from the file name 
+\begin_inset Quotes eld
+\end_inset
+
+test.moctld
+\begin_inset Quotes erd
+\end_inset
+
+, they have not yet implemented this functionality.
+ 
+\end_layout
+
 \end_body
 \end_document
