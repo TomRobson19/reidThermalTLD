@@ -199,5 +199,12 @@ test.moctld
  
 \end_layout
 
+\begin_layout Itemize
+Tested MultiObjectTLD implementation with myself as the first target, and
+ only that target.
+ It is still misidentifying Toby and Greg as me, like the OpenCV implementation,
+ but seemed to have fewer of the bounding boxes around them.
+\end_layout
+
 \end_body
 \end_document
