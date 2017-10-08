@@ -206,22 +206,46 @@ Tested MultiObjectTLD implementation with myself as the first target, and
  but seemed to have fewer of the bounding boxes around them.
 \end_layout
 
-\begin_layout Standard
-Make bitbucket account and send to Toby
+\begin_layout Section*
+
+\series bold
+First meeting 
 \end_layout
 
-\begin_layout Standard
-Research Machine Learning for Re-ID
+\begin_layout Itemize
+Research Machine Learning for Re-ID, use this to write related work section
+ of paper (lit review)
 \end_layout
 
-\begin_layout Standard
-Write related work section
-\end_layout
-
-\begin_layout Standard
-Ask tLD company about how much a development license would be and if it
+\begin_layout Itemize
+Ask TLD company about how much a development license would be and if it
  would be suitable (can we extract recognised target)
 \end_layout
 
+\begin_layout Itemize
+New plan is to apply machine learning to the problem to a greater extent
+ than previously.
+ 
+\end_layout
+
+\begin_layout Itemize
+Previsionally this will involve an svm per classification of target
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The TLD implementations that I have experimented with is good at tracking
+ a target through a camera view, but does not perform re-identification
+ well.
+ 
+\end_layout
+
+\begin_layout Itemize
+This implementation does have a NearestNeighbour classifier to attempt re-id,
+ should probably rewrite this component using a better machine learning
+ algorithm, or even just experiment with parameters.
+\end_layout
+
+\end_deeper
 \end_body
 \end_document

@@ -50,3 +50,11 @@ src/main
 src/Makefile
 
 documents/#Logbook\.lyx#
+
+MultiObjectTLD/CMakeFiles/
+
+MultiObjectTLD/input/carchase/
+
+MultiObjectTLD/input/motocross/
+
+MultiObjectTLD/input/
