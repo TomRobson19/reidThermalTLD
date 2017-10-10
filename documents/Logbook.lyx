@@ -247,5 +247,54 @@ This implementation does have a NearestNeighbour classifier to attempt re-id,
 \end_layout
 
 \end_deeper
+\begin_layout Section*
+Week 1
+\end_layout
+
+\begin_layout Itemize
+Maybe should investigate openTLD, downloaded and had a play.
+\end_layout
+
+\begin_layout Itemize
+Tried CMT as well, seems to be a very good tracker.
+\end_layout
+
+\begin_layout Itemize
+Experimented with other OpenCV tracking algorithms, particularly with KCF,
+ which seemed capable of decent Re-Identification, ask Toby if evaluating
+ multiple algorithms would be a good deliverable.#
+\end_layout
+
+\begin_layout Itemize
+Different Pseudocode idea
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+For all targets in image, if any of the svm's have a high enough confidence
+ rate then do not create a new target, and update the TLDMultiTracker, which
+ should get the right one.
+\end_layout
+
+\begin_layout Itemize
+If the confidence rates are insufficient, make a new target, add new TLD,
+ then update.
+\end_layout
+
+\begin_layout Itemize
+When displaying the bounding boxes, train the appropriate SVM for the target.
+\end_layout
+
+\begin_layout Itemize
+Concerns:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Different targets for the front and back of people, maybe sides as well
+\end_layout
+
+\end_deeper
+\end_deeper
 \end_body
 \end_document
