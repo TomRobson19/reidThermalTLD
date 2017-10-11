@@ -134,7 +134,7 @@ int main(int argc, char **argv)
             //tracker->update(frame, target);
             //rectangle(displayImage, target, Scalar(255,0,0), 2, 1 );
 
-            multiTracker.update(frame);
+            multiTracker.update_opt(frame);
 
             std::vector<Rect2d> v = multiTracker.boundingBoxes;
 
