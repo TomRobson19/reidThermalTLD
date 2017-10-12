@@ -60,3 +60,5 @@ MultiObjectTLD/input/motocross/
 MultiObjectTLD/input/
 
 MultiObjectTLD/runtime\.txt
+
+*.lyx#

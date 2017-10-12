@@ -256,13 +256,13 @@ Maybe should investigate openTLD, downloaded and had a play.
 \end_layout
 
 \begin_layout Itemize
-Tried CMT as well, seems to be a very good tracker.
+Tried CMT as well, seems to be a good tracker.
 \end_layout
 
 \begin_layout Itemize
 Experimented with other OpenCV tracking algorithms, particularly with KCF,
  which seemed capable of decent Re-Identification, ask Toby if evaluating
- multiple algorithms would be a good deliverable.#
+ multiple algorithms would be a good deliverable.
 \end_layout
 
 \begin_layout Itemize
@@ -300,6 +300,33 @@ Different targets for the front and back of people, maybe sides as well
 Got demo from the TLD Vision people, linux version doesn't work at all (doesn't
  recognise keypresses), windows version does work but the tracking is not
  as good as the open source implementations.
+\end_layout
+
+\begin_layout Section*
+Meeting 2
+\end_layout
+
+\begin_layout Itemize
+Decided not to do comparison of algorithms as they already exist, have relevent
+ webpage open in a tab.
+\end_layout
+
+\begin_layout Itemize
+Now need to read the relevent papers, recommended by Mendeley, Toby and
+ own googling.
+\end_layout
+
+\begin_layout Itemize
+Need to establish feasibility of online tracking for different of ML algorithms.
+\end_layout
+
+\begin_layout Itemize
+Shortlist of algorithms/TLD implementations to use as base 
+\end_layout
+
+\begin_layout Itemize
+Estalish what is going to be extracted from the TLD (or other) to be used
+ to train the ML section.
 \end_layout
 
 \end_body
