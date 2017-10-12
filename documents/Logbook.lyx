@@ -209,7 +209,7 @@ Tested MultiObjectTLD implementation with myself as the first target, and
 \begin_layout Section*
 
 \series bold
-First meeting 
+Meeting 1
 \end_layout
 
 \begin_layout Itemize
@@ -327,6 +327,23 @@ Shortlist of algorithms/TLD implementations to use as base
 \begin_layout Itemize
 Estalish what is going to be extracted from the TLD (or other) to be used
  to train the ML section.
+\end_layout
+
+\begin_layout Section*
+Week 2
+\end_layout
+
+\begin_layout Itemize
+Check and see if there is existing dataset of thermal profiles that could
+ be used for training purposes.
+\end_layout
+
+\begin_layout Itemize
+Most papers seem to use supervised learning in the training phase.
+\end_layout
+
+\begin_layout Itemize
+Got lots of papers in Mendeley to make my way through now :) 
 \end_layout
 
 \end_body

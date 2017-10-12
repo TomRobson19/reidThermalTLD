@@ -1,0 +1,158 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+People Re-identification using Deep Convolutional Neural Network
+\end_layout
+
+\begin_layout Subsubsection*
+Guanwen Zhang, Jien Kato, Yu Wang and Kenji Mase
+\end_layout
+
+\begin_layout Standard
+Creating a deep CNN to integrate feature learning and re-identification
+ into one framework.
+\end_layout
+
+\begin_layout Standard
+Normal activation functions are replaced in this case by linear SVMs.
+\end_layout
+
+\begin_layout Standard
+Don't learn cross-entropy loss, use margin based loss to measure similarity
+ of pair being compared.
+\end_layout
+
+\begin_layout Standard
+Most studies on person re-identification mainly focus on analyzing the people
+ appearance, with the acceptable assumption that people will not change
+ their clothing during the observation period.
+\end_layout
+
+\begin_layout Standard
+There are three kinds of contribution in this paper: (1) we proposed a simple
+ architecture of deep CNN for people re-identification problem that has
+ not been addressed before; (2) we introduced linear SVM on the top of the
+ network to measure the ranking comparison that is needed by people re-identific
+ation; (3) we gave a detailed discussion about the limitation of using deep
+ learning in re-identification problem and the potential for further improvement.
+\end_layout
+
+\begin_layout Standard
+SVM is placed 
+\begin_inset Quotes eld
+\end_inset
+
+on top
+\begin_inset Quotes erd
+\end_inset
+
+ of the network, rather than at every neuron as the earlier discription
+ as activation functions may seem to suggest.
+\end_layout
+
+\begin_layout Standard
+Full network of CNN nodes given in paper.
+\end_layout
+
+\begin_layout Standard
+Problem with training exists as predicted due to the fact that it has to
+ be trained first, this method does not seem to be conducive to live training,
+ but if we could get a sufficiently varied sample of people then could potential
+ly train it ourselves??
+\end_layout
+
+\begin_layout Standard
+They use PSD unsupervised learning as well as dropout on some layers to
+ try and prevent overfitting but it is still present, this is the reported
+ issue why the performace is limited compared to the state of the art in
+ colour.
+\end_layout
+
+\begin_layout Standard
+They used pre-existing datasets of different people encountered in other
+ papers.
+\end_layout
+
+\begin_layout Standard
+How to find a good feature representation to bridge the “gap” between appearance
+s of the same people is a very challenging task.
+ Existing methods either employ hand craft features or use machine learning
+ method with existing features to form a specific representation.
+ However, there are a lot of uncertainty in these methods due to human factors
+ and specific applications.
+ Deep learning, with ability to learn a proper feature representation from
+ the bottom of the raw images, seems to be a promising solution for the
+ people re-identification tasks.
+\end_layout
+
+\end_body
+\end_document
