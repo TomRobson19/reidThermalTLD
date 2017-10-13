@@ -154,5 +154,31 @@ s of the same people is a very challenging task.
  people re-identification tasks.
 \end_layout
 
+\begin_layout Section*
+An Improved Deep Learning Architecture for Person Re-Identification
+\end_layout
+
+\begin_layout Subsubsection*
+Ejaz Ahmed, Michael Jones and Tim Marks
+\end_layout
+
+\begin_layout Standard
+Specifically designing CNN layers for Re-ID
+\end_layout
+
+\begin_layout Standard
+Want to simultaeneously learn features and a corresponding similarity metric
+ to enable Re-ID.
+\end_layout
+
+\begin_layout Standard
+Formulates problem as binary classification
+\end_layout
+
+\begin_layout Standard
+Takes an input pair of images and tries to determine whether they are the
+ same person
+\end_layout
+
 \end_body
 \end_document
