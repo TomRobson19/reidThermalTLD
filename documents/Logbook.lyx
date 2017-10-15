@@ -346,5 +346,9 @@ Most papers seem to use supervised learning in the training phase.
 Got lots of papers in Mendeley to make my way through now :) 
 \end_layout
 
+\begin_layout Itemize
+Can't test struck in its current form as it runs opencv2
+\end_layout
+
 \end_body
 \end_document

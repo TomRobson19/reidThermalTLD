@@ -70,6 +70,85 @@
 \begin_body
 
 \begin_layout Section*
+Tracking-Learning-Detection
+\end_layout
+
+\begin_layout Subsubsection*
+Zdenek Kalal, Krystian Mikolajczyk, and Jiri Matas
+\end_layout
+
+\begin_layout Standard
+This is the original paper in which the authors propose the TLD algorithm
+ that I intend to use
+\end_layout
+
+\begin_layout Standard
+The approach is to decompose the long term tracking task into tracking,
+ learning and detection.
+ 
+\end_layout
+
+\begin_layout Standard
+The tracker follows the object from frame to frame, assuming frame to frame
+ motion is limited and the object will remain in the frame.
+\end_layout
+
+\begin_layout Standard
+The detector localises all appearences that have been observed so far and
+ uses these to correct the tracker if necessary.
+\end_layout
+
+\begin_layout Standard
+The learning component estimates the errors in the detector and updates
+ it.
+ This uses 
+\begin_inset Quotes eld
+\end_inset
+
+P-N
+\begin_inset Quotes erd
+\end_inset
+
+ learning which estimates errors using a pair of experts for missed detections
+ and false positives respectively.
+ 
+\end_layout
+
+\begin_layout Standard
+Components must work together, cannot solve long-term tracking problem on
+ their own.
+\end_layout
+
+\begin_layout Standard
+P-expert identifies false negatives, N expert identifies false positives.
+\end_layout
+
+\begin_layout Standard
+Good images included in this paper to use when explaining algorithm.
+\end_layout
+
+\begin_layout Standard
+Implementation of algorithm is described in detail if needed.
+\end_layout
+
+\begin_layout Section*
+The Thermal Infrared Visual Object Tracking VOT-TIR2015/16 Challenge Results
+ (2 papers)
+\end_layout
+
+\begin_layout Standard
+Comparison of different algorithms for person tracking
+\end_layout
+
+\begin_layout Standard
+Doesn't actually include TLD
+\end_layout
+
+\begin_layout Standard
+Saving these ones for later 
+\end_layout
+
+\begin_layout Section*
 People Re-identification using Deep Convolutional Neural Network
 \end_layout
 
@@ -178,6 +257,41 @@ Formulates problem as binary classification
 \begin_layout Standard
 Takes an input pair of images and tries to determine whether they are the
  same person
+\end_layout
+
+\begin_layout Standard
+Features used in this paper are very colour based.
+\end_layout
+
+\begin_layout Standard
+This is pretrained using an existing dataset, similar to above
+\end_layout
+
+\begin_layout Standard
+Seem to be able to avoid overfitting
+\end_layout
+
+\begin_layout Standard
+Performs as good as state of the art, sometimes better
+\end_layout
+
+\begin_layout Section*
+Struck: Structured Output Tracking with Kernels
+\end_layout
+
+\begin_layout Subsubsection*
+Sam Hare, Amir Saffari and Philip Torr
+\end_layout
+
+\begin_layout Standard
+This method of tracking is based on structured output predicition.
+ (possible alternative to TLD, or just take the SVM element)
+\end_layout
+
+\begin_layout Standard
+Main feature of this approacvh that interests us is the use of an SVM that
+ is trained online, and budgeted to prevent unbounded growth in number of
+ support vectors.
 \end_layout
 
 \end_body
