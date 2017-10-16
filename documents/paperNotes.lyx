@@ -294,5 +294,33 @@ Main feature of this approacvh that interests us is the use of an SVM that
  support vectors.
 \end_layout
 
+\begin_layout Standard
+These algorithms treat the tracking problem as a detection task over time.
+\end_layout
+
+\begin_layout Standard
+Such approaches maintain a classifier that is trained online to distinguish
+ the target object from the surrounding background
+\end_layout
+
+\begin_layout Standard
+During tracking, this classifier determines a maximum classification score
+ around the estimate using a sliding window approach.
+\end_layout
+
+\begin_layout Standard
+Main approach here is to predict the object location between frames.
+ 
+\end_layout
+
+\begin_layout Standard
+Performance superior to state of the art at the time of paper writing.
+\end_layout
+
+\begin_layout Standard
+Could use, code written for OpenCV2 so would have to adapt.
+ 
+\end_layout
+
 \end_body
 \end_document
