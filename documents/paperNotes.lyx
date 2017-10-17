@@ -322,5 +322,62 @@ Could use, code written for OpenCV2 so would have to adapt.
  
 \end_layout
 
+\begin_layout Section*
+Online Learning based Multiple Pedestrians Tracking in Thermal Imagery for
+ Safe Driving at Night
+\end_layout
+
+\begin_layout Subsubsection*
+Byoung Chul Ko, Joon-Young Kwak and Jae-Yeal Nam
+\end_layout
+
+\begin_layout Standard
+This paper is not available in full for some reason, only has a single page.
+ 
+\end_layout
+
+\begin_layout Standard
+Performs detection subject to the season and the weather.
+\end_layout
+
+\begin_layout Standard
+Uses online learning as frames are obtained sequentially.
+ 
+\end_layout
+
+\begin_layout Standard
+learning based on boosted random ferns
+\end_layout
+
+\begin_layout Standard
+This will be of very limited use to me as there is insufficient information.
+\end_layout
+
+\begin_layout Section*
+Joint Learning of Single-image and Cross-image Representations for Person
+ Re-identification 
+\end_layout
+
+\begin_layout Subsubsection*
+Faqiang Wang, Wangmeng Zuo, Liang Lin,David Zhang, Lei Zhang
+\end_layout
+
+\begin_layout Standard
+This approach uses a deep CNN with several sections trained on both single
+ image and cross image representations.
+\end_layout
+
+\begin_layout Standard
+These give different features as outputs
+\end_layout
+
+\begin_layout Standard
+Single image is like last years approach
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \end_body
 \end_document
