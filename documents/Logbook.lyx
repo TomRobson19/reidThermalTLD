@@ -360,5 +360,23 @@ Need to establish how important runtime is to us, and whether any frames
  should be skipped.
 \end_layout
 
+\begin_layout Itemize
+Possible Algorithms
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+MOTLD
+\end_layout
+
+\begin_layout Itemize
+Struck - need to test with OpenCV 2
+\end_layout
+
+\begin_layout Itemize
+OpenTLD - look into how to use this
+\end_layout
+
+\end_deeper
 \end_body
 \end_document

@@ -410,7 +410,7 @@ Many of other state of the art (at the time) approaches rely on pretrained
 \end_layout
 
 \begin_layout Standard
-Manifold ranking generally is a graphbased ranking algorithm to retrieve
+Manifold ranking generally is a graph based ranking algorithm to retrieve
  images from multimedia databases.
 \end_layout
 
@@ -425,7 +425,7 @@ Laplacian filters are used to get the manifold ranking.
 \end_layout
 
 \begin_layout Section*
-PRISM: Person Reidentification via Structured Matching
+PRISM: Person Re-identification via Structured Matching
 \end_layout
 
 \begin_layout Subsubsection*
@@ -439,18 +439,67 @@ This approach aims to identify which people from one camera view are present
 
 \begin_layout Standard
 Problems arise from changes in appearence such as different pose, illumination
- and callibration of cameras.
+ and calibration of cameras.
 \end_layout
 
 \begin_layout Standard
 They propose a structured matching method to account for these problems
  by viewing the global problem as a weighted graph matching problem and
- estimate edge weights by learning to predict them based on the co-occurances
+ estimate edge weights by learning to predict them based on the co-occurrences
  of visual patterns of their training examples.
 \end_layout
 
 \begin_layout Standard
-This above point means that it is trained online.
+This above point means that it is trained offline.
+\end_layout
+
+\begin_layout Standard
+The main system created for this paper deals with people in two views simultaneo
+usly, but they say it also works on individual views, which is more relevant
+ to us as our data set will not have people appearing in multiple cameras
+ simultaneously, so each camera must operate individually apart from sharing
+ an array of targets.
+\end_layout
+
+\begin_layout Standard
+Inspiration for the structured learning component of this solution is being
+ taken from systems that match text documents, with words being replaced
+ here by 
+\begin_inset Quotes eld
+\end_inset
+
+visual words
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem we are trying to solve in our work is referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+Open-world Re-ID
+\begin_inset Quotes erd
+\end_inset
+
+, which is more difficult, and out of scope for this paper.
+\end_layout
+
+\begin_layout Section*
+On-the-fly feature importance mining for person re-identification
+\end_layout
+
+\begin_layout Subsubsection*
+Chunxiao Liu, Shaogang Gong, Chen Change Loy
+\end_layout
+
+\begin_layout Standard
+This is an unsupervised approach to feature importance mining on the fly
+ specific to each target image.
+ 
 \end_layout
 
 \end_body
