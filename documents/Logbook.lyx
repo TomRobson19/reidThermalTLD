@@ -350,5 +350,15 @@ Got lots of papers in Mendeley to make my way through now :)
 Can't test struck in its current form as it runs opencv2
 \end_layout
 
+\begin_layout Itemize
+Most of the ML papers have complex CNN, need to understand how I could write
+ this better.
+\end_layout
+
+\begin_layout Itemize
+Need to establish how important runtime is to us, and whether any frames
+ should be skipped.
+\end_layout
+
 \end_body
 \end_document

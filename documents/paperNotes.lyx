@@ -372,11 +372,85 @@ These give different features as outputs
 \end_layout
 
 \begin_layout Standard
-Single image is like last years approach
+Single image is like last years approach - even discusses Mahalanobis distances
 \end_layout
 
 \begin_layout Standard
+Paper does not explain cross image representations very well, need to do
+ more reseacrh on this.
+\end_layout
 
+\begin_layout Standard
+CNN architecture is highly complex
+\end_layout
+
+\begin_layout Section*
+Person Re-Identification by Manifold Ranking (2013 so a bit older)
+\end_layout
+
+\begin_layout Subsubsection*
+Chen Change Loy, Chunxiao Liu, Shaogang Gong
+\end_layout
+
+\begin_layout Standard
+This paper aims to move away from labelled pairwise data for training, towards
+ an unlabelled method.
+ This seems to suit our purposes more.
+\end_layout
+
+\begin_layout Standard
+Nice intro to the problem --> For person re-identification (Re-ID), one
+ is given a probe query image to match against a set of gallery candidates
+ captured in distributed locations at different times
+\end_layout
+
+\begin_layout Standard
+Many of other state of the art (at the time) approaches rely on pretrained
+ datasets, which limit the scalability of the problem into the real world.
+\end_layout
+
+\begin_layout Standard
+Manifold ranking generally is a graphbased ranking algorithm to retrieve
+ images from multimedia databases.
+\end_layout
+
+\begin_layout Standard
+Features - break the roi down into 6 horizontal stripes and extract colour
+ and texture histograms - 2784 dimensional feature vector
+\end_layout
+
+\begin_layout Standard
+Laplacian filters are used to get the manifold ranking.
+ 
+\end_layout
+
+\begin_layout Section*
+PRISM: Person Reidentification via Structured Matching
+\end_layout
+
+\begin_layout Subsubsection*
+Ziming Zhang and Venkatesh Saligrama
+\end_layout
+
+\begin_layout Standard
+This approach aims to identify which people from one camera view are present
+ in another - useful for the multicamera aspect of our work
+\end_layout
+
+\begin_layout Standard
+Problems arise from changes in appearence such as different pose, illumination
+ and callibration of cameras.
+\end_layout
+
+\begin_layout Standard
+They propose a structured matching method to account for these problems
+ by viewing the global problem as a weighted graph matching problem and
+ estimate edge weights by learning to predict them based on the co-occurances
+ of visual patterns of their training examples.
+\end_layout
+
+\begin_layout Standard
+This above point means that it is trained online.
 \end_layout
 
 \end_body
