@@ -513,5 +513,53 @@ Normally feature histograms are concatenated together with some weighting
  descriptive power of features.
 \end_layout
 
+\begin_layout Standard
+We must therefore find a way to quantify the importance of the feature to
+ each person.
+\end_layout
+
+\begin_layout Standard
+This is done using a random forest classifier.
+\end_layout
+
+\begin_layout Section*
+Open-World Person Re-Identification by Multi-Label Assignment Inference
+\end_layout
+
+\begin_layout Subsubsection*
+Brais Cancela, Timothy Hospedales and Shaogang Gong
+\end_layout
+
+\begin_layout Standard
+Open-World re-identification is the problem we are trying to solve, without
+ pre-training on a specified dataset.
+\end_layout
+
+\begin_layout Standard
+The vast majority of previous work in the entire field of re-identification
+ has been closed-world.
+\end_layout
+
+\begin_layout Standard
+In the Open-World situation we have no prior information about the number
+ of people or their overlap of identity across cameras.
+ 
+\end_layout
+
+\begin_layout Standard
+This paper introduces a new Conditional Random Field (CRF) model.
+\end_layout
+
+\begin_layout Standard
+Different candidates of people with unknown id labels are represented as
+ nodes in the CRF.
+ The objective of this is to infer the most likely correct assignment of
+ multiple id labels simultaneously to all the nodes.
+\end_layout
+
+\begin_layout Standard
+They use both appearance, temporal and spatial information.
+\end_layout
+
 \end_body
 \end_document
