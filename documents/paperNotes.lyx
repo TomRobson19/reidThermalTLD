@@ -502,5 +502,16 @@ This is an unsupervised approach to feature importance mining on the fly
  
 \end_layout
 
+\begin_layout Standard
+Means that features are no longer assigned generic weights, and are instead
+ assigned based on which feature is most discriminative per person.
+\end_layout
+
+\begin_layout Standard
+Normally feature histograms are concatenated together with some weighting
+ based on importance, which were assigned based on some assumption of the
+ descriptive power of features.
+\end_layout
+
 \end_body
 \end_document
