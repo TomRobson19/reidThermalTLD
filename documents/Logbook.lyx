@@ -370,13 +370,60 @@ MOTLD
 \end_layout
 
 \begin_layout Itemize
-Struck - need to test with OpenCV 2
+Struck - need to test with OpenCV 2 - currently hasn't been run
 \end_layout
 
 \begin_layout Itemize
-OpenTLD - look into how to use this
+OpenTLD - look into how to use this - seems to work well(ish)
+\end_layout
+
+\begin_layout Itemize
+OpenCV implementations - function but slow
 \end_layout
 
 \end_deeper
+\begin_layout Section*
+Meeting 3
+\end_layout
+
+\begin_layout Itemize
+New idea - 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Train a CNN on closed world dataset - this should establish good feature
+ vectors for telling people apart at a certain layer
+\end_layout
+
+\begin_layout Itemize
+Each time we have a new person pass it into the CNN and extract the feature
+ vector at a layer determined by experimentation, and use this feature vector
+ for re-id
+\end_layout
+
+\begin_layout Itemize
+Compare feature vector using SVM/Mahalanobis etc.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Papers currently open in browser looking at similar ways of doing this
+\end_layout
+
+\begin_layout Itemize
+could have ML bit in python and then load it into C++
+\end_layout
+
+\begin_layout Itemize
+Next - 3 deliverables - read selection of CNN papers (embedded learning),
+ decide on suitable tracking algorithm, decide on suitable CNN framework
+ - tool - Caffe/tensorflow
+\end_layout
+
+\begin_layout Itemize
+send Toby my ssh public key so I can access the cameras.
+\end_layout
+
 \end_body
 \end_document
