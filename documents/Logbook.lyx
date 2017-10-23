@@ -470,6 +470,14 @@ Maybe pass each target through the neural network every 10 classifications
  to ensure we have sufficient data for the Re-ID part (SVM or Mahalanobis)
 \end_layout
 
+\begin_layout Itemize
+Do I want to extract the silhouette or the whole bounding box?
+\end_layout
+
+\begin_layout Itemize
+Good idea to make all training images the same size or not?
+\end_layout
+
 \end_deeper
 \end_body
 \end_document

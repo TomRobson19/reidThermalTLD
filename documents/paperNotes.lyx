@@ -561,5 +561,81 @@ Different candidates of people with unknown id labels are represented as
 They use both appearance, temporal and spatial information.
 \end_layout
 
+\begin_layout Section*
+A Discriminatively Learned CNN Embedding for Person Re-identification
+\end_layout
+
+\begin_layout Subsubsection*
+Zhedong Zheng, Liang Zheng and Yi Yang
+\end_layout
+
+\begin_layout Standard
+This paper revisits two previous CNN models, verification and identification.
+\end_layout
+
+\begin_layout Standard
+Identification takes in an image and determines which of a set of pretrained
+ people it is.
+\end_layout
+
+\begin_layout Standard
+Verification takes in a pair of images and attempts to determine whether
+ they are of the same person or different people.
+ 
+\end_layout
+
+\begin_layout Standard
+These two models have their respective pros and cons due to different loss
+ functions.
+ 
+\end_layout
+
+\begin_layout Standard
+This paper proposes a siamese network that computes the identification and
+ verification loss, taking in a pair of images and predicting their identities,
+ as well as if they are the same.
+ 
+\end_layout
+
+\begin_layout Standard
+CNNs have proven to be very good at feature extraction over the recent past,
+ but the two different methods differ in terms of input, feature extraction
+ and loss function.
+\end_layout
+
+\begin_layout Standard
+If we were not to train on image pairs, the training objective would then
+ be different from the testing procedure, and this may not result in the
+ network learning things that are relevant to our purpose.
+\end_layout
+
+\begin_layout Standard
+Similar approach has been tried in the field of face recognition.
+ 
+\end_layout
+
+\begin_layout Standard
+CaffeNet is used for the neural net
+\end_layout
+
+\begin_layout Standard
+Used some networks pretrained on ImageNet (Look into these)
+\end_layout
+
+\begin_layout Standard
+Potential to be applied on the generic instance retrieval task.
+\end_layout
+
+\begin_layout Section*
+Embedding Deep Metric for Person Re-identification: A Study Against Large
+ Variations
+\end_layout
+
+\begin_layout Subsubsection*
+Hailin Shi, Yang Yang, Xiangyu Zhu, Shengcai Liao, Zhen Lei, Weishi Zheng,
+ Stan Z.
+ Li
+\end_layout
+
 \end_body
 \end_document
