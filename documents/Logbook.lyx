@@ -425,5 +425,51 @@ Next - 3 deliverables - read selection of CNN papers (embedded learning),
 send Toby my ssh public key so I can access the cameras.
 \end_layout
 
+\begin_layout Section*
+Week 3
+\end_layout
+
+\begin_layout Itemize
+This means we are now going to have 2 major discrete components, the tracking
+ component and Re-Id component.
+\end_layout
+
+\begin_layout Itemize
+The Re-ID component will only operate when the Haar cascade has found a
+ target that is not currently being tracked
+\end_layout
+
+\begin_layout Itemize
+Need to ensure that whatever tracking algorithm we choose can handle being
+ told which of their targets to be updated
+\end_layout
+
+\begin_layout Itemize
+Test struck by installing OpenCV2 on Kali box??
+\end_layout
+
+\begin_layout Itemize
+Thoughts:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The tracking implementations I am considering make some attempt at Re-ID,
+ need to ensure that they do not try and overwrite the CNN component, but
+ wait to be told which target a new classification is - is motld the best
+ choice for this?
+\end_layout
+
+\begin_layout Itemize
+Thinking the best solution for testing would be to implement the tracking
+ stage first, and have a key press to replace the neural network for now
+\end_layout
+
+\begin_layout Itemize
+Maybe pass each target through the neural network every 10 classifications
+ to ensure we have sufficient data for the Re-ID part (SVM or Mahalanobis)
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
