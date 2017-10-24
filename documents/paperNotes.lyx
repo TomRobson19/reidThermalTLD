@@ -637,5 +637,48 @@ Hailin Shi, Yang Yang, Xiangyu Zhu, Shengcai Liao, Zhen Lei, Weishi Zheng,
  Li
 \end_layout
 
+\begin_layout Standard
+Pedestrian data is distributed as highly curved manifolds in the feature
+ space.
+\end_layout
+
+\begin_layout Standard
+Learn a metric weight constraint to improve the generalisation ability of
+ the neural network
+\end_layout
+
+\begin_layout Standard
+Basic re-id - extracting discriminative features from pedestrian images
+ and computing the distance of samples by feature comparison.
+\end_layout
+
+\begin_layout Standard
+When using a deep neural net, the CNN part extracts the features from images
+ and the metric learning part compares the features with the metric.
+\end_layout
+
+\begin_layout Standard
+Main proposition in this paper is using 
+\begin_inset Quotes eld
+\end_inset
+
+moderate positive mining
+\begin_inset Quotes erd
+\end_inset
+
+ in addition to hard negative to improve identification accuracy.
+ 
+\end_layout
+
+\begin_layout Standard
+Use mahalanobis distance rather than euclidean distance for comparisons
+ (like last year)
+\end_layout
+
+\begin_layout Standard
+Using the moderate positive samples, they reduce the intra-class variance
+ while preserving the intrinsic graphics structure if pedestrian data.
+\end_layout
+
 \end_body
 \end_document
