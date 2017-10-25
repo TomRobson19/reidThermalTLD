@@ -479,5 +479,14 @@ Good idea to make all training images the same size or not?
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Keras seems to be a good option, based on either Theano or TensorFlow
+\end_layout
+
+\begin_layout Itemize
+In terms of the tracking algorithm, need to be able to handle multiple objects,
+ but not fight with the Re-ID subsystem.
+\end_layout
+
 \end_body
 \end_document
