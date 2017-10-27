@@ -507,9 +507,14 @@ MoTLD performs well, but tries to Re-ID, would need to research the library
 \end_layout
 
 \begin_layout Itemize
-Thinking I will implement the tracking stage first, and have a key press
- to replace the neural network for now, probably using MoTLD, as comitting
- to it will give me more time to study how the library works
+Thinking I will implement the tracking stage first, and have each detection
+ that would go to the neural network be a new target for now, to ensure
+ no interference
+\end_layout
+
+\begin_layout Itemize
+Probably using MoTLD, as comitting to it will give me more time to study
+ how the library works
 \end_layout
 
 \end_deeper
