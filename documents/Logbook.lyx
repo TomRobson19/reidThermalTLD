@@ -548,5 +548,42 @@ Suggestion from some papers has been a neural network per image to get features,
 \end_layout
 
 \end_deeper
+\begin_layout Section*
+Meeting 4
+\end_layout
+
+\begin_layout Itemize
+Let's use MoTLD, try and make it as an abstract class so we could potentially
+ switch tracker, then write multi-object tracker class to inherit from this
+ and call tracker.
+\end_layout
+
+\begin_layout Itemize
+Making tracking system work first priority
+\end_layout
+
+\begin_layout Itemize
+Toby has code on git to convert Mat to IplImage, try and stay as far from
+ this old C stuff as possible.
+ 
+\end_layout
+
+\begin_layout Itemize
+Siamese neural network seems like the way to go.
+ 
+\end_layout
+
+\begin_layout Itemize
+OpenCV DNN can read TensorFlow and Caffe Models, will use this
+\end_layout
+
+\begin_layout Itemize
+Write abstract class design by next meeting.
+\end_layout
+
+\begin_layout Itemize
+Vague timing plan by next week
+\end_layout
+
 \end_body
 \end_document
