@@ -488,5 +488,49 @@ In terms of the tracking algorithm, need to be able to handle multiple objects,
  but not fight with the Re-ID subsystem.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+CppMT is very clean and fast, but makes a mistake when greg and I cross
+ over in the exampel video, so probably should not be used.
+\end_layout
+
+\begin_layout Itemize
+OpenTLD is slower than CppMT, has decent accuracy, would need to use multiple
+ instances of this tracker for multiple objects, also is a very complicated
+ library.
+\end_layout
+
+\begin_layout Itemize
+MoTLD performs well, but tries to Re-ID, would need to research the library
+ more.
+ 
+\end_layout
+
+\begin_layout Itemize
+Thinking I will implement the tracking stage first, and have a key press
+ to replace the neural network for now, probably using MoTLD, as comitting
+ to it will give me more time to study how the library works
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+In terms of neural network to use:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Many online reviews prefer TensorFlow to Caffe
+\end_layout
+
+\begin_layout Itemize
+Lots recommend using keras as a wrapper around tensorflow, but this is python
+ only
+\end_layout
+
+\begin_layout Itemize
+
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
