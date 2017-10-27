@@ -528,7 +528,18 @@ Lots recommend using keras as a wrapper around tensorflow, but this is python
 \end_layout
 
 \begin_layout Itemize
+What does Toby have experience in, as this seems to be the best way.
+\end_layout
 
+\begin_layout Itemize
+Don't understand how to design neural networks properly, how to choose number
+ and size of layers.
+ (experimentation)
+\end_layout
+
+\begin_layout Itemize
+Suggestion from some papers has been a neural network per image to get features,
+ passed into another to tell if the person is the same or different.
 \end_layout
 
 \end_deeper
