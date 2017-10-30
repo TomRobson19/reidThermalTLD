@@ -62,3 +62,9 @@ MultiObjectTLD/input/
 MultiObjectTLD/runtime\.txt
 
 *.lyx#
+
+MultiObjectTLD/CMakeCache\.txt
+
+MultiObjectTLD/camExample
+
+MultiObjectTLD/Makefile
