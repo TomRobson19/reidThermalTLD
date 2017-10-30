@@ -102,10 +102,11 @@ int main(int argc, char **argv)
                     Rect rec = found_filtered[i];
 
                     rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
-                    //update tracker here based on targets present
+                    //update tracker here based on targets present and bounding box's proximity to edge of image
                 }
             }
         }
+        //update other targets
         // Display result
         imshow("Tracking", displayImage);
         unsigned char key = waitKey(1);

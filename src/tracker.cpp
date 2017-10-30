@@ -9,6 +9,8 @@
 using namespace cv;
 using namespace std;
 
+//functions required: addTarget, deleteTarget, updateAllTargets, getFrame
+
 class GenericTracker
 {
 public:
