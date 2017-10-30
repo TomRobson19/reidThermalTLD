@@ -599,7 +599,7 @@ Made skeleton in main
 
 \begin_layout Itemize
 Did OpenCV reinstall, TLD implementation is now faster but performs terribly,
- so will not use.
+ so still will not use.
 \end_layout
 
 \end_body
