@@ -590,16 +590,20 @@ Week 4
 \end_layout
 
 \begin_layout Itemize
-Started abstract class development.
-\end_layout
-
-\begin_layout Itemize
 Made skeleton in main
 \end_layout
 
 \begin_layout Itemize
 Did OpenCV reinstall, TLD implementation is now faster but performs terribly,
  so still will not use.
+\end_layout
+
+\begin_layout Itemize
+Written abstract class with virtual methods, now writing MoTLD version
+\end_layout
+
+\begin_layout Itemize
+ObjectBox is defined in Matrix.h in MOTLD
 \end_layout
 
 \end_body
