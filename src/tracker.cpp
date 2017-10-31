@@ -33,10 +33,17 @@ public:
     {
         tracker(width, height, settings);
     }
-    void addTarget(Rectangle boundingBox)
+    void addTarget(Rectangle boundingBox, int personID)
     {
     	//convert rectangle to ObjectBox
-        tracker.addObject(boundingBox);
+    	ObjectBox object;
+    	object.x = boundingBox.x;
+    	object.y = boundingBox.y;
+    	object.width = boundingBox.width;
+    	object.height = boundingBox.height;
+    	object.objectId = personID;
+
+        tracker.addObject(object);
     }
     void deleteTarget()
     {
