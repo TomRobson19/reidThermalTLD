@@ -595,7 +595,8 @@ Made skeleton in main
 
 \begin_layout Itemize
 Did OpenCV reinstall, TLD implementation is now faster but performs terribly,
- so still will not use.
+ so still will not use - check on changes regularly, if I can use it that
+ would be great
 \end_layout
 
 \begin_layout Itemize
@@ -603,7 +604,8 @@ Written abstract class with virtual methods, now writing MoTLD version
 \end_layout
 
 \begin_layout Itemize
-ObjectBox is defined in Matrix.h in MOTLD
+ObjectBox is defined in Matrix.h in MOTLD - understand how this works now
+ and have converted Rectangle
 \end_layout
 
 \end_body
