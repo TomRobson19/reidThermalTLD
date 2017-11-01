@@ -1,5 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include "tracker.cpp"
+#include "person.cpp"
 
 using namespace cv;
 using namespace std;

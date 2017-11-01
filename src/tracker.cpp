@@ -1,6 +1,7 @@
-#include "opencv2/videoio.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
+#include <opencv2/videoio.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/opencv.hpp>
 
 #include <iostream>
 #include <string>
@@ -20,20 +21,21 @@ using namespace std;
 class GenericTracker
 {
 public:
-    virtual void initialise();
-    virtual void addTarget();
+    virtual void initialise(int width, int height);
+    virtual void addTarget(Rect boundingBox, int personID);
     virtual void deleteTarget();
-    virtual void update();
+    virtual void update(Mat image);
 };
 
 class MultiObjectTLDTracker : public GenericTracker
 {
 public:
-    void initialise(int width, int height)
-    {
-        tracker(width, height, settings);
-    }
-    void addTarget(Rectangle boundingBox, int personID)
+	MultiObjectTLDTracker(Mat image) : tracker(image.cols, image.rows, settings) {}
+    // void initialise(int width, int height)
+    // {
+    //     tracker = MultiObjectTLD(width, height, settings);
+    // }
+    void addTarget(Rect boundingBox, int personID)
     {
     	//convert rectangle to ObjectBox
     	ObjectBox object;
@@ -51,17 +53,19 @@ public:
     }
     void update(Mat image)
     {
-        IplImage *frame = &(IplImage(image));
+        IplImage frame = (IplImage(image));
+
+        int size = image.cols * image.rows;
 
         unsigned char img[size * 3];
 
         for(int j = 0; j < size; j++)
         {
-            img[j] = frame->imageData[j * 3 + 2];
-            img[j + size] = frame->imageData[j * 3 + 1];
-            img[j + 2 * size] = frame->imageData[j * 3];
+            img[j] = frame.imageData[j * 3 + 2];
+            img[j + size] = frame.imageData[j * 3 + 1];
+            img[j + 2 * size] = frame.imageData[j * 3];
         }
-        tracker.processFrame();
+        tracker.processFrame(img);
     }
 private:
     MultiObjectTLD tracker;
