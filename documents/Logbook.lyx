@@ -608,5 +608,38 @@ ObjectBox is defined in Matrix.h in MOTLD - understand how this works now
  and have converted Rectangle
 \end_layout
 
+\begin_layout Itemize
+Having difficulties with compilation with the header file library, multiple
+ definition issues.
+\end_layout
+
+\begin_layout Itemize
+Also don't really understand abstract classes in header files properly yet,
+ will continue to look into it.
+\end_layout
+
+\begin_layout Section*
+Timing Plan
+\end_layout
+
+\begin_layout Itemize
+Next 2 weeks to implement the tracking component with placeholder for neural
+ net.
+\end_layout
+
+\begin_layout Itemize
+Spend time here investigating other tracking algorithms if necessary.
+\end_layout
+
+\begin_layout Itemize
+2 weeks research and experimentation with neural network design, most likely
+ in python with keras, while also looking into forming dataset
+\end_layout
+
+\begin_layout Itemize
+Then start to implement neural network on our dataset and establish the
+ most effective settings for it.
+\end_layout
+
 \end_body
 \end_document

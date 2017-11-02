@@ -1,6 +1,5 @@
-#include <opencv2/opencv.hpp>
-#include "tracker.cpp"
-#include "person.cpp"
+#include "person.hpp"
+#include "tracker.hpp"
 
 using namespace cv;
 using namespace std;
@@ -32,7 +31,7 @@ int main(int argc, char **argv)
     CascadeClassifier cascade = CascadeClassifier(CASCADE_TO_USE);
 
     Mat frame;
-
+    
     while(video.read(frame))
     {
         Mat displayImage = frame.clone();

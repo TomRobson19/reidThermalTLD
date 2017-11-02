@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(camExample)
 set(CMAKE_BUILD_TYPE Release)
-set(OpenCV_DIR /home/tom/Documents/motld/MultiObjectTLD)
+set(OpenCV_DIR /home/tom/Documents/fourthYearWork/otherTrackers/MultiObjectTLD)
 find_package(OpenCV REQUIRED)
 add_compile_options(-std=c++11 -g)
 include_directories(${OpenCV_INCLUDE_DIRS})
