@@ -614,12 +614,17 @@ Having difficulties with compilation with the header file library, multiple
 \end_layout
 
 \begin_layout Itemize
+Compiles when the implementation of my tracker is in main.cpp, and tracker.cpp
+ is ignored, still unsure why this is the case.
+\end_layout
+
+\begin_layout Itemize
 Also don't really understand abstract classes in header files properly yet,
  will continue to look into it.
 \end_layout
 
 \begin_layout Section*
-Timing Plan
+Timing Plan - as of week 4
 \end_layout
 
 \begin_layout Itemize

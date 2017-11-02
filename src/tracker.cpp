@@ -1,5 +1,10 @@
 #include "tracker.hpp"
 
+int main()
+{
+    return 1;
+}
+
 MultiObjectTLDTracker::MultiObjectTLDTracker(const Mat image) 
 {
     initialise(image.cols, image.rows);
