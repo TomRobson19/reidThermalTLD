@@ -3,20 +3,6 @@
  * IMPLEMENTATION                                                                                 *
  **************************************************************************************************/ 
 
-inline Matrix::Matrix()
-{
-
-
-  ivData = NULL; 
-  ivWidth = ivHeight = 0;
-}
-
-inline Matrix::Matrix(const int width, const int height)
-  : ivWidth(width), ivHeight(height)
-{
-  ivData = new float[width*height];
-}
-
 Matrix::Matrix(const Matrix& copyFrom)
   : ivWidth(copyFrom.ivWidth), ivHeight(copyFrom.ivHeight)
 {

@@ -4,6 +4,9 @@
 *                         public accessible stuff                            *
 ******************************************************************************/
 
+const WarpSettings FernFilter::cDefaultInitWarpSettings = {10, 20, 5, 20, 0.2, 0.2};
+const WarpSettings FernFilter::cDefaultUpdateWarpSettings = {10, 10, 5, 20, 0.2, 0.2};
+
 FernFilter::FernFilter(const int & width, const int & height, const int & numFerns,
                        const int & featuresPerFern, const int & patchSize, 
                        const int & scaleMin, const int & scaleMax, const int & bbMin)

@@ -199,4 +199,16 @@ std::ostream& operator<<(std::ostream& aStream, const Matrix& aMatrix);
 /// Outputs an RGB image in PPM format
 void writePPM(const char* filename, const Matrix& rMatrix, const Matrix& gMatrix, const Matrix& bMatrix);
 
+inline Matrix::Matrix()
+{
+  ivData = NULL; 
+  ivWidth = ivHeight = 0;
+}
+
+inline Matrix::Matrix(const int width, const int height)
+  : ivWidth(width), ivHeight(height)
+{
+  ivData = new float[width*height];
+}
+
 #endif

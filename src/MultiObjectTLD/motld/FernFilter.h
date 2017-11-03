@@ -236,8 +236,4 @@ private:
   static const WarpSettings cDefaultUpdateWarpSettings;
 };
 
-const WarpSettings FernFilter::cDefaultInitWarpSettings = {10, 20, 5, 20, 0.2, 0.2};
-const WarpSettings FernFilter::cDefaultUpdateWarpSettings = {10, 10, 5, 20, 0.2, 0.2};
-
-
 #endif //FERNCLASSIFIER_H
