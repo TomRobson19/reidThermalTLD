@@ -646,5 +646,27 @@ Then start to implement neural network on our dataset and establish the
  most effective settings for it.
 \end_layout
 
+\begin_layout Section*
+Meeting 5
+\end_layout
+
+\begin_layout Itemize
+Convert MOTLD into non-header only library, and republish on github.
+\end_layout
+
+\begin_layout Itemize
+Need to pull out the patches to allow us to pass the identifications to
+ the neural.
+\end_layout
+
+\begin_layout Itemize
+Check if keras output format is tensorflow, and can be read by opencv dnn
+ module.
+\end_layout
+
+\begin_layout Itemize
+Discuss data collection issues
+\end_layout
+
 \end_body
 \end_document
