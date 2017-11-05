@@ -665,7 +665,20 @@ Check if keras output format is tensorflow, and can be read by opencv dnn
 \end_layout
 
 \begin_layout Itemize
-Discuss data collection issues
+Discuss data collection issues next time.
+\end_layout
+
+\begin_layout Section*
+Week 5
+\end_layout
+
+\begin_layout Itemize
+Converted MOTLD from a c header library to a normal C++ library, and have
+ resolved my linker issues
+\end_layout
+
+\begin_layout Itemize
+Tracker.cpp mostly implemented, but still untested and unused in main.
 \end_layout
 
 \end_body
