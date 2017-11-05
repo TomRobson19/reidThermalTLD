@@ -37,3 +37,15 @@ void MultiObjectTLDTracker::update(Mat image)
     }
     tracker.processFrame(img);
 }
+
+void MultiObjectTLDTracker::drawBoxes(Mat image)
+{
+    std::vector<ObjectBox> boxes;
+    boxes = tracker.getObjectBoxes();
+
+    for (int i = 0; i < boxes.size(); i++)
+    {
+        Rect rec (boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
+        rectangle(image, rec, (255, 0, 0), 2, 1 );
+    }
+}

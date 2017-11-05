@@ -16,6 +16,8 @@ public:
     virtual void addTarget(Rect boundingBox, int personID);
     virtual void deleteTarget();
     virtual void update(Mat image);
+    virtual void drawBoxes(Mat image);
+
 };
 
 class MultiObjectTLDTracker// : public GenericTracker
@@ -29,6 +31,8 @@ public:
     void addTarget(Rect boundingBox, int personID);
     void deleteTarget();
     void update(Mat image);
+    void drawBoxes(Mat image);
+
 };
 
 #endif
