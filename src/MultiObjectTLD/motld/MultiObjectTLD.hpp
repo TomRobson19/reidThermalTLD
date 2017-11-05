@@ -25,10 +25,10 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "LKTracker.h"
-#include "FernFilter.h"
-#include "NNClassifier.h"
-#include "Matrix.h"
+#include "LKTracker.hpp"
+#include "FernFilter.hpp"
+#include "NNClassifier.hpp"
+#include "Matrix.hpp"
 
 #define COLOR_MODE_GRAY 0
 #define COLOR_MODE_RGB 1

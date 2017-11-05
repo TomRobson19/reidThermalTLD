@@ -19,7 +19,7 @@
 #ifndef LKTracker_H
 #define LKTracker_H
   
-#include "Matrix.h"
+#include "Matrix.hpp"
 #include <vector>
 #include <algorithm>
 #include <math.h>

@@ -34,8 +34,8 @@
 #include <sys/time.h>
 #endif
 
-#include "Matrix.h"
-#include "Utils.h"
+#include "Matrix.hpp"
+#include "Utils.hpp"
 
 #define USEMAP 1       // Default: 1 - 0 = use lookup table instead: experimental
 #define USETBBP 1      // Default: 1 - 0 = use simple pixel comparison: experimental

@@ -22,8 +22,8 @@
 //#include <iostream>
 //#include <fstream>
 #include <vector>
-#include "Matrix.h"
-#include "Histogram.h"
+#include "Matrix.hpp"
+#include "Histogram.hpp"
 
 /// Data structure representing nearest neighbor patches with color histograms
 class NNPatch

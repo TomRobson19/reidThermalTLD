@@ -1,4 +1,4 @@
-#include "LKTracker.h"
+#include "LKTracker.hpp"
 /**************************************************************************************************
  * IMPLEMENTATION                                                                                 *
  **************************************************************************************************/ 
@@ -11,7 +11,7 @@ void LKTracker::initFirstFrame(unsigned char * img)
 void LKTracker::initFirstFrame(const Matrix& img)
 {
   ivPrevPyramid = new LKPyramid(MAX_PYRAMID_LEVEL+1);
-  ivPrevPyramid->I["0] = img;
+  ivPrevPyramid->I[0] = img;
   for (int i = 0; i <= MAX_PYRAMID_LEVEL; ++i)
   {
     ivPrevPyramid->I[i].scharrDerivativeX(ivPrevPyramid->Ix[i]);

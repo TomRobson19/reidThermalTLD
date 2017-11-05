@@ -1,4 +1,4 @@
-#include "FernFilter.h"
+#include "FernFilter.hpp"
 
 /*****************************************************************************
 *                         public accessible stuff                            *

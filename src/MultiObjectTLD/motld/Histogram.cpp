@@ -1,4 +1,4 @@
-#include "Histogram.h"
+#include "Histogram.hpp"
 
 Histogram * Histogram::ivInstance = NULL;
 

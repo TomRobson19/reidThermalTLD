@@ -22,7 +22,7 @@
 #include <cmath>
 #include <cstring>
 #include <vector>
-#include "Matrix.h"
+#include "Matrix.hpp"
 
 #define MAX3(a,b,c) a > b ? (a > c ? a : c) : (b > c ? b : c);
 #define MIN3(a,b,c) a < b ? (a < c ? a : c) : (b < c ? b : c);
