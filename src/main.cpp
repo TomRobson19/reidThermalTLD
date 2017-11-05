@@ -31,6 +31,8 @@ int main(int argc, char **argv)
     CascadeClassifier cascade = CascadeClassifier(CASCADE_TO_USE);
 
     Mat frame;
+
+    MultiObjectTLDTracker tracker();
     
     while(video.read(frame))
     {  
