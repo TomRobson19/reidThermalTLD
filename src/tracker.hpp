@@ -3,7 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 
-#include "MultiObjectTLD/motld/MultiObjectTLD.h"
+#include "MultiObjectTLD/motld/MultiObjectTLD.hpp"
 
 using namespace cv;
 using namespace std;
@@ -24,7 +24,7 @@ private:
     const MOTLDSettings settings = MOTLDSettings(0);
     MultiObjectTLD tracker = MultiObjectTLD(640,480,settings);
 public:
-    MultiObjectTLDTracker(const Mat image); 
+    MultiObjectTLDTracker(); 
     void initialise(int width, int height);
     void addTarget(Rect boundingBox, int personID);
     void deleteTarget();

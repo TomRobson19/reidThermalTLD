@@ -1,13 +1,10 @@
 #include "tracker.hpp"
 
-MultiObjectTLDTracker::MultiObjectTLDTracker(const Mat image) 
+MultiObjectTLDTracker::MultiObjectTLDTracker() 
 {
-    initialise(image.cols, image.rows);
-} 
-void MultiObjectTLDTracker::initialise(int width, int height)
-{
-    //tracker = MultiObjectTLD(width, height, settings);
+
 }
+
 void MultiObjectTLDTracker::addTarget(Rect boundingBox, int personID)
 {
     //convert rectangle to ObjectBox
