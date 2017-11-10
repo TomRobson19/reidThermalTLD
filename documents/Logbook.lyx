@@ -681,5 +681,35 @@ Converted MOTLD from a c header library to a normal C++ library, and have
 Tracker.cpp mostly implemented, but still untested and unused in main.
 \end_layout
 
+\begin_layout Itemize
+Unable to ssh into cameras, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ are bringing me to a password page, 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ seems to not exist
+\end_layout
+
+\begin_layout Section*
+Meeting 6
+\end_layout
+
+\begin_layout Itemize
+Deleting targets function next priority, then integrate with main
+\end_layout
+
+\begin_layout Itemize
+Can now get into camera alpha (in the lab) and beta (on the roof), gamma
+ and delta have lost connections, Toby needs to add my key to these when
+ they come back up.
+\end_layout
+
 \end_body
 \end_document
