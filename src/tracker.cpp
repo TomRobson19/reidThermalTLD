@@ -1,4 +1,5 @@
 #include "tracker.hpp"
+#include <tuple>
 
 MultiObjectTLDTracker::MultiObjectTLDTracker() 
 {
@@ -62,10 +63,11 @@ int MultiObjectTLDTracker::getNumberOfObjects()
     return tracker.getObjectBoxes().size();
 }
 
-std::vector<Rect> MultiObjectTLDTracker::getObjectRects()
+std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectRects()
 {
     std::vector<ObjectBox> objectBoxes = tracker.getObjectBoxes();
     std::vector<Rect> rectangles;
+    std::vector<int> personIDs;
 
     for (int i = 0; i < objectBoxes.size(); i++)
     {
@@ -76,6 +78,8 @@ std::vector<Rect> MultiObjectTLDTracker::getObjectRects()
         temp.height = objectBoxes[i].height;
 
         rectangles.push_back(temp);
+
+        personIDs.push_back(objectBoxes[i].objectId);
     }
-    return rectangles;
+    return std::tuple<std::vector<Rect>,std::vector<int>>(rectangles,personIDs);
 }

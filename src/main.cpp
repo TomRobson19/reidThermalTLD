@@ -104,7 +104,10 @@ int main(int argc, char **argv)
                 }
                 if (found_filtered.size() > tracker.getNumberOfObjects())
                 {
-                    std::vector<Rect> objectRectangles = tracker.getObjectRects();
+                    std::vector<Rect> objectRectangles;
+                    std::vector<int> personIDs;
+
+                    std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
 
                     for (size_t i = 0; i < found_filtered.size(); i++)
                     {
@@ -122,7 +125,8 @@ int main(int argc, char **argv)
                         
                         if (newTarget == true)
                         {
-                            tracker.addTarget(rec, 0+objectRectangles.size());
+                            int key = waitKey(1000);
+                            tracker.addTarget(rec, key);
                         }
 
                         rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
@@ -132,13 +136,17 @@ int main(int argc, char **argv)
             }
         }
 
-        std::vector<Rect> objectRectangles = tracker.getObjectRects();
+        std::vector<Rect> objectRectangles;
+        std::vector<int> personIDs;
+        std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
             if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640)
             {
-                tracker.deleteTarget(0);
+                tracker.deleteTarget(personIDs[i]);
+                std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
+                i--;
             }
         }
 

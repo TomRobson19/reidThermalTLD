@@ -2,6 +2,7 @@
 #define TRACKER_H
 
 #include <opencv2/opencv.hpp>
+#include <tuple>
 
 #include "MultiObjectTLD/motld/MultiObjectTLD.hpp"
 
@@ -18,7 +19,7 @@ public:
     virtual void update(Mat image);
     virtual void drawBoxes(Mat image);
     virtual int getNumberOfObjects();
-    virtual std::vector<Rect> getObjectRects();
+    virtual std::tuple<std::vector<Rect>,std::vector<int>> getObjectRects();
 
 };
 
@@ -35,7 +36,7 @@ public:
     void update(Mat image);
     void drawBoxes(Mat image);
     int getNumberOfObjects();
-    std::vector<Rect> getObjectRects();
+    std::tuple<std::vector<Rect>,std::vector<int>> getObjectRects();
 };
 
 #endif
