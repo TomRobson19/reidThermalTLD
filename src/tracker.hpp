@@ -14,9 +14,11 @@ public:
 	virtual ~GenericTracker();
     virtual void initialise(int width, int height);
     virtual void addTarget(Rect boundingBox, int personID);
-    virtual void deleteTarget();
+    virtual void deleteTarget(int personID);
     virtual void update(Mat image);
     virtual void drawBoxes(Mat image);
+    virtual int getNumberOfObjects();
+    virtual std::vector<Rect> getObjectRects();
 
 };
 
@@ -29,10 +31,11 @@ public:
     MultiObjectTLDTracker(); 
     void initialise(int width, int height);
     void addTarget(Rect boundingBox, int personID);
-    void deleteTarget();
+    void deleteTarget(int personID);
     void update(Mat image);
     void drawBoxes(Mat image);
-
+    int getNumberOfObjects();
+    std::vector<Rect> getObjectRects();
 };
 
 #endif

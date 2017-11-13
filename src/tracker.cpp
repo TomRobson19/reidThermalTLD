@@ -17,9 +17,17 @@ void MultiObjectTLDTracker::addTarget(Rect boundingBox, int personID)
 
     tracker.addObject(object);
 }
-void MultiObjectTLDTracker::deleteTarget()
+void MultiObjectTLDTracker::deleteTarget(int personID)
 {
-    //use the getObjectBoxes function
+    std::vector<ObjectBox> objects = tracker.getObjectBoxes();
+    for (int i = 0; i < objects.size(); i++)
+    {
+        if(objects[i].objectId == personID)
+        {
+            objects.erase(objects.begin()+i);
+            i--;
+        }
+    }
 }
 void MultiObjectTLDTracker::update(Mat image)
 {
@@ -40,12 +48,34 @@ void MultiObjectTLDTracker::update(Mat image)
 
 void MultiObjectTLDTracker::drawBoxes(Mat image)
 {
-    std::vector<ObjectBox> boxes;
-    boxes = tracker.getObjectBoxes();
+    std::vector<ObjectBox> boxes = tracker.getObjectBoxes();
 
     for (int i = 0; i < boxes.size(); i++)
     {
         Rect rec (boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
         rectangle(image, rec, (255, 0, 0), 2, 1 );
     }
+}
+
+int MultiObjectTLDTracker::getNumberOfObjects()
+{
+    return tracker.getObjectBoxes().size();
+}
+
+std::vector<Rect> MultiObjectTLDTracker::getObjectRects()
+{
+    std::vector<ObjectBox> objectBoxes = tracker.getObjectBoxes();
+    std::vector<Rect> rectangles;
+
+    for (int i = 0; i < objectBoxes.size(); i++)
+    {
+        Rect temp;
+        temp.x = objectBoxes[i].x;
+        temp.y = objectBoxes[i].y;
+        temp.width = objectBoxes[i].width;
+        temp.height = objectBoxes[i].height;
+
+        rectangles.push_back(temp);
+    }
+    return rectangles;
 }

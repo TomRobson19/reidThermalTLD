@@ -711,5 +711,18 @@ Can now get into camera alpha (in the lab) and beta (on the roof), gamma
  they come back up.
 \end_layout
 
+\begin_layout Itemize
+try and get onto these cameras and follow instructions on bitbucket
+\end_layout
+
+\begin_layout Section*
+Week 6
+\end_layout
+
+\begin_layout Itemize
+Implemented tracker in main, next thing to do is work out how I'll deal
+ with personIDs.
+\end_layout
+
 \end_body
 \end_document

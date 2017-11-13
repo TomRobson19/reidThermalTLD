@@ -32,11 +32,15 @@ int main(int argc, char **argv)
 
     Mat frame;
 
-    MultiObjectTLDTracker tracker();
+    MultiObjectTLDTracker tracker = MultiObjectTLDTracker();
     
     while(video.read(frame))
     {  
+        tracker.update(frame);
+
         Mat displayImage = frame.clone();
+
+        tracker.drawBoxes(displayImage);
 
         Mat foreground;
         MoG->apply(frame, foreground, (double)(1.0 / learning));
@@ -98,17 +102,46 @@ int main(int argc, char **argv)
                         found_filtered.push_back(rec);
                     }
                 }
-
-                for (size_t i = 0; i < found_filtered.size(); i++)
+                if (found_filtered.size() > tracker.getNumberOfObjects())
                 {
-                    Rect rec = found_filtered[i];
+                    std::vector<Rect> objectRectangles = tracker.getObjectRects();
 
-                    rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
-                    //update tracker here based on targets present and bounding box's proximity to edge of image
+                    for (size_t i = 0; i < found_filtered.size(); i++)
+                    {
+                        Rect rec = found_filtered[i];
+
+                        bool newTarget = true;
+
+                        for (int i = 0; i < objectRectangles.size(); i++)
+                        {
+                            if ((rec & objectRectangles[i]).area() > 0) 
+                            {
+                                newTarget = false;
+                            }
+                        }
+                        
+                        if (newTarget == true)
+                        {
+                            tracker.addTarget(rec, 0+objectRectangles.size());
+                        }
+
+                        rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
+                        //update tracker here based on targets present and bounding box's proximity to edge of image
+                    }
                 }
             }
         }
-        //update other targets
+
+        std::vector<Rect> objectRectangles = tracker.getObjectRects();
+
+        for (int i = 0; i < objectRectangles.size(); i++)
+        {
+            if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640)
+            {
+                tracker.deleteTarget(0);
+            }
+        }
+
         // Display result
         imshow("Tracking", displayImage);
         unsigned char key = waitKey(1);
