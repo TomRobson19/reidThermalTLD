@@ -729,5 +729,9 @@ Hopefully dealt with personIDs using tuples, implemented a waitKey bodge
  to replace the Re-ID system for now.
 \end_layout
 
+\begin_layout Itemize
+Creates additional targets for some reason, still looking into this
+\end_layout
+
 \end_body
 \end_document
