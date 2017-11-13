@@ -125,11 +125,11 @@ int main(int argc, char **argv)
                         
                         if (newTarget == true)
                         {
-                            int key = waitKey(1000);
+                            int key = waitKey(10000000);
                             tracker.addTarget(rec, key);
                         }
 
-                        rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
+                        //rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
                         //update tracker here based on targets present and bounding box's proximity to edge of image
                     }
                 }
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640)
+            if (objectRectangles[i].x<50 || objectRectangles[i].x+objectRectangles[i].width>590)
             {
                 tracker.deleteTarget(personIDs[i]);
                 std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 
         // Display result
         imshow("Tracking", displayImage);
-        unsigned char key = waitKey(1);
+        unsigned char key = waitKey(10);
         if (key == 'x')
         {
             // if user presses "x" then exit
