@@ -140,10 +140,14 @@ int main(int argc, char **argv)
         std::vector<int> personIDs;
         std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
 
+        cout << objectRectangles.size() << endl;
+
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].x<50 || objectRectangles[i].x+objectRectangles[i].width>590)
+            cout << objectRectangles[i].x << endl;
+            if (objectRectangles[i].x<100 || objectRectangles[i].x+objectRectangles[i].width>540)
             {
+                cout << "deletion" << endl;
                 tracker.deleteTarget(personIDs[i]);
                 std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
                 i--;
