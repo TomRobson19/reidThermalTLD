@@ -18,7 +18,7 @@ public:
     virtual void update(Mat image);
     virtual void drawBoxes(Mat image);
     virtual int getNumberOfObjects();
-    virtual std::tuple<std::vector<Rect>,std::vector<int>> getObjectRects();
+    virtual std::tuple<std::vector<Rect>,std::vector<int>> getObjectRectangles();
 
 };
 
@@ -35,7 +35,7 @@ public:
     void update(Mat image);
     void drawBoxes(Mat image);
     int getNumberOfObjects();
-    std::tuple<std::vector<Rect>,std::vector<int>> getObjectRects();
+    std::tuple<std::vector<Rect>,std::vector<int>> getObjectRectangles();
 };
 
 #endif

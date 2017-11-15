@@ -53,7 +53,7 @@ void MultiObjectTLDTracker::drawBoxes(Mat image)
     for (int i = 0; i < boxes.size(); i++)
     {
         Rect rec (boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
-        rectangle(image, rec, (255, 0, 0), 2, 1 );
+        rectangle(image, rec, Scalar(255, 0, 0), 2, 1 );
     }
 }
 
@@ -62,7 +62,7 @@ int MultiObjectTLDTracker::getNumberOfObjects()
     return tracker.getObjectBoxes().size();
 }
 
-std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectRects()
+std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectRectangles()
 {
     std::vector<ObjectBox> objectBoxes = tracker.getObjectBoxes();
     std::vector<Rect> rectangles;

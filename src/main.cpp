@@ -104,7 +104,7 @@ int main(int argc, char **argv)
                 }
                 if (found_filtered.size() > tracker.getNumberOfObjects())
                 {
-                     auto temp = tracker.getObjectRects();
+                    auto temp = tracker.getObjectRectangles();
 
                     std::vector<Rect> objectRectangles = std::get<0>(temp);
                     std::vector<int> personIDs = std::get<1>(temp);
@@ -112,6 +112,7 @@ int main(int argc, char **argv)
                     for (size_t i = 0; i < found_filtered.size(); i++)
                     {
                         Rect rec = found_filtered[i];
+                        rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
                         bool newTarget = true;
 
@@ -123,6 +124,7 @@ int main(int argc, char **argv)
                             }
                         }
                         
+                        //This will be replaced with neural network
                         if (newTarget == true)
                         {
                             int key = waitKey(10000000);
@@ -133,12 +135,10 @@ int main(int argc, char **argv)
             }
         }
 
-        auto temp = tracker.getObjectRects();
+        auto temp = tracker.getObjectRectangles();
 
         std::vector<Rect> objectRectangles = std::get<0>(temp);
         std::vector<int> personIDs = std::get<1>(temp);
-
-        cout << objectRectangles.size() << endl;
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
                 cout << "deletion" << endl;
                 tracker.deleteTarget(personIDs[i]);
 
-                temp = tracker.getObjectRects();
+                temp = tracker.getObjectRectangles();
                 objectRectangles = std::get<0>(temp);
                 personIDs = std::get<1>(temp);
             }
