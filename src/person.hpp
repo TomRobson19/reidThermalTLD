@@ -1,7 +1,7 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include <opencv2/core.hpp>
+#include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -27,7 +27,6 @@ private:
 	int currentCamera;
 	vector<cv::Mat_<float> > history;
 	int lastSeen;
-	cv::KalmanFilter KF;
 	cv::Mat_<float> measurement = cv::Mat_<float>(6,1);
 
 	Mat allFeatures;
@@ -50,16 +49,6 @@ public:
 	void setCurrentCamera(int cameraID);
 
 	int getCurrentCamera();
-
-	void initKalman(float x, float y, int timeSteps, float w, float h);
-
-	void kalmanCorrect(float x, float y, int timeSteps, float w, float h);
-
-	Rect kalmanPredict();
-
-	void updateFeatures(Mat newFeature);
-
-	Mat getFeatures();
 };
  
 #endif
