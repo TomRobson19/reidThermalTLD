@@ -41,7 +41,7 @@
 #define USETBBP 1      // Default: 1 - 0 = use simple pixel comparison: experimental
 #define USEFASTSCAN 0  // Default: 0 - 1 = scan only every 2nd box: experimental
 
-#define TIMING 1
+#define TIMING 0
 
 // some settings - don't change these!
 #define CONFIDENCETHRESHOLD             0.7

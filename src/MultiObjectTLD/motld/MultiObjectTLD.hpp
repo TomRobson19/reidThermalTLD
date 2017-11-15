@@ -20,7 +20,7 @@
 #define MULTIOBJECTTLD_H
 
 //#define DEBUG 1
-//#define TIMING 1
+#define TIMING 0
 
 #include <iostream>
 #include <fstream>
