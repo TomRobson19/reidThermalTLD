@@ -2,7 +2,6 @@
 #define TRACKER_H
 
 #include <opencv2/opencv.hpp>
-#include <tuple>
 
 #include "MultiObjectTLD/motld/MultiObjectTLD.hpp"
 

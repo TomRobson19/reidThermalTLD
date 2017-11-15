@@ -1,5 +1,4 @@
 #include "tracker.hpp"
-#include <tuple>
 
 MultiObjectTLDTracker::MultiObjectTLDTracker() 
 {
