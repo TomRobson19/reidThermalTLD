@@ -733,5 +733,14 @@ Hopefully dealt with personIDs using tuples, implemented a waitKey bodge
 Creates additional targets for some reason, still looking into this
 \end_layout
 
+\begin_layout Itemize
+Return values of tuples are not working
+\end_layout
+
+\begin_layout Itemize
+Fixed return values of tuples, base tracker functionality now works, having
+ problems with deleting targets.
+\end_layout
+
 \end_body
 \end_document

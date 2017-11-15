@@ -104,10 +104,10 @@ int main(int argc, char **argv)
                 }
                 if (found_filtered.size() > tracker.getNumberOfObjects())
                 {
-                    std::vector<Rect> objectRectangles;
-                    std::vector<int> personIDs;
+                     auto temp = tracker.getObjectRects();
 
-                    std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
+                    std::vector<Rect> objectRectangles = std::get<0>(temp);
+                    std::vector<int> personIDs = std::get<1>(temp);
 
                     for (size_t i = 0; i < found_filtered.size(); i++)
                     {
@@ -128,29 +128,28 @@ int main(int argc, char **argv)
                             int key = waitKey(10000000);
                             tracker.addTarget(rec, key);
                         }
-
-                        //rectangle(displayImage, rec, (255, 0, 0), 2, 1 );
-                        //update tracker here based on targets present and bounding box's proximity to edge of image
                     }
                 }
             }
         }
 
-        std::vector<Rect> objectRectangles;
-        std::vector<int> personIDs;
-        std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
+        auto temp = tracker.getObjectRects();
+
+        std::vector<Rect> objectRectangles = std::get<0>(temp);
+        std::vector<int> personIDs = std::get<1>(temp);
 
         cout << objectRectangles.size() << endl;
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            cout << objectRectangles[i].x << endl;
-            if (objectRectangles[i].x<100 || objectRectangles[i].x+objectRectangles[i].width>540)
+            if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640)
             {
                 cout << "deletion" << endl;
                 tracker.deleteTarget(personIDs[i]);
-                std::tuple<std::vector<Rect>, std::vector<int>>(objectRectangles,personIDs) = tracker.getObjectRects();
-                i--;
+
+                temp = tracker.getObjectRects();
+                objectRectangles = std::get<0>(temp);
+                personIDs = std::get<1>(temp);
             }
         }
 

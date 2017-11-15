@@ -69,8 +69,6 @@ std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectR
     std::vector<Rect> rectangles;
     std::vector<int> personIDs;
 
-    cout << "Obj" << objectBoxes.size() << endl;
-
     for (int i = 0; i < objectBoxes.size(); i++)
     {
         Rect temp;
@@ -82,8 +80,6 @@ std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectR
         rectangles.push_back(temp);
 
         personIDs.push_back(objectBoxes[i].objectId);
-
-        cout << rectangles[0] << endl;
     }
-    return std::tuple<std::vector<Rect>,std::vector<int>>(rectangles,personIDs);
+    return std::make_tuple(rectangles,personIDs);
 }
