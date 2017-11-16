@@ -743,7 +743,18 @@ Fixed return values of tuples, base tracker functionality now works, having
 \end_layout
 
 \begin_layout Itemize
-Seems to get stuck just before the person leaves the scene 
+Seems to get stuck just before the person leaves the scene, meaning that
+ the box doesn't get close enough to the edge to be deleted.
+\end_layout
+
+\begin_layout Itemize
+Need to associate people objects with tracker objects, will require a rewriting
+ of the person class.
+\end_layout
+
+\begin_layout Itemize
+Deletion function not working properly, currently unclear why.
+ 
 \end_layout
 
 \end_body

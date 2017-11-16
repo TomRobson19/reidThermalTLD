@@ -142,6 +142,8 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
+
+            cout << objectRectangles.size() << endl;
             if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640)
             {
                 cout << "deletion" << endl;

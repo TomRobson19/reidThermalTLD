@@ -25,7 +25,6 @@ void MultiObjectTLDTracker::deleteTarget(int personID)
         if(objects[i].objectId == personID)
         {
             objects.erase(objects.begin()+i);
-            i--;
         }
     }
 }
