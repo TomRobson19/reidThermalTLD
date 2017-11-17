@@ -20,11 +20,13 @@ void MultiObjectTLDTracker::addTarget(Rect boundingBox, int personID)
 void MultiObjectTLDTracker::deleteTarget(int personID)
 {
     std::vector<ObjectBox> objects = tracker.getObjectBoxes();
+    std::vector<NNPatch> patches = tracker.getObjectPatches();
     for (int i = 0; i < objects.size(); i++)
     {
         if(objects[i].objectId == personID)
         {
             objects.erase(objects.begin()+i);
+            patches.erase(patches.begin()+i);
         }
     }
 }

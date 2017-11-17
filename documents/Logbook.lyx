@@ -757,5 +757,9 @@ Deletion function not working properly, currently unclear why.
  
 \end_layout
 
+\begin_layout Itemize
+Need to make the wait key return the correct numerical value.
+\end_layout
+
 \end_body
 \end_document

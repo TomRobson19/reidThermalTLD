@@ -128,6 +128,7 @@ int main(int argc, char **argv)
                         if (newTarget == true)
                         {
                             int key = waitKey(10000000);
+                            cout << "##########" << key << endl;
                             tracker.addTarget(rec, key);
                         }
                     }
@@ -149,9 +150,9 @@ int main(int argc, char **argv)
                 cout << "deletion" << endl;
                 tracker.deleteTarget(personIDs[i]);
 
-                temp = tracker.getObjectRectangles();
-                objectRectangles = std::get<0>(temp);
-                personIDs = std::get<1>(temp);
+                // temp = tracker.getObjectRectangles();
+                // objectRectangles = std::get<0>(temp);
+                // personIDs = std::get<1>(temp);
             }
         }
 

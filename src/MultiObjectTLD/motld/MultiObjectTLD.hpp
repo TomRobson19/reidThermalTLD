@@ -148,6 +148,11 @@ public:
     {
         return ivCurrentBoxes;
     };
+
+    std::vector<NNPatch> getObjectPatches() const
+    {
+        return ivCurrentPatches;
+    };
     /** @brief Saves an output image to file in PPM format.
      * @param src the same as passed to processFrame()
      * @param filename the filename, suggested ending: ".ppm"
