@@ -174,9 +174,9 @@ void NNClassifier::addObject(const NNPatch& patch)
 }
 
 void NNClassifier::deleteObject(int personID)
-{
+{  
   ivPosPatches.erase(ivPosPatches.begin()+personID);
-  ivPosPatches[ivPosPatches.size() - 1].erase(ivPosPatches[ivPosPatches.size() - 1].begin()+personID);
+
   ivWarpIndices.erase(ivWarpIndices.begin()+personID);
 }
 
