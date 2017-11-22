@@ -68,6 +68,17 @@ void MultiObjectTLD::addObjects(std::vector<ObjectBox> obs)
     ivNObjects += n;
 }
 
+void MultiObjectTLD::deleteObject(int personID)
+{
+    ivCurrentBoxes.erase(ivCurrentBoxes.begin()+personID);
+    ivDefined.erase(ivDefined.begin()+personID);
+    ivValid.erase(ivValid.begin()+personID);
+    ivCurrentPatches.erase(ivCurrentPatches.begin()+personID);;
+    //ivNNClassifier.deleteObject(personID);
+
+    ivNObjects -= 1;
+}
+
 int MultiObjectTLD::getStatus(const int objId) const
 {
     if (objId >= ivNObjects)

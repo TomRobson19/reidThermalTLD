@@ -119,6 +119,9 @@ public:
      *  constructor (see MultiObjectTLD()). In case of COLOR_MODE_RGB the array should have the form
      *  [r_0, r_1, ..., r_n,  g_0, g_1, ..., g_n,  b_0, b_1, ..., b_n].
      */
+
+    void deleteObject(int personID);
+
     void processFrame(unsigned char *img);
     /// En/Disables learning (i.e. updating the classifiers) at runtime
     void enableLearning(bool enable = true)

@@ -33,6 +33,8 @@ int main(int argc, char **argv)
     Mat frame;
 
     MultiObjectTLDTracker tracker = MultiObjectTLDTracker();
+
+    int personCounter = 0;
     
     while(video.read(frame))
     {  
@@ -128,8 +130,9 @@ int main(int argc, char **argv)
                         if (newTarget == true)
                         {
                             int key = waitKey(10000000);
-                            cout << "##########" << key << endl;
-                            tracker.addTarget(rec, key);
+                            cout << "####" << key << "####" << personCounter << endl;
+                            tracker.addTarget(rec, personCounter);
+                            personCounter++;
                         }
                     }
                 }
@@ -145,10 +148,11 @@ int main(int argc, char **argv)
         {
 
             cout << objectRectangles.size() << endl;
-            if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640)
+            if (objectRectangles[i].x<40 || objectRectangles[i].x+objectRectangles[i].width>600)
             {
-                cout << "deletion" << endl;
+                cout << "deletion" << personIDs[i] << endl;
                 tracker.deleteTarget(personIDs[i]);
+                personCounter--;
 
                 // temp = tracker.getObjectRectangles();
                 // objectRectangles = std::get<0>(temp);

@@ -173,6 +173,13 @@ void NNClassifier::addObject(const NNPatch& patch)
   }
 }
 
+void NNClassifier::deleteObject(int personID)
+{
+  ivPosPatches.erase(ivPosPatches.begin()+personID);
+  ivPosPatches[ivPosPatches.size() - 1].erase(ivPosPatches[ivPosPatches.size() - 1].begin()+personID);
+  ivWarpIndices.erase(ivWarpIndices.begin()+personID);
+}
+
 /// @param patch the patch that shall be learned
 /// @param objId id of the object class to which the patch should be added
 /// @param positive @b true if element of this class, @b false if not (background patch)

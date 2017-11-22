@@ -761,5 +761,26 @@ Deletion function not working properly, currently unclear why.
 Need to make the wait key return the correct numerical value.
 \end_layout
 
+\begin_layout Section*
+Week 7
+\end_layout
+
+\begin_layout Itemize
+Implementing the delete function in tracker
+\end_layout
+
+\begin_layout Itemize
+Changed MOTLD to include deletion functions, still erroring on some stuff,
+ working on this further
+\end_layout
+
+\begin_layout Section*
+Meeting 7
+\end_layout
+
+\begin_layout Itemize
+Investigate potential for use of contrastive loss CNN (Collomosse work).
+\end_layout
+
 \end_body
 \end_document

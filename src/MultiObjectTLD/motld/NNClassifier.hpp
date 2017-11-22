@@ -77,6 +77,7 @@ public:
   bool trainNN(const NNPatch& patch, int objId = 0, bool positive = true, bool tmp = false);
   /// Initializes a new object class with the given patch.
   void addObject(const NNPatch& patch);
+  void deleteObject(int personID);
   /// Returns a pointer to positive patches (intended for drawing).
   const std::vector<std::vector<NNPatch> > * getPosPatches() const;
   /// Returns a pointer to negative patches (intended for drawing).
