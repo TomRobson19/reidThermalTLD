@@ -802,9 +802,14 @@ Current logic works well if the first detection of the target is a good
 \end_layout
 
 \begin_layout Itemize
-Boxes don't get to the edge of the image enough to be deleted, maybe have
- some logic in the re-id part to delete target if it clearly is nothing
- like the target it is supposed to be
+Boxes don't always get close enough to the edge of the image to be deleted,
+ maybe have some logic in the re-id part to delete target if it clearly
+ is nothing like the target it is supposed to be.
+\end_layout
+
+\begin_layout Itemize
+Deletion heuristic (how far away from side of the image) still needs more
+ work/research.
 \end_layout
 
 \end_body
