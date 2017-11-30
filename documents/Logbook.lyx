@@ -812,5 +812,16 @@ Deletion heuristic (how far away from side of the image) still needs more
  work/research.
 \end_layout
 
+\begin_layout Itemize
+Thinking the best idea will be to keep the edge of the image heuristic,
+ and also have one to delete the object if it is not similar enough to the
+ saved profile.
+\end_layout
+
+\begin_layout Itemize
+Ferns deletion still needs to be done, will be quite complex to do by personid
+ as this is not currently used for this piece of functionality.
+\end_layout
+
 \end_body
 \end_document
