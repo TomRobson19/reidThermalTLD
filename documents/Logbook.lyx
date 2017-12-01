@@ -823,5 +823,45 @@ Ferns deletion still needs to be done, will be quite complex to do by personid
  as this is not currently used for this piece of functionality.
 \end_layout
 
+\begin_layout Section*
+Meeting 8
+\end_layout
+
+\begin_layout Itemize
+Discard current MoG and Haar
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+when something enters, gets generic type object (set colour)
+\end_layout
+
+\begin_layout Itemize
+if some distance away from side, run HoG on it (only once, or up to N times)
+ (give person colour)
+\end_layout
+
+\begin_layout Itemize
+Then let MoTLD take over
+\end_layout
+
+\begin_layout Itemize
+Maybe when it gets close to edge, run HoG to check if still a person, if
+ not, delete
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Plan out CNN architecture - base it on transfer learning from Collomose
+\end_layout
+
+\begin_layout Itemize
+Do above changes to the MoG and HoG system
+\end_layout
+
+\begin_layout Itemize
+Try and understand Ferns code in MoTLD
+\end_layout
+
 \end_body
 \end_document
