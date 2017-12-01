@@ -146,7 +146,7 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].x<20 || objectRectangles[i].x+objectRectangles[i].width>620 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
+            if (objectRectangles[i].x<20 || objectRectangles[i].x+objectRectangles[i].width>630 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
             {
                 cout << "deletion" << personIDs[i] << endl;
                 tracker.deleteTarget(personIDs[i]);
