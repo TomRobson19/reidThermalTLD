@@ -774,7 +774,7 @@ Keep going with the deletion logic, last stage of tracking component.
 \end_layout
 
 \begin_layout Section*
-Week 7
+Week 7+8
 \end_layout
 
 \begin_layout Itemize
@@ -861,6 +861,57 @@ Do above changes to the MoG and HoG system
 
 \begin_layout Itemize
 Try and understand Ferns code in MoTLD
+\end_layout
+
+\begin_layout Section*
+Week 9
+\end_layout
+
+\begin_layout Itemize
+New Pseudocode:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Adding TLD targets
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Run MoG on every frame, and draw generic colour box
+\end_layout
+
+\begin_layout Itemize
+If away from edge and not currently in a TLD box, run HoG/Haar
+\end_layout
+
+\begin_layout Itemize
+If HoG/Haar successful, add TLD object
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Deleting TLD targets
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If leaving the edge of the image
+\end_layout
+
+\begin_layout Itemize
+If stationary, run HoG/Haar
+\end_layout
+
+\begin_layout Itemize
+If HoG/Haar unsuccessful, then delete
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Also need to properly understand the Ferns code to correct my deletion function
+ and get rid of the enumeration errors
 \end_layout
 
 \end_body
