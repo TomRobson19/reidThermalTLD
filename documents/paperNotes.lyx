@@ -687,5 +687,22 @@ Using the moderate positive samples, they reduce the intra-class variance
  while preserving the intrinsic graphics structure if pedestrian data.
 \end_layout
 
+\begin_layout Section*
+Sketching with Style: Visual Search with Sketches and Aesthetic Context
+\end_layout
+
+\begin_layout Subsubsection*
+John Collomosse, Tu Bui, MichaelWilber, Chen Fang, Hailin Jin
+\end_layout
+
+\begin_layout Standard
+Model of visual similarity containing both structure and style
+\end_layout
+
+\begin_layout Standard
+Uses a triple network, in their case one discriminates on style while the
+ other discriminates on structure.
+\end_layout
+
 \end_body
 \end_document

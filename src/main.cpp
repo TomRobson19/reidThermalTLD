@@ -77,17 +77,97 @@ int main(int argc, char **argv)
             {
                 vector<Rect> found, found_filtered;
 
+                rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+
                 Mat roi = frame(r);
+
+                auto temp = tracker.getObjectRectangles();
+
+                std::vector<Rect> objectRectangles = std::get<0>(temp);
+                std::vector<int> personIDs = std::get<1>(temp);
+
+                bool alreadyTarget = false;
+
+                for (int i = 0; i < objectRectangles.size(); i++)
+                {
+                    if ((r & objectRectangles[i]).area() > 0) 
+                    {
+                        alreadyTarget = true;
+                    }
+                }
+
+                if (!alreadyTarget)
+                {
+                    cascade.detectMultiScale(roi, found, 1.1, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(32, 64));
+
+                    for(size_t i = 0; i < found.size(); i++ )
+                    {
+
+                        Rect rec = found[i];
+
+                        rec.x += r.x;
+                        rec.y += r.y;
+
+                        size_t j;
+                        // Do not add small detections inside a bigger detection.
+                        for ( j = 0; j < found.size(); j++ )
+                        {
+                            if ( j != i && (rec & found[j]) == rec )
+                            {
+                                break;
+                            }
+                        }
+
+                        if (j == found.size())
+                        {
+                            found_filtered.push_back(rec);
+                        }
+                    }
+
+                    for (size_t i = 0; i < found_filtered.size(); i++)
+                    {
+                        Rect rec = found_filtered[i];
+                        rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
+
+                        int key = waitKey(10000000);
+                        cout << "####" << key << "####" << personCounter << endl;
+                        tracker.addTarget(rec, personCounter);
+                        personCounter++;   
+                    }
+                    
+                }
+            }
+        }
+
+        auto temp = tracker.getObjectRectangles();
+
+        std::vector<Rect> objectRectangles = std::get<0>(temp);
+        std::vector<int> personIDs = std::get<1>(temp);
+
+        for (int i = 0; i < objectRectangles.size(); i++)
+        {
+            if (objectRectangles[i].x<20 || objectRectangles[i].x+objectRectangles[i].width>630 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
+            {
+                cout << "deletion" << personIDs[i] << endl;
+                tracker.deleteTarget(personIDs[i]);
+
+                temp = tracker.getObjectRectangles();
+                objectRectangles = std::get<0>(temp);
+                personIDs = std::get<1>(temp);
+            }
+            else
+            {
+                Mat roi = frame(objectRectangles[i]);
+                vector<Rect> found, found_filtered;
 
                 cascade.detectMultiScale(roi, found, 1.1, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(32, 64));
 
                 for(size_t i = 0; i < found.size(); i++ )
                 {
-
                     Rect rec = found[i];
 
-                    rec.x += r.x;
-                    rec.y += r.y;
+                    rec.x += objectRectangles[i].x;
+                    rec.y += objectRectangles[i].y;
 
                     size_t j;
                     // Do not add small detections inside a bigger detection.
@@ -104,57 +184,7 @@ int main(int argc, char **argv)
                         found_filtered.push_back(rec);
                     }
                 }
-                if (found_filtered.size() > tracker.getNumberOfObjects())
-                {
-                    auto temp = tracker.getObjectRectangles();
-
-                    std::vector<Rect> objectRectangles = std::get<0>(temp);
-                    std::vector<int> personIDs = std::get<1>(temp);
-
-                    for (size_t i = 0; i < found_filtered.size(); i++)
-                    {
-                        Rect rec = found_filtered[i];
-                        rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
-
-                        bool newTarget = true;
-
-                        for (int i = 0; i < objectRectangles.size(); i++)
-                        {
-                            if ((rec & objectRectangles[i]).area() > 0) 
-                            {
-                                newTarget = false;
-                            }
-                        }
-                        
-                        //This will be replaced with neural network
-                        if (newTarget == true)
-                        {
-                            int key = waitKey(10000000);
-                            cout << "####" << key << "####" << personCounter << endl;
-                            tracker.addTarget(rec, personCounter);
-                            personCounter++;
-                        }
-                    }
-                }
-            }
-        }
-
-        auto temp = tracker.getObjectRectangles();
-
-        std::vector<Rect> objectRectangles = std::get<0>(temp);
-        std::vector<int> personIDs = std::get<1>(temp);
-
-        for (int i = 0; i < objectRectangles.size(); i++)
-        {
-            if (objectRectangles[i].x<20 || objectRectangles[i].x+objectRectangles[i].width>630 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
-            {
-                cout << "deletion" << personIDs[i] << endl;
-                tracker.deleteTarget(personIDs[i]);
-                personCounter--;
-
-                // temp = tracker.getObjectRectangles();
-                // objectRectangles = std::get<0>(temp);
-                // personIDs = std::get<1>(temp);
+                cout << found_filtered.size() << endl;
             }
         }
 

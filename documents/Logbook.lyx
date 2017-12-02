@@ -914,5 +914,14 @@ Also need to properly understand the Ferns code to correct my deletion function
  and get rid of the enumeration errors
 \end_layout
 
+\begin_layout Itemize
+Changed the adding target logic, deletion of NN objects causing a segfault
+ when multiple targets are present
+\end_layout
+
+\begin_layout Itemize
+Haar does not give a target in many of the MoTLD objects.
+\end_layout
+
 \end_body
 \end_document
