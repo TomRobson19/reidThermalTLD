@@ -84,8 +84,8 @@ int main(int argc, char **argv)
 
                 auto temp = tracker.getObjectRectangles();
 
-                std::vector<Rect> objectRectangles = std::get<0>(temp);
-                std::vector<int> personIDs = std::get<1>(temp);
+                vector<Rect> objectRectangles = std::get<0>(temp);
+                vector<int> personIDs = std::get<1>(temp);
 
                 bool alreadyTarget = false;
 
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
                         // Do not add small detections inside a bigger detection.
                         for ( j = 0; j < found.size(); j++ )
                         {
-                            if ( j != i && (rec & found[j]) == rec )
+                            if (((rec & found[j]).area() > 0) && (found[j].area() < rec.area()))
                             {
                                 break;
                             }
