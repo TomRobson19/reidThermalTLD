@@ -28,7 +28,8 @@ int main(int argc, char **argv)
 
     Ptr<BackgroundSubtractorMOG2> MoG = createBackgroundSubtractorMOG2(500, 25, false);
 
-    CascadeClassifier cascade = CascadeClassifier(CASCADE_TO_USE);
+    HOGDescriptor hog;
+    hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
 
     Mat frame;
 
@@ -98,7 +99,7 @@ int main(int argc, char **argv)
 
                 if (!alreadyTarget)
                 {
-                    cascade.detectMultiScale(roi, found, 1.1, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(32, 64));
+                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(32,64), 1.05, 2);
 
                     for(size_t i = 0; i < found.size(); i++ )
                     {
@@ -146,10 +147,11 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].x<20 || objectRectangles[i].x+objectRectangles[i].width>630 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
+            if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
             {
                 cout << "deletion" << personIDs[i] << endl;
                 tracker.deleteTarget(personIDs[i]);
+                personCounter --;
 
                 temp = tracker.getObjectRectangles();
                 objectRectangles = std::get<0>(temp);
@@ -157,10 +159,12 @@ int main(int argc, char **argv)
             }
             else
             {
-                Mat roi = frame(objectRectangles[i]);
+                Rect r = objectRectangles[i];
+
+                Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
 
-                cascade.detectMultiScale(roi, found, 1.1, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(32, 64));
+                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(32,64), 1.05, 2);
 
                 for(size_t i = 0; i < found.size(); i++ )
                 {
@@ -184,7 +188,16 @@ int main(int argc, char **argv)
                         found_filtered.push_back(rec);
                     }
                 }
-                cout << found_filtered.size() << endl;
+                if (found_filtered.size() == 0)
+                {
+                    cout << "deletion" << personIDs[i] << endl;
+                    tracker.deleteTarget(personIDs[i]);
+                    personCounter --;
+
+                    temp = tracker.getObjectRectangles();
+                    objectRectangles = std::get<0>(temp);
+                    personIDs = std::get<1>(temp);
+                }
             }
         }
 

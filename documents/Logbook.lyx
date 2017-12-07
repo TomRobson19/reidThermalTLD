@@ -923,5 +923,18 @@ Changed the adding target logic, deletion of NN objects causing a segfault
 Haar does not give a target in many of the MoTLD objects.
 \end_layout
 
+\begin_layout Itemize
+Changed to HoG, has a much better hit rate in these detections.
+\end_layout
+
+\begin_layout Itemize
+The above pseudocode has now been implemented 
+\end_layout
+
+\begin_layout Itemize
+Cannot handle deleting two targets in the same frame, need to look into
+ this
+\end_layout
+
 \end_body
 \end_document
