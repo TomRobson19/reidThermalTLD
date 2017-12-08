@@ -928,12 +928,29 @@ Changed to HoG, has a much better hit rate in these detections.
 \end_layout
 
 \begin_layout Itemize
-The above pseudocode has now been implemented 
+The above pseudocode has now been implemented.
 \end_layout
 
 \begin_layout Itemize
 Cannot handle deleting two targets in the same frame, need to look into
  this
+\end_layout
+
+\begin_layout Itemize
+Notes on what is wring written on paper, as well as very brief CNN design.
+\end_layout
+
+\begin_layout Section*
+Meeting 9
+\end_layout
+
+\begin_layout Itemize
+Have another new paper to read
+\end_layout
+
+\begin_layout Itemize
+Need to fix Fern problems, only thing left now in tracking as far as I know
+ at this time
 \end_layout
 
 \end_body
