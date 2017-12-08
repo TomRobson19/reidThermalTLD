@@ -44,7 +44,7 @@ const std::vector<Matrix> FernFilter::addObjects(const Matrix& image, const std:
     if (boxes[i].objectId != ivNumObjects + (int)i)
       std::cerr << "ERROR WRONG OBJECT ENUMERATION!" << std::endl;
     ivMinVariances.push_back(100000);
-    addObjectToFerns();
+    addObjectToFerns(); //no actually using
     addPatchWithWarps(image, boxes[i], ivInitWarpSettings, posResult, true);
   }
   
@@ -54,6 +54,15 @@ const std::vector<Matrix> FernFilter::addObjects(const Matrix& image, const std:
   ivNumObjects += boxes.size();
   
   return result;
+}
+
+const void FernFilter::deleteObjects(int personID)
+{
+
+  ivMinVariances.erase(ivMinVariances.begin()+personID);
+
+
+  ivNumObjects -= 1;
 }
 
 const std::vector<FernDetection> FernFilter::scanPatch(const Matrix & image) const

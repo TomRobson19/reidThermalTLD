@@ -70,12 +70,12 @@ void MultiObjectTLD::addObjects(std::vector<ObjectBox> obs)
 
 void MultiObjectTLD::deleteObject(int personID)
 {
-    //delete fern filter stuff, does not map to addObjects but to addObjectsToFerns and others called in the same place
     ivCurrentBoxes.erase(ivCurrentBoxes.begin()+personID);
     ivDefined.erase(ivDefined.begin()+personID);
     ivValid.erase(ivValid.begin()+personID);
     ivCurrentPatches.erase(ivCurrentPatches.begin()+personID);;
     ivNNClassifier.deleteObject(personID);
+    ivFernFilter.deleteObjects(personID);
 
     ivNObjects -= 1;
 }

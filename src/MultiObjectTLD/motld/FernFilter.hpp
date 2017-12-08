@@ -103,6 +103,8 @@ public:
   ~FernFilter();
   /// introduces new objects from a list of object boxes and returns negative training examples
   const std::vector<Matrix> addObjects(const Matrix & image, const std::vector<ObjectBox>& boxes);
+
+  const void deleteObjects(int personID);
   /// scans fern structure for possible object matches using a sliding window approach
   const std::vector<FernDetection> scanPatch(const Matrix & image) const;
   /// updates the fern structure with information about the correct boxes
