@@ -953,5 +953,14 @@ Need to fix Fern problems, only thing left now in tracking as far as I know
  at this time
 \end_layout
 
+\begin_layout Itemize
+Fern problem now fixed (mostly), may investigate further to try and improve
+ quality of TLD tracking.
+\end_layout
+
+\begin_layout Itemize
+Need to fiddle with HoG to get more reliable detections.
+\end_layout
+
 \end_body
 \end_document
