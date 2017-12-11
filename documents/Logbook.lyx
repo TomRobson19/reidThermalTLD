@@ -966,5 +966,21 @@ Fern problem now fixed (mostly), may investigate further to try and improve
 Need to fiddle with HoG to get more reliable detections.
 \end_layout
 
+\begin_layout Itemize
+Now need to associate targets with person objects.
+\end_layout
+
+\begin_layout Itemize
+Keras had a siamese NN example
+\end_layout
+
+\begin_layout Itemize
+Look at papers for structure of other networks for re-id or feature extraction
+\end_layout
+
+\begin_layout Itemize
+Possible dataset in download, don't know how to open rosbag files though.
+\end_layout
+
 \end_body
 \end_document
