@@ -982,5 +982,17 @@ Look at papers for structure of other networks for re-id or feature extraction
 Possible dataset in download, don't know how to open rosbag files though.
 \end_layout
 
+\begin_layout Itemize
+Nice network architecture on page 9 of 
+\begin_inset Quotes eld
+\end_inset
+
+Embedding Deep Metric for Person Re-identification
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
