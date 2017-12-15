@@ -967,7 +967,8 @@ Need to fiddle with HoG to get more reliable detections.
 \end_layout
 
 \begin_layout Itemize
-Now need to associate targets with person objects.
+Now need to associate targets with person objects - add function to merge
+ TLD objects
 \end_layout
 
 \begin_layout Itemize
@@ -992,6 +993,48 @@ Embedding Deep Metric for Person Re-identification
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section*
+Meeting 10
+\end_layout
+
+\begin_layout Itemize
+Need to make another version of tracking code to extract training data for
+ my network
+\end_layout
+
+\begin_layout Itemize
+Will actually be trained from the cameras on the roof, but the data I will
+ get for now will serve to test the implementation.
+ 
+\end_layout
+
+\begin_layout Itemize
+Toby is finding me some data
+\end_layout
+
+\begin_layout Section*
+Christmas TODO List
+\end_layout
+
+\begin_layout Itemize
+Integrate person class and add merge function
+\end_layout
+
+\begin_layout Itemize
+Make data extraction class (to get training data from videos)
+\end_layout
+
+\begin_layout Itemize
+Implement siamese CNN using keras example and network architecture from
+ papers
+\end_layout
+
+\begin_layout Itemize
+More reading on siamese networks for this purpose and feature extraction
+ network architectures.
+ 
 \end_layout
 
 \end_body
