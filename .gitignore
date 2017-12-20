@@ -78,3 +78,7 @@ src/MultiObjectTLD/input/carchase/
 src/MultiObjectTLD/input/motocross/
 
 src/MultiObjectTLD/CMakeCache\.txt
+
+src/people/
+
+src/dataExtraction

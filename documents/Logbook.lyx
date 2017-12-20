@@ -1037,5 +1037,18 @@ More reading on siamese networks for this purpose and feature extraction
  
 \end_layout
 
+\begin_layout Section*
+Christmas Notes
+\end_layout
+
+\begin_layout Itemize
+Keras installed with tensorflow GPU backend - had to downgrade CUDA to make
+ work, didn't need to do CudNN
+\end_layout
+
+\begin_layout Itemize
+Created dataExtraction file, need to make it put the images in a nice format.
+\end_layout
+
 \end_body
 \end_document
