@@ -15,7 +15,7 @@ np.random.seed(1337)  # for reproducibility
 import random
 from keras.datasets import mnist
 from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout, Input, Lambda
+from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import RMSprop
 from keras import backend as K
 
@@ -57,9 +57,29 @@ def create_pairs(x, digit_indices):
     return np.array(pairs), np.array(labels)
 
 
-def create_base_network(input_dim):
+def create_base_network(input_dim, X_train):
     '''Base network to be shared (eq. to feature extraction).
     '''
+    # model = Sequential()
+    # model.add(Conv2D(32, (3, 3), padding='same', input_shape=X_train.shape+(1,)))
+    # model.add(Activation('relu'))
+    # model.add(Conv2D(32, (3, 3)))
+    # model.add(Activation('relu'))
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    # model.add(Dropout(0.25))
+
+    # model.add(Conv2D(64, (3, 3), padding='same'))
+    # model.add(Activation('relu'))
+    # model.add(Conv2D(64, (3, 3)))
+    # model.add(Activation('relu'))
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    # model.add(Dropout(0.25))
+
+    # model.add(Flatten())
+    # model.add(Dense(512))
+    # model.add(Activation('relu'))
+    # model.add(Dropout(0.5))
+
     seq = Sequential()
     seq.add(Dense(128, input_shape=(input_dim,), activation='relu'))
     seq.add(Dropout(0.1))
@@ -94,7 +114,7 @@ digit_indices = [np.where(y_test == i)[0] for i in range(10)]
 te_pairs, te_y = create_pairs(X_test, digit_indices)
 
 # network definition
-base_network = create_base_network(input_dim)
+base_network = create_base_network(input_dim, X_train)
 
 input_a = Input(shape=(input_dim,))
 input_b = Input(shape=(input_dim,))
