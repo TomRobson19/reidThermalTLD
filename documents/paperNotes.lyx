@@ -704,5 +704,9 @@ Uses a triple network, in their case one discriminates on style while the
  other discriminates on structure.
 \end_layout
 
+\begin_layout Standard
+This is not as relevent to our problem as previously thought.
+\end_layout
+
 \end_body
 \end_document

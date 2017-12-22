@@ -2,12 +2,12 @@
 
 Person::Person(int identifier, float x, float y, int timeSteps, float w, float h) {
 	setIdentifier(identifier);
-  setColour(identifier);
+ 	setColour(identifier);
 }
 
 void Person::setColour(int identifier) {
 	srand(identifier*100);
-  personColour = Scalar(rand() % 256, rand() % 256, rand() % 256);
+ 	personColour = Scalar(rand() % 256, rand() % 256, rand() % 256);
 }
 
 Scalar Person::getColour() {
@@ -15,11 +15,11 @@ Scalar Person::getColour() {
 }
 
 void Person::setIdentifier(int identifier) {
-  personIdentifier = identifier;
+	personIdentifier = identifier;
 }
 
 int Person::getIdentifier() {
-  return personIdentifier;
+ 	return personIdentifier;
 }
 
 int Person::getLastSeen() {
@@ -33,12 +33,10 @@ Point2f Person::getLastPosition() {
 	return position;
 }
 
-void Person::setCurrentCamera(int cameraID)
-{
-  currentCamera = cameraID;
+void Person::setCurrentCamera(int cameraID) {
+ 	currentCamera = cameraID;
 }
 
-int Person::getCurrentCamera()
-{
-  return currentCamera;
+int Person::getCurrentCamera() {
+ 	return currentCamera;
 }

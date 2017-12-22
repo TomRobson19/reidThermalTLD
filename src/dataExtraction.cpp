@@ -139,7 +139,7 @@ int main(int argc, char **argv)
                         personCounter++;   
                         personToSaveAs = key;
 
-                        imwrite("people/"+ std::to_string(personToSaveAs)+"/"+ std::to_string(filenameCounter)+".jpg", frame(rec));
+                        imwrite("people/"+ std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", frame(rec));
                         filenameCounter++;
                     }
                     
@@ -207,7 +207,7 @@ int main(int argc, char **argv)
                 }
                 else
                 {
-                    imwrite("people/" + std::to_string(filenameCounter)+"person"+ std::to_string(personToSaveAs)+".jpg", frame(r));
+                    imwrite("people/" + std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", frame(r));
                     filenameCounter++;
                 }
             }
