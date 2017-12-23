@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/betaInput.webm");
+    VideoCapture video("data/Dataset1/alphaInput.webm");
 
     // Check video is open
     if(!video.isOpened())

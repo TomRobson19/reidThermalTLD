@@ -1050,5 +1050,15 @@ Keras installed with tensorflow GPU backend - had to downgrade CUDA to make
 Created dataExtraction file, need to make it put the images in a nice format.
 \end_layout
 
+\begin_layout Itemize
+Data extraction working, but TLD slow to track targets moving sideways,
+ and HoG is not getting good results
+\end_layout
+
+\begin_layout Itemize
+Experimenting with the Siamese network using the MNIST dataset, the simpler
+ network seems to work best, need my own data now really.
+\end_layout
+
 \end_body
 \end_document
