@@ -1,8 +1,10 @@
 #include "person.hpp"
 
-Person::Person(int identifier, float x, float y, int timeSteps, float w, float h) {
+Person::Person(int identifier) {
 	setIdentifier(identifier);
  	setColour(identifier);
+
+ 	//initialise MOTLD tracker
 }
 
 void Person::setColour(int identifier) {
@@ -24,13 +26,6 @@ int Person::getIdentifier() {
 
 int Person::getLastSeen() {
 	return lastSeen;
-}
-
-Point2f Person::getLastPosition() {
-	float currentX = measurement(0);
-	float currentY = measurement(1);
-	Point2f position = Point2f(currentX,currentY);
-	return position;
 }
 
 void Person::setCurrentCamera(int cameraID) {

@@ -32,7 +32,7 @@ private:
 	Mat allFeatures;
 
 public:
-	Person(int identifier, float x, float y, int timeSteps, float w, float h);
+	Person(int identifier);
 
 	void setIdentifier(int identifier);
 
@@ -44,11 +44,18 @@ public:
 
 	int getLastSeen();
 
-	Point2f getLastPosition();
-
 	void setCurrentCamera(int cameraID);
 
 	int getCurrentCamera();
+
+	void addTLDObject();
+
+	void deleteTLDObject(int objectID);
+
+	void savePositivePatch();
+
+	Rect getPositivePatches();
+	//maybe compare new result with 10? previous patches using the CNN and go with majority vote?? 
 };
  
 #endif
