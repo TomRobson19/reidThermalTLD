@@ -85,16 +85,13 @@ int main(int argc, char **argv)
 
                 Mat roi = frame(r);
 
-                auto temp = tracker.getObjectRectangles();
-
-                vector<Rect> objectRectangles = std::get<0>(temp);
-                vector<int> personIDs = std::get<1>(temp);
+                vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 
                 bool alreadyTarget = false;
 
                 for (int i = 0; i < objectRectangles.size(); i++)
                 {
-                    if ((r & objectRectangles[i]).area() > 0) 
+                    if ((r & objectRectangles[i].rectangle).area() > 0) 
                     {
                         alreadyTarget = true;
                     }
@@ -147,26 +144,21 @@ int main(int argc, char **argv)
             }
         }
 
-        auto temp = tracker.getObjectRectangles();
-
-        std::vector<Rect> objectRectangles = std::get<0>(temp);
-        std::vector<int> personIDs = std::get<1>(temp);
+        std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].x<0 || objectRectangles[i].x+objectRectangles[i].width>640 || objectRectangles[i].y<0 || objectRectangles[i].y+objectRectangles[i].height>480)
+            if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>640 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>480)
             {
-                cout << "deletion" << personIDs[i] << endl;
-                tracker.deleteTarget(personIDs[i]);
+                cout << "deletion" << objectRectangles[i].personID << endl;
+                tracker.deleteTarget(objectRectangles[i].personID);
                 personCounter --;
 
-                temp = tracker.getObjectRectangles();
-                objectRectangles = std::get<0>(temp);
-                personIDs = std::get<1>(temp);
+                std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
             }
             else
             {
-                Rect r = objectRectangles[i];
+                Rect r = objectRectangles[i].rectangle;
 
                 Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
@@ -177,8 +169,8 @@ int main(int argc, char **argv)
                 {
                     Rect rec = found[i];
 
-                    rec.x += objectRectangles[i].x;
-                    rec.y += objectRectangles[i].y;
+                    rec.x += objectRectangles[i].rectangle.x;
+                    rec.y += objectRectangles[i].rectangle.y;
 
                     size_t j;
                     // Do not add small detections inside a bigger detection.
@@ -197,13 +189,11 @@ int main(int argc, char **argv)
                 }
                 if (found_filtered.size() == 0)
                 {
-                    cout << "deletion" << personIDs[i] << endl;
-                    tracker.deleteTarget(personIDs[i]);
+                    cout << "deletion" << objectRectangles[i].personID << endl;
+                    tracker.deleteTarget(objectRectangles[i].personID);
                     personCounter --;
 
-                    temp = tracker.getObjectRectangles();
-                    objectRectangles = std::get<0>(temp);
-                    personIDs = std::get<1>(temp);
+                    std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                 }
                 else
                 {
