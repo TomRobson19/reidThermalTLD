@@ -54,11 +54,11 @@ int MultiObjectTLDTracker::getNumberOfObjects()
     return tracker.getObjectBoxes().size();
 }
 
-std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectRectangles()
+std::vector<rectangleAndID> MultiObjectTLDTracker::getObjectRectangles()
 {
     std::vector<ObjectBox> objectBoxes = tracker.getObjectBoxes();
-    std::vector<Rect> rectangles;
-    std::vector<int> personIDs;
+    
+    std::vector<rectangleAndID> objects;
 
     for (int i = 0; i < objectBoxes.size(); i++)
     {
@@ -68,9 +68,16 @@ std::tuple<std::vector<Rect>,std::vector<int>> MultiObjectTLDTracker::getObjectR
         temp.width = objectBoxes[i].width;
         temp.height = objectBoxes[i].height;
 
-        rectangles.push_back(temp);
+        rectangleAndID recAndID;
 
-        personIDs.push_back(objectBoxes[i].objectId);
+        recAndID.rectangle = temp;
+
+        recAndID.personID = objectBoxes[i].objectId;
+
+        objects.push_back(recAndID);        
     }
-    return std::make_tuple(rectangles,personIDs);
+
+    std::sort(objects.begin(), objects.end());
+
+    return objects;
 }

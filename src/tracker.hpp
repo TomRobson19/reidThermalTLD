@@ -2,11 +2,21 @@
 #define TRACKER_H
 
 #include <opencv2/opencv.hpp>
+#include <algorithm>
 
 #include "MultiObjectTLD/motld/MultiObjectTLD.hpp"
 
 using namespace cv;
 using namespace std;
+
+struct rectangleAndID {
+    Rect rectangle;
+    int personID;
+
+    bool operator< (const rectangleAndID &other) const {
+        return personID < other.personID;
+    }
+};
 
 class GenericTracker
 {
@@ -35,7 +45,7 @@ public:
     void update(Mat image);
     void drawBoxes(Mat image);
     int getNumberOfObjects();
-    std::tuple<std::vector<Rect>,std::vector<int>> getObjectRectangles();
+    std::vector<rectangleAndID> getObjectRectangles();
 };
 
 #endif

@@ -1060,5 +1060,21 @@ Experimenting with the Siamese network using the MNIST dataset, the simpler
  network seems to work best, need my own data now really.
 \end_layout
 
+\begin_layout Itemize
+Made the way i deal with rectangles and personIDs much nicer, still don't
+ use the person class, passing it as an argument means that it would have
+ to return the updated tracker, which is a waste of time.
+\end_layout
+
+\begin_layout Itemize
+Think I'll only use the person class for colour/identifier and patch extraction
+ from the MOTLD object using personID.
+\end_layout
+
+\begin_layout Itemize
+Need to update data extraction class to work with these changes (or just
+ leave it as it is currently compiled)
+\end_layout
+
 \end_body
 \end_document
