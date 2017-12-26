@@ -142,7 +142,7 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 
 # train
 rms = RMSprop()
-model.compile(loss=contrastive_loss, optimizer=rms)
+#model.compile(loss=contrastive_loss, optimizer=rms)
 model.compile(loss=contrastive_loss, optimizer='adadelta')
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
