@@ -1072,8 +1072,8 @@ Think I'll only use the person class for colour/identifier and patch extraction
 \end_layout
 
 \begin_layout Itemize
-Need to update data extraction class to work with these changes (or just
- leave it as it is currently compiled)
+Need to update data extraction class to work with these changes - DONE THIS
+ NOW
 \end_layout
 
 \end_body
