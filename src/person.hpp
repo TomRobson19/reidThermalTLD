@@ -41,10 +41,6 @@ public:
 
 	int getCurrentCamera();
 
-	void addTLDObject(Rect boundingBox, MultiObjectTLDTracker tracker);
-
-	void deleteTLDObject(MultiObjectTLDTracker tracker);
-
 	void savePositivePatch(MultiObjectTLDTracker tracker);
 
 	Rect getPositivePatches(MultiObjectTLDTracker tracker);

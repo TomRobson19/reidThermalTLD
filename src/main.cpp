@@ -7,6 +7,8 @@ using namespace std;
 
 #define CASCADE_TO_USE "classifiers/people_thermal_23_07_casALL16x32_stump_sym_24_n4.xml"
 
+vector<Person> targets;
+
 int main(int argc, char **argv)
 {
     // Read video
@@ -77,7 +79,7 @@ int main(int argc, char **argv)
             {
                 vector<Rect> found, found_filtered;
 
-                rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+                //rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
 
                 Mat roi = frame(r);
 
@@ -126,12 +128,19 @@ int main(int argc, char **argv)
                         Rect rec = found_filtered[i];
                         rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
+                        //Neural Network Placeholder
                         int key = waitKey(10000000);
-
                         int personID = key-48;
                         cout << "New Target " << personID << endl;
 
                         tracker.addTarget(rec, personID);
+
+                        if(personID > targets.size())
+                        {
+                            Person person(personID);
+                            targets.push_back(person);
+                            //this is to allow for saving patches and determining colour
+                        }
                     }
                     
                 }
