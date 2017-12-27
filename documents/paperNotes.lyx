@@ -804,5 +804,50 @@ Person Re-Identification Using CNN Features Learned from Combination of
 Tetsu Matsukawa, Einoshin Suzuki
 \end_layout
 
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+Recently, features extracted from top layers of pre-trained Convolutional
+ Neural Network (CNN) on a large annotated dataset have been proven to be
+ strong off-the-shelf descriptors for various recognition tasks.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This paper aims to improve CNN features by conducting a fine-tuning on a
+ pedestrian attribute dataset.
+ 
+\end_layout
+
+\begin_layout Standard
+They are trying to apply extra softmax functions to the end features of
+ the CNN, using attributes like gender, colour of clothes, age etc.
+ This is not particularly applicable to thermal, as these are the attributes
+ that we were unable to collect last year.
+ 
+\end_layout
+
+\begin_layout Standard
+The CNN used here is Alexnet, composed of 5 convolutional layers and 3 fully
+ connected layers.
+ 
+\end_layout
+
+\begin_layout Standard
+The output of this is then used to predict labels for each of the attributes
+ being considered.
+ A combination of these attributes is used to perform re-identification.
+ 
+\end_layout
+
+\begin_layout Standard
+Results are overwhelmingly positive.
+ 
+\end_layout
+
 \end_body
 \end_document
