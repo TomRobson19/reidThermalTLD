@@ -705,7 +705,103 @@ Uses a triple network, in their case one discriminates on style while the
 \end_layout
 
 \begin_layout Standard
-This is not as relevent to our problem as previously thought.
+This is not as relevent to our problem as previously thought, as it features
+ an anchor images as well as positive and negative classifications.
+ 
+\end_layout
+
+\begin_layout Standard
+Possibly come back to this one
+\end_layout
+
+\begin_layout Section*
+Learning by tracking: Siamese CNN for robust target association
+\end_layout
+
+\begin_layout Subsubsection*
+Laura Leal-Taixe, Cristian Canton-Ferrer, Konrad Schindler
+\end_layout
+
+\begin_layout Standard
+Employs a CNN to learn a feature representation as part of the training
+ stage
+\end_layout
+
+\begin_layout Standard
+In this case, they are trying to learn whether two detections belong to
+ the same trajectory
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+Our learning framework has two stages: first, a CNN in Siamese twin architecture
+ is trained to assess the similarity of two equally sized 1 image regions;
+ second, contextual features that capture the relative geometry and position
+ of the two patches of inter- est are combined with the CNN output to produce
+ a final prediction, in our case using gradient boosting (GB)
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is then used to inform a tracker, which is different to our approach,
+ as we have TLD handling this part of the process, but the feature extraction
+ stage and the fact that this is a siamese network makes this work of interest
+ to us.
+ 
+\end_layout
+
+\begin_layout Standard
+Related work section claims that the use of CNNs for feature extraction
+ is becoming ever more popular and effective.
+ 
+\end_layout
+
+\begin_layout Standard
+The use of local spatio-temporal features learnt using a CNN is the element
+ of this work that is of interest to us.
+ 
+\end_layout
+
+\begin_layout Standard
+The approach we are using is using a Cost function.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Input patches are processed by two parallel branches featuring the same
+ network structure and weights.
+ Finally, the top layers of each branch are fed to a cost function that
+ aims at learning a manifold where different classes are easily separable.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Other suggested architectures are In-network and joint data input.
+ They claim joint data input gives superior output, but the evidence for
+ this is largely based on these being used for optical flow.
+ 
+\end_layout
+
+\begin_layout Standard
+After feature extraction, they use gradient boosting based on current and
+ previous image sizes and positions to improve the accuracy.
+\end_layout
+
+\begin_layout Section*
+Person Re-Identification Using CNN Features Learned from Combination of
+ Attributes
+\end_layout
+
+\begin_layout Subsubsection*
+Tetsu Matsukawa, Einoshin Suzuki
 \end_layout
 
 \end_body
