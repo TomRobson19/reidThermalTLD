@@ -849,5 +849,35 @@ Results are overwhelmingly positive.
  
 \end_layout
 
+\begin_layout Section*
+Dimensionality Reduction by Learning an Invariant Mapping
+\end_layout
+
+\begin_layout Subsubsection*
+Raia Hadsell, Sumit Chopra, Yann LeCun
+\end_layout
+
+\begin_layout Standard
+This is the paper than has been implemented in the keras siamese example
+\end_layout
+
+\begin_layout Standard
+This example computes the Euclidean distance on the output of the shared
+ network and by optimizing the contrastive loss
+\end_layout
+
+\begin_layout Standard
+The main aim is mapping high dimensional inputs to lower dimensional outputs,
+ given a neighbourhood of examples in the same feature space.
+ 
+\end_layout
+
+\begin_layout Standard
+The neural network used for this paper on the MNIST dataset is relatively
+ simple, and will need to be improved for use with our dataset, which is
+ far more complex.
+ 
+\end_layout
+
 \end_body
 \end_document
