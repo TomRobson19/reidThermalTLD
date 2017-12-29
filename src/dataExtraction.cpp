@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/alphaInput.webm");
+    VideoCapture video("data/Dataset1/betaInput.webm");
 
     // Check video is open
     if(!video.isOpened())
@@ -136,7 +136,11 @@ int main(int argc, char **argv)
                         personCounter++;   
                         personToSaveAs = key;
 
-                        imwrite("people/"+ std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", frame(rec));
+                        Mat imgToSave = frame(rec);
+
+                        resize(imgToSave, imgToSave, Size(256,512));
+
+                        imwrite("people/"+ std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", imgToSave);
                         filenameCounter++;
                     }
                     
@@ -197,7 +201,9 @@ int main(int argc, char **argv)
                 }
                 else
                 {
-                    imwrite("people/" + std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", frame(r));
+                    Mat imgToSave = frame(r);
+                    resize(imgToSave, imgToSave, Size(256,512));
+                    imwrite("people/" + std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", imgToSave);
                     filenameCounter++;
                 }
             }

@@ -79,7 +79,7 @@ int main(int argc, char **argv)
             {
                 vector<Rect> found, found_filtered;
 
-                //rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+                rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
 
                 Mat roi = frame(r);
 
@@ -128,11 +128,16 @@ int main(int argc, char **argv)
                         Rect rec = found_filtered[i];
                         rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
+                        //image to be sent to the neural network
+                        Mat imgToUse = frame(rec);
+                        resize(imgToUse, imgToUse, Size(256,512));
+
                         //Neural Network Placeholder
                         int key = waitKey(10000000);
                         int personID = key-48;
                         cout << "New Target " << personID << endl;
 
+                        //don't use the resized version here!
                         tracker.addTarget(rec, personID);
 
                         if(personID > targets.size())
