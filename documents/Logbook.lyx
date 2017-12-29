@@ -1082,7 +1082,13 @@ Read a few more papers on siamese CNNs
 
 \begin_layout Itemize
 Need to resize the images before sending them to the neural network, and
- in the data extraction class.
+ in the data extraction class.Have set this to (256,512)
+\end_layout
+
+\begin_layout Itemize
+Have several NN files - the original example (exampleSiameseNetwork.py),
+ siameseNetwork.py, which will have parameters for my dataset, and networkExperim
+entation.py, which is being used to help me learn keras better.
 \end_layout
 
 \end_body
