@@ -1052,7 +1052,8 @@ Created dataExtraction file, need to make it put the images in a nice format.
 
 \begin_layout Itemize
 Data extraction working, but TLD slow to track targets moving sideways,
- and HoG is not getting good results
+ and HoG is not getting good results - original HoG example from Toby is
+ not better
 \end_layout
 
 \begin_layout Itemize
@@ -1089,6 +1090,19 @@ Need to resize the images before sending them to the neural network, and
 Have several NN files - the original example (exampleSiameseNetwork.py),
  siameseNetwork.py, which will have parameters for my dataset, and networkExperim
 entation.py, which is being used to help me learn keras better.
+\end_layout
+
+\begin_layout Itemize
+Network experimentation is now in a good spot, need more of my data now
+ 
+\end_layout
+
+\begin_layout Itemize
+Data is downloading from Toby's server, once I have it need to do a lot
+ of supervised downloading.
+ Also need to establish if the same people are present in multiple videos
+ and label them accordingly.
+ 
 \end_layout
 
 \end_body

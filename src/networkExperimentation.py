@@ -57,7 +57,7 @@ def create_pairs(x, digit_indices):
     return np.array(pairs), np.array(labels)
 
 
-def create_base_network(input_shape, X_train):
+def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
     
     #input image dimensions
@@ -80,13 +80,6 @@ def create_base_network(input_shape, X_train):
     model.add(Flatten())
     model.add(Dense(128))
     model.add(Activation('relu'))
-    # model.add(Dropout(0.5))
-    # seq = Sequential()
-    # seq.add(Dense(128, input_shape=(input_dim,), activation='relu'))
-    # seq.add(Dropout(0.1))
-    # seq.add(Dense(128, activation='relu'))
-    # seq.add(Dropout(0.1))
-    # seq.add(Dense(128, activation='relu'))
     return model
 
 
@@ -98,8 +91,6 @@ def compute_accuracy(predictions, labels):
 
 # the data, shuffled and split between train and test sets
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
-# X_train = X_train.reshape(60000, 784)
-# X_test = X_test.reshape(10000, 784)
 X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
 X_test = X_test.reshape(X_test.shape[0], 28, 28, 1)
 input_shape = (28, 28, 1)
@@ -108,7 +99,6 @@ X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
 X_train /= 255
 X_test /= 255
-input_dim = 784
 num_epochs = 20
 
 # create training+test positive and negative pairs
@@ -120,7 +110,7 @@ te_pairs, te_y = create_pairs(X_test, digit_indices)
 
 # network definition
 # base_network = create_base_network(input_dim, X_train)
-base_network = create_base_network(input_shape, X_train)
+base_network = create_base_network(input_shape)
 
 # input_a = Input(shape=(input_dim,))
 # input_b = Input(shape=(input_dim,))
