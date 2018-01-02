@@ -1105,5 +1105,39 @@ Data is downloading from Toby's server, once I have it need to do a lot
  
 \end_layout
 
+\begin_layout Itemize
+Got data, lots of videos have no people in them so currently in the process
+ of removing them.
+ Whole gamma folder is useless so has been deleted.
+\end_layout
+
+\begin_layout Itemize
+HOG person detector getting nothing from cameras on the roof, need different
+ approach.
+ 
+\end_layout
+
+\begin_layout Itemize
+Tried replacing HoG with a neural network from the internet, it kept telling
+ me I was a bottle.....
+ 
+\end_layout
+
+\begin_layout Itemize
+Haar detections don't occur every frame so would require constant NN classificat
+ion
+\end_layout
+
+\begin_layout Itemize
+MOTLD does not follow targets moving directly sideways accross camera view
+ very well
+\end_layout
+
+\begin_layout Itemize
+Got HoG to find people in the roof camera videos by enlarging the image,
+ still not working frame to frame.
+ 
+\end_layout
+
 \end_body
 \end_document
