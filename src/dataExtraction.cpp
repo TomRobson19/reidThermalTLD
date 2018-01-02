@@ -4,12 +4,10 @@
 using namespace cv;
 using namespace std;
 
-#define CASCADE_TO_USE "classifiers/people_thermal_23_07_casALL16x32_stump_sym_24_n4.xml"
-
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/betaInput.webm");
+    VideoCapture video("data/Dataset1/alphaInput.webm");
 
     // Check video is open
     if(!video.isOpened())
@@ -42,6 +40,7 @@ int main(int argc, char **argv)
     
     while(video.read(frame))
     {  
+        resize(frame, frame, Size(1280, 960));
         tracker.update(frame);
 
         Mat displayImage = frame.clone();
@@ -99,7 +98,7 @@ int main(int argc, char **argv)
 
                 if (!alreadyTarget)
                 {
-                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(32,64), 1.05, 2);
+                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,32), 1.05, 2);
 
                     for(size_t i = 0; i < found.size(); i++ )
                     {
@@ -138,7 +137,7 @@ int main(int argc, char **argv)
 
                         Mat imgToSave = frame(rec);
 
-                        resize(imgToSave, imgToSave, Size(256,512));
+                        resize(imgToSave, imgToSave, Size(128,256));
 
                         imwrite("people/"+ std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", imgToSave);
                         filenameCounter++;
@@ -152,9 +151,9 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>640 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>480)
+            if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>1280 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>960)
             {
-                cout << "deletion" << objectRectangles[i].personID << endl;
+                cout << "deletion border" << objectRectangles[i].personID << endl;
                 tracker.deleteTarget(objectRectangles[i].personID);
                 personCounter --;
 
@@ -167,7 +166,7 @@ int main(int argc, char **argv)
                 Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
 
-                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(32,64), 1.05, 2);
+                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,32), 1.05, 2);
 
                 for(size_t i = 0; i < found.size(); i++ )
                 {
@@ -193,7 +192,7 @@ int main(int argc, char **argv)
                 }
                 if (found_filtered.size() == 0)
                 {
-                    cout << "deletion" << objectRectangles[i].personID << endl;
+                    cout << "deletion hog" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
                     personCounter --;
 
@@ -202,7 +201,7 @@ int main(int argc, char **argv)
                 else
                 {
                     Mat imgToSave = frame(r);
-                    resize(imgToSave, imgToSave, Size(256,512));
+                    resize(imgToSave, imgToSave, Size(128,256));
                     imwrite("people/" + std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", imgToSave);
                     filenameCounter++;
                 }
@@ -212,6 +211,7 @@ int main(int argc, char **argv)
         // Display result
         imshow("Tracking", displayImage);
         unsigned char key = waitKey(10);
+        cout << "frame" << endl;
         if (key == 'x')
         {
             // if user presses "x" then exit
