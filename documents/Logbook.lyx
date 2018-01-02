@@ -1134,9 +1134,11 @@ MOTLD does not follow targets moving directly sideways accross camera view
 \end_layout
 
 \begin_layout Itemize
-Got HoG to find people in the roof camera videos by enlarging the image,
- still not working frame to frame.
- 
+Got HoG to find people in the roof camera videos by enlarging the image
+\end_layout
+
+\begin_layout Itemize
+HOG gets weird detections on the alpha camera of my dataset from last year
 \end_layout
 
 \end_body

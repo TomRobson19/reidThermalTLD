@@ -36,7 +36,7 @@ class MultiObjectTLDTracker// : public GenericTracker
 {
 private:
     const MOTLDSettings settings = MOTLDSettings(0);
-    MultiObjectTLD tracker = MultiObjectTLD(640,480,settings);
+    MultiObjectTLD tracker = MultiObjectTLD(1280,960,settings);
 public:
     MultiObjectTLDTracker(); 
     void initialise(int width, int height);

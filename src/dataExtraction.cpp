@@ -7,7 +7,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/alphaInput.webm");
+    VideoCapture video("data/Dataset1/deltaInput.webm");
 
     // Check video is open
     if(!video.isOpened())
@@ -81,6 +81,8 @@ int main(int argc, char **argv)
                 vector<Rect> found, found_filtered;
 
                 rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+
+                cout << "width " << r.width << " height " << r.height << endl;
 
                 Mat roi = frame(r);
 
@@ -211,7 +213,6 @@ int main(int argc, char **argv)
         // Display result
         imshow("Tracking", displayImage);
         unsigned char key = waitKey(10);
-        cout << "frame" << endl;
         if (key == 'x')
         {
             // if user presses "x" then exit
