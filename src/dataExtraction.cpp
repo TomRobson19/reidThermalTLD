@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
     // Read video
     VideoCapture video("data/Dataset1/deltaInput.webm");
-
+    string filenameExtension = "delta1 ";
     // Check video is open
     if(!video.isOpened())
     {
@@ -22,7 +22,6 @@ int main(int argc, char **argv)
     int height = 30;
     int learning = 100000;
     int padding = 40;
-
 
     Ptr<BackgroundSubtractorMOG2> MoG = createBackgroundSubtractorMOG2(500, 25, false);
 
@@ -61,7 +60,6 @@ int main(int argc, char **argv)
         findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 
         //make new image from bitwise and of frame and foreground
-
         for(int idx = 0; idx >= 0; idx = hierarchy[idx][0])
         {
             Rect r = boundingRect(contours[idx]);
@@ -82,7 +80,7 @@ int main(int argc, char **argv)
 
                 rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
 
-                cout << "width " << r.width << " height " << r.height << endl;
+                //cout << "width " << r.width << " height " << r.height << endl;
 
                 Mat roi = frame(r);
 
@@ -100,11 +98,10 @@ int main(int argc, char **argv)
 
                 if (!alreadyTarget)
                 {
-                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,32), 1.05, 2);
+                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
                     for(size_t i = 0; i < found.size(); i++ )
                     {
-
                         Rect rec = found[i];
 
                         rec.x += r.x;
@@ -119,13 +116,11 @@ int main(int argc, char **argv)
                                 break;
                             }
                         }
-
                         if (j == found.size())
                         {
                             found_filtered.push_back(rec);
                         }
                     }
-
                     for (size_t i = 0; i < found_filtered.size(); i++)
                     {
                         Rect rec = found_filtered[i];
@@ -141,10 +136,9 @@ int main(int argc, char **argv)
 
                         resize(imgToSave, imgToSave, Size(128,256));
 
-                        imwrite("people/"+ std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", imgToSave);
+                        imwrite("people/"+ std::to_string(personToSaveAs-48)+"/"+ filenameExtension + std::to_string(filenameCounter)+".jpg", imgToSave);
                         filenameCounter++;
                     }
-                    
                 }
             }
         }
@@ -168,7 +162,7 @@ int main(int argc, char **argv)
                 Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
 
-                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,32), 1.05, 2);
+                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
                 for(size_t i = 0; i < found.size(); i++ )
                 {
@@ -204,7 +198,7 @@ int main(int argc, char **argv)
                 {
                     Mat imgToSave = frame(r);
                     resize(imgToSave, imgToSave, Size(128,256));
-                    imwrite("people/" + std::to_string(personToSaveAs-48)+","+ std::to_string(filenameCounter)+".jpg", imgToSave);
+                    imwrite("people/" + std::to_string(personToSaveAs-48)+"/"+ filenameExtension + std::to_string(filenameCounter)+".jpg", imgToSave);
                     filenameCounter++;
                 }
             }
