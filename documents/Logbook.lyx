@@ -1141,5 +1141,9 @@ Got HoG to find people in the roof camera videos by enlarging the image
 HOG gets weird detections on the alpha camera of my dataset from last year
 \end_layout
 
+\begin_layout Itemize
+Improved organisation of images extracted
+\end_layout
+
 \end_body
 \end_document

@@ -80,6 +80,9 @@ def create_base_network(input_shape):
     model.add(Flatten())
     model.add(Dense(128))
     model.add(Activation('relu'))
+    model.add(Dropout(0.1))
+    model.add(Dense(128))
+    model.add(Activation('relu'))
     return model
 
 
