@@ -7,8 +7,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/deltaInput.webm");
-    string filenameExtension = "delta1 ";
+    VideoCapture video("data/Dataset1/alphaInput.webm");
+    string filenameExtension = "alpha1 ";
     // Check video is open
     if(!video.isOpened())
     {
@@ -80,8 +80,6 @@ int main(int argc, char **argv)
 
                 rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
 
-                //cout << "width " << r.width << " height " << r.height << endl;
-
                 Mat roi = frame(r);
 
                 vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
@@ -126,6 +124,7 @@ int main(int argc, char **argv)
                         Rect rec = found_filtered[i];
                         rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
+                        cout << "waiting" << endl;
                         int key = waitKey(10000000);
                         cout << "####" << key << "####" << personCounter << endl;
                         tracker.addTarget(rec, personCounter);

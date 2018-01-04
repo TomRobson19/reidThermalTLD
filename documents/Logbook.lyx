@@ -1145,5 +1145,9 @@ HOG gets weird detections on the alpha camera of my dataset from last year
 Improved organisation of images extracted
 \end_layout
 
+\begin_layout Itemize
+HOG call is causing the segfaults
+\end_layout
+
 \end_body
 \end_document
