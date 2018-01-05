@@ -23,8 +23,8 @@ int main(int argc, char **argv)
 
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
-    int width = 30;
-    int height = 30;
+    int width = 100;
+    int height = 100;
     int learning = 100000;
     int padding = 40;
 
@@ -40,6 +40,7 @@ int main(int argc, char **argv)
 
     while(video.read(frame))
     {  
+        resize(frame, frame, Size(1280, 960));
         tracker.update(frame);
 
         Mat displayImage = frame.clone();
@@ -60,7 +61,6 @@ int main(int argc, char **argv)
         findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 
         //make new image from bitwise and of frame and foreground
-
         for(int idx = 0; idx >= 0; idx = hierarchy[idx][0])
         {
             Rect r = boundingRect(contours[idx]);
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
             {
                 vector<Rect> found, found_filtered;
 
-                rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+                //rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
 
                 Mat roi = frame(r);
 
@@ -97,33 +97,37 @@ int main(int argc, char **argv)
 
                 if (!alreadyTarget)
                 {
-                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(32,64), 1.05, 2);
+                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
                     for(size_t i = 0; i < found.size(); i++ )
                     {
-
                         Rect rec = found[i];
 
                         rec.x += r.x;
                         rec.y += r.y;
 
-                        size_t j;
-                        // Do not add small detections inside a bigger detection.
-                        for ( j = 0; j < found.size(); j++ )
+                        bool save = true;
+                        for (int j = 0; j < found.size(); j++ )
                         {
-                            if (((rec & found[j]).area() > 0) && (found[j].area() < rec.area()))
+                            Rect currentComparison = found[j];
+                            currentComparison.x += r.x;
+                            currentComparison.y += r.y;
+
+                            Rect combination = rec & currentComparison;
+
+                            if ( ((combination.area() > 0) || (combination.area() == rec.area())) && i != j )
                             {
+                                save = false;
                                 break;
                             }
                         }
-
-                        if (j == found.size())
+                        if (save == true)
                         {
                             found_filtered.push_back(rec);
                         }
                     }
 
-                    for (size_t i = 0; i < found_filtered.size(); i++)
+                    for (int i = 0; i < found_filtered.size(); i++)
                     {
                         Rect rec = found_filtered[i];
                         rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
@@ -133,6 +137,7 @@ int main(int argc, char **argv)
                         resize(imgToUse, imgToUse, Size(256,512));
 
                         //Neural Network Placeholder
+                        cout << "waiting" << endl;
                         int key = waitKey(10000000);
                         int personID = key-48;
                         cout << "New Target " << personID << endl;
@@ -170,16 +175,16 @@ int main(int argc, char **argv)
                 Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
 
-                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(32,64), 1.05, 2);
+                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
-                for(size_t i = 0; i < found.size(); i++ )
+                for(int i = 0; i < found.size(); i++ )
                 {
                     Rect rec = found[i];
 
                     rec.x += objectRectangles[i].rectangle.x;
                     rec.y += objectRectangles[i].rectangle.y;
 
-                    size_t j;
+                    int j;
                     // Do not add small detections inside a bigger detection.
                     for ( j = 0; j < found.size(); j++ )
                     {

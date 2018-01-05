@@ -7,8 +7,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/alphaInput.webm");
-    string filenameExtension = "alpha1 ";
+    VideoCapture video("data/Dataset1/deltaInput.webm");
+    string filenameExtension = "delta1 ";
     // Check video is open
     if(!video.isOpened())
     {
@@ -169,14 +169,14 @@ int main(int argc, char **argv)
 
                 hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
-                for(size_t i = 0; i < found.size(); i++ )
+                for(int i = 0; i < found.size(); i++ )
                 {
                     Rect rec = found[i];
 
                     rec.x += objectRectangles[i].rectangle.x;
                     rec.y += objectRectangles[i].rectangle.y;
 
-                    size_t j;
+                    int j;
                     // Do not add small detections inside a bigger detection.
                     for ( j = 0; j < found.size(); j++ )
                     {
