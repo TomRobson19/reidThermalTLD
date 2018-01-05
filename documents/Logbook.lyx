@@ -1112,7 +1112,7 @@ Got data, lots of videos have no people in them so currently in the process
 \end_layout
 
 \begin_layout Itemize
-HOG person detector getting nothing from cameras on the roof, need different
+HoG person detector getting nothing from cameras on the roof, need different
  approach.
  
 \end_layout
@@ -1138,7 +1138,7 @@ Got HoG to find people in the roof camera videos by enlarging the image
 \end_layout
 
 \begin_layout Itemize
-HOG gets weird detections on the alpha camera of my dataset from last year
+HoG gets weird detections on the alpha camera of my dataset from last year
 \end_layout
 
 \begin_layout Itemize
@@ -1146,7 +1146,17 @@ Improved organisation of images extracted
 \end_layout
 
 \begin_layout Itemize
-HOG call is causing the segfaults
+HoG call is causing the segfaults
+\end_layout
+
+\begin_layout Itemize
+Fixed issues by increasing the size required for HoG detections 
+\end_layout
+
+\begin_layout Itemize
+Also rectangles that were within each other were both being added and targets,
+ have now fixed this.
+ 
 \end_layout
 
 \end_body

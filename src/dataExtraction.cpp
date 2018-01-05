@@ -18,8 +18,8 @@ int main(int argc, char **argv)
 
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
-    int width = 30;
-    int height = 30;
+    int width = 100;
+    int height = 100;
     int learning = 100000;
     int padding = 40;
 
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
             {
                 vector<Rect> found, found_filtered;
 
-                rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+                //rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
 
                 Mat roi = frame(r);
 
@@ -98,35 +98,41 @@ int main(int argc, char **argv)
                 {
                     hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
-                    for(size_t i = 0; i < found.size(); i++ )
+                    for(int i = 0; i < found.size(); i++ )
                     {
                         Rect rec = found[i];
 
                         rec.x += r.x;
                         rec.y += r.y;
 
-                        size_t j;
-                        // Do not add small detections inside a bigger detection.
-                        for ( j = 0; j < found.size(); j++ )
+                        bool save = true;
+                        for (int j = 0; j < found.size(); j++ )
                         {
-                            if (((rec & found[j]).area() > 0) && (found[j].area() < rec.area()))
+                            Rect currentComparison = found[j];
+                            currentComparison.x += r.x;
+                            currentComparison.y += r.y;
+
+                            Rect combination = rec & currentComparison;
+
+                            if ( ((combination.area() > 0) || (combination.area() == rec.area())) && i != j )
                             {
+                                save = false;
                                 break;
                             }
                         }
-                        if (j == found.size())
+                        if (save == true)
                         {
                             found_filtered.push_back(rec);
                         }
                     }
-                    for (size_t i = 0; i < found_filtered.size(); i++)
+                    for (int i = 0; i < found_filtered.size(); i++)
                     {
                         Rect rec = found_filtered[i];
                         rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
                         cout << "waiting" << endl;
                         int key = waitKey(10000000);
-                        cout << "####" << key << "####" << personCounter << endl;
+                        cout << "####" << key-48 << "####" << personCounter << endl;
                         tracker.addTarget(rec, personCounter);
                         personCounter++;   
                         personToSaveAs = key;
