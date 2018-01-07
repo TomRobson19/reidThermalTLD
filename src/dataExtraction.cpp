@@ -7,8 +7,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/deltaInput.webm");
-    string filenameExtension = "delta1 ";
+    VideoCapture video("data/Dataset1/betaInput.webm");
+    string filenameExtension = "beta1 ";
     // Check video is open
     if(!video.isOpened())
     {
@@ -156,9 +156,12 @@ int main(int argc, char **argv)
             {
                 cout << "deletion border" << objectRectangles[i].personID << endl;
                 tracker.deleteTarget(objectRectangles[i].personID);
+                cout << "deleted" << endl;
                 personCounter --;
 
                 std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+
+                cout << objectRectangles.size() << endl;
             }
             else
             {
@@ -195,9 +198,12 @@ int main(int argc, char **argv)
                 {
                     cout << "deletion hog" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
+                    cout << "deleted" << endl;
+
                     personCounter --;
 
                     std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+                    cout << objectRectangles.size() << endl;
                 }
                 else
                 {

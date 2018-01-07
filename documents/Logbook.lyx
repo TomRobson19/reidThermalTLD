@@ -1159,5 +1159,15 @@ Also rectangles that were within each other were both being added and targets,
  
 \end_layout
 
+\begin_layout Itemize
+Deleting target 0 before target 1 causes a segmentation fault, am investigating.
+ 
+\end_layout
+
+\begin_layout Itemize
+Need to change my deletion function to work off actual personIDs in both
+ dataExtraction and main.
+\end_layout
+
 \end_body
 \end_document
