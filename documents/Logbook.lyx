@@ -1178,5 +1178,9 @@ Have now altered the delete function so that it works correctly, seg fault
 have made bash script to remove all data in dataset while testing
 \end_layout
 
+\begin_layout Itemize
+extracted and filtered alpha1 data -DO NOT REFRESH OR SCREW UP
+\end_layout
+
 \end_body
 \end_document
