@@ -130,6 +130,12 @@ int main(int argc, char **argv)
                         Rect rec = found_filtered[i];
                         rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
+                        char str[200];
+                        sprintf(str,"Identifying");
+                        Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
+ 
+                        putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
+
                         cout << "waiting" << endl;
                         int key = waitKey(10000000);
                         cout << "####" << key-48 << "####" << personCounter << endl;

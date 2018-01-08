@@ -70,14 +70,21 @@ void MultiObjectTLD::addObjects(std::vector<ObjectBox> obs)
 
 void MultiObjectTLD::deleteObject(int personID)
 {
-    ivCurrentBoxes.erase(ivCurrentBoxes.begin()+personID);
-    ivDefined.erase(ivDefined.begin()+personID);
-    ivValid.erase(ivValid.begin()+personID);
-    ivCurrentPatches.erase(ivCurrentPatches.begin()+personID);;
-    ivNNClassifier.deleteObject(personID);
-    ivFernFilter.deleteObjects(personID);
+    for(int i = 0; i < ivCurrentBoxes.size(); i++)
+    {
+        if(ivCurrentBoxes[i].objectId == personID)
+        {
+            ivCurrentBoxes.erase(ivCurrentBoxes.begin()+i);
+            ivDefined.erase(ivDefined.begin()+i);
+            ivValid.erase(ivValid.begin()+i);
+            ivCurrentPatches.erase(ivCurrentPatches.begin()+i);;
+            ivNNClassifier.deleteObject(i);
+            ivFernFilter.deleteObjects(i);
 
-    ivNObjects -= 1;
+            ivNObjects -= 1;
+        }
+    }
+    
 }
 
 int MultiObjectTLD::getStatus(const int objId) const

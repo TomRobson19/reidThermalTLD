@@ -1169,5 +1169,14 @@ Need to change my deletion function to work off actual personIDs in both
  dataExtraction and main.
 \end_layout
 
+\begin_layout Itemize
+Have now altered the delete function so that it works correctly, seg fault
+ no longer occurs in this situation
+\end_layout
+
+\begin_layout Itemize
+have made bash script to remove all data in dataset while testing
+\end_layout
+
 \end_body
 \end_document
