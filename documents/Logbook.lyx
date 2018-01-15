@@ -1118,12 +1118,6 @@ HoG person detector getting nothing from cameras on the roof, need different
 \end_layout
 
 \begin_layout Itemize
-Tried replacing HoG with a neural network from the internet, it kept telling
- me I was a bottle.....
- 
-\end_layout
-
-\begin_layout Itemize
 Haar detections don't occur every frame so would require constant NN classificat
 ion
 \end_layout
@@ -1216,6 +1210,15 @@ n of accuracy, am investigating.
 \begin_layout Itemize
 Need to investigate MOTLD process frame call to stop it drawing boxes so
  I can draw boxes and write text of my own colour choice.
+\end_layout
+
+\begin_layout Itemize
+HOG is still causing me a major problem with erroneous detections, as well
+ as MOTLD not moving sideways acrosss the frame very well
+\end_layout
+
+\begin_layout Itemize
+EMAIL BRECKON ABOUT NEXT MEETING
 \end_layout
 
 \end_body
