@@ -1179,7 +1179,30 @@ have made bash script to remove all data in dataset while testing
 \end_layout
 
 \begin_layout Itemize
-extracted and filtered alpha1 data -DO NOT REFRESH OR SCREW UP
+extracted and filtered dataset1 data -DO NOT REFRESH OR SCREW UP
+\end_layout
+
+\begin_layout Itemize
+Ensure smaller people inside someone elses MOTLD box doesn't result in the
+ target being kept, maybe introduce a size threshold - DONE THIS NOW
+\end_layout
+
+\begin_layout Itemize
+Still having problems with HoG, particularly in alpha camera when Caz is
+ in view, and moving sideways
+\end_layout
+
+\begin_layout Itemize
+Dataset 2 not good for data extraction as too many people are overlapping.
+\end_layout
+
+\begin_layout Section*
+Week 11
+\end_layout
+
+\begin_layout Itemize
+Size threshold currently set to 2, causes a lot of deletions, experiment
+ with this.
 \end_layout
 
 \end_body

@@ -161,12 +161,15 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>640 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>480)
+            if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>1280 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>960)
             {
-                int personToDelete = objectRectangles[i].personID;
-                cout << "Deletion " << personToDelete << endl;
-                tracker.deleteTarget(personToDelete);
+                cout << "deletion border" << objectRectangles[i].personID << endl;
+                tracker.deleteTarget(objectRectangles[i].personID);
+                cout << "deleted" << endl;
+
                 std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+
+                cout << objectRectangles.size() << endl;
             }
             else
             {
@@ -177,34 +180,45 @@ int main(int argc, char **argv)
 
                 hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
 
-                for(int i = 0; i < found.size(); i++ )
+                for(int j = 0; j < found.size(); j++ )
                 {
-                    Rect rec = found[i];
+                    Rect rec = found[j];
 
                     rec.x += objectRectangles[i].rectangle.x;
                     rec.y += objectRectangles[i].rectangle.y;
 
-                    int j;
+                    int k;
                     // Do not add small detections inside a bigger detection.
-                    for ( j = 0; j < found.size(); j++ )
+                    for ( k = 0; k < found.size(); k++ )
                     {
-                        if (((rec & found[j]).area() > 0) && (found[j].area() < rec.area()))
+                        if (((rec & found[k]).area() > 0) && (found[k].area() < rec.area()))
                         {
                             break;
                         }
                     }
 
-                    if (j == found.size())
+                    if (k == found.size())
                     {
                         found_filtered.push_back(rec);
                     }
                 }
                 if (found_filtered.size() == 0)
                 {
-                    int personToDelete = objectRectangles[i].personID;
-                    cout << "Deletion " << personToDelete << endl;
-                    tracker.deleteTarget(personToDelete);
+                    cout << "deletion hog" << objectRectangles[i].personID << endl;
+                    tracker.deleteTarget(objectRectangles[i].personID);
+                    cout << "deleted" << endl;
+
                     std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+                    cout << objectRectangles.size() << endl;
+                }
+                else if (found_filtered[0].area()*2 < objectRectangles[i].rectangle.area())
+                {
+                    cout << "deletion size" << objectRectangles[i].personID << endl;
+                    tracker.deleteTarget(objectRectangles[i].personID);
+                    cout << "deleted" << endl;
+
+                    std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+                    cout << objectRectangles.size() << endl;
                 }
             }
         }
