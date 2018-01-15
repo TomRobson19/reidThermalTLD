@@ -1083,7 +1083,7 @@ Read a few more papers on siamese CNNs
 
 \begin_layout Itemize
 Need to resize the images before sending them to the neural network, and
- in the data extraction class.Have set this to (256,512)
+ in the data extraction class.Have set this to (128,256)
 \end_layout
 
 \begin_layout Itemize
@@ -1211,6 +1211,11 @@ n of accuracy, am investigating.
  Is an ExceptionIgnored error, and seems to have no effect, but I still
  don't like it.
  
+\end_layout
+
+\begin_layout Itemize
+Need to investigate MOTLD process frame call to stop it drawing boxes so
+ I can draw boxes and write text of my own colour choice.
 \end_layout
 
 \end_body
