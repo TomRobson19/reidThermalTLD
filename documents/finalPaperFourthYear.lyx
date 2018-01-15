@@ -194,16 +194,6 @@ Relation to this Project
 Solution
 \end_layout
 
-\begin_layout Standard
-Having established the problem that we want to solve, we will now break
- down the most important elements of our solution, giving an overview of
- the structure of our implementation, a description of the elements used
- for the person detection subsystem, a description of the features that
- we have used and explanation of how we compare new detections to previously
- identified targets.
- 
-\end_layout
-
 \begin_layout Subsection
 Implementation Structure and Tools Used
 \end_layout
@@ -224,8 +214,20 @@ Person Identification
 Person Tracking using Track-Learn-Detect
 \end_layout
 
+\begin_layout Subsubsection
+Deletion of Track-Learn-Detect Targets
+\end_layout
+
 \begin_layout Subsection
 Deep Learning
+\end_layout
+
+\begin_layout Subsubsection
+Network Architecture
+\end_layout
+
+\begin_layout Subsubsection
+Training Dataset
 \end_layout
 
 \begin_layout Section
@@ -268,22 +270,6 @@ Appraisal of Project Organisation
 
 \begin_layout Section
 Conclusion 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-small
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
