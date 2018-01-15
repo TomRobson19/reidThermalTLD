@@ -1205,5 +1205,13 @@ Size threshold currently set to 2, causes a lot of deletions, experiment
  with this.
 \end_layout
 
+\begin_layout Itemize
+Neural Network occasionally errors for currently unknown reason after calculatio
+n of accuracy, am investigating.
+ Is an ExceptionIgnored error, and seems to have no effect, but I still
+ don't like it.
+ 
+\end_layout
+
 \end_body
 \end_document
