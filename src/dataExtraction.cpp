@@ -7,8 +7,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset3/alphaInput.webm");
-    string filenameExtension = "alpha3 ";
+    VideoCapture video("data/Dataset3/deltaInput.webm");
+    string filenameExtension = "delta3 ";
     // Check video is open
     if(!video.isOpened())
     {
@@ -136,6 +136,8 @@ int main(int argc, char **argv)
  
                         putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
 
+                        imshow("newTarget", frame(rec));
+
                         cout << "waiting" << endl;
                         int key = waitKey(10000000);
                         cout << "####" << key-48 << "####" << personCounter << endl;
@@ -213,7 +215,7 @@ int main(int argc, char **argv)
                     std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                     cout << objectRectangles.size() << endl;
                 }
-                else if (found_filtered[0].area()*2 < objectRectangles[i].rectangle.area())
+                else if (found_filtered[0].area()*5 < objectRectangles[i].rectangle.area())
                 {
                     cout << "deletion size" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
