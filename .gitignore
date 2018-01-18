@@ -84,3 +84,5 @@ src/people/
 src/dataExtraction
 
 src/people*
+
+src/__pycache__/
