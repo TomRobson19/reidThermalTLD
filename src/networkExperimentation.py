@@ -45,13 +45,13 @@ def create_pairs(x, digit_indices):
     '''
     pairs = []
     labels = []
-    n = min([len(digit_indices[d]) for d in range(10)]) - 1
-    for d in range(10):
+    n = min([len(digit_indices[d]) for d in range(8)]) - 1
+    for d in range(8):
         for i in range(n):
             z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
             pairs += [[x[z1], x[z2]]]
-            inc = random.randrange(1, 10)
-            dn = (d + inc) % 10
+            inc = random.randrange(1, 8)
+            dn = (d + inc) % 8
             z1, z2 = digit_indices[d][i], digit_indices[dn][i]
             pairs += [[x[z1], x[z2]]]
             labels += [1, 0]
@@ -61,14 +61,12 @@ def create_pairs(x, digit_indices):
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
     
-    #input image dimensions
-    img_rows, img_cols = 28, 28
     # number of convolutional filters to use
-    nb_filters = 16
+    nb_filters = 32
     # size of pooling area for max pooling
-    pool_size = (2, 2)
+    pool_size = (16, 16)
     # convolution kernel size
-    kernel_size = (3, 3)
+    kernel_size = (32,32)
 
     model = Sequential()
     model.add(Conv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape))
@@ -119,12 +117,11 @@ for person in os.listdir(image_dir):
 
 for target in img_groups:
     for img_file in img_groups[target]:
-        if int(target) < 3:
+        if int(target) < 8:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             X_train.append(img)
             y_train.append(int(target))
-        else:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             X_test.append(img)
@@ -136,7 +133,8 @@ y_train = np.array(y_train)
 y_test = np.array(y_test)
 
 input_shape = (256, 128, 1)
-
+X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1)
+X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1)
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
 X_train /= 255
@@ -150,11 +148,12 @@ num_epochs = 20
 
 
 # create training+test positive and negative pairs
-digit_indices = [np.where(y_train == i)[0] for i in range(10)]
+digit_indices = [np.where(y_train == i)[0] for i in range(8)]
 print(digit_indices)
 tr_pairs, tr_y = create_pairs(X_train, digit_indices)
 
-digit_indices = [np.where(y_test == i)[0] for i in range(10)]
+digit_indices = [np.where(y_test == i)[0] for i in range(8)]
+print(digit_indices)
 te_pairs, te_y = create_pairs(X_test, digit_indices)
 
 # network definition

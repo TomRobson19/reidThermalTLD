@@ -1191,6 +1191,28 @@ Dataset 2 not good for data extraction as too many people are overlapping.
 \end_layout
 
 \begin_layout Section*
+Meeting 11
+\end_layout
+
+\begin_layout Itemize
+Dataset of people should be something like an ordered heap based on when/where
+ last seen, and queried in order, stopping when the confidence level is
+ high enough.
+ This is a measure to increase the scalability.
+ 
+\end_layout
+
+\begin_layout Itemize
+There is an unlabelled thermal pedestrian dataset if we want a lot of negative
+ examples.
+ 
+\end_layout
+
+\begin_layout Itemize
+Next objective is functionality to read in images and give to keras.
+\end_layout
+
+\begin_layout Section*
 Week 11
 \end_layout
 
@@ -1221,26 +1243,8 @@ HOG is still causing me a major problem with erroneous detections, as well
 Did data extraction on all of last years data.
 \end_layout
 
-\begin_layout Section*
-Meeting 11
-\end_layout
-
 \begin_layout Itemize
-Dataset of people should be something like an ordered heap based on when/where
- last seen, and queried in order, stopping when the confidence level is
- high enough.
- This is a measure to increase the scalability.
- 
-\end_layout
-
-\begin_layout Itemize
-There is an unlabelled thermal pedestrian dataset if we want a lot of negative
- examples.
- 
-\end_layout
-
-\begin_layout Itemize
-Next objective is functionality to read in images and give to keras.
+Reading in data to network, issue now is that I am running out of GPU memory.
 \end_layout
 
 \end_body
