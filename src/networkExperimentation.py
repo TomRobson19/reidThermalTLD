@@ -135,10 +135,6 @@ X_test = np.array(X_test)
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
-print(X_train)
-
-print(X_train.shape)
-
 input_shape = (256, 128, 1)
 
 X_train = X_train.astype('float32')
@@ -147,8 +143,15 @@ X_train /= 255
 X_test /= 255
 num_epochs = 20
 
+
+
+# the below range(10) arguments and the arguments in the create_pairs() function refers to the 10 classes in mnist dataset
+# this needs fixing
+
+
 # create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(10)]
+print(digit_indices)
 tr_pairs, tr_y = create_pairs(X_train, digit_indices)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(10)]
