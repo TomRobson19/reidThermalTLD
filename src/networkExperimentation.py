@@ -18,7 +18,8 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import RMSprop
 from keras import backend as K
-
+import os
+import cv2
 
 def euclidean_distance(vects):
     x, y = vects
@@ -98,10 +99,47 @@ def compute_accuracy(predictions, labels):
 
 
 # the data, shuffled and split between train and test sets
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
-X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
-X_test = X_test.reshape(X_test.shape[0], 28, 28, 1)
-input_shape = (28, 28, 1)
+#(X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+
+
+X_train = []
+X_test = []
+y_train = []
+y_test = []
+
+image_dir = "people"
+img_groups = {}
+for person in os.listdir(image_dir):
+    for img_file in os.listdir(image_dir + "/" + person):
+        if person in img_groups:
+            img_groups[person].append(img_file)
+        else:
+            img_groups[person]=[img_file]
+
+for target in img_groups:
+    for img_file in img_groups[target]:
+        if int(target) < 3:
+            img = cv2.imread(os.path.join(image_dir, target, img_file))
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+            X_train.append(img)
+            y_train.append(int(target))
+        else:
+            img = cv2.imread(os.path.join(image_dir, target, img_file))
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+            X_test.append(img)
+            y_test.append(int(target))
+
+X_train = np.array(X_train)
+X_test = np.array(X_test)
+y_train = np.array(y_train)
+y_test = np.array(y_test)
+
+print(X_train)
+
+print(X_train.shape)
+
+input_shape = (256, 128, 1)
 
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
