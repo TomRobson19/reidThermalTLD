@@ -14,6 +14,7 @@ np.random.seed(1337)  # for reproducibility
 
 import random
 from keras.datasets import mnist
+from keras.callbacks import ModelCheckpoint
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import RMSprop
@@ -56,6 +57,27 @@ def create_pairs(x, digit_indices):
             pairs += [[x[z1], x[z2]]]
             labels += [1, 0]
     return np.array(pairs), np.array(labels)
+
+
+# generator version
+
+def generate_pairs(x, digit_indices):
+    '''Positive and negative pair creation.
+    Alternates between positive and negative pairs.
+    '''
+    pairs = []
+    labels = []
+    n = min([len(digit_indices[d]) for d in range(8)]) - 1
+    for d in range(8):
+        for i in range(n):
+            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+            pairs = [[x[z1], x[z2]]]
+            inc = random.randrange(1, 8)
+            dn = (d + inc) % 8
+            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
+            pairs = [[x[z1], x[z2]]]
+            labels = [1, 0]
+            yield (np.array(pairs), np.array(labels))
 
 
 def create_base_network(input_shape):
@@ -145,27 +167,26 @@ num_epochs = 20
 
 # the below range(10) arguments and the arguments in the create_pairs() function refers to the 10 classes in mnist dataset
 # this needs fixing
-
-
-# create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
-print(digit_indices)
-tr_pairs, tr_y = create_pairs(X_train, digit_indices)
+train_generator = generate_pairs(X_train, digit_indices)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
-print(digit_indices)
-te_pairs, te_y = create_pairs(X_test, digit_indices)
+test_generator = generate_pairs(X_test, digit_indices)
+
+# create training+test positive and negative pairs
+# digit_indices = [np.where(y_train == i)[0] for i in range(8)]
+# tr_pairs, tr_y = create_pairs(X_train, digit_indices)
+
+# digit_indices = [np.where(y_test == i)[0] for i in range(8)]
+# te_pairs, te_y = create_pairs(X_test, digit_indices)
 
 # network definition
 # base_network = create_base_network(input_dim, X_train)
 base_network = create_base_network(input_shape)
-
 # input_a = Input(shape=(input_dim,))
 # input_b = Input(shape=(input_dim,))
 input_a = Input(shape=input_shape)
 input_b = Input(shape=input_shape)
-
-
 # because we re-use the same instance `base_network`,
 # the weights of the network
 # will be shared across the two branches
@@ -180,10 +201,26 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 rms = RMSprop()
 #model.compile(loss=contrastive_loss, optimizer=rms)
 model.compile(loss=contrastive_loss, optimizer='adadelta')
-model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
-          validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
-          batch_size=128,
-          epochs=num_epochs)
+# model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
+#           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
+#           batch_size=128,
+#           epochs=num_epochs)
+
+#########define this stuff then test
+BATCH_SIZE = 32
+
+num_train_steps = len(X_train) // BATCH_SIZE
+num_val_steps = len(X_test) // BATCH_SIZE
+
+BEST_MODEL_FILE = os.path.join(image_dir, "models", "inception-ft-best.h5")
+
+checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
+history = model.fit_generator(train_generator, 
+                             steps_per_epoch=num_train_steps,
+                             epochs=num_epochs,
+                             validation_data=test_generator,
+                             validation_steps=num_val_steps,
+                             callbacks=[checkpoint])
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
