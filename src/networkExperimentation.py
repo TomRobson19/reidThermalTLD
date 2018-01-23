@@ -14,13 +14,20 @@ np.random.seed(1337)  # for reproducibility
 
 import random
 from keras.datasets import mnist
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import RMSprop
 from keras import backend as K
 import os
 import cv2
+
+outputFolder = "output"
+import time
+ts = time.time()
+outputFolder = outputFolder+"/"+str(ts).split(".")[0]
+
+tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
 
 def euclidean_distance(vects):
     x, y = vects
@@ -59,25 +66,46 @@ def create_pairs(x, digit_indices):
     return np.array(pairs), np.array(labels)
 
 
-# generator version
+# generator version - currently yields one positive and one negative pair per call
 
-def generate_pairs(x, digit_indices):
+def generate_pairs(x, digit_indices, batch_size):
     '''Positive and negative pair creation.
     Alternates between positive and negative pairs.
     '''
-    pairs = []
-    labels = []
+
+    current = 0
+
+    pairs1 = np.zeros((batch_size, 256, 128, 1))
+    pairs2 = np.zeros((batch_size, 256, 128, 1))
+    labels = np.zeros((batch_size, 2))
+
+    next_pair = True
     n = min([len(digit_indices[d]) for d in range(8)]) - 1
     for d in range(8):
         for i in range(n):
-            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-            pairs = [[x[z1], x[z2]]]
-            inc = random.randrange(1, 8)
-            dn = (d + inc) % 8
-            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
-            pairs = [[x[z1], x[z2]]]
-            labels = [1, 0]
-            yield (np.array(pairs), np.array(labels))
+            if next_pair == True:
+                z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+                pairs1[current] = x[z1]
+                pairs2[current] = x[z2]
+                labels[current] = [1, 0]
+                next_pair = False
+            else:
+                inc = random.randrange(1, 8)
+                dn = (d + inc) % 8
+                z1, z2 = digit_indices[d][i], digit_indices[dn][i]
+                pairs1[current] = x[z1]
+                pairs2[current] = x[z2]
+                labels[current] = [0, 1]
+                next_pair = True 
+            current += 1
+
+            if current == batch_size:
+                yield [pairs1, pairs2], labels
+                pairs1 = np.zeros((batch_size, 256, 128, 1))
+                pairs2 = np.zeros((batch_size, 256, 128, 1))
+                labels = np.zeros((batch_size, 2))
+                current = 0
+            
 
 
 def create_base_network(input_shape):
@@ -163,15 +191,24 @@ X_train /= 255
 X_test /= 255
 num_epochs = 20
 
-
+# p = np.random.permutation(len(X_train))
+# X_train = X_train[p]
+# y_train = y_train[p]
+# p = np.random.permutation(len(X_test))
+# X_test = X_test[p]
+# y_test = y_test[p]
 
 # the below range(10) arguments and the arguments in the create_pairs() function refers to the 10 classes in mnist dataset
 # this needs fixing
+BATCH_SIZE = 32
+
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
-train_generator = generate_pairs(X_train, digit_indices)
+train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
-test_generator = generate_pairs(X_test, digit_indices)
+test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
+
+print(next(train_generator))
 
 # create training+test positive and negative pairs
 # digit_indices = [np.where(y_train == i)[0] for i in range(8)]
@@ -199,8 +236,8 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 
 # train
 rms = RMSprop()
-#model.compile(loss=contrastive_loss, optimizer=rms)
-model.compile(loss=contrastive_loss, optimizer='adadelta')
+model.compile(loss=contrastive_loss, optimizer=rms)
+#model.compile(loss=contrastive_loss, optimizer='adadelta')
 # model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
 #           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
 #           batch_size=128,
@@ -212,15 +249,15 @@ BATCH_SIZE = 32
 num_train_steps = len(X_train) // BATCH_SIZE
 num_val_steps = len(X_test) // BATCH_SIZE
 
-BEST_MODEL_FILE = os.path.join(image_dir, "models", "inception-ft-best.h5")
+#BEST_MODEL_FILE = os.path.join(image_dir, "models", "inception-ft-best.h5")
 
-checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
+#checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
 history = model.fit_generator(train_generator, 
                              steps_per_epoch=num_train_steps,
                              epochs=num_epochs,
                              validation_data=test_generator,
-                             validation_steps=num_val_steps,
-                             callbacks=[checkpoint])
+                             validation_steps=num_val_steps, 
+                             callbacks=[tbCallBack])
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])

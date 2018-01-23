@@ -1247,5 +1247,26 @@ Did data extraction on all of last years data.
 Reading in data to network, issue now is that I am running out of GPU memory.
 \end_layout
 
+\begin_layout Section*
+Week 12
+\end_layout
+
+\begin_layout Itemize
+Experimenting with generators, nearly there I think.
+\end_layout
+
+\begin_layout Itemize
+Now seems to work but will need ages to run it
+\end_layout
+
+\begin_layout Itemize
+Do other stuff nice way of outputting the model - save model, weights, parameter
+s, confusion matrix, precision, accuracy, recall
+\end_layout
+
+\begin_layout Itemize
+Need to recheck and filter dataset
+\end_layout
+
 \end_body
 \end_document
