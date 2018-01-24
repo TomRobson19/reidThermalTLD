@@ -121,21 +121,21 @@ def create_base_network(input_shape):
     model = Sequential()
     model.add(Conv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape))
     model.add(Activation('relu'))
-    model.add(Conv2D(nb_filters, kernel_size))
-    model.add(Activation('relu'))
-    model.add(Conv2D(nb_filters, kernel_size))
-    model.add(Activation('relu'))
+    # model.add(Conv2D(nb_filters, kernel_size))
+    # model.add(Activation('relu'))
+    # model.add(Conv2D(nb_filters, kernel_size))
+    # model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=pool_size))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
     model.add(Dense(128))
     model.add(Activation('relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(128))
-    model.add(Activation('relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(128))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(128))
+    # model.add(Activation('relu'))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(128))
     model.add(Activation('relu'))
     return model
 
@@ -200,7 +200,7 @@ num_epochs = 20
 
 # the below range(10) arguments and the arguments in the create_pairs() function refers to the 10 classes in mnist dataset
 # this needs fixing
-BATCH_SIZE = 32
+BATCH_SIZE = 8
 
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
 train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
@@ -208,7 +208,7 @@ train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
 test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
 
-print(next(train_generator))
+#print(next(train_generator))
 
 # create training+test positive and negative pairs
 # digit_indices = [np.where(y_train == i)[0] for i in range(8)]
@@ -242,9 +242,6 @@ model.compile(loss=contrastive_loss, optimizer=rms)
 #           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
 #           batch_size=128,
 #           epochs=num_epochs)
-
-#########define this stuff then test
-BATCH_SIZE = 32
 
 num_train_steps = len(X_train) // BATCH_SIZE
 num_val_steps = len(X_test) // BATCH_SIZE

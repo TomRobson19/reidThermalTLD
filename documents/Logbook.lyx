@@ -1268,5 +1268,14 @@ s, confusion matrix, precision, accuracy, recall
 Need to recheck and filter dataset
 \end_layout
 
+\begin_layout Itemize
+Shrinking batch size fixes graphics memory error
+\end_layout
+
+\begin_layout Itemize
+StopIteration() error that I am now getting is due to the generator, unsure
+ why so far
+\end_layout
+
 \end_body
 \end_document
