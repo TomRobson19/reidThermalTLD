@@ -87,6 +87,4 @@ src/people*
 
 src/__pycache__/
 
-src/output/1516631609/log/
-
-src/output/1516631952/log/
+src/output/*
