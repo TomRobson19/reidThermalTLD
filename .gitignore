@@ -88,3 +88,5 @@ src/people*
 src/__pycache__/
 
 src/output/*
+
+src/test/

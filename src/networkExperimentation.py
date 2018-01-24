@@ -15,10 +15,11 @@ np.random.seed(1337)  # for reproducibility
 import random
 from keras.datasets import mnist
 from keras.callbacks import ModelCheckpoint, TensorBoard
-from keras.models import Sequential, Model
+from keras.models import Sequential, Model, load_model
 from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import RMSprop
 from keras import backend as K
+from sklearn.metrics import accuracy_score, confusion_matrix
 import os
 import cv2
 
@@ -80,31 +81,34 @@ def generate_pairs(x, digit_indices, batch_size):
     labels = np.zeros((batch_size, 2))
 
     next_pair = True
-    n = min([len(digit_indices[d]) for d in range(8)]) - 1
-    for d in range(8):
-        for i in range(n):
-            if next_pair == True:
-                z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-                pairs1[current] = x[z1]
-                pairs2[current] = x[z2]
-                labels[current] = [1, 0]
-                next_pair = False
-            else:
-                inc = random.randrange(1, 8)
-                dn = (d + inc) % 8
-                z1, z2 = digit_indices[d][i], digit_indices[dn][i]
-                pairs1[current] = x[z1]
-                pairs2[current] = x[z2]
-                labels[current] = [0, 1]
-                next_pair = True 
-            current += 1
+    #n = min([len(digit_indices[d]) for d in range(8)]) - 1
+    while(True):
+        for d in range(8):
+            n = len(digit_indices[d])-1
+            for i in range(n):
+                if next_pair == True:
+                    z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+                    pairs1[current] = x[z1]
+                    pairs2[current] = x[z2]
+                    labels[current] = [1, 0]
+                    next_pair = False
+                else:
+                    inc = random.randrange(1, 8)
+                    dn = (d + inc) % 8
+                    j = random.randint(0,len(digit_indices[dn])-1)
+                    z1, z2 = digit_indices[d][i], digit_indices[dn][j]
+                    pairs1[current] = x[z1]
+                    pairs2[current] = x[z2]
+                    labels[current] = [0, 1]
+                    next_pair = True 
+                current += 1
 
-            if current == batch_size:
-                yield [pairs1, pairs2], labels
-                pairs1 = np.zeros((batch_size, 256, 128, 1))
-                pairs2 = np.zeros((batch_size, 256, 128, 1))
-                labels = np.zeros((batch_size, 2))
-                current = 0
+                if current == batch_size:
+                    yield [pairs1, pairs2], labels
+                    pairs1 = np.zeros((batch_size, 256, 128, 1))
+                    pairs2 = np.zeros((batch_size, 256, 128, 1))
+                    labels = np.zeros((batch_size, 2))
+                    current = 0
             
 
 
@@ -121,21 +125,21 @@ def create_base_network(input_shape):
     model = Sequential()
     model.add(Conv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape))
     model.add(Activation('relu'))
-    # model.add(Conv2D(nb_filters, kernel_size))
-    # model.add(Activation('relu'))
-    # model.add(Conv2D(nb_filters, kernel_size))
-    # model.add(Activation('relu'))
+    model.add(Conv2D(nb_filters, kernel_size))
+    model.add(Activation('relu'))
+    model.add(Conv2D(nb_filters, kernel_size))
+    model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=pool_size))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
     model.add(Dense(128))
     model.add(Activation('relu'))
-    # model.add(Dropout(0.1))
-    # model.add(Dense(128))
-    # model.add(Activation('relu'))
-    # model.add(Dropout(0.1))
-    # model.add(Dense(128))
+    model.add(Dropout(0.1))
+    model.add(Dense(128))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.1))
+    model.add(Dense(128))
     model.add(Activation('relu'))
     return model
 
@@ -189,7 +193,7 @@ X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
 X_train /= 255
 X_test /= 255
-num_epochs = 20
+
 
 # p = np.random.permutation(len(X_train))
 # X_train = X_train[p]
@@ -198,15 +202,19 @@ num_epochs = 20
 # X_test = X_test[p]
 # y_test = y_test[p]
 
-# the below range(10) arguments and the arguments in the create_pairs() function refers to the 10 classes in mnist dataset
-# this needs fixing
 BATCH_SIZE = 8
+num_epochs = 1
 
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
 train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
 test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
+# counter = 0
+# while True:
+#     print(next(train_generator))
+#     print(counter)
+#     counter += 1
 
 #print(next(train_generator))
 
@@ -236,7 +244,7 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 
 # train
 rms = RMSprop()
-model.compile(loss=contrastive_loss, optimizer=rms)
+model.compile(loss=contrastive_loss, optimizer=rms, metrics=["accuracy"])
 #model.compile(loss=contrastive_loss, optimizer='adadelta')
 # model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
 #           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
@@ -250,17 +258,33 @@ num_val_steps = len(X_test) // BATCH_SIZE
 
 #checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
 history = model.fit_generator(train_generator, 
-                             steps_per_epoch=num_train_steps,
+                             steps_per_epoch=num_train_steps-2,
                              epochs=num_epochs,
                              validation_data=test_generator,
-                             validation_steps=num_val_steps, 
+                             validation_steps=num_val_steps-2, 
                              callbacks=[tbCallBack])
 
-# compute final accuracy on training and test sets
-pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
-tr_acc = compute_accuracy(pred, tr_y)
-pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
-te_acc = compute_accuracy(pred, te_y)
+FINAL_MODEL_FILE = os.path.join("test", "model.h5")
+model.save(FINAL_MODEL_FILE, overwrite=True)
 
-print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
-print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
+def evaluate_model(model):
+    ytest, ytest_ = [], []
+    num_test_steps = len(X_test) // BATCH_SIZE
+    curr_test_steps = 0
+    for [X1test, X2test], Ytest in test_generator:
+        if curr_test_steps > num_test_steps:
+            break
+        Ytest_ = model.predict([X1test, X2test])
+        ytest.extend(np.argmax(Ytest, axis=1).tolist())
+        ytest_.extend(np.argmax(Ytest_, axis=1).tolist())
+        curr_test_steps += 1
+    acc = accuracy_score(ytest, ytest_)
+    cm = confusion_matrix(ytest, ytest_)
+    return acc, cm
+
+print("==== Evaluation Results: final model on test set ====")
+final_model = load_model(FINAL_MODEL_FILE,custom_objects={'contrastive_loss': contrastive_loss})
+acc, cm = evaluate_model(final_model)
+print("Accuracy Score: {:.3f}".format(acc))
+print("Confusion Matrix")
+print(cm)

@@ -1273,8 +1273,8 @@ Shrinking batch size fixes graphics memory error
 \end_layout
 
 \begin_layout Itemize
-StopIteration() error that I am now getting is due to the generator, unsure
- why so far
+Dataset now working correctly with generator, not sure if the evaluation
+ is working properly, need to test on mnist
 \end_layout
 
 \end_body
