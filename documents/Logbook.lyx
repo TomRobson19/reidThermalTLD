@@ -1173,7 +1173,7 @@ have made bash script to remove all data in dataset while testing
 \end_layout
 
 \begin_layout Itemize
-extracted and filtered dataset1 data -DO NOT REFRESH OR SCREW UP
+extracted and filtered dataset1 data
 \end_layout
 
 \begin_layout Itemize
@@ -1265,7 +1265,7 @@ s, confusion matrix, precision, accuracy, recall
 \end_layout
 
 \begin_layout Itemize
-Need to recheck and filter dataset
+Need to recheck and filter dataset - done 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 \end_layout
 
 \begin_layout Itemize
@@ -1275,6 +1275,15 @@ Shrinking batch size fixes graphics memory error
 \begin_layout Itemize
 Dataset now working correctly with generator, not sure if the evaluation
  is working properly, need to test on mnist
+\end_layout
+
+\begin_layout Itemize
+Toby is sending me login for compute servers 
+\end_layout
+
+\begin_layout Itemize
+While filtering the dataset, found more missclassifications than I expected,
+ need to check data extraction class, maybe MOTLD is doing erroneous re-ID
 \end_layout
 
 \end_body

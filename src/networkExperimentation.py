@@ -210,6 +210,14 @@ train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
 test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
+
+while True:
+    test = random.randint(1,8)
+    [X1,X2],Y = next(train_generator)
+    cv2.imshow("test1", X1[test])
+    cv2.imshow("test2", X2[test])
+    print(Y[test])
+    cv2.waitKey(10000)
 # counter = 0
 # while True:
 #     print(next(train_generator))
