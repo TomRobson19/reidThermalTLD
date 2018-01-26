@@ -1,12 +1,3 @@
-'''Train a Siamese MLP on pairs of digits from the MNIST dataset.
-It follows Hadsell-et-al.'06 [1] by computing the Euclidean distance on the
-output of the shared network and by optimizing the contrastive loss (see paper
-for mode details).
-[1] "Dimensionality Reduction by Learning an Invariant Mapping"
-    http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
-Gets to 99.5% test accuracy after 20 epochs.
-3 seconds per epoch on a Titan X GPU
-'''
 from __future__ import absolute_import
 from __future__ import print_function
 import numpy as np
@@ -109,8 +100,6 @@ def generate_pairs(x, digit_indices, batch_size):
                     pairs2 = np.zeros((batch_size, 256, 128, 1))
                     labels = np.zeros((batch_size, 2))
                     current = 0
-            
-
 
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
@@ -143,17 +132,10 @@ def create_base_network(input_shape):
     model.add(Activation('relu'))
     return model
 
-
 def compute_accuracy(predictions, labels):
     '''Compute classification accuracy with a fixed threshold on distances.
     '''
     return labels[predictions.ravel() < 0.5].mean()
-
-
-# the data, shuffled and split between train and test sets
-#(X_train, y_train), (X_test, y_test) = mnist.load_data()
-
-
 
 X_train = []
 X_test = []
@@ -194,16 +176,8 @@ X_test = X_test.astype('float32')
 X_train /= 255
 X_test /= 255
 
-
-# p = np.random.permutation(len(X_train))
-# X_train = X_train[p]
-# y_train = y_train[p]
-# p = np.random.permutation(len(X_test))
-# X_test = X_test[p]
-# y_test = y_test[p]
-
 BATCH_SIZE = 8
-num_epochs = 1
+num_epochs = 4
 
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
 train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
@@ -226,15 +200,6 @@ test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
 #     print(counter)
 #     counter += 1
 
-#print(next(train_generator))
-
-# create training+test positive and negative pairs
-# digit_indices = [np.where(y_train == i)[0] for i in range(8)]
-# tr_pairs, tr_y = create_pairs(X_train, digit_indices)
-
-# digit_indices = [np.where(y_test == i)[0] for i in range(8)]
-# te_pairs, te_y = create_pairs(X_test, digit_indices)
-
 # network definition
 # base_network = create_base_network(input_dim, X_train)
 base_network = create_base_network(input_shape)
@@ -255,24 +220,19 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 # train
 rms = RMSprop()
 model.compile(loss=contrastive_loss, optimizer=rms, metrics=["accuracy"])
-#model.compile(loss=contrastive_loss, optimizer='adadelta')
-# model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
-#           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
-#           batch_size=128,
-#           epochs=num_epochs)
 
 num_train_steps = len(X_train) // BATCH_SIZE
 num_val_steps = len(X_test) // BATCH_SIZE
 
-#BEST_MODEL_FILE = os.path.join(image_dir, "models", "inception-ft-best.h5")
+BEST_MODEL_FILE = os.path.join("test", "checkpoint.h5")
 
-#checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
+checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
 history = model.fit_generator(train_generator, 
                              steps_per_epoch=num_train_steps-2,
                              epochs=num_epochs,
                              validation_data=test_generator,
                              validation_steps=num_val_steps-2, 
-                             callbacks=[tbCallBack])
+                             callbacks=[tbCallBack,checkpoint])
 
 FINAL_MODEL_FILE = os.path.join("test", "model.h5")
 model.save(FINAL_MODEL_FILE, overwrite=True)

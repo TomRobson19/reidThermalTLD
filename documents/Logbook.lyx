@@ -1248,7 +1248,7 @@ Reading in data to network, issue now is that I am running out of GPU memory.
 \end_layout
 
 \begin_layout Section*
-Week 12
+Week 12 and Meeting 12
 \end_layout
 
 \begin_layout Itemize
@@ -1284,6 +1284,20 @@ Toby is sending me login for compute servers
 \begin_layout Itemize
 While filtering the dataset, found more missclassifications than I expected,
  need to check data extraction class, maybe MOTLD is doing erroneous re-ID
+\end_layout
+
+\begin_layout Itemize
+Connected to NCC and install keras and tensorflow, need to use 
+\begin_inset Quotes eld
+\end_inset
+
+module load cuda/8.0-cudnn6
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Have cloned my repo on to it, and used scp to put my data onto it.
+ Now need to write appropriate slurm scripts.
 \end_layout
 
 \end_body
