@@ -1300,5 +1300,9 @@ module load cuda/8.0-cudnn6
  Now need to write appropriate slurm scripts.
 \end_layout
 
+\begin_layout Itemize
+Weird prints when training are allocation fails
+\end_layout
+
 \end_body
 \end_document

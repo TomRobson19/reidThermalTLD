@@ -64,9 +64,7 @@ def generate_pairs(x, digit_indices, batch_size):
     '''Positive and negative pair creation.
     Alternates between positive and negative pairs.
     '''
-
     current = 0
-
     pairs1 = np.zeros((batch_size, 256, 128, 1))
     pairs2 = np.zeros((batch_size, 256, 128, 1))
     labels = np.zeros((batch_size, 2))
@@ -185,7 +183,6 @@ train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
 test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
 
-
 # GENERATOR TESTING
 # while True:
 #     test = random.randint(0,7)
@@ -203,8 +200,7 @@ test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
 # network definition
 # base_network = create_base_network(input_dim, X_train)
 base_network = create_base_network(input_shape)
-# input_a = Input(shape=(input_dim,))
-# input_b = Input(shape=(input_dim,))
+
 input_a = Input(shape=input_shape)
 input_b = Input(shape=input_shape)
 # because we re-use the same instance `base_network`,
