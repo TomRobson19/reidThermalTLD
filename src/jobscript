@@ -2,7 +2,7 @@
 #SBATCH -N 1
 #SBATCH -c 1
 #SBATCH --gres=gpu:1
-#SBATCH -p debug
+#SBATCH -p short
 #SBATCH --job-name=thermalReID
 
 #SBATCH --mail-user t.a.robson@durham.ac.uk
