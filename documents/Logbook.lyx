@@ -1305,7 +1305,11 @@ Weird prints when training are allocation fails
 \end_layout
 
 \begin_layout Itemize
-NEED TO FILTER DATASET AGAIN
+NEED TO FILTER DATASET AGAIN - DONE
+\end_layout
+
+\begin_layout Itemize
+Have problems with cuda version on NCC
 \end_layout
 
 \end_body
