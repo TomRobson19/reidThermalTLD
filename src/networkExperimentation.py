@@ -175,7 +175,7 @@ X_train /= 255
 X_test /= 255
 
 BATCH_SIZE = 8
-num_epochs = 4
+num_epochs = 10
 
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
 train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
