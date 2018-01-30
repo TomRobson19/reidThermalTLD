@@ -1304,5 +1304,9 @@ module load cuda/8.0-cudnn6
 Weird prints when training are allocation fails
 \end_layout
 
+\begin_layout Itemize
+NEED TO FILTER DATASET AGAIN
+\end_layout
+
 \end_body
 \end_document
