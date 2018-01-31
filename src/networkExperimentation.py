@@ -110,24 +110,18 @@ def create_base_network(input_shape):
     kernel_size = (32,32)
 
     model = Sequential()
-    model.add(Conv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape))
-    model.add(Activation('relu'))
-    model.add(Conv2D(nb_filters, kernel_size))
-    model.add(Activation('relu'))
-    model.add(Conv2D(nb_filters, kernel_size))
-    model.add(Activation('relu'))
+    model.add(Conv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape, activation='relu'))
+    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
+    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
     model.add(MaxPooling2D(pool_size=pool_size))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
-    model.add(Dense(128))
-    model.add(Activation('relu'))
+    model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.1))
-    model.add(Dense(128))
-    model.add(Activation('relu'))
+    model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.1))
-    model.add(Dense(128))
-    model.add(Activation('relu'))
+    model.add(Dense(128, activation='relu'))
     return model
 
 def compute_accuracy(predictions, labels):

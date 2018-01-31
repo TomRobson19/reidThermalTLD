@@ -1309,7 +1309,10 @@ NEED TO FILTER DATASET AGAIN - DONE
 \end_layout
 
 \begin_layout Itemize
-Have problems with cuda version on NCC
+Been fiddling with train test split, need separate data for training, validation
+ and evaluation.
+ Split into training and validation, maybe use a different dataset for evaluatio
+n.
 \end_layout
 
 \end_body
