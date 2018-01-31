@@ -154,12 +154,12 @@ for target in img_groups:
         if int(target) < 8:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            X_train.append(img)
-            y_train.append(int(target))
-            img = cv2.imread(os.path.join(image_dir, target, img_file))
-            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            X_test.append(img)
-            y_test.append(int(target))
+            if np.random.random() < 0.8:
+                X_train.append(img)
+                y_train.append(int(target))
+            else:
+                X_test.append(img)
+                y_test.append(int(target))
 
 X_train = np.array(X_train)
 X_test = np.array(X_test)
@@ -228,6 +228,7 @@ history = model.fit_generator(train_generator,
                              epochs=num_epochs,
                              validation_data=test_generator,
                              validation_steps=num_val_steps-2, 
+                             verbose=2,
                              callbacks=[tbCallBack,checkpoint])
 
 FINAL_MODEL_FILE = os.path.join("test", "model.h5")
