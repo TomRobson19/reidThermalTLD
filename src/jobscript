@@ -2,7 +2,7 @@
 #SBATCH -N 1
 #SBATCH -c 1
 #SBATCH --gres=gpu:pascal:1
-#SBATCH -p long
+#SBATCH -p short
 #SBATCH --job-name=thermalReID
 
 #SBATCH -e stderr-filename
