@@ -1265,10 +1265,6 @@ s, confusion matrix, precision, accuracy, recall
 \end_layout
 
 \begin_layout Itemize
-Need to recheck and filter dataset - done 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-\end_layout
-
-\begin_layout Itemize
 Shrinking batch size fixes graphics memory error
 \end_layout
 
@@ -1304,6 +1300,10 @@ module load cuda/8.0-cudnn6
 Weird prints when training are allocation fails
 \end_layout
 
+\begin_layout Section*
+Week 13 and Meeting 13
+\end_layout
+
 \begin_layout Itemize
 NEED TO FILTER DATASET AGAIN - DONE
 \end_layout
@@ -1315,10 +1315,6 @@ Been fiddling with train test split, need separate data for training, validation
 n.
 \end_layout
 
-\begin_layout Section*
-Week 13
-\end_layout
-
 \begin_layout Itemize
 Reference survey paper for first part of lit review 
 \end_layout
@@ -1326,6 +1322,10 @@ Reference survey paper for first part of lit review
 \begin_layout Itemize
 Don't rely too heavily on last years paper for this year, as it will be
  different marker
+\end_layout
+
+\begin_layout Itemize
+currently almost no learning is happening, need to look at this.
 \end_layout
 
 \end_body
