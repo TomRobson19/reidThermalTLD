@@ -209,7 +209,7 @@ distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([proc
 
 model = Model(inputs=[input_a, input_b], outputs=distance)
 
-# train
+# train - try with Adam and Adadelta
 rms = RMSprop()
 model.compile(loss=contrastive_loss, optimizer=rms, metrics=["accuracy"])
 
