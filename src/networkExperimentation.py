@@ -7,7 +7,7 @@ import random
 from keras.datasets import mnist
 from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.models import Sequential, Model, load_model
-from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
+from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten, ZeroPadding2D
 from keras.optimizers import RMSprop
 from keras import backend as K
 from sklearn.metrics import accuracy_score, confusion_matrix
@@ -109,21 +109,60 @@ def create_base_network(input_shape):
     # convolution kernel size
     kernel_size = (8,8)
 
-    model = Sequential()
-    model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
-    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    model.add(MaxPooling2D(pool_size=pool_size))
-    model.add(Dropout(0.25))
+    # model = Sequential()
+    # model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
+    # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
+    # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
+    # model.add(MaxPooling2D(pool_size=pool_size))
+    # model.add(Dropout(0.25))
 
+    # model.add(Flatten())
+    # model.add(Dense(128, activation='relu'))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(128, activation='relu'))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(128, activation='relu'))
+
+    model = Sequential()
+    model.add(ZeroPadding2D((1, 1), input_shape=input_shape))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(256, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(256, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(256, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1, 1)))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(Flatten())
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(128, activation='relu'))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+
+
     return model
 
 def compute_accuracy(predictions, labels):
