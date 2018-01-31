@@ -103,14 +103,16 @@ def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
     
     # number of convolutional filters to use
-    nb_filters = 32
+    nb_filters = 128
     # size of pooling area for max pooling
-    pool_size = (16, 16)
+    pool_size = (8,8)
     # convolution kernel size
-    kernel_size = (32,32)
+    kernel_size = (8,8)
 
     model = Sequential()
-    model.add(Conv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape, activation='relu'))
+    model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
+    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
+    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
     model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
     model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
     model.add(MaxPooling2D(pool_size=pool_size))
