@@ -5,9 +5,6 @@
 #SBATCH -p short
 #SBATCH --job-name=thermalReID
 
-#SBATCH --mail-user t.a.robson@durham.ac.uk
-#SBATCH --mail-type=ALL
-
 #SBATCH -e stderr-filename
 #SBATCH -o stdout-filename
 
