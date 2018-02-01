@@ -119,26 +119,24 @@ def generate_pairs(x, digit_indices, batch_size):
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
     
-    # # number of convolutional filters to use
     # nb_filters = 128
-    # # size of pooling area for max pooling
     # pool_size = (8,8)
-    # # convolution kernel size
     # kernel_size = (8,8)
-
     # model = Sequential()
     # model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
     # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
     # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
     # model.add(MaxPooling2D(pool_size=pool_size))
     # model.add(Dropout(0.25))
-
     # model.add(Flatten())
     # model.add(Dense(128, activation='relu'))
     # model.add(Dropout(0.1))
     # model.add(Dense(128, activation='relu'))
     # model.add(Dropout(0.1))
     # model.add(Dense(128, activation='relu'))
+
+
+
 
     # model = Sequential()
     # model.add(ZeroPadding2D((1, 1), input_shape=input_shape))
@@ -177,43 +175,87 @@ def create_base_network(input_shape):
     # model.add(Dropout(0.5))
     # model.add(Dense(4096, activation='relu'))
 
-    img_input = Input(input_shape)
-    x = Conv2D(32, (3, 3), strides=(2, 2), use_bias=False)(img_input)
-    x = BatchNormalization(name='block1_conv1_bn')(x)
-    x = Activation('relu', name='block1_conv1_act')(x)
-    x = Conv2D(64, (3, 3), use_bias=False)(x)
-    x = BatchNormalization(name='block1_conv2_bn')(x)
-    x = Activation('relu', name='block1_conv2_act')(x)
 
-    residual = Conv2D(128, (1, 1), strides=(2, 2),
-                      padding='same', use_bias=False)(x)
-    residual = BatchNormalization()(residual)
 
-    x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
-    x = BatchNormalization(name='block2_sepconv1_bn')(x)
-    x = Activation('relu', name='block2_sepconv2_act')(x)
-    x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
-    x = BatchNormalization(name='block2_sepconv2_bn')(x)
 
-    x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
-    x = layers.add([x, residual])
+    # img_input = Input(input_shape)
+    # x = Conv2D(32, (3, 3), strides=(2, 2), use_bias=False)(img_input)
+    # x = BatchNormalization(name='block1_conv1_bn')(x)
+    # x = Activation('relu', name='block1_conv1_act')(x)
+    # x = Conv2D(64, (3, 3), use_bias=False)(x)
+    # x = BatchNormalization(name='block1_conv2_bn')(x)
+    # x = Activation('relu', name='block1_conv2_act')(x)
 
-    residual = Conv2D(256, (1, 1), strides=(2, 2),
-                      padding='same', use_bias=False)(x)
-    residual = BatchNormalization()(residual)
+    # residual = Conv2D(128, (1, 1), strides=(2, 2),
+    #                   padding='same', use_bias=False)(x)
+    # residual = BatchNormalization()(residual)
 
-    x = Activation('relu', name='block3_sepconv1_act')(x)
-    x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
-    x = BatchNormalization(name='block3_sepconv1_bn')(x)
-    x = Activation('relu', name='block3_sepconv2_act')(x)
-    x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
-    x = BatchNormalization(name='block3_sepconv2_bn')(x)
+    # x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
+    # x = BatchNormalization(name='block2_sepconv1_bn')(x)
+    # x = Activation('relu', name='block2_sepconv2_act')(x)
+    # x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
+    # x = BatchNormalization(name='block2_sepconv2_bn')(x)
 
-    x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
-    x = layers.add([x, residual])
-    x = GlobalAveragePooling2D()(x)
+    # x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
+    # x = layers.add([x, residual])
 
-    model = Model(img_input, x)
+    # residual = Conv2D(256, (1, 1), strides=(2, 2),
+    #                   padding='same', use_bias=False)(x)
+    # residual = BatchNormalization()(residual)
+
+    # x = Activation('relu', name='block3_sepconv1_act')(x)
+    # x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
+    # x = BatchNormalization(name='block3_sepconv1_bn')(x)
+    # x = Activation('relu', name='block3_sepconv2_act')(x)
+    # x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
+    # x = BatchNormalization(name='block3_sepconv2_bn')(x)
+
+    # x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
+    # x = layers.add([x, residual])
+    # x = GlobalAveragePooling2D()(x)
+
+    # model = Model(img_input, x)
+
+    model = Sequential()
+    model.add(Convolution2D(filters=16, kernel_size=(7, 7), padding='same',
+                            name='image_array', input_shape=input_shape))
+    model.add(BatchNormalization())
+    model.add(Convolution2D(filters=16, kernel_size=(7, 7), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(AveragePooling2D(pool_size=(2, 2), padding='same'))
+    model.add(Dropout(.5))
+
+    model.add(Convolution2D(filters=32, kernel_size=(5, 5), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Convolution2D(filters=32, kernel_size=(5, 5), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(AveragePooling2D(pool_size=(2, 2), padding='same'))
+    model.add(Dropout(.5))
+
+    model.add(Convolution2D(filters=64, kernel_size=(3, 3), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Convolution2D(filters=64, kernel_size=(3, 3), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(AveragePooling2D(pool_size=(2, 2), padding='same'))
+    model.add(Dropout(.5))
+
+    model.add(Convolution2D(filters=128, kernel_size=(3, 3), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Convolution2D(filters=128, kernel_size=(3, 3), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(AveragePooling2D(pool_size=(2, 2), padding='same'))
+    model.add(Dropout(.5))
+
+    model.add(Convolution2D(filters=256, kernel_size=(3, 3), padding='same'))
+    model.add(BatchNormalization())
+    model.add(Convolution2D(filters=num_classes, kernel_size=(3, 3), padding='same'))
+    model.add(GlobalAveragePooling2D())
+
+    
     return model
 
 def compute_accuracy(predictions, labels):
