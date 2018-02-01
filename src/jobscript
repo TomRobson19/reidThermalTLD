@@ -8,6 +8,8 @@
 #SBATCH -e stderr-filename
 #SBATCH -o stdout-filename
 
+#SBATCH -t 24:00:00
+
 module load cuda/8.0-cudnn6
 module load opencv/3.4-py3
 
