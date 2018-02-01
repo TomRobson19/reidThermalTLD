@@ -102,12 +102,12 @@ def generate_pairs(x, digit_indices, batch_size):
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
     
-    # number of convolutional filters to use
-    nb_filters = 128
-    # size of pooling area for max pooling
-    pool_size = (8,8)
-    # convolution kernel size
-    kernel_size = (8,8)
+    # # number of convolutional filters to use
+    # nb_filters = 128
+    # # size of pooling area for max pooling
+    # pool_size = (8,8)
+    # # convolution kernel size
+    # kernel_size = (8,8)
 
     # model = Sequential()
     # model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
@@ -247,8 +247,8 @@ distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([proc
 model = Model(inputs=[input_a, input_b], outputs=distance)
 
 # train - try with Adam and Adadelta
-rms = RMSprop()
-model.compile(loss=contrastive_loss, optimizer=rms, metrics=["accuracy"])
+#rms = RMSprop()
+model.compile(loss=contrastive_loss, optimizer="adadelta", metrics=["accuracy"])
 
 num_train_steps = len(X_train) // BATCH_SIZE
 num_val_steps = len(X_test) // BATCH_SIZE
