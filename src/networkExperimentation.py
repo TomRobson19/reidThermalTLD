@@ -14,6 +14,23 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import os
 import cv2
 
+
+
+from keras.layers import Activation, Convolution2D, Dropout, Conv2D
+from keras.layers import AveragePooling2D, BatchNormalization
+from keras.layers import GlobalAveragePooling2D
+from keras.models import Sequential
+from keras.layers import Flatten
+from keras.models import Model
+from keras.layers import Input
+from keras.layers import MaxPooling2D
+from keras.layers import SeparableConv2D
+from keras import layers
+from keras.regularizers import l2
+
+
+
+
 outputFolder = "output"
 import time
 ts = time.time()
@@ -123,44 +140,80 @@ def create_base_network(input_shape):
     # model.add(Dropout(0.1))
     # model.add(Dense(128, activation='relu'))
 
-    model = Sequential()
-    model.add(ZeroPadding2D((1, 1), input_shape=input_shape))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(256, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(256, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(256, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(512, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1, 1)))
-    model.add(Conv2D(512, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    model.add(Flatten())
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(4096, activation='relu'))
+    # model = Sequential()
+    # model.add(ZeroPadding2D((1, 1), input_shape=input_shape))
+    # model.add(Conv2D(64, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(64, (3, 3), activation='relu'))
+    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(128, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(128, (3, 3), activation='relu'))
+    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(256, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(256, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(256, (3, 3), activation='relu'))
+    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(512, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(512, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(512, (3, 3), activation='relu'))
+    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(512, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(512, (3, 3), activation='relu'))
+    # model.add(ZeroPadding2D((1, 1)))
+    # model.add(Conv2D(512, (3, 3), activation='relu'))
+    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    # model.add(Flatten())
+    # model.add(Dense(4096, activation='relu'))
+    # model.add(Dropout(0.5))
+    # model.add(Dense(4096, activation='relu'))
 
+    img_input = Input(input_shape)
+    x = Conv2D(32, (3, 3), strides=(2, 2), use_bias=False)(img_input)
+    x = BatchNormalization(name='block1_conv1_bn')(x)
+    x = Activation('relu', name='block1_conv1_act')(x)
+    x = Conv2D(64, (3, 3), use_bias=False)(x)
+    x = BatchNormalization(name='block1_conv2_bn')(x)
+    x = Activation('relu', name='block1_conv2_act')(x)
 
+    residual = Conv2D(128, (1, 1), strides=(2, 2),
+                      padding='same', use_bias=False)(x)
+    residual = BatchNormalization()(residual)
+
+    x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
+    x = BatchNormalization(name='block2_sepconv1_bn')(x)
+    x = Activation('relu', name='block2_sepconv2_act')(x)
+    x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
+    x = BatchNormalization(name='block2_sepconv2_bn')(x)
+
+    x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
+    x = layers.add([x, residual])
+
+    residual = Conv2D(256, (1, 1), strides=(2, 2),
+                      padding='same', use_bias=False)(x)
+    residual = BatchNormalization()(residual)
+
+    x = Activation('relu', name='block3_sepconv1_act')(x)
+    x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
+    x = BatchNormalization(name='block3_sepconv1_bn')(x)
+    x = Activation('relu', name='block3_sepconv2_act')(x)
+    x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
+    x = BatchNormalization(name='block3_sepconv2_bn')(x)
+
+    x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
+    x = layers.add([x, residual])
+    x = GlobalAveragePooling2D()(x)
+
+    model = Model(img_input, x)
     return model
 
 def compute_accuracy(predictions, labels):
