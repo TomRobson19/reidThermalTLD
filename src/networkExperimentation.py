@@ -252,10 +252,10 @@ def create_base_network(input_shape):
 
     model.add(Convolution2D(filters=256, kernel_size=(3, 3), padding='same'))
     model.add(BatchNormalization())
-    model.add(Convolution2D(filters=num_classes, kernel_size=(3, 3), padding='same'))
+    model.add(Convolution2D(filters=256, kernel_size=(3, 3), padding='same'))
     model.add(GlobalAveragePooling2D())
 
-    
+
     return model
 
 def compute_accuracy(predictions, labels):
