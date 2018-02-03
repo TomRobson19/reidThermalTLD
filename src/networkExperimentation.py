@@ -84,7 +84,7 @@ def generate_pairs(x, digit_indices, batch_size):
     current = 0
     pairs1 = np.zeros((batch_size, 256, 128, 1))
     pairs2 = np.zeros((batch_size, 256, 128, 1))
-    labels = np.zeros((batch_size, 1))
+    labels = np.zeros((batch_size, 2))
 
     next_pair = True
     #n = min([len(digit_indices[d]) for d in range(8)]) - 1
@@ -96,7 +96,7 @@ def generate_pairs(x, digit_indices, batch_size):
                     z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
                     pairs1[current] = x[z1]
                     pairs2[current] = x[z2]
-                    labels[current] = [1]
+                    labels[current] = [1,0]
                     next_pair = False
                 else:
                     inc = random.randrange(1, 8)
@@ -105,7 +105,7 @@ def generate_pairs(x, digit_indices, batch_size):
                     z1, z2 = digit_indices[d][i], digit_indices[dn][j]
                     pairs1[current] = x[z1]
                     pairs2[current] = x[z2]
-                    labels[current] = [0]
+                    labels[current] = [0,1]
                     next_pair = True 
                 current += 1
 
@@ -113,7 +113,7 @@ def generate_pairs(x, digit_indices, batch_size):
                     yield [pairs1, pairs2], labels
                     pairs1 = np.zeros((batch_size, 256, 128, 1))
                     pairs2 = np.zeros((batch_size, 256, 128, 1))
-                    labels = np.zeros((batch_size, 1))
+                    labels = np.zeros((batch_size, 2))
                     current = 0
 
 def create_base_network(input_shape):
