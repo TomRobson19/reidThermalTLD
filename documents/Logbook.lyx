@@ -1337,5 +1337,14 @@ Implemented a closed world architecture for my data, this appears to be
  working well.
 \end_layout
 
+\begin_layout Itemize
+Closed world with augmentation - Test accuracy: 0.9645250295624753 
+\end_layout
+
+\begin_layout Itemize
+Closed world no augmentation - Test accuracy: 0.9940476190476191 - MAYBE
+ OVERFITTED?
+\end_layout
+
 \end_body
 \end_document
