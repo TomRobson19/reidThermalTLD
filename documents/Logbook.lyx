@@ -1329,7 +1329,12 @@ currently almost no learning is happening, need to look at this.
 \end_layout
 
 \begin_layout Itemize
-Testing a fair amount of networks from the internet
+Testing a fair amount of networks from the internet - none worked so far
+\end_layout
+
+\begin_layout Itemize
+Implemented a closed world architecture for my data, this appears to be
+ working well.
 \end_layout
 
 \end_body
