@@ -10,6 +10,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D
+from keras.callbacks import ModelCheckpoint, TensorBoard
 import os
 import cv2
 import numpy as np
@@ -17,12 +18,16 @@ import numpy as np
 batch_size = 32
 num_classes = 8
 epochs = 100
-data_augmentation = False
+data_augmentation = True
 num_predictions = 20
 save_dir = os.path.join(os.getcwd(), 'saved_models')
 model_name = 'keras_cifar10_trained_model.h5'
 
-
+outputFolder = "output"
+import time
+ts = time.time()
+outputFolder = outputFolder+"/"+str(ts).split(".")[0]
+tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
 
 x_train = []
 x_test = []
@@ -136,7 +141,8 @@ else:
                                      batch_size=batch_size),
                         epochs=epochs,
                         validation_data=(x_test, y_test),
-                        workers=4)
+                        workers=4,
+                        callbacks=[tbCallBack])
 
 # Save model and weights
 if not os.path.isdir(save_dir):
