@@ -121,21 +121,21 @@ def create_base_network(input_shape):
     
 
     # DOESNT LEARN ANYTHING
-    nb_filters = 128
-    pool_size = (8,8)
-    kernel_size = (8,8)
-    model = Sequential()
-    model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
-    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    model.add(MaxPooling2D(pool_size=pool_size))
-    model.add(Dropout(0.25))
-    model.add(Flatten())
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(128, activation='relu'))
+    # nb_filters = 128
+    # pool_size = (8,8)
+    # kernel_size = (8,8)
+    # model = Sequential()
+    # model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
+    # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
+    # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
+    # model.add(MaxPooling2D(pool_size=pool_size))
+    # model.add(Dropout(0.25))
+    # model.add(Flatten())
+    # model.add(Dense(128, activation='relu'))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(128, activation='relu'))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(128, activation='relu'))
 
 
 
@@ -209,7 +209,26 @@ def create_base_network(input_shape):
     # x = GlobalAveragePooling2D()(x)
     # model = Model(img_input, x)
 
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), padding='same',
+                     input_shape=input_shape))
+    model.add(Activation('relu'))
+    model.add(Conv2D(32, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
 
+    model.add(Conv2D(64, (3, 3), padding='same'))
+    model.add(Activation('relu'))
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Flatten())
+    model.add(Dense(512))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.5))
     return model
 
 def compute_accuracy(predictions, labels):
