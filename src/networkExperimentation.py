@@ -74,9 +74,6 @@ def create_pairs(x, digit_indices):
             labels += [1, 0]
     return np.array(pairs), np.array(labels)
 
-
-# generator version - currently yields one positive and one negative pair per call
-
 def generate_pairs(x, digit_indices, batch_size):
     '''Positive and negative pair creation.
     Alternates between positive and negative pairs.
@@ -118,96 +115,6 @@ def generate_pairs(x, digit_indices, batch_size):
 
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction).
-    
-
-    # DOESNT LEARN ANYTHING
-    # nb_filters = 128
-    # pool_size = (8,8)
-    # kernel_size = (8,8)
-    # model = Sequential()
-    # model.add(Conv2D(nb_filters, kernel_size, padding='same', input_shape=input_shape, activation='relu'))
-    # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    # model.add(Conv2D(nb_filters, kernel_size, activation='relu'))
-    # model.add(MaxPooling2D(pool_size=pool_size))
-    # model.add(Dropout(0.25))
-    # model.add(Flatten())
-    # model.add(Dense(128, activation='relu'))
-    # model.add(Dropout(0.1))
-    # model.add(Dense(128, activation='relu'))
-    # model.add(Dropout(0.1))
-    # model.add(Dense(128, activation='relu'))
-
-
-
-    # DOESN'T LEARN ANYTHING
-    # model = Sequential()
-    # model.add(ZeroPadding2D((1, 1), input_shape=input_shape))
-    # model.add(Conv2D(64, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(64, (3, 3), activation='relu'))
-    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(128, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(128, (3, 3), activation='relu'))
-    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(256, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(256, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(256, (3, 3), activation='relu'))
-    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(512, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(512, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(512, (3, 3), activation='relu'))
-    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(512, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(512, (3, 3), activation='relu'))
-    # model.add(ZeroPadding2D((1, 1)))
-    # model.add(Conv2D(512, (3, 3), activation='relu'))
-    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    # model.add(Flatten())
-    # model.add(Dense(4096, activation='relu'))
-    # model.add(Dropout(0.5))
-    # model.add(Dense(4096, activation='relu'))
-
-
-
-    #starts worse than random, but improves a bit, never above random though
-    # img_input = Input(input_shape)
-    # x = Conv2D(32, (3, 3), strides=(2, 2), use_bias=False)(img_input)
-    # x = BatchNormalization(name='block1_conv1_bn')(x)
-    # x = Activation('relu', name='block1_conv1_act')(x)
-    # x = Conv2D(64, (3, 3), use_bias=False)(x)
-    # x = BatchNormalization(name='block1_conv2_bn')(x)
-    # x = Activation('relu', name='block1_conv2_act')(x)
-    # residual = Conv2D(128, (1, 1), strides=(2, 2),padding='same', use_bias=False)(x)
-    # residual = BatchNormalization()(residual)
-    # x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
-    # x = BatchNormalization(name='block2_sepconv1_bn')(x)
-    # x = Activation('relu', name='block2_sepconv2_act')(x)
-    # x = SeparableConv2D(128, (3, 3), padding='same', use_bias=False)(x)
-    # x = BatchNormalization(name='block2_sepconv2_bn')(x)
-    # x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
-    # x = layers.add([x, residual])
-    # residual = Conv2D(256, (1, 1), strides=(2, 2),padding='same', use_bias=False)(x)
-    # residual = BatchNormalization()(residual)
-    # x = Activation('relu', name='block3_sepconv1_act')(x)
-    # x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
-    # x = BatchNormalization(name='block3_sepconv1_bn')(x)
-    # x = Activation('relu', name='block3_sepconv2_act')(x)
-    # x = SeparableConv2D(256, (3, 3), padding='same', use_bias=False)(x)
-    # x = BatchNormalization(name='block3_sepconv2_bn')(x)
-    # x = MaxPooling2D((3, 3), strides=(2, 2), padding='same')(x)
-    # x = layers.add([x, residual])
-    # x = GlobalAveragePooling2D()(x)
-    # model = Model(img_input, x)
 
     model = Sequential()
     model.add(Conv2D(32, (3, 3), padding='same',
