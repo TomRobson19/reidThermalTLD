@@ -1,27 +1,26 @@
-'''Train a simple deep CNN on the CIFAR10 small images dataset.
-It gets to 75% validation accuracy in 25 epochs, and 79% after 50 epochs.
-(it's still underfitting at that point, though).
+'''Train a Siamese MLP on pairs of digits from the MNIST dataset.
+It follows Hadsell-et-al.'06 [1] by computing the Euclidean distance on the
+output of the shared network and by optimizing the contrastive loss (see paper
+for mode details).
+[1] "Dimensionality Reduction by Learning an Invariant Mapping"
+    http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
+Gets to 99.5% test accuracy after 20 epochs.
+3 seconds per epoch on a Titan X GPU
 '''
-
+from __future__ import absolute_import
 from __future__ import print_function
-import keras
-from keras.datasets import cifar10
-from keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, Flatten
-from keras.layers import Conv2D, MaxPooling2D
+import numpy as np
+np.random.seed(1337)  # for reproducibility
+
+import random
 from keras.callbacks import ModelCheckpoint, TensorBoard
+from keras.datasets import mnist
+from keras.models import Sequential, Model
+from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
+from keras.optimizers import RMSprop
+from keras import backend as K
 import os
 import cv2
-import numpy as np
-
-batch_size = 32
-num_classes = 8
-epochs = 100
-data_augmentation = True
-num_predictions = 20
-save_dir = os.path.join(os.getcwd(), 'saved_models')
-model_name = 'trained_model.h5'
 
 outputFolder = "output"
 import time
@@ -29,6 +28,69 @@ ts = time.time()
 outputFolder = outputFolder+"/"+str(ts).split(".")[0]
 tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
 
+def euclidean_distance(vects):
+    x, y = vects
+    return K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True))
+
+
+def eucl_dist_output_shape(shapes):
+    shape1, shape2 = shapes
+    return (shape1[0], 1)
+
+
+def contrastive_loss(y_true, y_pred):
+    '''Contrastive loss from Hadsell-et-al.'06
+    http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
+    '''
+    margin = 1
+    return K.mean(y_true * K.square(y_pred) + (1 - y_true) * K.square(K.maximum(margin - y_pred, 0)))
+
+
+def create_pairs(x, digit_indices):
+    '''Positive and negative pair creation.
+    Alternates between positive and negative pairs.
+    '''
+    pairs = []
+    labels = []
+    n = min([len(digit_indices[d]) for d in range(8)]) - 1
+    for d in range(8):
+        for i in range(n):
+            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+            pairs += [[x[z1], x[z2]]]
+            inc = random.randrange(1, 8)
+            dn = (d + inc) % 8
+            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
+            pairs += [[x[z1], x[z2]]]
+            labels += [1, 0]
+    return np.array(pairs), np.array(labels)
+
+
+def create_base_network(input_shape):
+    #Base network to be shared (eq. to feature extraction).
+
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape, activation='relu'))
+    model.add(Conv2D(32, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Flatten())
+    model.add(Dense(512, activation='relu'))
+    return model
+
+
+def compute_accuracy(predictions, labels):
+    '''Compute classification accuracy with a fixed threshold on distances.
+    '''
+    return labels[predictions.ravel() < 0.5].mean()
+
+
+# the data, shuffled and split between train and test sets
 x_train = []
 x_test = []
 y_train = []
@@ -68,84 +130,50 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255  
 
+num_epochs = 100
 
- 
+# create training+test positive and negative pairs
+digit_indices = [np.where(y_train == i)[0] for i in range(8)]
+tr_pairs, tr_y = create_pairs(x_train, digit_indices)
+
+digit_indices = [np.where(y_test == i)[0] for i in range(8)]
+te_pairs, te_y = create_pairs(x_test, digit_indices)
+
+# network definition
+# base_network = create_base_network(input_dim, X_train)
+base_network = create_base_network(input_shape)
+
+# input_a = Input(shape=(input_dim,))
+# input_b = Input(shape=(input_dim,))
+input_a = Input(shape=input_shape)
+input_b = Input(shape=input_shape)
 
 
+# because we re-use the same instance `base_network`,
+# the weights of the network
+# will be shared across the two branches
+processed_a = base_network(input_a)
+processed_b = base_network(input_b)
 
-# Convert class vectors to binary class matrices.
-y_train = keras.utils.to_categorical(y_train, num_classes)
-y_test = keras.utils.to_categorical(y_test, num_classes)
+distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([processed_a, processed_b])
 
+model = Model(inputs=[input_a, input_b], outputs=distance)
 
+# train
+rms = RMSprop()
+#model.compile(loss=contrastive_loss, optimizer=rms)
+model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["accuracy"])
+model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
+          validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
+          batch_size=128,
+          epochs=num_epochs,
+          callbacks=[tbCallBack])
 
-model = Sequential()
-model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape, activation='relu'))
-model.add(Conv2D(32, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
+# compute final accuracy on training and test sets
+pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
+tr_acc = compute_accuracy(pred, tr_y)
+pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
+te_acc = compute_accuracy(pred, te_y)
 
-model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-
-model.add(Flatten())
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(num_classes))
-model.add(Activation('softmax'))
-
-# initiate RMSprop optimizer
-opt = keras.optimizers.rmsprop(lr=0.0001, decay=1e-6)
-
-# Let's train the model using RMSprop
-model.compile(loss='categorical_crossentropy',
-              optimizer=opt,
-              metrics=['accuracy'])
-
-if not data_augmentation:
-    print('Not using data augmentation.')
-    model.fit(x_train, y_train,
-              batch_size=batch_size,
-              epochs=epochs,
-              validation_data=(x_test, y_test),
-              shuffle=True)
-else:
-    print('Using real-time data augmentation.')
-    # This will do preprocessing and realtime data augmentation:
-    datagen = ImageDataGenerator(
-        featurewise_center=False,  # set input mean to 0 over the dataset
-        samplewise_center=False,  # set each sample mean to 0
-        featurewise_std_normalization=False,  # divide inputs by std of the dataset
-        samplewise_std_normalization=False,  # divide each input by its std
-        zca_whitening=False,  # apply ZCA whitening
-        rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
-        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
-        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
-        horizontal_flip=True,  # randomly flip images
-        vertical_flip=False)  # randomly flip images
-
-    # Compute quantities required for feature-wise normalization
-    # (std, mean, and principal components if ZCA whitening is applied).
-    datagen.fit(x_train)
-
-    # Fit the model on the batches generated by datagen.flow().
-    model.fit_generator(datagen.flow(x_train, y_train,
-                                     batch_size=batch_size),
-                        epochs=epochs,
-                        validation_data=(x_test, y_test),
-                        workers=4,
-                        callbacks=[tbCallBack])
-
-# Save model and weights
-if not os.path.isdir(save_dir):
-    os.makedirs(save_dir)
-model_path = os.path.join(save_dir, model_name)
-model.save(model_path)
-print('Saved trained model at %s ' % model_path)
-
-# Score trained model.
-scores = model.evaluate(x_test, y_test, verbose=1)
-print('Test loss:', scores[0])
-print('Test accuracy:', scores[1])
+print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
+print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
