@@ -1,150 +1,36 @@
-from __future__ import absolute_import
-from __future__ import print_function
-import numpy as np
-np.random.seed(1337)  # for reproducibility
+'''Train a simple deep CNN on the CIFAR10 small images dataset.
+It gets to 75% validation accuracy in 25 epochs, and 79% after 50 epochs.
+(it's still underfitting at that point, though).
+'''
 
-import random
-from keras.datasets import mnist
+from __future__ import print_function
+import keras
+from keras.datasets import cifar10
+from keras.preprocessing.image import ImageDataGenerator
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint, TensorBoard
-from keras.models import Sequential, Model, load_model
-from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten, ZeroPadding2D
-from keras.optimizers import RMSprop
-from keras import backend as K
-from sklearn.metrics import accuracy_score, confusion_matrix
 import os
 import cv2
+import numpy as np
 
-
-
-from keras.layers import Activation, Convolution2D, Dropout, Conv2D
-from keras.layers import AveragePooling2D, BatchNormalization
-from keras.layers import GlobalAveragePooling2D
-from keras.models import Sequential
-from keras.layers import Flatten
-from keras.models import Model
-from keras.layers import Input
-from keras.layers import MaxPooling2D
-from keras.layers import SeparableConv2D
-from keras import layers
-from keras.regularizers import l2
-
-
-
+batch_size = 32
+num_classes = 8
+epochs = 100
+data_augmentation = True
+num_predictions = 20
+save_dir = os.path.join(os.getcwd(), 'saved_models')
+model_name = 'trained_model.h5'
 
 outputFolder = "output"
 import time
 ts = time.time()
 outputFolder = outputFolder+"/"+str(ts).split(".")[0]
-
 tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
 
-def euclidean_distance(vects):
-    x, y = vects
-    return K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True))
-
-
-def eucl_dist_output_shape(shapes):
-    shape1, shape2 = shapes
-    return (shape1[0], 1)
-
-
-def contrastive_loss(y_true, y_pred):
-    '''Contrastive loss from Hadsell-et-al.'06
-    http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
-    '''
-    margin = 1
-    return K.mean(y_true * K.square(y_pred) + (1 - y_true) * K.square(K.maximum(margin - y_pred, 0)))
-
-
-def create_pairs(x, digit_indices):
-    '''Positive and negative pair creation.
-    Alternates between positive and negative pairs.
-    '''
-    pairs = []
-    labels = []
-    n = min([len(digit_indices[d]) for d in range(8)]) - 1
-    for d in range(8):
-        for i in range(n):
-            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-            pairs += [[x[z1], x[z2]]]
-            inc = random.randrange(1, 8)
-            dn = (d + inc) % 8
-            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
-            pairs += [[x[z1], x[z2]]]
-            labels += [1, 0]
-    return np.array(pairs), np.array(labels)
-
-def generate_pairs(x, digit_indices, batch_size):
-    '''Positive and negative pair creation.
-    Alternates between positive and negative pairs.
-    '''
-    current = 0
-    pairs1 = np.zeros((batch_size, 256, 128, 1))
-    pairs2 = np.zeros((batch_size, 256, 128, 1))
-    labels = np.zeros((batch_size, 2))
-
-    next_pair = True
-    #n = min([len(digit_indices[d]) for d in range(8)]) - 1
-    while(True):
-        for d in range(8):
-            n = len(digit_indices[d])-1
-            for i in range(n):
-                if next_pair == True:
-                    z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-                    pairs1[current] = x[z1]
-                    pairs2[current] = x[z2]
-                    labels[current] = [1,0]
-                    next_pair = False
-                else:
-                    inc = random.randrange(1, 8)
-                    dn = (d + inc) % 8
-                    j = random.randint(0,len(digit_indices[dn])-1)
-                    z1, z2 = digit_indices[d][i], digit_indices[dn][j]
-                    pairs1[current] = x[z1]
-                    pairs2[current] = x[z2]
-                    labels[current] = [0,1]
-                    next_pair = True 
-                current += 1
-
-                if current == batch_size:
-                    yield [pairs1, pairs2], labels
-                    pairs1 = np.zeros((batch_size, 256, 128, 1))
-                    pairs2 = np.zeros((batch_size, 256, 128, 1))
-                    labels = np.zeros((batch_size, 2))
-                    current = 0
-
-def create_base_network(input_shape):
-    #Base network to be shared (eq. to feature extraction).
-
-    model = Sequential()
-    model.add(Conv2D(32, (3, 3), padding='same',
-                     input_shape=input_shape))
-    model.add(Activation('relu'))
-    model.add(Conv2D(32, (3, 3)))
-    model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-
-    model.add(Conv2D(64, (3, 3), padding='same'))
-    model.add(Activation('relu'))
-    model.add(Conv2D(64, (3, 3)))
-    model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-
-    model.add(Flatten())
-    model.add(Dense(512))
-    model.add(Activation('relu'))
-    model.add(Dropout(0.5))
-    return model
-
-def compute_accuracy(predictions, labels):
-    '''Compute classification accuracy with a fixed threshold on distances.
-    '''
-    return labels[predictions.ravel() < 0.5].mean()
-
-X_train = []
-X_test = []
+x_train = []
+x_test = []
 y_train = []
 y_test = []
 
@@ -163,103 +49,103 @@ for target in img_groups:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             if np.random.random() < 0.8:
-                X_train.append(img)
+                x_train.append(img)
                 y_train.append(int(target))
             else:
-                X_test.append(img)
+                x_test.append(img)
                 y_test.append(int(target))
 
-X_train = np.array(X_train)
-X_test = np.array(X_test)
+x_train = np.array(x_train)
+x_test = np.array(x_test)
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
 input_shape = (256, 128, 1)
-X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1)
-X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1)
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-X_train /= 255
-X_test /= 255
+x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
+x_train = x_train.astype('float32')
+x_test = x_test.astype('float32')
+x_train /= 255
+x_test /= 255  
 
-BATCH_SIZE = 8
-num_epochs = 10
 
-digit_indices = [np.where(y_train == i)[0] for i in range(8)]
-train_generator = generate_pairs(X_train, digit_indices, BATCH_SIZE)
+ 
 
-digit_indices = [np.where(y_test == i)[0] for i in range(8)]
-test_generator = generate_pairs(X_test, digit_indices, BATCH_SIZE)
 
-# GENERATOR TESTING
-# while True:
-#     test = random.randint(0,7)
-#     [X1,X2],Y = next(train_generator)
-#     cv2.imshow("test1", X1[test])
-#     cv2.imshow("test2", X2[test])
-#     print(Y[test])
-#     cv2.waitKey(10000)
-# counter = 0
-# while True:
-#     print(next(train_generator))
-#     print(counter)
-#     counter += 1
 
-# network definition
-# base_network = create_base_network(input_dim, X_train)
-base_network = create_base_network(input_shape)
+# Convert class vectors to binary class matrices.
+y_train = keras.utils.to_categorical(y_train, num_classes)
+y_test = keras.utils.to_categorical(y_test, num_classes)
 
-input_a = Input(shape=input_shape)
-input_b = Input(shape=input_shape)
-# because we re-use the same instance `base_network`,
-# the weights of the network
-# will be shared across the two branches
-processed_a = base_network(input_a)
-processed_b = base_network(input_b)
 
-distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([processed_a, processed_b])
 
-model = Model(inputs=[input_a, input_b], outputs=distance)
+model = Sequential()
+model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape, activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
 
-# train - try with Adam and Adadelta
-#rms = RMSprop()
-model.compile(loss=contrastive_loss, optimizer="adadelta", metrics=["accuracy"])
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
 
-num_train_steps = len(X_train) // BATCH_SIZE
-num_val_steps = len(X_test) // BATCH_SIZE
+model.add(Flatten())
+model.add(Dense(512, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(num_classes))
+model.add(Activation('softmax'))
 
-BEST_MODEL_FILE = os.path.join("test", "checkpoint.h5")
+# initiate RMSprop optimizer
+opt = keras.optimizers.rmsprop(lr=0.0001, decay=1e-6)
 
-checkpoint = ModelCheckpoint(filepath=BEST_MODEL_FILE, save_best_only=True)
-history = model.fit_generator(train_generator, 
-                             steps_per_epoch=num_train_steps,
-                             epochs=num_epochs,
-                             validation_data=test_generator,
-                             validation_steps=num_val_steps, 
-                             verbose=2,
-                             callbacks=[tbCallBack,checkpoint])
+# Let's train the model using RMSprop
+model.compile(loss='categorical_crossentropy',
+              optimizer=opt,
+              metrics=['accuracy'])
 
-FINAL_MODEL_FILE = os.path.join("test", "model.h5")
-model.save(FINAL_MODEL_FILE, overwrite=True)
+if not data_augmentation:
+    print('Not using data augmentation.')
+    model.fit(x_train, y_train,
+              batch_size=batch_size,
+              epochs=epochs,
+              validation_data=(x_test, y_test),
+              shuffle=True)
+else:
+    print('Using real-time data augmentation.')
+    # This will do preprocessing and realtime data augmentation:
+    datagen = ImageDataGenerator(
+        featurewise_center=False,  # set input mean to 0 over the dataset
+        samplewise_center=False,  # set each sample mean to 0
+        featurewise_std_normalization=False,  # divide inputs by std of the dataset
+        samplewise_std_normalization=False,  # divide each input by its std
+        zca_whitening=False,  # apply ZCA whitening
+        rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
+        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+        horizontal_flip=True,  # randomly flip images
+        vertical_flip=False)  # randomly flip images
 
-def evaluate_model(model):
-    ytest, ytest_ = [], []
-    num_test_steps = len(X_test) // BATCH_SIZE
-    curr_test_steps = 0
-    for [X1test, X2test], Ytest in test_generator:
-        if curr_test_steps > num_test_steps:
-            break
-        Ytest_ = model.predict([X1test, X2test])
-        ytest.extend(np.argmax(Ytest, axis=1).tolist())
-        ytest_.extend(np.argmax(Ytest_, axis=1).tolist())
-        curr_test_steps += 1
-    acc = accuracy_score(ytest, ytest_)
-    cm = confusion_matrix(ytest, ytest_)
-    return acc, cm
+    # Compute quantities required for feature-wise normalization
+    # (std, mean, and principal components if ZCA whitening is applied).
+    datagen.fit(x_train)
 
-print("==== Evaluation Results: final model on test set ====")
-final_model = load_model(FINAL_MODEL_FILE,custom_objects={'contrastive_loss': contrastive_loss})
-acc, cm = evaluate_model(final_model)
-print("Accuracy Score: {:.3f}".format(acc))
-print("Confusion Matrix")
-print(cm)
+    # Fit the model on the batches generated by datagen.flow().
+    model.fit_generator(datagen.flow(x_train, y_train,
+                                     batch_size=batch_size),
+                        epochs=epochs,
+                        validation_data=(x_test, y_test),
+                        workers=4,
+                        callbacks=[tbCallBack])
+
+# Save model and weights
+if not os.path.isdir(save_dir):
+    os.makedirs(save_dir)
+model_path = os.path.join(save_dir, model_name)
+model.save(model_path)
+print('Saved trained model at %s ' % model_path)
+
+# Score trained model.
+scores = model.evaluate(x_test, y_test, verbose=1)
+print('Test loss:', scores[0])
+print('Test accuracy:', scores[1])
