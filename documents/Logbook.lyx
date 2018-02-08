@@ -1341,18 +1341,13 @@ Implemented a closed world architecture for my data, this appears to be
 Closed world with augmentation - Test accuracy: 0.9645250295624753 
 \end_layout
 
-\begin_layout Itemize
-Closed world no augmentation - Test accuracy: 0.9940476190476191 - MAYBE
- OVERFITTED?
-\end_layout
-
 \begin_layout Section*
 Week 14 and Meeting 14
 \end_layout
 
 \begin_layout Itemize
 Try replicating my generator logic for the MNIST dataset and see if that
- will work
+ will work - done this now, it is running on NCC
 \end_layout
 
 \begin_layout Itemize
@@ -1364,6 +1359,16 @@ Also try downscaling alll my images massively and loading into graphics
 \begin_layout Itemize
 Experiment with parameters around learning rate and check effect on loss.
  
+\end_layout
+
+\begin_layout Itemize
+The generator is the problem, tested on MNIST and getting 50% accuracy.
+ 
+\end_layout
+
+\begin_layout Itemize
+Testing with my create pairs fucntion, didn't work, think problem is with
+ my logical comprehension of dataset.
 \end_layout
 
 \end_body
