@@ -1387,5 +1387,13 @@ When model is saved, its output will be the difference in vector space rather
  Current confidence threshold is 0.5.
 \end_layout
 
+\begin_layout Itemize
+* Accuracy on training set: 100.00% * Accuracy on test set: 97.85% 
+\end_layout
+
+\begin_layout Itemize
+Need to make new evaluation dataset
+\end_layout
+
 \end_body
 \end_document
