@@ -13,12 +13,18 @@ import numpy as np
 np.random.seed(1337)  # for reproducibility
 
 import random
+from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.datasets import mnist
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import RMSprop
 from keras import backend as K
 
+outputFolder = "output"
+import time
+ts = time.time()
+outputFolder = outputFolder+"/"+str(ts).split(".")[0]
+tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
 
 def euclidean_distance(vects):
     x, y = vects
@@ -137,7 +143,8 @@ model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["accuracy"])
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
-          epochs=num_epochs)
+          epochs=num_epochs,
+          callbacks=[tbCallBack])
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
