@@ -1371,5 +1371,21 @@ Testing with my create pairs fucntion, didn't work, think problem is with
  my logical comprehension of dataset.
 \end_layout
 
+\begin_layout Itemize
+Have it working now when all loaded into video memory and not using generator,
+ need a pascal for this though.
+\end_layout
+
+\begin_layout Itemize
+Need to define a new accuracy metric, otherwise the graphs aren't useful
+ and I'd like them in my paper
+\end_layout
+
+\begin_layout Itemize
+When model is saved, its output will be the difference in vector space rather
+ than a label of 1 or 0.
+ Current confidence threshold is 0.5.
+\end_layout
+
 \end_body
 \end_document
