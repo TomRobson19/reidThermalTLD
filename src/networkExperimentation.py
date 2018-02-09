@@ -130,7 +130,7 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255  
 
-num_epochs = 10
+num_epochs = 100
 
 # create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
@@ -168,17 +168,17 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
           epochs=num_epochs,
+          verbose=2,
           callbacks=[tbCallBack])
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
-print(pred)
-print(tr_y)
-# print(model.evaluate([tr_pairs[:, 0], tr_pairs[:, 1]],tr_y))
 tr_acc = compute_accuracy(pred, tr_y)
 
+print(pred)
+print(tr_y)
+
 pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
-# print(model.evaluate([te_pairs[:, 0], te_pairs[:, 1]],te_y))
 te_acc = compute_accuracy(pred, te_y)
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
