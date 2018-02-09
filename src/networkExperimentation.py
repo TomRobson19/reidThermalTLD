@@ -130,7 +130,7 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255  
 
-num_epochs = 100
+num_epochs = 10
 
 # create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
@@ -138,6 +138,7 @@ tr_pairs, tr_y = create_pairs(x_train, digit_indices)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
 te_pairs, te_y = create_pairs(x_test, digit_indices)
+
 
 # network definition
 # base_network = create_base_network(input_dim, X_train)
@@ -162,7 +163,7 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 # train
 rms = RMSprop()
 #model.compile(loss=contrastive_loss, optimizer=rms)
-model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["accuracy"])
+model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["acc"])
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
@@ -171,8 +172,13 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
+print(pred)
+print(tr_y)
+# print(model.evaluate([tr_pairs[:, 0], tr_pairs[:, 1]],tr_y))
 tr_acc = compute_accuracy(pred, tr_y)
+
 pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
+# print(model.evaluate([te_pairs[:, 0], te_pairs[:, 1]],te_y))
 te_acc = compute_accuracy(pred, te_y)
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
