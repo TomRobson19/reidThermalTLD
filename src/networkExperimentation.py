@@ -1,12 +1,3 @@
-'''Train a Siamese MLP on pairs of digits from the MNIST dataset.
-It follows Hadsell-et-al.'06 [1] by computing the Euclidean distance on the
-output of the shared network and by optimizing the contrastive loss (see paper
-for mode details).
-[1] "Dimensionality Reduction by Learning an Invariant Mapping"
-    http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
-Gets to 99.5% test accuracy after 20 epochs.
-3 seconds per epoch on a Titan X GPU
-'''
 from __future__ import absolute_import
 from __future__ import print_function
 import numpy as np
@@ -30,6 +21,10 @@ tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_g
 
 def euclidean_distance(vects):
     x, y = vects
+
+    # temp = K.cast(K.less(K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True)),0.5),"float32")
+    # return temp
+
     return K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True))
 
 
