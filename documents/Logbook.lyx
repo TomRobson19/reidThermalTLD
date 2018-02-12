@@ -1411,5 +1411,19 @@ Trying to use K.cast and K.less to have the euclidean distance return 1 or
 Changing accuracy metric to binary doesn't work
 \end_layout
 
+\begin_layout Itemize
+RMS optimiser breaks everything
+\end_layout
+
+\begin_layout Itemize
+Changed threshold to 0.3, accuracy now 99.35% 
+\end_layout
+
+\begin_layout Itemize
+Threshold at 0.2 gives 100% accuracy, getting slightly suspicious now of
+ how good this is.
+ 
+\end_layout
+
 \end_body
 \end_document

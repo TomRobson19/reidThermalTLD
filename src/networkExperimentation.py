@@ -82,7 +82,7 @@ def create_base_network(input_shape):
 def compute_accuracy(predictions, labels):
     '''Compute classification accuracy with a fixed threshold on distances.
     '''
-    return labels[predictions.ravel() < 0.5].mean()
+    return labels[predictions.ravel() < 0.2].mean()
 
 
 # the data, shuffled and split between train and test sets
@@ -155,12 +155,7 @@ distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([proc
 
 model = Model(inputs=[input_a, input_b], outputs=distance)
 
-# train
-rms = RMSprop()
-#opt = RMSprop(lr=0.0001, decay=1e-6)
-
-#model.compile(loss=contrastive_loss, optimizer=rms)
-model.compile(loss=contrastive_loss, optimizer=rms, metrics=["acc"])
+model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["acc"])
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
@@ -180,6 +175,10 @@ te_acc = compute_accuracy(pred, te_y)
 
 
 
+print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
+print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
+
+
 save_dir = os.path.join(os.getcwd(), 'saved_models')
 model_name = 'openWorld.h5'
 if not os.path.isdir(save_dir):
@@ -187,7 +186,3 @@ if not os.path.isdir(save_dir):
 model_path = os.path.join(save_dir, model_name)
 model.save(model_path)
 print('Saved trained model at %s ' % model_path)
-
-
-print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
-print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
