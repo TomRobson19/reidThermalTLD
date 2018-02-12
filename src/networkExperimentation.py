@@ -157,8 +157,10 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 
 # train
 rms = RMSprop()
+#opt = RMSprop(lr=0.0001, decay=1e-6)
+
 #model.compile(loss=contrastive_loss, optimizer=rms)
-model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["acc"])
+model.compile(loss=contrastive_loss, optimizer=rms, metrics=["acc"])
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
@@ -175,6 +177,17 @@ print(tr_y)
 
 pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 te_acc = compute_accuracy(pred, te_y)
+
+
+
+save_dir = os.path.join(os.getcwd(), 'saved_models')
+model_name = 'openWorld.h5'
+if not os.path.isdir(save_dir):
+    os.makedirs(save_dir)
+model_path = os.path.join(save_dir, model_name)
+model.save(model_path)
+print('Saved trained model at %s ' % model_path)
+
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
