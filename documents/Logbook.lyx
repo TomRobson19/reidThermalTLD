@@ -1425,5 +1425,12 @@ Threshold at 0.2 gives 100% accuracy, getting slightly suspicious now of
  
 \end_layout
 
+\begin_layout Itemize
+Make a little script to learn about the OpenCV DNN model by randomly loading
+ images from the dataset and passing them to the network and get the distance
+ back.
+ Will also help to test my suspicions about the 100% accuracy.
+\end_layout
+
 \end_body
 \end_document
