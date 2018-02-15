@@ -1449,6 +1449,10 @@ Define evaluation dataset – ongoing.
 \end_layout
 
 \begin_layout Itemize
+Define new accuracy function for TensorFlow.
+\end_layout
+
+\begin_layout Itemize
 Re-run and evaluate CNN model inside OpenCV tracking run-time.
  
 \end_layout
@@ -1459,10 +1463,11 @@ Consider capture of performance metrics (inc.
  
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
-Define new accuracy function for TensorFlow.
+Made new accuracy function, fairly happy with it although still needs more
+ testing.
 \end_layout
 
-\end_deeper
 \end_body
 \end_document
