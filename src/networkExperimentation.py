@@ -22,8 +22,7 @@ tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_g
 def euclidean_distance(vects):
     x, y = vects
 
-    # temp = K.cast(K.less(K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True)),0.5),"float32")
-    # return temp
+    #return K.cast(K.less(K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True)),0.5),"float32")
 
     return K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True))
 
@@ -79,10 +78,13 @@ def create_base_network(input_shape):
     return model
 
 
-def compute_accuracy(predictions, labels):
-    '''Compute classification accuracy with a fixed threshold on distances.
-    '''
-    return labels[predictions.ravel() < 0.2].mean()
+def calc_accuracy(labels, predictions):
+    '''accuracy function for compilation'''
+    return K.mean(K.equal(labels, K.cast(K.less(predictions,0.5),"float32")))
+
+def compute_accuracy(predictions, labels): 
+    '''final computation of accuracy'''
+    return labels[predictions.ravel() < 0.5].mean() 
 
 
 # the data, shuffled and split between train and test sets
@@ -155,7 +157,7 @@ distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([proc
 
 model = Model(inputs=[input_a, input_b], outputs=distance)
 
-model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["acc"])
+model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["acc",calc_accuracy])
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
