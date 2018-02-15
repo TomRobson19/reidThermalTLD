@@ -1444,8 +1444,7 @@ Meeting
 
 \begin_deeper
 \begin_layout Itemize
-Define evaluation dataset – ongoing.
- 
+Define evaluation dataset – ongoing - use Toby and Miko from behaviour dataset
 \end_layout
 
 \begin_layout Itemize
@@ -1454,7 +1453,7 @@ Define new accuracy function for TensorFlow.
 
 \begin_layout Itemize
 Re-run and evaluate CNN model inside OpenCV tracking run-time.
- 
+ - make toy example first, then integrate into my tracking code
 \end_layout
 
 \begin_layout Itemize
@@ -1467,6 +1466,12 @@ Consider capture of performance metrics (inc.
 \begin_layout Itemize
 Made new accuracy function, fairly happy with it although still needs more
  testing.
+\end_layout
+
+\begin_layout Itemize
+Can't do ROC curve in tensorboad, will be done in sklearn and matplotlib
+ i guess.
+ 
 \end_layout
 
 \end_body
