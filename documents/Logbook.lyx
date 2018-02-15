@@ -1432,5 +1432,37 @@ Make a little script to learn about the OpenCV DNN model by randomly loading
  Will also help to test my suspicions about the 100% accuracy.
 \end_layout
 
+\begin_layout Itemize
+I've put the euclidean distances from the predictions in a text file, seems
+ to back up the 100% accuracy.
+ 
+\end_layout
+
+\begin_layout Itemize
+Meeting
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Define evaluation dataset – ongoing.
+ 
+\end_layout
+
+\begin_layout Itemize
+Re-run and evaluate CNN model inside OpenCV tracking run-time.
+ 
+\end_layout
+
+\begin_layout Itemize
+Consider capture of performance metrics (inc.
+ ROC curve + distribution of embedding space).
+ 
+\end_layout
+
+\begin_layout Itemize
+Define new accuracy function for TensorFlow.
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
