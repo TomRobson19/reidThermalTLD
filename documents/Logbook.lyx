@@ -1474,5 +1474,21 @@ Can't do ROC curve in tensorboad, will be done in sklearn and matplotlib
  
 \end_layout
 
+\begin_layout Itemize
+Gathering evaluation data, HoG not performing well close to camera, maybe
+ have an if statement to check for larger targets first, then look for smaller.
+ 
+\end_layout
+
+\begin_layout Itemize
+Current implementation will be good from the roof cameras.
+ 
+\end_layout
+
+\begin_layout Itemize
+Gathered evaluation data - Toby and Miko saved in 8 and 9.
+ 
+\end_layout
+
 \end_body
 \end_document
