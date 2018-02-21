@@ -13,6 +13,10 @@ from keras import backend as K
 import os
 import cv2
 
+import scikitplot as skplt
+import matplotlib.pyplot as plt
+
+
 outputFolder = "output"
 import time
 ts = time.time()
@@ -82,9 +86,22 @@ def calc_accuracy(labels, predictions):
     '''accuracy function for compilation'''
     return K.mean(K.equal(labels, K.cast(K.less(predictions,0.5),"float32")))
 
-def compute_accuracy(predictions, labels): 
+def compute_accuracy(labels, predictions): 
     '''final computation of accuracy'''
     return labels[predictions.ravel() < 0.5].mean() 
+
+# def ROC(labels, predictions):
+#     totalData = len(labels)
+#     predictions = predictions.ravel() < 0.5
+#     TP = 0
+#     FP = 0
+#     for i in range(totalData):
+#         if labels[i] == 1 and predictions[i] = True:
+#             TP += 1 
+#         elif labels[i] == 0 and predictions[i] = True:
+#             FP += 1
+
+
 
 
 # the data, shuffled and split between train and test sets
@@ -127,7 +144,7 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255  
 
-num_epochs = 100
+num_epochs = 10
 
 # create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(8)]
@@ -167,15 +184,15 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
-tr_acc = compute_accuracy(pred, tr_y)
-
-print(pred)
-print(tr_y)
+tr_acc = compute_accuracy(tr_y, pred)
 
 pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
-te_acc = compute_accuracy(pred, te_y)
+te_acc = compute_accuracy(te_y, pred)
 
 
+probs = te_y[pred.ravel() < 0.5]
+skplt.metrics.plot_roc_curve(te_y, probs)
+plt.save_fig("figure.png")
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))

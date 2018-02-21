@@ -7,8 +7,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset3/deltaInput.webm");
-    string filenameExtension = "delta3 ";
+    VideoCapture video("data/exampleVideos/loitering20140319.webm");
+    string filenameExtension = "delta6 ";
     // Check video is open
     if(!video.isOpened())
     {
