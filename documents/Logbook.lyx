@@ -1490,5 +1490,30 @@ Gathered evaluation data - Toby and Miko saved in 8 and 9.
  
 \end_layout
 
+\begin_layout Section*
+Week 16 and Meeting 16
+\end_layout
+
+\begin_layout Itemize
+ROC curve from distances, get TP and FP from here
+\end_layout
+
+\begin_layout Itemize
+Do a 
+\begin_inset Quotes eld
+\end_inset
+
+grid search
+\begin_inset Quotes erd
+\end_inset
+
+ of different threshold 
+\end_layout
+
+\begin_layout Itemize
+Include top 5 error in paper if time.
+ 
+\end_layout
+
 \end_body
 \end_document
