@@ -1515,5 +1515,19 @@ Include top 5 error in paper if time.
  
 \end_layout
 
+\begin_layout Itemize
+Best way to save my trained model is with an h5 file
+\end_layout
+
+\begin_layout Itemize
+Need to ensure I have the latest version of opencv and contrib
+\end_layout
+
+\begin_layout Itemize
+People seem to be having issues reading in networks with Flatten layers,
+ will investigate.
+ 
+\end_layout
+
 \end_body
 \end_document
