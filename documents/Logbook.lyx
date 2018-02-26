@@ -1529,5 +1529,61 @@ People seem to be having issues reading in networks with Flatten layers,
  
 \end_layout
 
+\begin_layout Itemize
+Having OpenCV issues with cuda - not rebuilt yet and still works, maybe
+ don't need a new copy
+\end_layout
+
+\begin_layout Itemize
+Think I'll have to convert model into a tensorflow .pb file as no one seems
+ to have done it with h5.
+ 
+\end_layout
+
+\begin_layout Itemize
+pb conversion didn't work with my custom loss function
+\end_layout
+
+\begin_layout Section*
+Week 17 and Meeting 17
+\end_layout
+
+\begin_layout Itemize
+Had to specify my custom functions in the conversion file but have successfully
+ converted to pb.
+ Had to do this on the NCC for graphics memory reasons.
+ 
+\end_layout
+
+\begin_layout Itemize
+Model currently saved locally was only over 10 epochs
+\end_layout
+
+\begin_layout Itemize
+Now working on ROC curve
+\end_layout
+
+\begin_layout Itemize
+When checking thresholds, change the tensorboard names so can use these
+ graphs to express results.
+ 
+\end_layout
+
+\begin_layout Itemize
+Also need to test number of epochs, is 100 necessary??
+\end_layout
+
+\begin_layout Itemize
+Drawn ROC curve, is dumb and pointless - also seems to be backwards?
+\end_layout
+
+\begin_layout Itemize
+Having a weird issue where my seeded random generator 
+\end_layout
+
+\begin_layout Itemize
+NEED TO CONFIRM WHAT DATA TO USE ROC CURVE WITH
+\end_layout
+
 \end_body
 \end_document

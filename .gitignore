@@ -94,3 +94,5 @@ src/test/
 *.h5
 
 *.pb
+
+*.png

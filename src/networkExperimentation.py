@@ -13,9 +13,11 @@ from keras import backend as K
 import os
 import cv2
 
+import sklearn
 import scikitplot as skplt
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+plt.switch_backend("Agg")
 
 outputFolder = "output"
 import time
@@ -40,7 +42,7 @@ def contrastive_loss(y_true, y_pred):
     '''Contrastive loss from Hadsell-et-al.'06
     http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
     '''
-    margin = 1
+    margin = 1 
     return K.mean(y_true * K.square(y_pred) + (1 - y_true) * K.square(K.maximum(margin - y_pred, 0)))
 
 
@@ -64,7 +66,7 @@ def create_pairs(x, digit_indices):
 
 
 def create_base_network(input_shape):
-    #Base network to be shared (eq. to feature extraction).
+    #Base network to be shared (eq. to feature extraction)
 
     model = Sequential()
     model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape, activation='relu'))
@@ -88,7 +90,8 @@ def calc_accuracy(labels, predictions):
 
 def compute_accuracy(labels, predictions): 
     '''final computation of accuracy'''
-    return labels[predictions.ravel() < 0.5].mean() 
+    #return labels[predictions.ravel() < 0.5].mean()
+    return np.mean(np.equal(predictions.ravel() < 0.5, labels))
 
 # def ROC(labels, predictions):
 #     totalData = len(labels)
@@ -100,8 +103,6 @@ def compute_accuracy(labels, predictions):
 #             TP += 1 
 #         elif labels[i] == 0 and predictions[i] = True:
 #             FP += 1
-
-
 
 
 # the data, shuffled and split between train and test sets
@@ -174,7 +175,7 @@ distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([proc
 
 model = Model(inputs=[input_a, input_b], outputs=distance)
 
-model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=["acc",calc_accuracy])
+model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=[calc_accuracy])
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
@@ -189,10 +190,23 @@ tr_acc = compute_accuracy(tr_y, pred)
 pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 te_acc = compute_accuracy(te_y, pred)
 
+probs = np.equal(pred.ravel() < 0.5, te_y)
 
-probs = te_y[pred.ravel() < 0.5]
-skplt.metrics.plot_roc_curve(te_y, probs)
-plt.save_fig("figure.png")
+fpr,tpr,_ = sklearn.metrics.roc_curve(te_y,probs)
+roc_auc = sklearn.metrics.auc(fpr, tpr)
+
+plt.figure()
+lw = 2
+plt.plot(fpr, tpr, color='darkorange',
+         lw=lw, label='ROC curve (area = %0.2f)' % roc_auc)
+plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.0])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic example')
+plt.legend(loc="lower right")
+plt.savefig("ROC.png")
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
