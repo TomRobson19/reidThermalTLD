@@ -90,3 +90,7 @@ src/__pycache__/
 src/output/*
 
 src/test/
+
+*.h5
+
+*.pb
