@@ -1,13 +1,17 @@
 #include "person.hpp"
 #include "tracker.hpp"
 #include <algorithm>
+#include <opencv2/dnn.hpp>
 
 using namespace cv;
+using namespace cv::dnn;
 using namespace std;
 
 #define CASCADE_TO_USE "classifiers/people_thermal_23_07_casALL16x32_stump_sym_24_n4.xml"
 
 vector<Person> targets;
+
+dnn::Net net = readNetFromTensorflow("saved_models/openWorld.h5.pb");
 
 int main(int argc, char **argv)
 {
