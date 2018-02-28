@@ -1585,5 +1585,24 @@ Having a weird issue where my seeded random generator
 NEED TO CONFIRM WHAT DATA TO USE ROC CURVE WITH
 \end_layout
 
+\begin_layout Itemize
+Meeting
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Try ROC curve as top 5 error
+\end_layout
+
+\begin_layout Itemize
+Embed high dimensional data using t-SNE - will be useful for poster and
+ paper
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+OPENCV IS FUCKED, HAVE TO STICK WITH THIS NOW THOUGH
+\end_layout
+
 \end_body
 \end_document

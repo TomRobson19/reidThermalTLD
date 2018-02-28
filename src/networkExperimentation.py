@@ -4,7 +4,7 @@ import numpy as np
 np.random.seed(1337)  # for reproducibility
 
 import random
-from keras.callbacks import ModelCheckpoint, TensorBoard
+from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.datasets import mnist
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
@@ -23,7 +23,8 @@ outputFolder = "output"
 import time
 ts = time.time()
 outputFolder = outputFolder+"/"+str(ts).split(".")[0]
-tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
+tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)7
+earlyStoppingCallback = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=2, verbose=0, mode='auto')
 
 def euclidean_distance(vects):
     x, y = vects
@@ -181,7 +182,7 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           batch_size=128,
           epochs=num_epochs,
           verbose=2,
-          callbacks=[tbCallBack])
+          callbacks=[tbCallBack,earlyStoppingCallback])
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
