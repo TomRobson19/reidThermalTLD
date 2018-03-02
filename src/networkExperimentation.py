@@ -23,8 +23,8 @@ outputFolder = "output"
 import time
 ts = time.time()
 outputFolder = outputFolder+"/"+str(ts).split(".")[0]
-tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)7
-earlyStoppingCallback = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=2, verbose=0, mode='auto')
+tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
+earlyStoppingCallback = EarlyStopping(monitor='val_loss', min_delta=0.001, patience=10, verbose=0, mode='auto')
 
 def euclidean_distance(vects):
     x, y = vects
