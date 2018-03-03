@@ -1601,7 +1601,19 @@ Embed high dimensional data using t-SNE - will be useful for poster and
 
 \end_deeper
 \begin_layout Itemize
-OPENCV IS FUCKED, HAVE TO STICK WITH THIS NOW THOUGH
+Replaced flatten layer with tf stuff, training worked, yet to try with DNN
+\end_layout
+
+\begin_layout Itemize
+Removed early stopping, don't like it
+\end_layout
+
+\begin_layout Itemize
+DNN still failing, fairly convinced I need fresh install
+\end_layout
+
+\begin_layout Itemize
+Finally managed to rebuild OpenCV
 \end_layout
 
 \end_body

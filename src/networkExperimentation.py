@@ -7,7 +7,7 @@ import random
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.datasets import mnist
 from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten
+from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten, Reshape, Permute
 from keras.optimizers import RMSprop
 from keras import backend as K
 import os
@@ -24,7 +24,6 @@ import time
 ts = time.time()
 outputFolder = outputFolder+"/"+str(ts).split(".")[0]
 tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
-earlyStoppingCallback = EarlyStopping(monitor='val_loss', min_delta=0.001, patience=10, verbose=0, mode='auto')
 
 def euclidean_distance(vects):
     x, y = vects
@@ -80,6 +79,12 @@ def create_base_network(input_shape):
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
+    # a,b,c,d = model.output_shape
+    # a = b*c*d
+
+    # model.add(Permute([1, 2, 3]))  # Indicate NHWC data layout
+    # model.add(Reshape((a,)))
+
     model.add(Flatten())
     model.add(Dense(512, activation='relu'))
     return model
@@ -102,7 +107,7 @@ y_test = []
 
 image_dir = "people"
 img_groups = {}
-for person in os.listdir(image_dir):
+for person in os.listdir(image_dir): 
     for img_file in os.listdir(image_dir + "/" + person):
         if person in img_groups:
             img_groups[person].append(img_file)
@@ -170,7 +175,7 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           batch_size=128,
           epochs=num_epochs,
           verbose=2,
-          callbacks=[tbCallBack,earlyStoppingCallback])
+          callbacks=[tbCallBack])
 
 # compute final accuracy on training and test sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
