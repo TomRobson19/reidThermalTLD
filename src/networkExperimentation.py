@@ -94,18 +94,6 @@ def compute_accuracy(labels, predictions):
     #return labels[predictions.ravel() < 0.5].mean()
     return np.mean(np.equal(predictions.ravel() < 0.5, labels))
 
-# def ROC(labels, predictions):
-#     totalData = len(labels)
-#     predictions = predictions.ravel() < 0.5
-#     TP = 0
-#     FP = 0
-#     for i in range(totalData):
-#         if labels[i] == 1 and predictions[i] = True:
-#             TP += 1 
-#         elif labels[i] == 0 and predictions[i] = True:
-#             FP += 1
-
-
 # the data, shuffled and split between train and test sets
 x_train = []
 x_test = []
