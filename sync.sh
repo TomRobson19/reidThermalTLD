@@ -17,6 +17,6 @@
 # 4. Run this file
 
 while true; do  
-  inotifywait -r -e modify,attrib,close_write,move,create,delete src
   rsync -azr --exclude "*.swp" --exclude 'main' --exclude 'dataExtraction' --exclude '__pycache__' --exclude 'people/' --exclude 'output' --exclude 'saved_models' src/ hzwr87@ncc.clients.dur.ac.uk:~/reidSource --delete
+  inotifywait -r -e modify,attrib,close_write,move,create,delete src
 done
