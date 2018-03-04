@@ -206,6 +206,52 @@ print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 
+
+
+
+
+layer_name = 'dense_1'
+intermediate_layer_model = Model(inputs=model.input,
+                                 outputs=model.get_layer(layer_name).output)
+intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
+
+np.savetxt("intermediate_output.csv",intermediate_output,delimiter=",")
+
+
+
+
+x_eval = []
+y_eval = []
+
+for target in img_groups:
+    for img_file in img_groups[target]:
+        if int(target) >= 8:
+            img = cv2.imread(os.path.join(image_dir, target, img_file))
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+            x_eval.append(img)
+            y_eval.append(int(target))
+
+x_eval = np.array(x_eval)
+y_eval = np.array(y_eval)
+x_eval = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
+x_eval = x_train.astype('float32')
+x_eval /= 255
+
+digit_indices = [np.where(y_eval == i)[0] for i in range(8,10)]
+eval_pairs, ev_y = create_pairs(x_eval, digit_indices)
+
+pred = model.predict([eval_pairs[:, 0], eval_pairs[:, 1]])
+eval_acc = compute_accuracy(ev_y, pred)
+print('* Accuracy on evaluation set: %0.2f%%' % (100 * eval_acc))
+
+
+
+
+
+
+
+
+
 save_dir = os.path.join(os.getcwd(), 'saved_models')
 model_name = 'openWorld.h5'
 if not os.path.isdir(save_dir):
