@@ -3,7 +3,7 @@
 #SBATCH -c 1
 #SBATCH --gres=gpu:pascal:1
 #SBATCH -p debug
-#SBATCH --job-name=thermalReID
+#SBATCH --job-name=conversion
 
 #SBATCH -e stderr-filename
 #SBATCH -o stdout-filename
