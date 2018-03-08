@@ -1613,8 +1613,100 @@ DNN still failing, fairly convinced I need fresh install
 \end_layout
 
 \begin_layout Itemize
-Finally managed to rebuild OpenCV
+Finally managed to rebuild OpenCV, failed at 100% on the contrib modules
+ though
 \end_layout
 
+\begin_layout Section*
+Week 18 and Meeting 18
+\end_layout
+
+\begin_layout Itemize
+Tried lots of stuff, dnn still not working
+\end_layout
+
+\begin_layout Itemize
+C++ not the problem, python also doesn't work
+\end_layout
+
+\begin_layout Itemize
+Flatten error fixed, this was well documented, Maxpooling now giving error,
+ can't find people having this error before
+\end_layout
+
+\begin_layout Itemize
+Saving as tensorflow straight from keras script made different error - 
+\end_layout
+
+\begin_layout Itemize
+Alternatives
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Could run Neutral Net in a separate thread and pass pairs of images to it
+\end_layout
+
+\begin_layout Itemize
+Or rewrite the whole of main in python and have them run together with using
+ DNN
+\end_layout
+
+\begin_layout Itemize
+Or possibly use C++ bindings of tensorflow
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Skip DNN and use C++ tensorflow
+\end_layout
+
+\begin_layout Itemize
+Maybe compare using TLD to just calling the neural network every frame
+\end_layout
+
+\begin_layout Itemize
+Successfully built C++ tensorflow
+\end_layout
+
+\begin_layout Itemize
+For C++ Tensorflow:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Need to symlink my src to tensorflow/cc/ --> ln -s src/ /home/tom/tensorflow/ten
+sorflow/cc
+\end_layout
+
+\begin_layout Itemize
+Need to have a .cc file and a build file in my src directory, to run with
+ bazel -(bazel run -c opt //tensorflow/cc/example:example)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Another alternative - nest python in C++, create python file that reads
+ in network and then has a fucntion with 2 images as parameters which returns
+ the distance.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+for this, need callModel.py, which loads the model (globally) and takes 2
+ images in from the command line ?? 
+\end_layout
+
+\begin_layout Itemize
+Would then have this return the confidence level
+\end_layout
+
+\begin_layout Itemize
+C++ would use second answer from https://stackoverflow.com/questions/16962430/cal
+ling-python-script-from-c-and-using-its-output
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
