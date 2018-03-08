@@ -11,7 +11,7 @@ using namespace std;
 
 vector<Person> targets;
 
-dnn::Net net = readNetFromTensorflow("saved_models/openWorld.h5.pb");
+dnn::Net net = readNetFromTensorflow("saved_models/graph.pb");
 
 int main(int argc, char **argv)
 {
