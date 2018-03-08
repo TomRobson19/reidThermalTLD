@@ -13,6 +13,7 @@ from keras import backend as K
 import os
 import cv2
 
+import tensorflow as tf
 import sklearn
 import scikitplot as skplt
 
@@ -65,28 +66,55 @@ def create_pairs(x, digit_indices):
     return np.array(pairs), np.array(labels)
 
 
+def create_eval_pairs(x, digit_indices):
+    '''Positive and negative pair creation.
+    Alternates between positive and negative pairs.
+    '''
+    pairs = []
+    labels = []
+    n = min([len(digit_indices[d]) for d in range(8,10)]) - 1
+    for d in range(8,10):
+        for i in range(n):
+            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+            pairs += [[x[z1], x[z2]]]
+            inc = random.randrange(8, 9)
+            dn = (d + inc) % 2
+            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
+            pairs += [[x[z1], x[z2]]]
+            labels += [1, 0]
+    return np.array(pairs), np.array(labels)
+
+shape = 0
+def flatten_bodge(x):
+    return tf.reshape(x, [tf.shape(x)[0],tf.shape(x)[1]*tf.shape(x)[2]*tf.shape(x)[3]])
+
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction)
 
-    model = Sequential()
-    model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape, activation='relu'))
-    model.add(Conv2D(32, (3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    #model = Sequential()
+    input_main = Input(shape=input_shape, dtype='float32')
+    x = Conv2D(32, (3, 3), padding='same', activation='relu')(input_main)
+    x = Conv2D(32, (3, 3), activation='relu')(x)
+    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Dropout(0.25)(x)
 
-    model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    x = Conv2D(64, (3, 3), padding='same', activation='relu')(x)
+    x = Conv2D(64, (3, 3), activation='relu')(x)
+    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Dropout(0.25)(x)
 
-    # a,b,c,d = model.output_shape
+    # x = Lambda(flatten_bodge, dtype='float32')(x)
+
+    # a,b,c,d = x.get_shape().as_list()
     # a = b*c*d
 
-    # model.add(Permute([1, 2, 3]))  # Indicate NHWC data layout
-    # model.add(Reshape((a,)))
+    # # x = Permute([1, 2, 3])(x)  # Indicate NHWC data layout
+    # x = Reshape((a,))(x)
 
-    model.add(Flatten())
-    model.add(Dense(512, activation='relu'))
+    x = Flatten()(x)
+    x = Dense(256, activation='relu', name="final")(x)
+
+    model = Model(inputs=input_main, outputs=x)
     return model
 
 
@@ -150,11 +178,8 @@ te_pairs, te_y = create_pairs(x_test, digit_indices)
 
 
 # network definition
-# base_network = create_base_network(input_dim, X_train)
 base_network = create_base_network(input_shape)
 
-# input_a = Input(shape=(input_dim,))
-# input_b = Input(shape=(input_dim,))
 input_a = Input(shape=input_shape)
 input_b = Input(shape=input_shape)
 
@@ -210,52 +235,69 @@ print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 
 
-layer_name = 'dense_1'
+
+# x_eval = []
+# y_eval = []
+
+# for target in img_groups:
+#     for img_file in img_groups[target]:
+#         if int(target) >= 8:
+#             img = cv2.imread(os.path.join(image_dir, target, img_file))
+#             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+#             x_eval.append(img)
+#             y_eval.append(int(target))
+
+# x_eval = np.array(x_eval)
+# y_eval = np.array(y_eval)
+# x_eval = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
+# x_eval = x_train.astype('float32')
+# x_eval /= 255
+
+# digit_indices = [np.where(y_eval == i)[0] for i in range(8,10)]
+# eval_pairs, ev_y = create_eval_pairs(x_eval, digit_indices)
+
+# pred = model.predict([eval_pairs[:, 0], eval_pairs[:, 1]])
+# eval_acc = compute_accuracy(ev_y, pred)
+# print('* Accuracy on evaluation set: %0.2f%%' % (100 * eval_acc))
+
+
+
+
+
 intermediate_layer_model = Model(inputs=model.input,
-                                 outputs=model.get_layer(layer_name).output)
+                                 outputs=model.get_layer(name="model_1_1/final/Relu").output)
 intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
-np.savetxt("intermediate_output.csv",intermediate_output,delimiter=",")
+np.savetxt("intermediate_output1.csv",vectors[-6000:],delimiter=",")
 
+intermediate_layer_model = Model(inputs=model.input,
+                                 outputs=model.get_layer(name="final/Relu").output)
+intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
-
-
-x_eval = []
-y_eval = []
-
-for target in img_groups:
-    for img_file in img_groups[target]:
-        if int(target) >= 8:
-            img = cv2.imread(os.path.join(image_dir, target, img_file))
-            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            x_eval.append(img)
-            y_eval.append(int(target))
-
-x_eval = np.array(x_eval)
-y_eval = np.array(y_eval)
-x_eval = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-x_eval = x_train.astype('float32')
-x_eval /= 255
-
-digit_indices = [np.where(y_eval == i)[0] for i in range(8,10)]
-eval_pairs, ev_y = create_pairs(x_eval, digit_indices)
-
-pred = model.predict([eval_pairs[:, 0], eval_pairs[:, 1]])
-eval_acc = compute_accuracy(ev_y, pred)
-print('* Accuracy on evaluation set: %0.2f%%' % (100 * eval_acc))
+np.savetxt("intermediate_output2.csv",vectors[-6000:],delimiter=",")
 
 
 
 
 
 
+# save_dir = os.path.join(os.getcwd(), 'saved_models')
+# model_name = 'openWorld.h5'
+# if not os.path.isdir(save_dir):
+#     os.makedirs(save_dir)
+# model_path = os.path.join(save_dir, model_name)
+# model.save(model_path)
+# print('Saved trained model at %s ' % model_path)
 
 
+sess = K.get_session()
 
-save_dir = os.path.join(os.getcwd(), 'saved_models')
-model_name = 'openWorld.h5'
-if not os.path.isdir(save_dir):
-    os.makedirs(save_dir)
-model_path = os.path.join(save_dir, model_name)
-model.save(model_path)
-print('Saved trained model at %s ' % model_path)
+#[print(x.op.name) for x in model.outputs]
+
+constant_graph = tf.graph_util.convert_variables_to_constants(sess, sess.graph.as_graph_def(),['lambda_1/Sqrt'])
+tf.train.write_graph(constant_graph, "", "graph.pb", as_text=False)
+
+# import cv2 as cv
+
+# net = cv.dnn.readNetFromTensorflow('graph.pb')
+# print("Success")
