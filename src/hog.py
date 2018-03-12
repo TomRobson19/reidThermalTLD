@@ -14,6 +14,11 @@
 
 import cv2
 import sys
+import numpy as numpy
+import person
+
+from keras.models import load_model, Model
+from keras import backend as K
 
 #####################################################################
 
@@ -21,8 +26,31 @@ keep_processing = True;
 camera_to_use = 1;
 EVENT_LOOP_DELAY = 40;	# delay for GUI window
                         # 40 ms equates to 1000ms/25fps = 40ms per frame
-
 #####################################################################
+
+def euclidean_distance(vects):
+    x, y = vects
+
+    #return K.cast(K.less(K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True)),0.5),"float32")
+
+    return K.sqrt(K.sum(K.square(x - y), axis=1, keepdims=True))
+
+
+def eucl_dist_output_shape(shapes):
+    shape1, shape2 = shapes
+    return (shape1[0], 1)
+
+def contrastive_loss(y_true, y_pred):
+    '''Contrastive loss from Hadsell-et-al.'06
+    http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
+    '''
+    margin = 1
+    return K.mean(y_true * K.square(y_pred) + (1 - y_true) * K.square(K.maximum(margin - y_pred, 0)))
+
+def calc_accuracy(labels, predictions):
+    '''accuracy function for compilation'''
+    return K.mean(K.equal(labels, K.cast(K.less(predictions,0.5),"float32")))
+
 
 def inside(r, q):
     rx, ry, rw, rh = r
@@ -36,11 +64,27 @@ def draw_detections(img, rects, thickness = 1):
         pad_w, pad_h = int(0.15*w), int(0.05*h)
         cv2.rectangle(img, (x+pad_w, y+pad_h), (x+w-pad_w, y+h-pad_h), (0, 0, 255), thickness)
 
+def convertForKeras(img):
+    newImg = np.array(img)
+    newImg = newImg.reshape(newImg.shape[0], newImg.shape[1],1)
+    newImg /= 255
+    return newImg
+
+def queryNeuralNetwork(img1, img2):
+    kerasInput = np.array([[img1,img2]])
+
+    prediction = model.predict(kerasInput)
+
+    return prediction
+
 #####################################################################
+model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
 
 padding = 40
 width = 100
 height = 100
+
+people = []
 
 # define video capture object
 
