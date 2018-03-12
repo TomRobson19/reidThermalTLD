@@ -281,21 +281,21 @@ np.savetxt("intermediate_output2.csv",vectors[-6000:],delimiter=",")
 
 
 
-# save_dir = os.path.join(os.getcwd(), 'saved_models')
-# model_name = 'openWorld.h5'
-# if not os.path.isdir(save_dir):
-#     os.makedirs(save_dir)
-# model_path = os.path.join(save_dir, model_name)
-# model.save(model_path)
-# print('Saved trained model at %s ' % model_path)
+save_dir = os.path.join(os.getcwd(), 'saved_models')
+model_name = 'openWorld.h5'
+if not os.path.isdir(save_dir):
+    os.makedirs(save_dir)
+model_path = os.path.join(save_dir, model_name)
+model.save(model_path)
+print('Saved trained model at %s ' % model_path)
 
 
-sess = K.get_session()
+# sess = K.get_session()
 
-#[print(x.op.name) for x in model.outputs]
+# #[print(x.op.name) for x in model.outputs]
 
-constant_graph = tf.graph_util.convert_variables_to_constants(sess, sess.graph.as_graph_def(),['lambda_1/Sqrt'])
-tf.train.write_graph(constant_graph, "", "graph.pb", as_text=False)
+# constant_graph = tf.graph_util.convert_variables_to_constants(sess, sess.graph.as_graph_def(),['lambda_1/Sqrt'])
+# tf.train.write_graph(constant_graph, "", "graph.pb", as_text=False)
 
 # import cv2 as cv
 
