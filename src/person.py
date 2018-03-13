@@ -6,30 +6,31 @@ class Person:
 	previous = []
 
 	def __init__(self, identifier):
-		setIdentifier(identifier)
-		setColour(identifier)
+		self.setIdentifier(identifier)
+		self.setColour(identifier)
 
 	def setIdentifier(self, identifier):
-		personIdentifier = identifier
+		self.personIdentifier = identifier
 
 	def getIdentifier(self):
-		return personIdentifier
+		return self.personIdentifier
 
 	def setColour(self, identifier):
+		random.seed(identifier)
 		personColour = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 
 	def getColour(self):
-		return personColour
+		return self.personColour
 
 	def addPrevious(self, roi):
-		if len(previous<10):
-			previous.append(roi)
+		if len(self.previous)<10:
+			self.previous.append(roi)
 		else:
-			previous = previous[1:]
-			previous.append(roi)
+			self.previous = self.previous[1:]
+			self.previous.append(roi)
 
 	def getPrevious(self):
-		return previous
+		return self.previous
 
 
 #when calling keras, think I just need to convert img to numpy using np.array, astype('float32') and /=255
