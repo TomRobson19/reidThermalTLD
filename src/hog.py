@@ -61,12 +61,11 @@ def inside(r, q):
     qx, qy, qw, qh = q
     return rx > qx and ry > qy and rx + rw < qx + qw and ry + rh < qy + qh
 
-def draw_detections(img, rects, colour, thickness = 1):
-    for x, y, w, h in rects:
-        # the HOG detector returns slightly larger rectangles than the real objects.
-        # so we slightly shrink the rectangles to get a nicer output.
-        pad_w, pad_h = int(0.15*w), int(0.05*h)
-        cv2.rectangle(img, (x+pad_w, y+pad_h), (x+w-pad_w, y+h-pad_h), thickness)
+def draw_detections(img, x,y,w,h, colour, thickness = 1):
+    # the HOG detector returns slightly larger rectangles than the real objects.
+    # so we slightly shrink the rectangles to get a nicer output.
+    pad_w, pad_h = int(0.15*w), int(0.05*h)
+    cv2.rectangle(img, (x, y), (x+w, y+h), thickness)
 
 def convertForKeras(img):
     newImg = np.array(img)
@@ -79,10 +78,10 @@ def queryNeuralNetwork(img1, img2):
     img1 = cv2.resize(img1,(128,256))
     img2 = cv2.resize(img2,(128,256))
     
-    cv2.imshow("test1",img1)
-    cv2.imshow("test2",img2)
+    # cv2.imshow("test1",img1)
+    # cv2.imshow("test2",img2)
 
-    cv2.waitKey(10000)
+    # cv2.waitKey(10000)
 
     img1 = img1.reshape(256,128,1)
     img2 = img2.reshape(256,128,1)
@@ -90,11 +89,8 @@ def queryNeuralNetwork(img1, img2):
     img1 = np.array([img1])
     img2 = np.array([img2])
 
-    print (img1)
-    
     prediction = model.predict([img1,img2])
-    print(prediction)
-    return prediction
+    return prediction[0][0]
 
 
 #####################################################################
@@ -154,6 +150,9 @@ def runOnSingleCamera(video_file):
             
             x,y,w,h = cv2.boundingRect(i)
 
+            originalx = x
+            originaly = y
+
             x = int(max(0, x - padding / 100.0 * w))
             y = int(max(0, y - padding / 100.0 * h))
 
@@ -191,7 +190,7 @@ def runOnSingleCamera(video_file):
                         newPerson = Person(0)
                         newPerson.addPrevious(personROI)
                         people.append(newPerson)
-                        draw_detections(displayImage, found_filtered, newPerson.getColour(), 3)
+                        draw_detections(displayImage, originalx, originaly, w,h, newPerson.getColour(), 3)
                     else:
                         closest = 100
                         closestPerson = 100
@@ -209,12 +208,14 @@ def runOnSingleCamera(video_file):
                         if closest < 0.5:
                             person = people[closestPerson]
                             person.addPrevious(personROI)
-                            draw_detections(displayImage, found_filtered, person.getColour(), 3)
+                            draw_detections(displayImage, originalx, originaly, w, h, person.getColour(), 3)
+                            print("REID")
                         else:
                             newPerson = Person(len(people))
                             newPerson.addPrevious(personROI)
                             people.append(newPerson)
-                            draw_detections(displayImage, found_filtered, newPerson.getColour(), 3)
+                            draw_detections(displayImage, originalx, originaly, w, h, newPerson.getColour(), 3)
+                            print("NEW")
         # display image
 
         cv2.imshow(windowName,displayImage)
