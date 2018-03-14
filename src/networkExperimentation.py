@@ -232,7 +232,7 @@ print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 
 
-
+print(te_pairs[0:,0])
 
 
 
@@ -264,17 +264,17 @@ print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 
 
-intermediate_layer_model = Model(inputs=model.input,
-                                 outputs=model.get_layer(name="model_1_1/final/Relu").output)
-intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
+# intermediate_layer_model = Model(inputs=model.input,
+#                                  outputs=model.get_layer(name="model_1_1/final/Relu").output)
+# intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
-np.savetxt("intermediate_output1.csv",vectors[-6000:],delimiter=",")
+# np.savetxt("intermediate_output1.csv",vectors[-6000:],delimiter=",")
 
-intermediate_layer_model = Model(inputs=model.input,
-                                 outputs=model.get_layer(name="final/Relu").output)
-intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
+# intermediate_layer_model = Model(inputs=model.input,
+#                                  outputs=model.get_layer(name="final/Relu").output)
+# intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
-np.savetxt("intermediate_output2.csv",vectors[-6000:],delimiter=",")
+# np.savetxt("intermediate_output2.csv",vectors[-6000:],delimiter=",")
 
 
 

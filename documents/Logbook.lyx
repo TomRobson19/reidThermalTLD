@@ -1708,5 +1708,30 @@ ling-python-script-from-c-and-using-its-output
 \end_layout
 
 \end_deeper
+\begin_layout Section*
+Week 19 and Meeting 19
+\end_layout
+
+\begin_layout Itemize
+Made python re-id system
+\end_layout
+
+\begin_layout Itemize
+Network predictions are all zero, unsure of problem, retraining now as unsure
+ what version of the network I have
+\end_layout
+
+\begin_layout Itemize
+mkfifo - investigate running a python script separately
+\end_layout
+
+\begin_layout Itemize
+Test out ROS code on cameras.
+\end_layout
+
+\begin_layout Itemize
+Camera Gamma is currently offline, go on without it for now
+\end_layout
+
 \end_body
 \end_document
