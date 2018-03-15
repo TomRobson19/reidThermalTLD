@@ -1733,5 +1733,9 @@ Test out ROS code on cameras.
 Camera Gamma is currently offline, go on without it for now
 \end_layout
 
+\begin_layout Itemize
+10 is a bit slow when the number of targets increases
+\end_layout
+
 \end_body
 \end_document

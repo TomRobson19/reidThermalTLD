@@ -92,6 +92,8 @@ def queryNeuralNetwork(img1, img2):
     prediction = model.predict([img1,img2])
     return prediction[0][0]
 
+def is_similar(image1, image2):
+    return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 #####################################################################
 model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
@@ -131,100 +133,106 @@ def runOnSingleCamera(video_file):
 
     keep_processing = True
 
+    previousImg = np.zeros((640,480,3), np.uint8)
+
     while (keep_processing):
 
         ret, img = cap.read()
 
-        img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        if not is_similar(img, previousImg):
 
-        displayImage = img
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
-        fgmask = mog.apply(img)
+            displayImage = img
 
-        fgthres = cv2.threshold(fgmask.copy(), 200, 255, cv2.THRESH_BINARY)[1]
-        fgdilated = cv2.dilate(fgthres, kernel=cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3)), iterations = 3)
+            fgmask = mog.apply(img)
 
-        _, contours, hierarchy = cv2.findContours(fgthres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            fgthres = cv2.threshold(fgmask.copy(), 200, 255, cv2.THRESH_BINARY)[1]
+            fgdilated = cv2.dilate(fgthres, kernel=cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3)), iterations = 3)
 
-        for i in contours:
-            
-            x,y,w,h = cv2.boundingRect(i)
+            _, contours, hierarchy = cv2.findContours(fgthres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-            originalx = x
-            originaly = y
+            for i in contours:
+                
+                x,y,w,h = cv2.boundingRect(i)
 
-            x = int(max(0, x - padding / 100.0 * w))
-            y = int(max(0, y - padding / 100.0 * h))
+                originalx = x
+                originaly = y
 
-            w = int(min(img.shape[1] - 1, (w + 2 * padding / 100.0 * w)))
-            h = int(min(img.shape[0] - 1, (h + 2 * padding / 100.0 * h)))
+                x = int(max(0, x - padding / 100.0 * w))
+                y = int(max(0, y - padding / 100.0 * h))
 
-            if ((w >= width) and (h >= height) and (x + w < img.shape[1]) and (y + h < img.shape[0])):
+                w = int(min(img.shape[1] - 1, (w + 2 * padding / 100.0 * w)))
+                h = int(min(img.shape[0] - 1, (h + 2 * padding / 100.0 * h)))
 
-                #cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+                if ((w >= width) and (h >= height) and (x + w < img.shape[1]) and (y + h < img.shape[0])):
 
-                roi = img[y:h+y,x:w+x]
+                    #cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+
+                    roi = img[y:h+y,x:w+x]
 
 
-                #perform HOG based pedestrain detection
+                    #perform HOG based pedestrain detection
 
-                found, w = hog.detectMultiScale(roi, winStride=(8,8), padding=(32,32), scale=1.05)
-                found_filtered = []
+                    found, w = hog.detectMultiScale(roi, winStride=(8,8), padding=(32,32), scale=1.05)
+                    found_filtered = []
 
-                for ri, r in enumerate(found):
-                    for qi, q in enumerate(found):
-                        if ri != qi and inside(r, q):
-                            break
-                        else:
-                            found_filtered.append(r)
+                    for ri, r in enumerate(found):
+                        for qi, q in enumerate(found):
+                            if ri != qi and inside(r, q):
+                                break
+                            else:
+                                found_filtered.append(r)
 
-                #draw_detections(img, found)
-                # draw_detections(displayImage, found_filtered, colour, 3)
+                    #draw_detections(img, found)
+                    # draw_detections(displayImage, found_filtered, colour, 3)
 
-                for x, y, w, h in found_filtered:
-                    #w, h = int(0.15*w), int(0.05*h)
-                    personROI = roi[y:h+y,x:w+x]
+                    for x, y, w, h in found_filtered:
+                        #w, h = int(0.15*w), int(0.05*h)
+                        personROI = roi[y:h+y,x:w+x]
 
-                    personROI = convertForKeras(personROI)
-                    if len(people) == 0:
-                        newPerson = Person(0)
-                        newPerson.addPrevious(personROI)
-                        people.append(newPerson)
-                        draw_detections(displayImage, originalx, originaly, w,h, newPerson.getColour(), 3)
-                    else:
-                        closest = 100
-                        closestPerson = 100
-                        for person in people:
-                            currentPerson = person.getIdentifier()
-                            previous = person.getPrevious()
-                            for previousFrame in previous:
-                                prediction = queryNeuralNetwork(personROI,previousFrame)
-
-                                print(currentPerson, prediction)
-                                
-                                if prediction < closest:
-                                    closest = prediction
-                                    closestPerson = currentPerson
-                        if closest < 0.5:
-                            person = people[closestPerson]
-                            person.addPrevious(personROI)
-                            draw_detections(displayImage, originalx, originaly, w, h, person.getColour(), 3)
-                            print("REID")
-                        else:
-                            newPerson = Person(len(people))
+                        personROI = convertForKeras(personROI)
+                        if len(people) == 0:
+                            newPerson = Person(0)
                             newPerson.addPrevious(personROI)
                             people.append(newPerson)
-                            draw_detections(displayImage, originalx, originaly, w, h, newPerson.getColour(), 3)
-                            print("NEW")
-        # display image
+                            draw_detections(displayImage, originalx, originaly, w,h, newPerson.getColour(), 3)
+                        else:
+                            closest = 100
+                            closestPerson = 100
+                            for person in people:
+                                currentPerson = person.getIdentifier()
+                                previous = person.getPrevious()
+                                for previousFrame in previous:
+                                    prediction = queryNeuralNetwork(personROI,previousFrame)
 
-        cv2.imshow(windowName,displayImage)
+                                    print(currentPerson, prediction)
+                                    
+                                    if prediction < closest:
+                                        closest = prediction
+                                        closestPerson = currentPerson
+                            if closest < 0.5:
+                                person = people[closestPerson]
+                                person.addPrevious(personROI)
+                                draw_detections(displayImage, originalx, originaly, w, h, person.getColour(), 3)
+                                print("REID")
+                            else:
+                                newPerson = Person(len(people))
+                                newPerson.addPrevious(personROI)
+                                people.append(newPerson)
+                                draw_detections(displayImage, originalx, originaly, w, h, newPerson.getColour(), 3)
+                                print("NEW")
+            # display image
 
-        # if user presses "x" then exit
+            cv2.imshow(windowName,displayImage)
 
-        key = cv2.waitKey(1) & 0xFF # wait 200ms (i.e. 1000ms / 5 fps = 200 ms)
-        if (key == ord('x')):
-            keep_processing = False
+            previousImg = img
+
+            # if user presses "x" then exit
+
+            key = cv2.waitKey(1) & 0xFF # wait 200ms (i.e. 1000ms / 5 fps = 200 ms)
+            if (key == ord('x')):
+                keep_processing = False
 
     # close all windows
 
