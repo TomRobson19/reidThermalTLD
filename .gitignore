@@ -96,3 +96,5 @@ src/test/
 *.pb
 
 *.png
+
+src/newData/

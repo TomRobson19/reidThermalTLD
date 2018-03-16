@@ -1737,5 +1737,9 @@ Camera Gamma is currently offline, go on without it for now
 10 is a bit slow when the number of targets increases
 \end_layout
 
+\begin_layout Itemize
+change logic for saving frames - maybe every 10 recognitions?
+\end_layout
+
 \end_body
 \end_document
