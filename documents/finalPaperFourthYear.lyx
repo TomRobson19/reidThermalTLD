@@ -4,11 +4,10 @@
 \begin_header
 \textclass article
 \begin_preamble
-
 \usepackage{durhampaper}
 
 
-\title{Camera-to-Camera Tracking for Person Re-identification within Thermal Imagery}
+\title{Deep Learning Enabled Thermal Re-Identification}
 \student{T.A. Robson}
 \supervisor{T.P. Breckon}
 \degree{MEng Computer Science}
