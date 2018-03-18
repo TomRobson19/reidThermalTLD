@@ -7,7 +7,7 @@
 \usepackage{durhampaper}
 
 
-\title{Deep Learning Enabled Thermal Re-Identification}
+\title{Deep Learning Enabled Open World Thermal Re-Identification}
 \student{T.A. Robson}
 \supervisor{T.P. Breckon}
 \degree{MEng Computer Science}
@@ -163,7 +163,7 @@ key "Zheng2016"
 
 \end_inset
 
- This means that we are aiming to solve the open world re-rdentification
+ This means that we are aiming to solve the open world re-identification
  problem.
 \end_layout
 
