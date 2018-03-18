@@ -112,9 +112,60 @@ Context/Background
 \end_layout
 
 \begin_layout Abstract
+Although use of thermal imagery currently poses significant advantages for
+ 24/7 surveillance in terms of the visibility of targets under all environmental
+ conditions, a key limitation is the lack of colour information.
+ Person re-identification across multiple cameras is a key research problem
+ within the domain of visual surveillance and a key challenge for the future
+ deployment of thermal sensing as an autonomous sensor technology.
+ Many current approaches to the problem rely on colour features 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gong2014"
+
+\end_inset
+
+.
+ We have previously attempted to use a set of similar features to solve
+ the thermal re-identification problem with little success 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+, and are now exploring alternatives.
+ 
+\end_layout
+
+\begin_layout Abstract
 
 \series bold
 Aims
+\end_layout
+
+\begin_layout Abstract
+The aim of this project is to develop a system that would build upon and
+ extend the range of existing thermal image detection, tracking and classificati
+on approaches.
+ The first step for this is to be able to detect a person within thermal
+ imagery in real time, distinguish a person from other objects and track
+ a person moving through a scene in real time.
+ We would then use a Siamese Convolutional Neural Network to determine if
+ a pair of images contained the same person or two different people.
+ This architecture has been chosen as it enables us to deploy the system
+ of any camera system with any human targets, rather than simply to train
+ and test in a closed world on the same set of people, as many previous
+ approaches have.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zheng2016"
+
+\end_inset
+
+ This means that we are aiming to solve the open world re-rdentification
+ problem.
 \end_layout
 
 \begin_layout Abstract
@@ -147,8 +198,8 @@ Conclusions
 \series bold
 Keywords: 
 \series default
-Computer Vision, Person Re-Identification, Re-ID, Person Tracking, Features,
- Attributes, Thermal Imagery, Thermal Video
+Deep Learning, Siamese Network, Computer Vision, Person Re-Identification,
+ Re-ID, Person Tracking, Thermal Imagery, Thermal Video
 \end_layout
 
 \begin_layout Standard
@@ -275,7 +326,7 @@ Conclusion
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "../../../old/thirdYearWork/Project/reidThermal/General/library"
+bibfiles "My Collection"
 options "bibtotoc,plain"
 
 \end_inset
