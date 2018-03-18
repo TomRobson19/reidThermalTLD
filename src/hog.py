@@ -174,7 +174,7 @@ def runOnSingleCamera(video_file):
 
                     #perform HOG based pedestrain detection
 
-                    found, w = hog.detectMultiScale(roi, winStride=(8,8), padding=(32,32), scale=1.05)
+                    found, w = hog.detectMultiScale(roi, winStride=(8,8), padding=(8,16), scale=1.05)
                     found_filtered = []
 
                     for ri, r in enumerate(found):
@@ -239,4 +239,4 @@ def runOnSingleCamera(video_file):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    runOnSingleCamera("data/Dataset1/betaInput.webm")
+    runOnSingleCamera("newData/1/2018-03-16T12.10.29ASM-input.avi")
