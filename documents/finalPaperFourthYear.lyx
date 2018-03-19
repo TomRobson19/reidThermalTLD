@@ -155,14 +155,14 @@ on approaches.
  This architecture has been chosen as it enables us to deploy the system
  of any camera system with any human targets, rather than simply to train
  and test in a closed world on the same set of people, as many previous
- approaches have.
- 
+ approaches have 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Zheng2016"
 
 \end_inset
 
+.
  This means that we are aiming to solve the open world re-identification
  problem.
 \end_layout
@@ -212,6 +212,357 @@ Deep Learning, Siamese Network, Computer Vision, Person Re-Identification,
 Introduction
 \end_layout
 
+\begin_layout Standard
+A fundamental task for a distributed multi-camera surveillance system is
+ to associate people across different camera views at different locations
+ and times 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gong2014"
+
+\end_inset
+
+.
+ This is referred to as the person re-identification problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gong2014"
+
+\end_inset
+
+ and is an interesting and important problem within the field of computer
+ vision.
+ From the previous work, we can see that a substantial amount of research
+ that has been done on person re-identification, mainly revolving around
+ the use of features or attributes of a person 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Layne"
+
+\end_inset
+
+.
+ However, much of this relies on the visible spectrum, with attributes of
+ the form “red shirt” 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Layne"
+
+\end_inset
+
+.
+ However, in the modern world, thermal imagery is often used for 24/7 surveillan
+ce when varying environmental conditions are present.
+ Therefore, it is important that an effective re-identification system is
+ developed to utilise this area of surveillance, as this problem is yet
+ to be effectively solved.
+\end_layout
+
+\begin_layout Standard
+There are many potential applications for this technology, but the most
+ important in the modern world would be to support human intelligence organisati
+ons.
+ The surveillance data that a system like this can provide would be critical
+ for crime-prevention, forensic analysis, and counter-terrorism activities
+ in both civilian and governmental agencies alike.
+ While this is currently widely used by human operators, these operators
+ have to be trained, which offsets the utility of this approach with training
+ and staffing costs.
+ The implementation of an automated re-identification system is therefore
+ of great interest, as it would be very useful in supporting these human
+ operators and enabling them to achieve better results more efficiently.
+ 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Example-of-Thermal"
+
+\end_inset
+
+ shows five different views of the same person that our features must be
+ able to re-identify as being the same person.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/Screenshot from running20140319.webm.png
+	scale 12
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/Screenshot from running20140319.webm - 2.png
+	scale 12
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/Screenshot from running20140319.webm - 3.png
+	scale 12
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/Screenshot from walking20140319.webm.png
+	scale 12
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/Screenshot from walking20140319.webm - 1.png
+	scale 12
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Example-of-Thermal"
+
+\end_inset
+
+Several frames showing the same person that our system must know are the
+ same person
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement R
+overhang 0in
+width "30col%"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/open vs closed.png
+	scale 20
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The difference between closed world (a) and open world (b) re-identification
+ systems, from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zheng2016"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:openVsClosed"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Whilst thermal imagery has many advantages, it is not able to identify colour,
+ making features that rely on colour useless.
+ Therefore, alternative features are required to facilitate re-identification.
+ In our previous work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+, we attempted to use features that a human would think were distinctive
+ enough to facilitate re-identification.
+ This had only limited success.
+ Since our work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+, the attention of the researchers of re-identification has shifted to deep
+ learning based solutions, as shall be discussed in more detail in the Related
+ Work section.
+ These deep learning approaches can be split into two categories: closed
+ world, where the system is trained and tested on the same set of people
+ from a pre defined dataset, and open world, where the system is trained
+ to learn what makes people different, so it can be applied to any dataset
+ of people.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:openVsClosed"
+
+\end_inset
+
+ shows the difference between these two possible approaches to deep learning
+ enabled re-identification.
+\end_layout
+
+\begin_layout Standard
+The intent of this project is
+\end_layout
+
 \begin_layout Subsection
 Aims of the Project
 \end_layout
@@ -225,11 +576,11 @@ Related Work
 \end_layout
 
 \begin_layout Subsection
-Previous Attempts at Re-Identification
+Feature-Based Attempts at Re-Identification
 \end_layout
 
 \begin_layout Subsection
-TLD Tracker
+TLD Tracker - maybe....
 \end_layout
 
 \begin_layout Subsection
