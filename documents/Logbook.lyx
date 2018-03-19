@@ -1747,5 +1747,22 @@ Re-ID looks like it could work well on my new dataset, need to do experiments
  Experiment and record loss and accuracy for all params from 0.1 - 1.0
 \end_layout
 
+\begin_layout Section*
+Easter Holidays
+\end_layout
+
+\begin_layout Itemize
+ASK TOBY IF HE HAS MY FEEDBACK FROM LAST YEAR - could save a drafting stage
+\end_layout
+
+\begin_layout Itemize
+Need to grid search network params and classification threshold
+\end_layout
+
+\begin_layout Itemize
+Made progress on extracting intermediate feature vector, many of them are
+ zero......
+\end_layout
+
 \end_body
 \end_document
