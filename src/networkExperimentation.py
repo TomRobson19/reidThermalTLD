@@ -66,27 +66,27 @@ def create_pairs(x, digit_indices):
     return np.array(pairs), np.array(labels)
 
 
-def create_eval_pairs(x, digit_indices):
-    '''Positive and negative pair creation.
-    Alternates between positive and negative pairs.
-    '''
-    pairs = []
-    labels = []
-    n = min([len(digit_indices[d]) for d in range(8,10)]) - 1
-    for d in range(8,10):
-        for i in range(n):
-            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-            pairs += [[x[z1], x[z2]]]
-            inc = random.randrange(8, 9)
-            dn = (d + inc) % 2
-            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
-            pairs += [[x[z1], x[z2]]]
-            labels += [1, 0]
-    return np.array(pairs), np.array(labels)
+# def create_eval_pairs(x, digit_indices):
+#     '''Positive and negative pair creation.
+#     Alternates between positive and negative pairs.
+#     '''
+#     pairs = []
+#     labels = []
+#     n = min([len(digit_indices[d]) for d in range(8,10)]) - 1
+#     for d in range(8,10):
+#         for i in range(n):
+#             z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+#             pairs += [[x[z1], x[z2]]]
+#             inc = random.randrange(8, 9)
+#             dn = (d + inc) % 2
+#             z1, z2 = digit_indices[d][i], digit_indices[dn][i]
+#             pairs += [[x[z1], x[z2]]]
+#             labels += [1, 0]
+#     return np.array(pairs), np.array(labels)
 
-shape = 0
-def flatten_bodge(x):
-    return tf.reshape(x, [tf.shape(x)[0],tf.shape(x)[1]*tf.shape(x)[2]*tf.shape(x)[3]])
+# shape = 0
+# def flatten_bodge(x):
+#     return tf.reshape(x, [tf.shape(x)[0],tf.shape(x)[1]*tf.shape(x)[2]*tf.shape(x)[3]])
 
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction)
@@ -231,9 +231,22 @@ print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 
+save_dir = os.path.join(os.getcwd(), 'saved_models')
+model_name = 'openWorld.h5'
+if not os.path.isdir(save_dir):
+    os.makedirs(save_dir)
+model_path = os.path.join(save_dir, model_name)
+model.save(model_path)
+print('Saved trained model at %s ' % model_path)
 
-print(te_pairs[0:,0])
 
+
+vectorTest = Model(inputs=[input_a, input_b], outputs=[processed_a,processed_b])
+
+test = vectorTest.predict([te_pairs[:, 0], te_pairs[:, 1]])
+print(test)
+
+np.savetxt("vectors.csv",test[0], delimiter=",")
 
 
 # x_eval = []
@@ -268,26 +281,19 @@ print(te_pairs[0:,0])
 #                                  outputs=model.get_layer(name="model_1_1/final/Relu").output)
 # intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
-# np.savetxt("intermediate_output1.csv",vectors[-6000:],delimiter=",")
+# np.savetxt("intermediate_output1.csv",intermediate_output,delimiter=",")
 
 # intermediate_layer_model = Model(inputs=model.input,
 #                                  outputs=model.get_layer(name="final/Relu").output)
 # intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
-# np.savetxt("intermediate_output2.csv",vectors[-6000:],delimiter=",")
+# np.savetxt("intermediate_output2.csv",intermediate_output,delimiter=",")
 
 
 
 
 
 
-save_dir = os.path.join(os.getcwd(), 'saved_models')
-model_name = 'openWorld.h5'
-if not os.path.isdir(save_dir):
-    os.makedirs(save_dir)
-model_path = os.path.join(save_dir, model_name)
-model.save(model_path)
-print('Saved trained model at %s ' % model_path)
 
 
 # sess = K.get_session()
