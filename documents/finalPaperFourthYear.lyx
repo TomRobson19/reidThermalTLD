@@ -271,11 +271,7 @@ ons.
  The implementation of an automated re-identification system is therefore
  of great interest, as it would be very useful in supporting these human
  operators and enabling them to achieve better results more efficiently.
- 
-\end_layout
-
-\begin_layout Standard
-Figure 
+ Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Example-of-Thermal"
@@ -560,11 +556,26 @@ reference "fig:openVsClosed"
 \end_layout
 
 \begin_layout Standard
-The intent of this project is
+TALK ABOUT TLD IF ENDS UP BEING USED
 \end_layout
 
 \begin_layout Subsection
 Aims of the Project
+\end_layout
+
+\begin_layout Standard
+The intent of this project is to develop a system that can utilise an open
+ world deep neural network, paired with a real time person detection system,
+ to solve the thermal re-identification problem, and improve on the performance
+ of state-of the-art solutions, including our own previous work 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -579,12 +590,226 @@ Related Work
 Feature-Based Attempts at Re-Identification
 \end_layout
 
-\begin_layout Subsection
-TLD Tracker - maybe....
+\begin_layout Standard
+Re-identification in colour is a well researched area, particularly using
+ distinctive features for this purpose.
+ Many of these methods are discussed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gong2014"
+
+\end_inset
+
+, and have been widely researched and understood, so research has moved
+ on to explore more complex methods.
+ An important part of the current state of the art in this area is camera
+ network layout and topology, as explored in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Martinel2016"
+
+\end_inset
+
+.
+ Here, the technique of distance vector routing is employed to get an idea
+ of the relative locations of the cameras, enabling the system to prioritise
+ the people seen most recently by the closest camera, as these are most
+ likely to be correct.
+ This is done by first analysing the overlap between cameras, and then computing
+ distance vectors and probabilities of going from one camera to another,
+ reducing the time complexity of the re-identification process in the majority
+ of cases.
+ 
+\end_layout
+
+\begin_layout Standard
+The work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chu2014"
+
+\end_inset
+
+ is on a similar theme to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Martinel2016"
+
+\end_inset
+
+, but assumes a non-overlapping camera system.
+ Each camera has entry and exit zones from its field of view, and if a person
+ can get from one camera field of view to another they are directly connected.
+ The system can then create what is referred to as a camera link model,
+ using a temporal, spatial and appearance relation between the entry and
+ exit zones of the cameras.
+ These paths are obtained from training data, but the system itself learns
+ how to recognise people by attributes, and uses the training data to estimate
+ where they are most likely to have gone after leaving a given camera field
+ of view.
+ 
+\end_layout
+
+\begin_layout Standard
+The authors of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "YiminWang2014"
+
+\end_inset
+
+ propose a different method for feature based identification, using a feature
+ projection matrix to project image features of one camera to the feature
+ space of another, to effectively eliminate the difference of feature distributi
+ons between the two cameras.
+ This feature projection matrix is obtained through supervised learning.
+ The proposed method aims to use a simple gradient descent algorithm to
+ accelerate and optimise the re-identification process by compensating for
+ the inconsistency of feature distributions captured by different cameras.
+ 
+\end_layout
+
+\begin_layout Standard
+The work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wu2012"
+
+\end_inset
+
+ emphasises the importance of making good use of all images and video frames
+ captured of a target.
+ The system proposed here creates a gallery of images of known individuals,
+ with more images increasing the accuracy of the system.
+ When a gallery exists for a target, this is referred to as multi-shot re-identi
+fication, and single-shot re-identification when only one image is available
+ in both the query and the gallery.
+ For multi-shot re-identification, the authors propose to use geometric
+ distance in another way by collaboratively approximating the query sets
+ using all galleries, a method known as Collaborative Sparse Approximation.
+ 
+\end_layout
+
+\begin_layout Standard
+Another approach, taken by the authors of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Liu2014"
+
+\end_inset
+
+, relies not only on extracting a set of features to use to compare people,
+ but also on determining which of these features is the most discriminative
+ for each person individually on the fly.
+ This is achieved through the use of a random forest classifier, and functions
+ well in an open world setting.
+ However, since the time of publication of this paper, the state of the
+ art of this area has moved on to deep learning.
+ 
+\end_layout
+
+\begin_layout Standard
+Our own previous attempt at thermal re-identification in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+ attempted to use features that a human would consider useful the re-identify
+ people, such as an approximation of the shape of the target, an analysis
+ of their gait and a measure of where each person's thermal 'hotspots' were.
+ This performed resonably well for some features, but its inaccuracy in
+ many situations led us to explore an alternative approach, using deep learning,
+ based on the current state of the art in the area.
+ 
 \end_layout
 
 \begin_layout Subsection
-Use of Deep Learning for Re-Identification 
+Use of Deep Learning for Re-Identification
+\end_layout
+
+\begin_layout Standard
+The use of deep learning to facilitate re-identification has been the driving
+ force in the research community in this area in recent times.
+ As our ability to train deeper and deeper networks on larger and larger
+ datasets has increased, largely thanks to modern improvements in graphics
+ hardware, these approches become more and more relevant.
+ As before, much of this research is focused on the colour spectrum.
+ The work of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Matsukawa2017"
+
+\end_inset
+
+ shows us how a combination of deep learning and human recognisable features
+ can be used for re-identification.
+ This works by training a neural network to recognise certain features that
+ the authors consider to be discriminative.
+ The result from the network is an ordered vector for the presence or absence
+ of these features.
+ However, as our previous work showed that we were unable to choose suitably
+ descriminitive features for thermal re-identification, we will not be able
+ to follow this approach.
+ 
+\end_layout
+
+\begin_layout Standard
+split into open world and closed world.
+ 
+\end_layout
+
+\begin_layout Standard
+Open World - 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhang2014"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ahmed2015"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wang2016a"
+
+\end_inset
+
+, 
+\end_layout
+
+\begin_layout Standard
+Closed World - 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhang2017"
+
+\end_inset
+
+, 
+\end_layout
+
+\begin_layout Standard
+Both - 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zheng2016"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+TLD Tracker - maybe....
+ (and alternatives)
 \end_layout
 
 \begin_layout Subsection
@@ -597,6 +822,10 @@ Solution
 
 \begin_layout Subsection
 Implementation Structure and Tools Used
+\end_layout
+
+\begin_layout Standard
+FILL IN WHEN DECIDED BETWEEN PYTHON/C++ TENSORFLOW/MKFIFO
 \end_layout
 
 \begin_layout Subsection
@@ -612,11 +841,11 @@ Person Identification
 \end_layout
 
 \begin_layout Subsubsection
-Person Tracking using Track-Learn-Detect
+Person Tracking using Track-Learn-Detect????
 \end_layout
 
 \begin_layout Subsubsection
-Deletion of Track-Learn-Detect Targets
+Deletion of Track-Learn-Detect Targets?????
 \end_layout
 
 \begin_layout Subsection
@@ -625,6 +854,16 @@ Deep Learning
 
 \begin_layout Subsubsection
 Network Architecture
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hadsell2006"
+
+\end_inset
+
+ for method used in siamese example
 \end_layout
 
 \begin_layout Subsubsection

@@ -1764,5 +1764,15 @@ Made progress on extracting intermediate feature vector, many of them are
  zero......
 \end_layout
 
+\begin_layout Itemize
+SKlearn grid search doesn't work with the siamese network for some reason....
+ should now try hyperas - also didn't work, will investigate further tomorrow.
+\end_layout
+
+\begin_layout Itemize
+Hyperas grid search now running, think I have a way to extract intermediate
+ layers, will test when optimal params are found
+\end_layout
+
 \end_body
 \end_document
