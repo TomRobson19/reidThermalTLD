@@ -734,7 +734,7 @@ The use of deep learning to facilitate re-identification has been the driving
  force in the research community in this area in recent times.
  As our ability to train deeper and deeper networks on larger and larger
  datasets has increased, largely thanks to modern improvements in graphics
- hardware, these approches become more and more relevant.
+ hardware, these approaches become more and more relevant and powerful.
  As before, much of this research is focused on the colour spectrum.
  The work of 
 \begin_inset CommandInset citation
@@ -756,8 +756,8 @@ key "Matsukawa2017"
 \end_layout
 
 \begin_layout Standard
-split into open world and closed world.
- 
+Much of the rest of the previous deep learning work is split into open world
+ and closed world...........
 \end_layout
 
 \begin_layout Standard
