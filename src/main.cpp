@@ -1,17 +1,73 @@
-#include "person.hpp"
 #include "tracker.hpp"
 #include <algorithm>
-#include <opencv2/dnn.hpp>
+#include <opencv2/opencv.hpp>
+
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <iostream>
+#include <string.h>
 
 using namespace cv;
-using namespace cv::dnn;
 using namespace std;
 
 #define CASCADE_TO_USE "classifiers/people_thermal_23_07_casALL16x32_stump_sym_24_n4.xml"
 
-vector<Person> targets;
+#define imagesFIFO "/tmp/images.fifo" 
+#define intsFIFO "/tmp/ints.fifo" 
+#define imagesDirectory "/tmp/imgs/"
 
-dnn::Net net = readNetFromTensorflow("saved_models/graph.pb");
+int fileNameCounter = 0;
+
+void writeToFIFO(Mat img) { 
+    cout << "writing" << endl;
+    int num, fifo; 
+    char extension[]=".jpg"; 
+    char newLine[]="\n"; 
+
+    std::string name = std::to_string(fileNameCounter);
+    char nameChar[name.length()+1]; 
+    
+    strcpy(nameChar, name.c_str());
+
+    char fileName[256]; // <- danger, only storage for 256 characters.
+    strncpy(fileName, imagesDirectory, sizeof(fileName));
+    strncat(fileName, nameChar, sizeof(fileName));
+    strncat(fileName, extension, sizeof(fileName));
+    
+
+    imwrite(fileName, img);
+
+    //strncat(fileName, newLine, sizeof(fileName));
+
+    cout << "here" << endl;
+
+    fifo = open(imagesFIFO, O_WRONLY);
+
+    cout << fileName << endl;
+
+    num= write(fifo, fileName, strlen(fileName));
+
+    close(fifo);
+    fileNameCounter++;
+}
+
+int readFromFIFO(){ 
+    int num, fifo, status; 
+    char temp[32]; 
+
+    fifo = open(intsFIFO, O_RDONLY);
+
+    num = read(fifo, temp, sizeof(temp));
+    
+    close(fifo);
+
+    cout << temp << endl;
+
+    return stoi(temp);
+
+}   
 
 int main(int argc, char **argv)
 {
@@ -141,20 +197,19 @@ int main(int argc, char **argv)
                         resize(imgToUse, imgToUse, Size(256,512));
 
                         //Neural Network Placeholder
-                        cout << "waiting" << endl;
-                        int key = waitKey(10000000);
-                        int personID = key-48;
-                        cout << "New Target " << personID << endl;
+                        writeToFIFO(imgToUse);
+
+                        int personID = readFromFIFO();
+
+                        Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
+
+                        char str[200];
+                        sprintf(str,"Person %d",personID);
+
+                        putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
 
                         //don't use the resized version here!
                         tracker.addTarget(rec, personID);
-
-                        if(personID > targets.size())
-                        {
-                            Person person(personID);
-                            targets.push_back(person);
-                            //this is to allow for saving patches and determining colour
-                        }
                     }
                     
                 }
