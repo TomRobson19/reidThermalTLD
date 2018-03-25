@@ -1824,15 +1824,22 @@ will need to investigate if they can all share the same fifo
 
 \end_deeper
 \begin_layout Itemize
-put numbers on the screen properly
-\end_layout
-
-\begin_layout Itemize
 determine correct number of frames to save
 \end_layout
 
 \begin_layout Itemize
 restructure and use this year's dataset
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+USE NVIDIA-SMI TO RESET GRAPHICS ERRORS
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+this is kinda annoying, maybe do a CUDA, CUDNN and tensorflow reinstall
+ if time
 \end_layout
 
 \end_deeper

@@ -31,7 +31,3 @@ class Person:
 
 	def getPrevious(self):
 		return self.previous
-
-
-#when calling keras, think I just need to convert img to numpy using np.array, astype('float32') and /=255
-#should be in this format when calling addPrevious

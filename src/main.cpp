@@ -279,6 +279,18 @@ int main(int argc, char **argv)
                     std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                     cout << objectRectangles.size() << endl;
                 }
+                else
+                {
+                    Rect rec = found_filtered[i];
+                    Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
+
+                    int personID = objectRectangles[i].personID;
+
+                    char str[200];
+                    sprintf(str,"Person %d",personID);
+
+                    putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
+                }
             }
         }
 

@@ -1,4 +1,3 @@
-#include "person.hpp"
 #include "tracker.hpp"
 
 using namespace cv;
