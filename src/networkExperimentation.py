@@ -244,10 +244,10 @@ print('Saved trained model at %s ' % model_path)
 vectorTest = Model(inputs=[input_a, input_b], outputs=[processed_a,processed_b])
 
 test = vectorTest.predict([te_pairs[:, 0], te_pairs[:, 1]])
-print(test)
 
-np.savetxt("vectors.csv",test[0], delimiter=",")
 
+np.savetxt("vectors1.csv",test[0], delimiter=",")
+np.savetxt("vectors2.csv",test[1], delimiter=",")
 
 # x_eval = []
 # y_eval = []
