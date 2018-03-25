@@ -1752,10 +1752,6 @@ Easter Holidays
 \end_layout
 
 \begin_layout Itemize
-ASK TOBY IF HE HAS MY FEEDBACK FROM LAST YEAR - could save a drafting stage
-\end_layout
-
-\begin_layout Itemize
 Need to grid search network params and classification threshold
 \end_layout
 
@@ -1774,5 +1770,71 @@ Hyperas grid search now running, think I have a way to extract intermediate
  layers, will test when optimal params are found
 \end_layout
 
+\begin_layout Itemize
+Writing test script for mkfifo
+\end_layout
+
+\begin_layout Itemize
+mkfifo testing script worked
+\end_layout
+
+\begin_layout Itemize
+Integrated mkfifo logic into main and new nnUtils files, currently untested.
+ 
+\end_layout
+
+\begin_layout Itemize
+Grid search ran, results in bestparams.txt
+\end_layout
+
+\begin_layout Itemize
+Toby sending feedback from last year
+\end_layout
+
+\begin_layout Itemize
+Haven't arranged another meeting, if I need to discuss something email Toby
+ and arrange a time.
+\end_layout
+
+\begin_layout Itemize
+C++ and python mkfifo functionality now works
+\end_layout
+
+\begin_layout Itemize
+This means I have TLD back to talk about!!!!!!
+\end_layout
+
+\begin_layout Itemize
+Next
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Optimise network parameters when grid search finishes
+\end_layout
+
+\begin_layout Itemize
+enable multithreading and mutexes like last year
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+will need to investigate if they can all share the same fifo
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+put numbers on the screen properly
+\end_layout
+
+\begin_layout Itemize
+determine correct number of frames to save
+\end_layout
+
+\begin_layout Itemize
+restructure and use this year's dataset
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
