@@ -1,0 +1,15 @@
+   5:     input_main = Input(shape=input_shape, dtype='float32')
+   6:     x = Conv2D(space['Conv2D'], space['pool_size'], padding='same', activation=space['activation'])(input_main)
+   7:     x = Conv2D(space['Conv2D_1'], space['pool_size_1'], padding='same', activation=space['activation_1'])(x)
+   8:     x = MaxPooling2D(pool_size=space['pool_size_2'])(x)
+   9:     x = Dropout(0.25)(x)
+  10: 
+  11:     x = Conv2D(space['Conv2D_2'], space['pool_size_3'], padding='same', activation=space['activation_2'])(x)
+  12:     x = Conv2D(space['Conv2D_3'], space['pool_size_4'], padding='same', activation=space['activation_3'])(x)
+  13:     x = MaxPooling2D(pool_size=space['pool_size_5'])(x)
+  14:     x = Dropout(0.25)(x)
+  15: 
+  16:     x = Flatten()(x)
+  17:     x = Dense(space['Dense'], activation=space['activation_4'])(x)
+{'pool_size_1': 8, 'pool_size_3': 3, 'activation_1': 'tanh', 'Conv2D_3': 32, 'pool_size_2': 5, 'Conv2D_1': 16, 'pool_size': 3, 'Dense': 16, 'activation_4': 'relu', 'Conv2D_2': 64, 'pool_size_5': 5, 'pool_size_4': 7, 'activation_3': 'tanh', 'activation_2': 'relu', 'Conv2D': 32, 'activation': 'tanh'}
+Evalutation of best performing model:
