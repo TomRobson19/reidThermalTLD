@@ -1840,7 +1840,8 @@ Next
 
 \begin_deeper
 \begin_layout Itemize
-Change Re-ID thresholds
+Change Re-ID thresholds - maybe re-id if confidence is much greater than
+ other targets.
 \end_layout
 
 \begin_layout Itemize

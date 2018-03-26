@@ -6,8 +6,8 @@
 #SBATCH --qos=long-high-prio
 #SBATCH --job-name=gridHyp
 
-#SBATCH -e stderr-filename
-#SBATCH -o stdout-filename
+#SBATCH -e stderr-grid
+#SBATCH -o stdout-grid
 
 #SBATCH --mem=8g
 
