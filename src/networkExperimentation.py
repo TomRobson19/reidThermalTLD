@@ -15,7 +15,8 @@ import cv2
 
 import tensorflow as tf
 import sklearn
-import scikitplot as skplt
+from sklearn import metrics
+#import scikitplot as skplt
 
 import matplotlib.pyplot as plt
 plt.switch_backend("Agg")
@@ -93,14 +94,14 @@ def create_base_network(input_shape):
 
     #model = Sequential()
     input_main = Input(shape=input_shape, dtype='float32')
-    x = Conv2D(32, (3, 3), padding='same', activation='relu')(input_main)
-    x = Conv2D(32, (3, 3), activation='relu')(x)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Conv2D(32, (3, 3), padding='same', activation='tanh')(input_main)
+    x = Conv2D(16, (8,8), activation='tanh')(x)
+    x = MaxPooling2D(pool_size=(5,5))(x)
     x = Dropout(0.25)(x)
 
-    x = Conv2D(64, (3, 3), padding='same', activation='relu')(x)
-    x = Conv2D(64, (3, 3), activation='relu')(x)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Conv2D(64, (3, 3), padding='same', activation='tanh')(x)
+    x = Conv2D(32, (7,7), activation='tanh')(x)
+    x = MaxPooling2D(pool_size=(5,5))(x)
     x = Dropout(0.25)(x)
 
     # x = Lambda(flatten_bodge, dtype='float32')(x)
@@ -112,7 +113,7 @@ def create_base_network(input_shape):
     # x = Reshape((a,))(x)
 
     x = Flatten()(x)
-    x = Dense(256, activation='relu', name="final")(x)
+    x = Dense(16, activation='relu')(x)
 
     model = Model(inputs=input_main, outputs=x)
     return model
@@ -176,6 +177,18 @@ tr_pairs, tr_y = create_pairs(x_train, digit_indices)
 digit_indices = [np.where(y_test == i)[0] for i in range(8)]
 te_pairs, te_y = create_pairs(x_test, digit_indices)
 
+# s = np.arange(tr_pairs.shape[0])
+# np.random.shuffle(s)
+
+# tr_pairs = tr_pairs[s]
+# tr_y = tr_y[s]
+
+# s = np.arange(te_pairs.shape[0])
+# np.random.shuffle(s)
+
+# te_pairs = te_pairs[s]
+# te_y = te_y[s]
+
 
 # network definition
 base_network = create_base_network(input_shape)
@@ -206,26 +219,30 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
 tr_acc = compute_accuracy(tr_y, pred)
 
+np.savetxt("tr_predictions.csv",pred, delimiter=",")
+
 pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])
 te_acc = compute_accuracy(te_y, pred)
 
-probs = np.equal(pred.ravel() < 0.5, te_y)
+np.savetxt("te_predictions.csv",pred, delimiter=",")
 
-fpr,tpr,_ = sklearn.metrics.roc_curve(te_y,probs)
-roc_auc = sklearn.metrics.auc(fpr, tpr)
+# probs = np.equal(pred.ravel() < 0.5, te_y)
 
-plt.figure()
-lw = 2
-plt.plot(fpr, tpr, color='darkorange',
-         lw=lw, label='ROC curve (area = %0.2f)' % roc_auc)
-plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.0])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('Receiver operating characteristic example')
-plt.legend(loc="lower right")
-plt.savefig("ROC.png")
+# fpr,tpr,_ = sklearn.metrics.roc_curve(te_y,probs)
+# roc_auc = sklearn.metrics.auc(fpr, tpr)
+
+# plt.figure()
+# lw = 2
+# plt.plot(fpr, tpr, color='darkorange',
+#          lw=lw, label='ROC curve (area = %0.2f)' % roc_auc)
+# plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+# plt.xlim([0.0, 1.0])
+# plt.ylim([0.0, 1.0])
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('Receiver operating characteristic example')
+# plt.legend(loc="lower right")
+# plt.savefig("ROC.png")
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
