@@ -3,6 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <algorithm>
+#include <stdlib.h>
 
 #include "MultiObjectTLD/motld/MultiObjectTLD.hpp"
 

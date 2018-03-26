@@ -68,6 +68,8 @@ struct ObjectBox
   float height;
   /// identifies object, which is represented by ObjectBox
   int objectId;
+
+  int personID;
 };
 
 /// datastructure for images (greyscale or single color)

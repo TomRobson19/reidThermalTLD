@@ -72,7 +72,7 @@ void MultiObjectTLD::deleteObject(int personID)
 {
     for(int i = 0; i < ivCurrentBoxes.size(); i++)
     {
-        if(ivCurrentBoxes[i].objectId == personID)
+        if(ivCurrentBoxes[i].personID == personID)
         {
             ivCurrentBoxes.erase(ivCurrentBoxes.begin()+i);
             ivDefined.erase(ivDefined.begin()+i);

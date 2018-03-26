@@ -13,7 +13,7 @@ void MultiObjectTLDTracker::addTarget(Rect boundingBox, int personID)
     object.y = boundingBox.y;
     object.width = boundingBox.width;
     object.height = boundingBox.height;
-    object.objectId = personID;
+    object.personID = personID;
 
     tracker.addObject(object);
 }
@@ -45,7 +45,11 @@ void MultiObjectTLDTracker::drawBoxes(Mat image)
     for (int i = 0; i < boxes.size(); i++)
     {
         Rect rec (boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
-        rectangle(image, rec, Scalar(255, 0, 0), 2, 1 );
+        int personID = boxes[i].personID;
+
+        srand(personID*10);
+
+        rectangle(image, rec, Scalar(rand() % 255, rand() % 255, rand() % 255), 2, 1 );
     }
 }
 
@@ -72,7 +76,7 @@ std::vector<rectangleAndID> MultiObjectTLDTracker::getObjectRectangles()
 
         recAndID.rectangle = temp;
 
-        recAndID.personID = objectBoxes[i].objectId;
+        recAndID.personID = objectBoxes[i].personID;
 
         objects.push_back(recAndID);        
     }

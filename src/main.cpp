@@ -21,7 +21,6 @@ using namespace std;
 int fileNameCounter = 0;
 
 void writeToFIFO(Mat img) { 
-    cout << "writing" << endl;
     int num, fifo; 
     char extension[]=".jpg"; 
     char newLine[]="\n"; 
@@ -39,13 +38,7 @@ void writeToFIFO(Mat img) {
 
     imwrite(fileName, img);
 
-    //strncat(fileName, newLine, sizeof(fileName));
-
-    cout << "here" << endl;
-
     fifo = open(imagesFIFO, O_WRONLY);
-
-    cout << fileName << endl;
 
     num= write(fifo, fileName, strlen(fileName));
 
@@ -63,8 +56,6 @@ int readFromFIFO(){
     
     close(fifo);
 
-    cout << temp << endl;
-
     return stoi(temp);
 
 }   
@@ -72,7 +63,7 @@ int readFromFIFO(){
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/Dataset1/betaInput.webm");
+    VideoCapture video("newData/newBeta.avi");
 
     // Check video is open
     if(!video.isOpened())
@@ -105,7 +96,7 @@ int main(int argc, char **argv)
 
         Mat displayImage = frame.clone();
 
-        tracker.drawBoxes(displayImage);
+        // tracker.drawBoxes(displayImage);
 
         Mat foreground;
         MoG->apply(frame, foreground, (double)(1.0 / learning));
@@ -157,7 +148,7 @@ int main(int argc, char **argv)
 
                 if (!alreadyTarget)
                 {
-                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
+                    hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,16), 1.05, 2);
 
                     for(size_t i = 0; i < found.size(); i++ )
                     {
@@ -190,23 +181,27 @@ int main(int argc, char **argv)
                     for (int i = 0; i < found_filtered.size(); i++)
                     {
                         Rect rec = found_filtered[i];
-                        rectangle(displayImage, rec, Scalar(0, 255, 0), 2, 1 );
 
                         //image to be sent to the neural network
                         Mat imgToUse = frame(rec);
                         resize(imgToUse, imgToUse, Size(256,512));
 
-                        //Neural Network Placeholder
+                        imshow("being classified", imgToUse);
+
                         writeToFIFO(imgToUse);
 
                         int personID = readFromFIFO();
 
-                        Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
+                        cout << "classified as " << personID << endl;
 
-                        char str[200];
-                        sprintf(str,"Person %d",personID);
+                        waitKey();
 
-                        putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
+                        // Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
+
+                        // char str[200];
+                        // sprintf(str,"Person %d",personID);
+
+                        // putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
 
                         //don't use the resized version here!
                         tracker.addTarget(rec, personID);
@@ -220,15 +215,14 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
+            cout << "length " << objectRectangles.size() << endl;
+            cout << "person " << objectRectangles[i].personID << endl;
             if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>1280 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>960)
             {
                 cout << "deletion border" << objectRectangles[i].personID << endl;
                 tracker.deleteTarget(objectRectangles[i].personID);
-                cout << "deleted" << endl;
 
-                std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
-
-                cout << objectRectangles.size() << endl;
+                // std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
             }
             else
             {
@@ -237,7 +231,7 @@ int main(int argc, char **argv)
                 Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
 
-                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
+                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,16), 1.05, 2);
 
                 for(int j = 0; j < found.size(); j++ )
                 {
@@ -265,23 +259,19 @@ int main(int argc, char **argv)
                 {
                     cout << "deletion hog" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
-                    cout << "deleted" << endl;
 
-                    std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
-                    cout << objectRectangles.size() << endl;
+                    // std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                 }
                 else if (found_filtered[0].area()*2 < objectRectangles[i].rectangle.area())
                 {
                     cout << "deletion size" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
-                    cout << "deleted" << endl;
 
-                    std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
-                    cout << objectRectangles.size() << endl;
+                    // std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                 }
                 else
                 {
-                    Rect rec = found_filtered[i];
+                    Rect rec = found_filtered[0];
                     Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
 
                     int personID = objectRectangles[i].personID;
@@ -293,10 +283,10 @@ int main(int argc, char **argv)
                 }
             }
         }
-
+        tracker.drawBoxes(displayImage);
         // Display result
         imshow("Tracking", displayImage);
-        unsigned char key = waitKey(10);
+        unsigned char key = waitKey(100);
         if (key == 'x')
         {
             // if user presses "x" then exit
