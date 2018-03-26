@@ -57,8 +57,27 @@ int readFromFIFO(){
     close(fifo);
 
     return stoi(temp);
-
 }   
+
+void deleteUsingFIFO(int personID) { 
+    int num, fifo; 
+
+    std::string idToDelete = std::to_string(personID);
+    char nameChar[idToDelete.length()+1]; 
+    
+    strcpy(nameChar, idToDelete.c_str());
+
+    cout << "here" << endl;
+
+    fifo = open(imagesFIFO, O_WRONLY);
+
+    num= write(fifo, nameChar, strlen(nameChar));
+
+    cout << "there" << endl;
+
+    close(fifo);
+    cout << "deleted" << endl;
+}
 
 int main(int argc, char **argv)
 {
@@ -196,13 +215,6 @@ int main(int argc, char **argv)
 
                         waitKey();
 
-                        // Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
-
-                        // char str[200];
-                        // sprintf(str,"Person %d",personID);
-
-                        // putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
-
                         //don't use the resized version here!
                         tracker.addTarget(rec, personID);
                     }
@@ -215,12 +227,12 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < objectRectangles.size(); i++)
         {
-            cout << "length " << objectRectangles.size() << endl;
-            cout << "person " << objectRectangles[i].personID << endl;
             if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>1280 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>960)
             {
                 cout << "deletion border" << objectRectangles[i].personID << endl;
                 tracker.deleteTarget(objectRectangles[i].personID);
+
+                deleteUsingFIFO(objectRectangles[i].personID);
 
                 // std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
             }
@@ -260,12 +272,16 @@ int main(int argc, char **argv)
                     cout << "deletion hog" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
 
+                    deleteUsingFIFO(objectRectangles[i].personID);
+
                     // std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                 }
                 else if (found_filtered[0].area()*2 < objectRectangles[i].rectangle.area())
                 {
                     cout << "deletion size" << objectRectangles[i].personID << endl;
                     tracker.deleteTarget(objectRectangles[i].personID);
+
+                    deleteUsingFIFO(objectRectangles[i].personID);
 
                     // std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                 }

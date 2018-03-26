@@ -4,6 +4,7 @@ class Person:
 	personIdentifier = 0
 	personColour = (0,0,0)
 	previous = []
+	active = True
 
 	def __init__(self, identifier):
 		self.setIdentifier(identifier)
@@ -28,6 +29,13 @@ class Person:
 		else:
 			self.previous = self.previous[1:]
 			self.previous.append(roi)
+		self.active = True
 
 	def getPrevious(self):
 		return self.previous
+
+	def makeInactive(self):
+		self.active = False
+
+	def isActive(self):
+		return self.active

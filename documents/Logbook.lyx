@@ -1840,11 +1840,6 @@ Next
 
 \begin_deeper
 \begin_layout Itemize
-Make deletion FIFO to prevent multiple identifications of the same person
- existing 
-\end_layout
-
-\begin_layout Itemize
 Change Re-ID thresholds
 \end_layout
 
