@@ -1805,12 +1805,47 @@ This means I have TLD back to talk about!!!!!!
 \end_layout
 
 \begin_layout Itemize
+USE NVIDIA-SMI TO RESET GRAPHICS ERRORS
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+this is kinda annoying, maybe do a CUDA, CUDNN and tensorflow reinstall
+ if time
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Network has been retrained and updated
+\end_layout
+
+\begin_layout Itemize
+Not sure labels/rectangles are going onto correct people - problems with
+ TLD object enumeration again
+\end_layout
+
+\begin_layout Itemize
+Try averaging classifications over all known images of a person and check
+ if below threshold.
+ 
+\end_layout
+
+\begin_layout Itemize
+Fixed enumeration
+\end_layout
+
+\begin_layout Itemize
 Next
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Optimise network parameters when grid search finishes
+Make deletion FIFO to prevent multiple identifications of the same person
+ existing 
+\end_layout
+
+\begin_layout Itemize
+Change Re-ID thresholds
 \end_layout
 
 \begin_layout Itemize
@@ -1829,17 +1864,6 @@ determine correct number of frames to save
 
 \begin_layout Itemize
 restructure and use this year's dataset
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-USE NVIDIA-SMI TO RESET GRAPHICS ERRORS
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-this is kinda annoying, maybe do a CUDA, CUDNN and tensorflow reinstall
- if time
 \end_layout
 
 \end_deeper
