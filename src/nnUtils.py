@@ -24,7 +24,6 @@ EVENT_LOOP_DELAY = 40	# delay for GUI window
                         # 40 ms equates to 1000ms/25fps = 40ms per frame
 imagesFIFO = "/tmp/images.fifo"
 intsFIFO = "/tmp/ints.fifo"
-deletionFIFO = "/tmp/deletion.fifo"
 
 people = []
 
@@ -111,12 +110,15 @@ def processImage():
 
         temp = data.split("/")
         if len(temp) > 1:
+            print("classify")
             img = cv2.imread(data)
             person = whichPerson(img)
             write(person)
             os.remove(data)
         else:
+            print("delete")
             idToDelete = int(data)
+            print(len(people))
             people[idToDelete].makeInactive()
         fifo.close()
 
@@ -150,11 +152,6 @@ if __name__ == '__main__':
         os.mkfifo(intsFIFO)
     except:
         print("ints fifo exists")
-
-    try:
-        os.mkfifo(deletionFIFO)
-    except:
-        print("deletion fifo exists")
 
     try:
         os.mkdir("/tmp/imgs")
