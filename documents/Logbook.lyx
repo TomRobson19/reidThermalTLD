@@ -1864,8 +1864,25 @@ restructure and use this year's dataset
 
 \end_deeper
 \begin_layout Itemize
-Old network had better graph on the training data, but was overfitting
+Old network had better graph on the training data, but was overfitting7
 \end_layout
 
+\begin_layout Itemize
+What to prioritise, no misclassifications or minimal number of targets.
+ TALK ABOUT THIS CHOICE IN THE PAPER
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+if re-ided, then defininetly that person, but may create new target - I
+ THINK THIS IS PREFERABLE.
+ 
+\end_layout
+
+\begin_layout Itemize
+OR, create fewer targets, but misidentify
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
