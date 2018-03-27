@@ -1863,5 +1863,9 @@ restructure and use this year's dataset
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Old network had better graph on the training data, but was overfitting
+\end_layout
+
 \end_body
 \end_document

@@ -556,7 +556,27 @@ reference "fig:openVsClosed"
 \end_layout
 
 \begin_layout Standard
-TALK ABOUT TLD IF ENDS UP BEING USED
+In order to improve the performance and runtime of our new approach, we
+ are replacing the Kalman filter used in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+ with an implementation of the Track-Learn-Detect (TLD) tracker, originally
+ proposed by the authors of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kalal2010"
+
+\end_inset
+
+.
+ The aim here is to ensure that we do not have to pass every frame to the
+ neural network, but instead, when a person has been identified, they can
+ then be tracked for as long as they remain unobscured in the frame.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -716,7 +736,7 @@ key "Robson2017"
 
 \end_inset
 
- attempted to use features that a human would consider useful the re-identify
+ attempted to use features that a human would consider useful to re-identify
  people, such as an approximation of the shape of the target, an analysis
  of their gait and a measure of where each person's thermal 'hotspots' were.
  This performed resonably well for some features, but its inaccuracy in
@@ -808,8 +828,7 @@ key "Zheng2016"
 \end_layout
 
 \begin_layout Subsection
-TLD Tracker - maybe....
- (and alternatives)
+TLD Tracker
 \end_layout
 
 \begin_layout Subsection
