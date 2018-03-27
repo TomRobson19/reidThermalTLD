@@ -575,8 +575,9 @@ key "Kalal2010"
 .
  The aim here is to ensure that we do not have to pass every frame to the
  neural network, but instead, when a person has been identified, they can
- then be tracked for as long as they remain unobscured in the frame.
- 
+ then be tracked for as long as they remain unobscured in the frame, and
+ continue to be labelled as the same person.
+ We hypothesise that this will improve our accuracy, as ......
 \end_layout
 
 \begin_layout Subsection
@@ -777,7 +778,39 @@ key "Matsukawa2017"
 
 \begin_layout Standard
 Much of the rest of the previous deep learning work is split into open world
- and closed world...........
+ and closed world.
+ The work of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zheng2016"
+
+\end_inset
+
+ presents a useful comparison between these two problems, as shown in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:openVsClosed"
+
+\end_inset
+
+.
+ They refer to the closed world problem as Identification and the open world
+ problem as Verification, with the justification that in close world, the
+ aim is to identify which of a given set of people the target is, where
+ as in open world, the aim is to verify whether two targets are the same
+ or not.
+ These two approaches differ greatly in terms of input method, feature extractio
+n and the loss function used.
+ The authors of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zheng2016"
+
+\end_inset
+
+ conclude, as we have, that the open world problem is more relevant to real
+ world applications.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -806,21 +839,19 @@ key "Wang2016a"
 \end_layout
 
 \begin_layout Standard
-Closed World - 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If need more closed world, use 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Zhang2017"
 
 \end_inset
 
-, 
-\end_layout
 
-\begin_layout Standard
-Both - 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Zheng2016"
+\end_layout
 
 \end_inset
 
@@ -833,6 +864,18 @@ TLD Tracker
 
 \begin_layout Subsection
 Relation to this Project
+\end_layout
+
+\begin_layout Standard
+Use of TLD
+\end_layout
+
+\begin_layout Standard
+Use of deep learning
+\end_layout
+
+\begin_layout Standard
+Open world
 \end_layout
 
 \begin_layout Section
@@ -860,11 +903,11 @@ Person Identification
 \end_layout
 
 \begin_layout Subsubsection
-Person Tracking using Track-Learn-Detect????
+Person Tracking using Track-Learn-Detect
 \end_layout
 
 \begin_layout Subsubsection
-Deletion of Track-Learn-Detect Targets?????
+Deletion of Track-Learn-Detect Targets
 \end_layout
 
 \begin_layout Subsection
