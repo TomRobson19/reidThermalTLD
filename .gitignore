@@ -98,3 +98,5 @@ src/test/
 *.png
 
 src/newData/
+
+src/oldData/
