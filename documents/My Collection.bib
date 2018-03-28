@@ -1,3 +1,27 @@
+@misc{chollet2015keras,
+author = {Chollet, Fran{\c{c}}ois},
+howpublished = {$\backslash$url{\{}https://github.com/fchollet/keras{\}}},
+publisher = {GitHub},
+title = {{Keras}},
+year = {2015}
+}
+@inproceedings{Qian2017,
+abstract = {Person Re-identification (re-id) aims to match people across non-overlapping camera views in a public space. It is a challenging problem because many people captured in surveillance videos wear similar clothes. Consequently, the differences in their appearance are often subtle and only detectable at the right location and scales. Existing re-id models, particularly the recently proposed deep learning based ones match people at a single scale. In contrast, in this paper, a novel multi-scale deep learning model is proposed. Our model is able to learn deep discriminative feature representations at different scales and automatically determine the most suitable scales for matching. The importance of different spatial locations for extracting discriminative features is also learned explicitly. Experiments are carried out to demonstrate that the proposed model outperforms the state-of-the art on a number of benchmarks},
+archivePrefix = {arXiv},
+arxivId = {1709.05165},
+author = {Qian, Xuelin and Fu, Yanwei and Jiang, Yu Gang and Xiang, Tao and Xue, Xiangyang},
+booktitle = {Proceedings of the IEEE International Conference on Computer Vision},
+doi = {10.1109/ICCV.2017.577},
+eprint = {1709.05165},
+file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Qian et al. - Unknown - Multi-scale Deep Learning Architectures for Person Re-identification.pdf:pdf},
+isbn = {9781538610329},
+issn = {15505499},
+pages = {5409--5418},
+title = {{Multi-scale Deep Learning Architectures for Person Re-identification}},
+url = {https://arxiv.org/pdf/1709.05165.pdf},
+volume = {2017-Octob},
+year = {2017}
+}
 @article{Almazan2018,
 abstract = {Training a deep architecture using a ranking loss has become standard for the person re-identification task. Increasingly, these deep architectures include additional components that leverage part detections, attribute predictions, pose estimators and other auxiliary information, in order to more effectively localize and align discriminative image regions. In this paper we adopt a different approach and carefully design each component of a simple deep architecture and, critically, the strategy for training it effectively for person re-identification. We extensively evaluate each design choice, leading to a list of good practices for person re-identification. By following these practices, our approach outperforms the state of the art, including more complex methods with auxiliary components, by large margins on four benchmark datasets. We also provide a qualitative analysis of our trained representation which indicates that, while compact, it is able to capture information from localized and discriminative regions, in a manner akin to an implicit attention mechanism.},
 archivePrefix = {arXiv},
@@ -8,22 +32,6 @@ file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Al
 title = {{Re-ID done right: towards good practices for person re-identification}},
 url = {https://arxiv.org/pdf/1801.05339.pdf http://arxiv.org/abs/1801.05339},
 year = {2018}
-}
-@misc{Zhu2017,
-abstract = {—Existing person re-identification (re-id) methods typically assume that (1) any probe person is guaranteed to appear in the gallery target population during deployment (i.e. closed-world), and (2) the probe set contains only a limited number of people (i.e. small search scale). Both assumptions are artificial and breached in real-world applications, since the probe population in target people search can be extremely vast in practice due to the ambiguity of probe search space boundary. Therefore, it is unrealistic that any probe person is assumed as one target people, and a large-scale search in person images is inherently demanded. In this work, we introduce a new person re-id search setting, called Large Scale Open-World (LSOW) re-id, characterised by huge size probe images and open person population in search thus more close to practical deployments. Under LSOW, the under-studied problem of person re-id effi-ciency is essential in addition to that of commonly-studied re-id accuracy. We therefore develop a novel fast person re-id method, called Cross-view Identity Correlation and vErification (X-ICE) hashing, for joint learning of cross-view identity representation binarisation and discrimination in a unified manner. Extensive comparative experiments on three large scale benchmarks have been conducted to validate the superiority and advantages of the proposed X-ICE method over a wide range of the state-of-the-art hashing models, person re-id methods, and their combinations.},
-author = {Zhu, Xiatian and Wu, Botong and Huang, Dongcheng and Zheng, Wei Shi},
-booktitle = {IEEE Transactions on Image Processing},
-doi = {10.1109/TIP.2017.2740564},
-file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/openWorld.pdf:pdf},
-issn = {10577149},
-keywords = {Person re-identification,efficient matching,fast search,hashing,large probe population,open search space},
-month = {may},
-number = {5},
-pages = {2286--2300},
-title = {{Fast Open-World Person Re-Identification}},
-url = {http://ieeexplore.ieee.org/document/8011476/},
-volume = {27},
-year = {2017}
 }
 @inproceedings{Chung2017,
 abstract = {Person re-identification is an important task in video surveillance systems. It can be formally defined as es-tablishing the correspondence between images of a person taken from different cameras at different times. In this pa-per, we present a two stream convolutional neural network where each stream is a Siamese network. This architec-ture can learn spatial and temporal information separately. We also propose a weighted two stream training objective function which combines the Siamese cost of the spatial and temporal streams with the objective of predicting a person's identity. We evaluate our proposed method on the publicly available PRID2011 and iLIDS-VID datasets and demon-strate the efficacy of our proposed method. On average, the top rank matching accuracy is 4{\%} higher than the accuracy achieved by the cross-view quadratic discriminant analy-sis used in combination with the hierarchical Gaussian de-scriptor (GOG+XQDA), and 5{\%} higher than the recurrent neural network method.},
@@ -404,6 +412,12 @@ title = {{on the Generalized Distance in Statistics}},
 url = {http://insa.nic.in/writereaddata/UpLoadedFiles/PINSA/Vol02{\_}1936{\_}1{\_}Art05.pdf},
 volume = {2},
 year = {1936}
+}
+@article{Mahalanobis,
+author = {Mahalanobis, P.C.},
+file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Mahalanobis - Unknown - On the Generalized Distance in Statistics.pdf:pdf},
+title = {{On the Generalized Distance in Statistics}},
+url = {http://insa.nic.in/writereaddata/UpLoadedFiles/PINSA/Vol02{\_}1936{\_}1{\_}Art05.pdf}
 }
 @article{Farneback2003,
 abstract = {This paper presents a novel two-frame motion estimation algorithm. The first step is to approximate each neighborhood of both frames by quadratic polynomials, which can be done efficiently using the polynomial expansion transform. From observing how an exact polynomial transforms under translation a method to estimate displacement fields from the polynomial expansion coefficients is derived and after a series of refinements leads to a robust algorithm. Evaluation on the Yosemite sequence shows good results.},
@@ -909,13 +923,37 @@ title = {{Video Tracking - Theory and Practice.}},
 url = {http://doi.wiley.com/10.1002/9780470974377{\%}5Cnhttp://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470749644.html;{\%}5Cnhttp://www.bibsonomy.org/bibtex/2236605cbe0dec216dfd746ae049c74a4/dblp},
 year = {2011}
 }
-@incollection{Layne,
-abstract = {Automated person re-identification using only visual information from public-space CCTV video is challenging for many reasons, such as poor resolution or challenges involved in dealing with camera calibration. More critical still, the majority of clothing worn in public spaces tends to be non-discriminative and there- fore of limited disambiguation value. Most re-identification techniques developed so far have relied on low-level visual-feature matching approaches that aim to re- turn matching gallery detections earlier in the ranked list of results. However, for many applications an initial probe image may not be available, or a low-level fea- ture representation may not be sufficiently invariant to viewing condition changes as well as being discriminative for re- identification. In this chapter, we showhowmid- level “semantic attributes” can be computed for person description.We further show how this attribute-based description can be used in synergy with low-level feature descriptions to improve re-identification accuracy when an attribute-centric distance measure is employed. Moreover, we discuss a “zero-shot” scenario in which a visual probe is unavailable but re-identification can still be performed with user-provided semantic attribute description.},
-author = {Layne, Ryan and Hospedales, Timothy M and Gong, Shaogang},
+@article{Layne2014,
+abstract = {Person re-identification is a crucial capability underpinning many applications of public-space video surveillance. Recent studies have shown the value of learning semantic attributes as a discriminative representation for re-identification. However, existing attribute representations do not generalise across camera deployments. Thus, this strategy currently requires the prohibitive effort of annotating a vector of person attributes for each individual in a large training set -- for each given deployment/dataset. In this paper we take a different approach and automatically discover a semantic attribute ontology, and learn an effective associated representation by crawling large volumes of internet data. In addition to eliminating the necessity for per-dataset annotation, by training on a much larger and more diverse array of examples this representation is more view-invariant and generalisable than attributes trained at conventional small scales. We show that these automatically discovered attributes provide a valuable representation that significantly improves re-identification performance on a variety of challenging datasets.},
+author = {Layne, Ryan and Hospedales, Tim and Gong, Shaogang},
+doi = {10.5244/C.28.1},
+file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Layne, Hospedales, Gong - 2014 - Re-id Hunting Attributes in the Wild.pdf:pdf},
+isbn = {1-901725-52-9},
+journal = {Proceedings of the British Machine Vision Conference 2014},
+title = {{Re-id: Hunting Attributes in the Wild}},
+url = {http://www.bmva.org/bmvc/2014/papers/paper042/index.html},
+year = {2014}
+}
+@article{Kundegorski2013,
+author = {Kundegorski, Mikolaj E. and Breckon, Toby P.},
+doi = {10.1117/12.2065673},
+file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Kundegorski, Breckon - 2014 - A Photogrammetric Approach for Real-time 3D Localization and Tracking of Pedestrians in Monocular Infrared.pdf:pdf},
+isbn = {9789898565471},
+journal = {In Proc. SPIE Optics and Photonics for Counterterrorism, Crime Fighting and Defence, SPIE, pp. 1-16, 2014.},
+keywords = {2,3d pedes- approach for,4,a means of recovering,and classification techniques,as,classification and localiza-,intelligent target reporting,of pedes-,passive target positioning,pedestrian detection,people detection,scene,sensor networks,temporal fil- target detection,temporal fusion,tering,the detection,the true 3d position,thermal imaging,thermal target tracking,trian targets within the,we present a real-time},
+title = {{A Photogrammetric Approach for Real-time 3D Localization and Tracking of Pedestrians in Monocular Infrared Imagery}},
+url = {http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/12.2065673{\%}5Cnhttp://www.pages.drexel.edu/{~}zz57/VISAPP 2013.pdf},
+year = {2014}
+}
+@incollection{Gong2014,
+author = {Gong, Shaogang and Cristani, Marco and Loy, Chen Change and Hospedales, Timothy M},
 booktitle = {Person Re-Identification},
-file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Layne, Hospedales, Gong - 2014 - Attributes-based Re-Identification.pdf:pdf},
-pages = {93--121},
-title = {{Attributes-based Re-Identification}},
+doi = {10.1007/978-1-4471-6296-4_1},
+file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Gong et al. - 2014 - The Re-Identification Challenge.pdf:pdf},
+isbn = {978-1-4471-6295-7},
+pages = {1--21},
+title = {{The Re-Identification Challenge}},
+url = {http://www.eecs.qmul.ac.uk/{~}sgg/papers/GongEtAl{\_}REIDChallenge2013.pdf},
 year = {2014}
 }
 @article{Mogelmose2013,
@@ -943,36 +981,12 @@ url = {http://www.scopus.com/inward/record.url?eid=2-s2.0-84958214503{\&}partner
 volume = {9652},
 year = {2015}
 }
-@article{Layne2014,
-abstract = {Person re-identification is a crucial capability underpinning many applications of public-space video surveillance. Recent studies have shown the value of learning semantic attributes as a discriminative representation for re-identification. However, existing attribute representations do not generalise across camera deployments. Thus, this strategy currently requires the prohibitive effort of annotating a vector of person attributes for each individual in a large training set -- for each given deployment/dataset. In this paper we take a different approach and automatically discover a semantic attribute ontology, and learn an effective associated representation by crawling large volumes of internet data. In addition to eliminating the necessity for per-dataset annotation, by training on a much larger and more diverse array of examples this representation is more view-invariant and generalisable than attributes trained at conventional small scales. We show that these automatically discovered attributes provide a valuable representation that significantly improves re-identification performance on a variety of challenging datasets.},
-author = {Layne, Ryan and Hospedales, Tim and Gong, Shaogang},
-doi = {10.5244/C.28.1},
-file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Layne, Hospedales, Gong - 2014 - Re-id Hunting Attributes in the Wild.pdf:pdf},
-isbn = {1-901725-52-9},
-journal = {Proceedings of the British Machine Vision Conference 2014},
-title = {{Re-id: Hunting Attributes in the Wild}},
-url = {http://www.bmva.org/bmvc/2014/papers/paper042/index.html},
-year = {2014}
-}
-@incollection{Gong2014,
-author = {Gong, Shaogang and Cristani, Marco and Loy, Chen Change and Hospedales, Timothy M},
+@incollection{Layne,
+abstract = {Automated person re-identification using only visual information from public-space CCTV video is challenging for many reasons, such as poor resolution or challenges involved in dealing with camera calibration. More critical still, the majority of clothing worn in public spaces tends to be non-discriminative and there- fore of limited disambiguation value. Most re-identification techniques developed so far have relied on low-level visual-feature matching approaches that aim to re- turn matching gallery detections earlier in the ranked list of results. However, for many applications an initial probe image may not be available, or a low-level fea- ture representation may not be sufficiently invariant to viewing condition changes as well as being discriminative for re- identification. In this chapter, we showhowmid- level “semantic attributes” can be computed for person description.We further show how this attribute-based description can be used in synergy with low-level feature descriptions to improve re-identification accuracy when an attribute-centric distance measure is employed. Moreover, we discuss a “zero-shot” scenario in which a visual probe is unavailable but re-identification can still be performed with user-provided semantic attribute description.},
+author = {Layne, Ryan and Hospedales, Timothy M and Gong, Shaogang},
 booktitle = {Person Re-Identification},
-doi = {10.1007/978-1-4471-6296-4_1},
-file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Gong et al. - 2014 - The Re-Identification Challenge.pdf:pdf},
-isbn = {978-1-4471-6295-7},
-pages = {1--21},
-title = {{The Re-Identification Challenge}},
-url = {http://www.eecs.qmul.ac.uk/{~}sgg/papers/GongEtAl{\_}REIDChallenge2013.pdf},
-year = {2014}
-}
-@article{Kundegorski2013,
-author = {Kundegorski, Mikolaj E. and Breckon, Toby P.},
-doi = {10.1117/12.2065673},
-file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Kundegorski, Breckon - 2014 - A Photogrammetric Approach for Real-time 3D Localization and Tracking of Pedestrians in Monocular Infrared.pdf:pdf},
-isbn = {9789898565471},
-journal = {In Proc. SPIE Optics and Photonics for Counterterrorism, Crime Fighting and Defence, SPIE, pp. 1-16, 2014.},
-keywords = {2,3d pedes- approach for,4,a means of recovering,and classification techniques,as,classification and localiza-,intelligent target reporting,of pedes-,passive target positioning,pedestrian detection,people detection,scene,sensor networks,temporal fil- target detection,temporal fusion,tering,the detection,the true 3d position,thermal imaging,thermal target tracking,trian targets within the,we present a real-time},
-title = {{A Photogrammetric Approach for Real-time 3D Localization and Tracking of Pedestrians in Monocular Infrared Imagery}},
-url = {http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/12.2065673{\%}5Cnhttp://www.pages.drexel.edu/{~}zz57/VISAPP 2013.pdf},
+file = {:home/tom/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Layne, Hospedales, Gong - 2014 - Attributes-based Re-Identification.pdf:pdf},
+pages = {93--121},
+title = {{Attributes-based Re-Identification}},
 year = {2014}
 }
