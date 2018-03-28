@@ -588,7 +588,7 @@ Aims of the Project
 The intent of this project is to develop a system that can utilise an open
  world deep neural network, paired with a real time person detection system,
  to solve the thermal re-identification problem, and improve on the performance
- of state-of the-art solutions, including our own previous work 
+ of state of the art solutions, including our own previous work 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Robson2017"
@@ -814,28 +814,63 @@ key "Zheng2016"
 \end_layout
 
 \begin_layout Standard
-Open World - 
+A solution to the open world problem is attempted in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Zhang2014"
 
 \end_inset
 
-, 
+.
+ The authors aim to combine feature learning and re-identification into
+ one framework, which is a deep siamese CNN with an SVM placed on top of
+ the network, after the last layer, to attempt open world re-identification.
+ The results of this are promising for the potential use of such an architecture
+, but fall short of the state of the art at time of writing.
+ The apparent reason for this is overfitting to the dataset used to train
+ the architecture, and the authors hypothesise that if they could use a
+ dataset with wider variation of people, improved results could be achieved.
+ As this work is several years old, we can hypothesise that with modern
+ graphics hardware, this model could realisitically be trained on a much
+ larger and more varied dataset, which should improve the results.
+ This hypothesis is backed up by the authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ahmed2015"
 
 \end_inset
 
-, 
+, who have implemented architecture and trained on a larger dataset which
+ consistently outperforms the state of the art at the time of its writing.
+ 
+\end_layout
+
+\begin_layout Standard
+The work in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Wang2016a"
 
 \end_inset
 
-, 
+ proposes a similar deep siamese CNN architecture, but also retains the
+ single image representation.
+ The purpose of this is to reduce the amount of computational work that
+ must be done on both images together, as well as jointly optimising the
+ single image representation and cross image representation for improved
+ accuracy at a lower computational cost.
+ The authors claim to outperform the majority of the state of the art methods
+ at the time of writing.
+ The work presented in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chung2017"
+
+\end_inset
+
+ uses a pair of siamese CNNs, one to learn spatial information and the other
+ to learn temporal information.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -878,16 +913,28 @@ Use of deep learning
 Open world
 \end_layout
 
+\begin_layout Standard
+Many of the papers only show results of training and testing the networks,
+ not for running them as part of a re-id system
+\end_layout
+
+\begin_layout Standard
+Take inspiration from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wang2016a"
+
+\end_inset
+
+ with the extraction of single image features before comparison
+\end_layout
+
 \begin_layout Section
 Solution
 \end_layout
 
 \begin_layout Subsection
 Implementation Structure and Tools Used
-\end_layout
-
-\begin_layout Standard
-FILL IN WHEN DECIDED BETWEEN PYTHON/C++ TENSORFLOW/MKFIFO
 \end_layout
 
 \begin_layout Subsection
