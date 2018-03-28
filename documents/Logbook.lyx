@@ -1884,5 +1884,31 @@ OR, create fewer targets, but misidentify
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+MENTION LACK OF DETAIL AVAILABLE FROM THERMAL RECORDINGS
+\end_layout
+
+\begin_layout Itemize
+Current best network 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+* Accuracy on training set: 99.93% 
+\end_layout
+
+\begin_layout Itemize
+* Accuracy on test set: 97.62% 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+6 new papers to add to related work
+\end_layout
+
+\begin_layout Itemize
+TRANSFER LEARNING FROM CLOSED WORLD???
+\end_layout
+
 \end_body
 \end_document
