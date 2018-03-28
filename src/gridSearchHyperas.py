@@ -268,7 +268,7 @@ def kerasClassifier(x_train, y_train, x_test, y_test):
 best_run, best_model = optim.minimize(model=kerasClassifier,
                                           data=data,
                                           algo=tpe.suggest,
-                                          max_evals=50,
+                                          max_evals=100,
                                           functions=[euclidean_distance,eucl_dist_output_shape, contrastive_loss, calc_accuracy, create_pairs],
                                           eval_space=True,
                                           trials=Trials())

@@ -13,3 +13,5 @@
   17:     x = Dense(space['Dense'], activation=space['activation_4'])(x)
 
 {'pool_size_1': 8, 'pool_size_3': 3, 'activation_1': 'tanh', 'Conv2D_3': 32, 'pool_size_2': 5, 'Conv2D_1': 16, 'pool_size': 3, 'Dense': 16, 'activation_4': 'relu', 'Conv2D_2': 64, 'pool_size_5': 5, 'pool_size_4': 7, 'activation_3': 'tanh', 'activation_2': 'relu', 'Conv2D': 32, 'activation': 'tanh'}
+
+{'activation_2': 'relu', 'activation_3': 'tanh', 'Conv2D': 32, 'Conv2D_3': 32, 'activation_4': 'relu', 'activation_1': 'tanh', 'pool_size_5': 3, 'Conv2D_1': 16, 'pool_size_3': 3, 'pool_size_2': 5, 'pool_size_4': 7, 'pool_size': 3, 'Conv2D_2': 64, 'pool_size_1': 5, 'activation': 'tanh', 'Dense': 16}
