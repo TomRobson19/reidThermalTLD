@@ -1910,5 +1910,13 @@ Current best network
 TRANSFER LEARNING FROM CLOSED WORLD???
 \end_layout
 
+\begin_layout Itemize
+we don’t have to require all positive pairs holding smaller distances than
+ all negative pairs regardless of query images.
+ Instead, what we want is for each query image, its positive pairs have
+ smaller distances than its negative ones.
+ There-
+\end_layout
+
 \end_body
 \end_document
