@@ -454,8 +454,8 @@ name "fig:Example-of-Thermal"
 
 \end_inset
 
-Several frames showing the same person that our system must know are the
- same person
+Several frames showing the same person that our system must re-identify
+ as the same person
 \end_layout
 
 \end_inset
@@ -473,13 +473,13 @@ Several frames showing the same person that our system must know are the
 lines 0
 placement R
 overhang 0in
-width "30col%"
+width "40col%"
 status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/open vs closed.png
-	scale 20
+	scale 30
 
 \end_inset
 
@@ -786,7 +786,8 @@ key "Zheng2016"
 
 \end_inset
 
- presents a useful comparison between these two problems, as shown in 
+ presents a useful comparison between these two problems, as shown in Figure
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:openVsClosed"
@@ -831,7 +832,7 @@ key "Zhang2014"
  the architecture, and the authors hypothesise that if they could use a
  dataset with wider variation of people, improved results could be achieved.
  As this work is several years old, we can hypothesise that with modern
- graphics hardware, this model could realisitically be trained on a much
+ graphics hardware, this model could realistically be trained on a much
  larger and more varied dataset, which should improve the results.
  This hypothesis is backed up by the authors of 
 \begin_inset CommandInset citation
@@ -870,31 +871,68 @@ key "Chung2017"
 
  uses a pair of siamese CNNs, one to learn spatial information and the other
  to learn temporal information.
+ These features are then weighted, as the authors claim that spatial features
+ are more discriminative than temporal features.
+ This method outperforms or shows comparable results to the existing best
+ performing methods.
+ The work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Qian2017"
+
+\end_inset
+
+ is another siamese CNN with the particular aim of making it work for people
+ represented at different scales.
+ This would be an interesting addition to our work, but is currently out
+ of scope for us.
  
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-If need more closed world, use 
+The authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Zhang2017"
+key "Almazan2018"
 
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-
+ do not propose a novel architecture as such, but instead propose a set
+ of good practices that should be followed for effective re-identification,
+ such as a state of the art model architecture and a sufficiently large
+ and complex dataset.
+ we will endeavour to follow this where possible.
+ REMOVE IF i DON'T FOLLOW THESE
 \end_layout
 
 \begin_layout Subsection
 TLD Tracker
+\end_layout
+
+\begin_layout Standard
+The Track-Learn-Detect (TLD) tracker was first proposed by Zdenek Kalal
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kalal2010"
+
+\end_inset
+
+.
+ The idea of this tracker is to break down the person tracking task into
+ tracking, learning and detection.
+ The tracker follows the object between frames.
+ The detector corrects the tracker if necessary based on previous observations.
+ The learning estimates detector’s errors and updates it to avoid these
+ errors in the future.
+ However, the main purpose of TLD is to be able to consistently follow the
+ same object through as changing background, for example a car driving along
+ a road being recorded from a helicopter.
+ The authors have said that it performs sub optimally on varying targets
+ such as people.
+ During our early experimentation, we found that is was sufficiently capable
+ of tracking a person through a single camera frame, but could not re-identify
+ people accross multiple cameras, or even returning from behind an obstruction.
 \end_layout
 
 \begin_layout Subsection
@@ -902,31 +940,41 @@ Relation to this Project
 \end_layout
 
 \begin_layout Standard
-Use of TLD
-\end_layout
-
-\begin_layout Standard
-Use of deep learning
-\end_layout
-
-\begin_layout Standard
-Open world
-\end_layout
-
-\begin_layout Standard
-Many of the papers only show results of training and testing the networks,
- not for running them as part of a re-id system
-\end_layout
-
-\begin_layout Standard
-Take inspiration from 
+In this project we use elements from many of the papers discussed in this
+ section.
+ The TLD tracker will be used simply for tracking a person for as long as
+ they remain visible in one camera view.
+ Whether this person has been previously observed by the system or not will
+ be determined by an open world siamese CNN, with an architecture similar
+ to the related work.
+ We take inspiration from 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Wang2016a"
 
 \end_inset
 
- with the extraction of single image features before comparison
+ and will extract the features of each individual image before comparison
+ between them.
+ However, many of these papers that propose such a network only show results
+ when it is trained and tested on a specific dataset of still images.
+ They do not integrate it with a tracking system to see how it can perform
+ in the real world.
+ Also, this previous work has all been done on colour imagery.
+ Very little work has been done to try and solve the re-identification problem
+ in thermal imagery, save for our own previous work 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+.
+ Therefore, the major research aim of our project, and where we are advancing
+ the state of the art,  is to see if such a network architecture can successfull
+y be applied to thermal imagery, and whether it can perform effectively
+ as a part of a full re-identification system in real time.
+ 
 \end_layout
 
 \begin_layout Section
