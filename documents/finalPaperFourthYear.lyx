@@ -1272,6 +1272,45 @@ key "Hadsell2006"
 Training Dataset
 \end_layout
 
+\begin_layout Standard
+The model was trained on the dataset collected for our previous work 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+, as this contained video of multiple people, some similar and some greatly
+ differing, from different views.
+ The real time person detection system discussed previously was adapted
+ into a data extraction system, where the identification of each person
+ was performed by a key press, rather than the neural network.
+ Each successive frame of each person was then saved to a file, labelled
+ with which person it showed.
+ The size of these files was fixed at 258x128, to ensure that the size of
+ the file had no effect on the training.
+ This meant that the system was trained on varying resolutions, as some
+ regions of interest had to be enlarged, and others had to be shrunk.
+ This would help the ability of the system to re-identify at different distances
+ away from the cameras.
+ 
+\end_layout
+
+\begin_layout Standard
+These files were then formed into positive and negative pairs of images,
+ where positive pairs were both images of the same person and negative pairs
+ were not.
+ We took care to ensure we had an equal number of positive and negative
+ pairs, giving a balanced dataset.
+ These pairs were assigned binary labels, 1 for positive pairs and 0 for
+ negative pairs.
+ 
+\end_layout
+
+\begin_layout Standard
+DATASET AUMENTATION IF DONE
+\end_layout
+
 \begin_layout Section
 Results
 \end_layout
