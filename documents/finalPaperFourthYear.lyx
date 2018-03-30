@@ -1203,17 +1203,42 @@ key "Kalal2010"
 \end_inset
 
 .
+ This algorithm was originally intended to facilitate the long term tracking
+ of an unknown object in a video stream.
+ The algorithm works by breaking down the person tracking task into tracking,
+ learning and detection.
+ The tracker follows the object between frames.
+ The detector corrects the tracker if necessary based on previous observations.
+ The learning estimates detector’s errors and updates it to avoid these
+ errors in the future.
+ In our early experimentation, we found that the learning part of this algorithm
+ meant that it was attempting to perform re-identification when people left
+ and re-entered a video stream, or appeared in a different one.
+ Therefore, we had to cut some of the functionality out of TLD for this
+ implementation, so that each object was deleted when it left the scene
+ or became obstructed.
+ This eliminated the miss-classifications that the limited re-identification
+ capabilities of this algorithm were causing, enabling us to effectively
+ track people across the scene, whilst using our neural network for the
+ re-identification.
  
 \end_layout
 
 \begin_layout Standard
-Each person currently in any of the camera views has an associated tracker
- object, which is created on the first HoG identification in this neighbourhood.
+Therefore, in this implementation, each person currently present in any
+ of the camera views has an associated TLD tracker object, which is created
+ on the first HoG identification in this neighbourhood, and classified by
+ the neural network.
+ The tracker then follows this person through the frame until either the
+ person leaves the frame or HoG is no longer getting a positive identification
+ within the tracker.
+ If either of these conditions occurs, the TLD object is deleted.
+ In the case of no HoG identification being present, this indicated that
+ the tracker has incorrectly predicted the position or rate of movement
+ of the person, and has lost them.
+ A new tracker will then be created to replace it in the next frame when
+ HoG detects this person again.
  
-\end_layout
-
-\begin_layout Subsubsection
-Deletion of Track-Learn-Detect Targets
 \end_layout
 
 \begin_layout Subsection
@@ -1222,6 +1247,15 @@ Deep Learning
 
 \begin_layout Subsubsection
 Network Architecture
+\end_layout
+
+\begin_layout Standard
+Taking inspiration from the state of the art literature in the area of open
+ world person re-identification, our network architecture is a deep siamese
+ CNN.
+ This means that the network is trained on pairs of images, and attempts
+ to determine whether these images show the same person or a different person.
+ 
 \end_layout
 
 \begin_layout Standard
