@@ -1019,7 +1019,7 @@ reference "fig:Logic-of-our"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1074,7 +1074,7 @@ key "opencv_library"
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "MOTLD"
+key "Lutz2015"
 
 \end_inset
 
@@ -1094,16 +1094,122 @@ key "chollet2015keras"
 Real Time Person Detection
 \end_layout
 
+\begin_layout Standard
+Before we can start concerning ourselves with deep learning based person
+ re-identification, we must be able to identify whether a person is present
+ in the image at all, so we have a region of interest to pass to the neural
+ network, and so we can use TLD to track targets through single camera views.
+ 
+\end_layout
+
 \begin_layout Subsubsection
 Background Subtraction
+\end_layout
+
+\begin_layout Standard
+The first stage of this process is background subtraction from the static
+ camera viewpoint.
+ We use the Mixture of Gaussians (MoG) technique to facilitate this, taking
+ inspiration from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zivkovic2004,Zivkovic"
+
+\end_inset
+
+.
+ This technique works by building up a background model over multiple camera
+ frames, modelling each of the pixels using multiple Gaussians.
+ Using a Gaussian over the last 
+\begin_inset Formula $N$
+\end_inset
+
+ frames, where 
+\begin_inset Formula $N$
+\end_inset
+
+ is given by a parameter specifying the rate at which the background model
+ is updated, is far more memory efficient than storing all the pixel values
+ across the entire video capture.
+ This update rate is determined by the trade off between being fast enough
+ to absorb objects that have become stationary into the background, and
+ being slow enough to allow the detection of slow moving objects.
+\end_layout
+
+\begin_layout Standard
+As the program runs through the video, during each new frame, a Gaussian
+ for each pixel is evaluated using a simple heuristic to determine which
+ is most likely to correspond to the background model.
+ Pixels that do not match closely enough with these background Gaussians
+ are classified as foreground elements, and added to a new image in the
+ code.
+ Once these foreground pixels are identified and built into a foreground
+ mask, erosion and dilation image operators 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "solomonbreckon10fundamentals"
+
+\end_inset
+
+ are used to clean up these results.
+ From here, we use the contour detection to find the connected components,
+ and draw bounding boxes around these contours.
+ 
 \end_layout
 
 \begin_layout Subsubsection
 Person Identification
 \end_layout
 
+\begin_layout Standard
+Having identified the foreground objects, we must now determine whether
+ they are people.
+ The implementation uses Histogram of Oriented Gradients (HOG), discussed
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Dalal"
+
+\end_inset
+
+.
+ This method works by performing edge gradient calculation on the bounding
+ box identified by the background subtractor.
+ From here cell histograms are computed, with each of the histogram entries
+ filled by gradient magnitudes.
+ These histograms are then used to create overlapping block histograms of
+ the adjacent cells.
+ These block histograms are then concatenated to give a HOG descriptor,
+ a high dimensional vector.
+ This HOG descriptor is then passed to a pre-trained machine learning algorithm,
+ in this case a Support Vector Machine (SVM).
+ If this comes up with a positive identification, then it is classified
+ as a person.
+ 
+\end_layout
+
 \begin_layout Subsubsection
 Person Tracking using Track-Learn-Detect
+\end_layout
+
+\begin_layout Standard
+Once we know where the people are in the camera view, we can track their
+ movement.
+ We use the Track-Learn-Detect algorithm, originally proposed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kalal2010"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Each person currently in any of the camera views has an associated tracker
+ object, which is created on the first HoG identification in this neighbourhood.
+ 
 \end_layout
 
 \begin_layout Subsubsection
