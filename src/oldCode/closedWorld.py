@@ -68,16 +68,9 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255  
 
-
- 
-
-
-
 # Convert class vectors to binary class matrices.
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
-
-
 
 model = Sequential()
 model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape, activation='relu'))

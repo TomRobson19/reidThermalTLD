@@ -40,11 +40,11 @@ void writeToFIFO(Mat img) {
 	
 	strcpy(nameChar, name.c_str());
 
-	char fileName[256]; // <- danger, only storage for 256 characters.
+	char fileName[1024]; // <- danger, only storage for 256 characters.
 	strncpy(fileName, imagesDirectory, sizeof(fileName));
 	strncat(fileName, nameChar, sizeof(fileName));
 	strncat(fileName, extension, sizeof(fileName));
-	
+	strncat(fileName, newLine, sizeof(fileName));
 
 	imwrite(fileName, img);
 
@@ -71,11 +71,13 @@ int readFromFIFO(){
 
 void deleteUsingFIFO(int personID) { 
 	int num, fifo; 
+	char newLine[]="\n"; 
 
 	std::string idToDelete = std::to_string(personID);
 	char nameChar[idToDelete.length()+1]; 
 	
 	strcpy(nameChar, idToDelete.c_str());
+	strncat(nameChar, newLine, sizeof(nameChar));
 
 	fifo = open(imagesFIFO, O_WRONLY);
 
@@ -223,8 +225,6 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 						pthread_mutex_unlock(&myLock);
 						cout << "classified as " << personID << endl;
 
-						waitKey();
-
 						//don't use the resized version here!
 						tracker.addTarget(rec, personID);
 					}
@@ -321,7 +321,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 				}
 			}
 		}
-		String cameras[4] = {"Alpha", "Beta", "Gamma"};
+		String cameras[3] = {"Alpha", "Beta", "Gamma"};
 
 		putText(displayImage, cameras[cameraID], Point2f(20,50), FONT_HERSHEY_SIMPLEX,1,(0,0,0));
 		tracker.drawBoxes(displayImage);
@@ -330,7 +330,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		if(multipleCameras == 1)
 		{
 			video.write(displayImage);
-			key = waitKey(1000);
+			key = waitKey(10000);
 			cout << cameras[cameraID] << endl;
 		}
 		else 
@@ -346,8 +346,9 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 			break;
 		}
 	}
-	String cameras[4] = {"Alpha", "Beta", "Gamma"};
+	String cameras[3] = {"Alpha", "Beta", "Gamma"};
 	cout << cameras[cameraID] << " done" << endl;
+	video.release();
 	return 0;
 }
 
@@ -364,11 +365,14 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 	capBeta.open(betaFile+"results.avi");
 	capGamma.open(gammaFile+"results.avi");
 
-	while(1)
-	{
-		capAlpha >> imgAlpha;
-		capBeta >> imgBeta;
-		capGamma >> imgGamma;
+	while(capAlpha.read(imgAlpha) && capBeta.read(imgBeta) && capGamma.read(imgGamma))
+	{	
+		// cout << "1" << endl; 
+		// capAlpha >> imgAlpha;
+		// capBeta >> imgBeta;
+		// capGamma >> imgGamma;
+		// cout << "2" << endl;
+
 
 		if(imgAlpha.empty() || imgBeta.empty() || imgGamma.empty())
 		{
@@ -387,12 +391,12 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 	    imgAlpha.copyTo(roiAlpha);
 	    imgBeta.copyTo(roiBeta);
 	    imgGamma.copyTo(roiGamma);
-
 		//imshow("output",out);
 		video.write(out);
 
 		key = waitKey(1);
 	}
+		video.release();
 }
 
 

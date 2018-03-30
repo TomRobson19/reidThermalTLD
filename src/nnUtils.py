@@ -106,10 +106,12 @@ def write(person):
 def processImage():
     while True:
         fifo = open(imagesFIFO, "r")
-        data = fifo.read()
+        data = fifo.readline()
 
         temp = data.split("/")
-        if len(temp) > 1:
+        if data == '':
+            continue
+        elif len(temp) > 1:
             print("classify")
             img = cv2.imread(data)
             person = whichPerson(img)
@@ -119,24 +121,9 @@ def processImage():
             print("delete")
             idToDelete = int(data)
             print(len(people))
+            print(idToDelete)
             people[idToDelete].makeInactive()
         fifo.close()
-
-# def processDeletion():
-#     while True:
-#         fifo = open(deletionFIFO, "r")
-#         data = fifo.read()
-        
-#         idToDelete = int(data)
-
-#         print(len(people))
-
-#         print(idToDelete)
-
-#         people[idToDelete].makeInactive()
-
-#         fifo.close()
-
 
 model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
 
@@ -157,10 +144,5 @@ if __name__ == '__main__':
         os.mkdir("/tmp/imgs")
     except:
         print("directory exists")
-
-    # p1 = Thread(target=processImage)
-    # p1.start()
-    # p2 = Thread(target=processDeletion)
-    # p2.start()
 
     processImage()
