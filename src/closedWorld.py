@@ -15,7 +15,7 @@ import os
 import cv2
 import numpy as np
 
-batch_size = 32
+batch_size = 128
 num_classes = 8
 epochs = 100
 data_augmentation = True
@@ -68,7 +68,7 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255  
 
-# Convert class vectors to binary class matrices.
+# # Convert class vectors to binary class matrices.
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
