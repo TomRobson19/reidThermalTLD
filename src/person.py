@@ -1,24 +1,16 @@
 import random
 
 class Person:
-	personIdentifier = 0
-	personColour = (0,0,0)
-	previous = []
-	active = True
 
 	def __init__(self, identifier):
-		self.setIdentifier(identifier)
-		self.setColour(identifier)
-
-	def setIdentifier(self, identifier):
 		self.personIdentifier = identifier
+		random.seed(identifier)
+		self.personColour = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+		self.previous = []
+		self.active = True
 
 	def getIdentifier(self):
 		return self.personIdentifier
-
-	def setColour(self, identifier):
-		random.seed(identifier)
-		personColour = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 
 	def getColour(self):
 		return self.personColour

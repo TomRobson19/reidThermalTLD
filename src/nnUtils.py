@@ -80,23 +80,29 @@ def whichPerson(img):
         closest = 100
         closestPerson = 100
         for person in people:
+            print(str(person.getIdentifier()) + " activity is " + str(person.isActive()))
             if not person.isActive():
                 currentPerson = person.getIdentifier()
                 previous = person.getPrevious()
                 for previousFrame in previous:
-                    prediction = queryNeuralNetwork(personROI,previousFrame)                
+                    prediction = queryNeuralNetwork(personROI,previousFrame)
+                    print("person "+str(person.getIdentifier())+" distance = "+str(prediction))                
                     if prediction < closest:
                         closest = prediction
                         closestPerson = currentPerson
         if closest < 0.5:
-            person = people[closestPerson]
-            person.addPrevious(personROI)
-            return person.getIdentifier()
+            for person in people:
+                if person.getIdentifier() == closestPerson:
+                    person.addPrevious(personROI)
+                    print("adding to "+str(person.getIdentifier()))
+                    return person.getIdentifier()
         else:
-            newPerson = Person(len(people))
-            newPerson.addPrevious(personROI)
-            people.append(newPerson)    
-            return newPerson.getIdentifier()
+            iden = len(people)
+            print("creating " + str(iden))
+            nextPerson = Person(iden)
+            nextPerson.addPrevious(personROI)
+            people.append(nextPerson)
+            return nextPerson.getIdentifier()
 
 def write(person):
     fifo = open(intsFIFO, "w")
@@ -118,10 +124,8 @@ def processImage():
             write(person)
             os.remove(data)
         else:
-            print("delete")
+            print("delete " + data)
             idToDelete = int(data)
-            print(len(people))
-            print(idToDelete)
             people[idToDelete].makeInactive()
         fifo.close()
 
