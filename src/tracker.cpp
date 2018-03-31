@@ -1,4 +1,16 @@
 #include "tracker.hpp"
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <iostream>
+#include <string.h>
+#include <thread>
+#include <chrono>
+#include <X11/Xlib.h>
+#include <unistd.h>
+
+#define imagesFIFO "/tmp/images.fifo" 
 
 MultiObjectTLDTracker::MultiObjectTLDTracker() 
 {
@@ -20,9 +32,26 @@ void MultiObjectTLDTracker::addTarget(Rect boundingBox, int personID)
 void MultiObjectTLDTracker::deleteTarget(int personID)
 {
     tracker.deleteObject(personID);
+
+    int num, fifo; 
+    char newLine[]="\n"; 
+
+    std::string idToDelete = std::to_string(personID);
+    char nameChar[idToDelete.length()+1]; 
+    
+    strcpy(nameChar, idToDelete.c_str());
+    strncat(nameChar, newLine, sizeof(nameChar));
+
+    fifo = open(imagesFIFO, O_WRONLY);
+
+    num= write(fifo, nameChar, strlen(nameChar));
+
+    close(fifo);
 }
 void MultiObjectTLDTracker::update(Mat image)
 {
+    std::vector<ObjectBox> previousObjectBoxes = tracker.getObjectBoxes();
+
     IplImage frame = (IplImage(image));
 
     int size = image.cols * image.rows;
@@ -36,6 +65,23 @@ void MultiObjectTLDTracker::update(Mat image)
         img[j + 2 * size] = frame.imageData[j * 3];
     }
     tracker.processFrame(img);
+
+    std::vector<ObjectBox> newObjectBoxes = tracker.getObjectBoxes();
+
+    for(int i=0; i<newObjectBoxes.size(); i++)
+    {
+        for(int j=0; j<previousObjectBoxes.size(); j++)
+        {
+            if(newObjectBoxes[i].personID == previousObjectBoxes[j].personID)
+            {
+                if((abs(newObjectBoxes[i].x - previousObjectBoxes[j].x) > 50) || (abs(newObjectBoxes[i].y - previousObjectBoxes[j].y)) > 50)
+                {
+                    deleteTarget(newObjectBoxes[i].personID);
+                   
+                }
+            }
+        }
+    }
 }
 
 void MultiObjectTLDTracker::drawBoxes(Mat image)

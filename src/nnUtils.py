@@ -94,11 +94,9 @@ def whichPerson(img):
             for person in people:
                 if person.getIdentifier() == closestPerson:
                     person.addPrevious(personROI)
-                    print("adding to "+str(person.getIdentifier()))
                     return person.getIdentifier()
         else:
             iden = len(people)
-            print("creating " + str(iden))
             nextPerson = Person(iden)
             nextPerson.addPrevious(personROI)
             people.append(nextPerson)
@@ -112,22 +110,23 @@ def write(person):
 def processImage():
     while True:
         fifo = open(imagesFIFO, "r")
-        data = fifo.readline()
+        lines = fifo.readlines()
 
-        temp = data.split("/")
-        if data == '':
-            continue
-        elif len(temp) > 1:
-            print("classify")
-            img = cv2.imread(data)
-            person = whichPerson(img)
-            write(person)
-            os.remove(data)
-        else:
-            print("delete " + data)
-            idToDelete = int(data)
-            people[idToDelete].makeInactive()
-        fifo.close()
+        for data in lines:
+            temp = data.split("/")
+            if data == '':
+                continue
+            elif len(temp) > 1:
+                img = cv2.imread(data)
+                person = whichPerson(img)
+                print("classified as " + str(person))
+                write(person)
+                os.remove(data)
+            else:
+                print("delete " + data)
+                idToDelete = int(data)
+                people[idToDelete].makeInactive()
+            fifo.close()
 
 model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
 

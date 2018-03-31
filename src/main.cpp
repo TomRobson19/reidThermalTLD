@@ -1,6 +1,9 @@
 #include "tracker.hpp"
 #include <algorithm>
 #include <opencv2/opencv.hpp>
+#include <opencv2/video.hpp>
+#include <opencv2/videoio.hpp>
+#include <ctime>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -9,7 +12,9 @@
 #include <iostream>
 #include <string.h>
 #include <thread>
+#include <chrono>
 #include <X11/Xlib.h>
+#include <unistd.h>
 
 using namespace cv;
 using namespace std;
@@ -84,12 +89,11 @@ void deleteUsingFIFO(int personID) {
 	num= write(fifo, nameChar, strlen(nameChar));
 
 	close(fifo);
-	cout << "deleted" << endl;
 }
 
 int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 {
-	VideoWriter video(file+"results.avi",CV_FOURCC('M','J','P','G'),10, Size(1280, 960),true);
+	VideoWriter video(file+"results.avi",CV_FOURCC('M','J','P','G'),50, Size(1280, 960),true);
 	// Read video
 	VideoCapture input(file);
 
@@ -119,10 +123,17 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 
 	while(input.read(frame))
 	{  
+	    clock_t start = std::clock();
+		
 		resize(frame, frame, Size(1280, 960));
+
+		pthread_mutex_lock(&myLock);
 		tracker.update(frame);
+		pthread_mutex_unlock(&myLock);
 
 		Mat displayImage = frame.clone();
+
+		cvtColor(frame, frame, CV_BGR2GRAY);
 
 		// tracker.drawBoxes(displayImage);
 
@@ -235,18 +246,20 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 
 		std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 
+		pthread_mutex_lock(&myLock);
+
 		for (int i = 0; i < objectRectangles.size(); i++)
 		{
 			if (objectRectangles[i].rectangle.x<0 || objectRectangles[i].rectangle.x+objectRectangles[i].rectangle.width>1280 || objectRectangles[i].rectangle.y<0 || objectRectangles[i].rectangle.y+objectRectangles[i].rectangle.height>960)
 			{
 				cout << "deletion border" << objectRectangles[i].personID << endl;
+
+				// pthread_mutex_lock(&myLock);
 				tracker.deleteTarget(objectRectangles[i].personID);
 
-				pthread_mutex_lock(&myLock);
+				// deleteUsingFIFO(objectRectangles[i].personID);
 
-				deleteUsingFIFO(objectRectangles[i].personID);
-
-				pthread_mutex_unlock(&myLock);
+				// pthread_mutex_unlock(&myLock);
 
 				// std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 			}
@@ -284,26 +297,26 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 				if (found_filtered.size() == 0)
 				{
 					cout << "deletion hog" << objectRectangles[i].personID << endl;
+
+					// pthread_mutex_lock(&myLock);
 					tracker.deleteTarget(objectRectangles[i].personID);
 
-					pthread_mutex_lock(&myLock);
+					// deleteUsingFIFO(objectRectangles[i].personID);
 
-					deleteUsingFIFO(objectRectangles[i].personID);
-
-					pthread_mutex_unlock(&myLock);
+					// pthread_mutex_unlock(&myLock);
 
 					// std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 				}
 				else if (found_filtered[0].area()*2 < objectRectangles[i].rectangle.area())
 				{
 					cout << "deletion size" << objectRectangles[i].personID << endl;
+
+					// pthread_mutex_lock(&myLock);
 					tracker.deleteTarget(objectRectangles[i].personID);
 
-					pthread_mutex_lock(&myLock);
+					// deleteUsingFIFO(objectRectangles[i].personID);
 
-					deleteUsingFIFO(objectRectangles[i].personID);
-
-					pthread_mutex_unlock(&myLock);
+					// pthread_mutex_unlock(&myLock);
 
 					// std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 				}
@@ -321,6 +334,8 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 				}
 			}
 		}
+
+		pthread_mutex_unlock(&myLock);
 		String cameras[3] = {"Alpha", "Beta", "Gamma"};
 
 		putText(displayImage, cameras[cameraID], Point2f(20,50), FONT_HERSHEY_SIMPLEX,1,(0,0,0));
@@ -330,13 +345,21 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		if(multipleCameras == 1)
 		{
 			video.write(displayImage);
-			key = waitKey(10000);
 			cout << cameras[cameraID] << endl;
+			//doesn't need to sleep, need to run for this time total
+
+			int elapsed = 1000 - (int)((clock()-start)/(CLOCKS_PER_SEC*1000));
+			if(elapsed < 0)
+			{
+				cout << "runtime too long" << endl;
+				return 0;
+			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(elapsed));
 		}
 		else 
 		{
 			imshow(file, displayImage);
-			key = waitKey(100);
+			key = waitKey(1);
 		}
 
 		if (key == 'x')
@@ -355,15 +378,20 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 
 void postProcessing(String alphaFile, String betaFile, String gammaFile, String directory)
 {
-	VideoWriter video(directory+"/fullResults.avi",CV_FOURCC('M','J','P','G'),10, Size(1920,480),true);
+	VideoWriter video(directory+"/fullResults.avi",CV_FOURCC('M','J','P','G'),50, Size(1920,480),true);
 	unsigned char key;
 
 	Mat imgAlpha, imgBeta, imgGamma;
-	VideoCapture capAlpha, capBeta, capGamma;
+	// VideoCapture capAlpha, capBeta, capGamma;
 
-	capAlpha.open(alphaFile+"results.avi");
-	capBeta.open(betaFile+"results.avi");
-	capGamma.open(gammaFile+"results.avi");
+	VideoCapture capAlpha(alphaFile+"results.avi");
+	VideoCapture capBeta(betaFile+"results.avi");
+	VideoCapture capGamma(gammaFile+"results.avi");
+
+	if(!capAlpha.isOpened())
+	{
+		cout << "Could not read video file" << endl;
+	}
 
 	while(capAlpha.read(imgAlpha) && capBeta.read(imgBeta) && capGamma.read(imgGamma))
 	{	
@@ -393,8 +421,6 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 	    imgGamma.copyTo(roiGamma);
 		//imshow("output",out);
 		video.write(out);
-
-		key = waitKey(1);
 	}
 		video.release();
 }
