@@ -108,8 +108,8 @@ def write(person):
     fifo.close()
 
 def processImage():
+    fifo = open(imagesFIFO, "r")
     while True:
-        fifo = open(imagesFIFO, "r")
         lines = fifo.readlines()
 
         for data in lines:
@@ -126,7 +126,7 @@ def processImage():
                 print("delete " + data)
                 idToDelete = int(data)
                 people[idToDelete].makeInactive()
-            fifo.close()
+    fifo.close()
 
 model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
 

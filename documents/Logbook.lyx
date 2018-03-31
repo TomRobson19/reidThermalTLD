@@ -1990,6 +1990,10 @@ re-id optimisation (threshold, how many to save etc.) - THIS WILL BE IMPORTANT,
  NETWORK ACCURACY IS ALREADY PRETTY GOOD
 \end_layout
 
+\begin_layout Itemize
+Video merging code
+\end_layout
+
 \end_deeper
 \end_body
 \end_document
