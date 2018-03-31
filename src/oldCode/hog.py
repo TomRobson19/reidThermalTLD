@@ -64,8 +64,8 @@ def inside(r, q):
 def draw_detections(img, x,y,w,h, colour, thickness = 1):
     # the HOG detector returns slightly larger rectangles than the real objects.
     # so we slightly shrink the rectangles to get a nicer output.
-    pad_w, pad_h = int(0.15*w), int(0.05*h)
-    cv2.rectangle(img, (x, y), (x+w, y+h), thickness)
+    #pad_w, pad_h = int(0.15*w), int(0.05*h)
+    cv2.rectangle(img, (x, y), (x+w, y+h), colour, thickness)
 
 def convertForKeras(img):
     newImg = np.array(img)
@@ -96,11 +96,11 @@ def is_similar(image1, image2):
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 #####################################################################
-model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
+model = load_model("../saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
 
 padding = 40
-width = 100
-height = 100
+width = 50
+height = 50
 
 people = []
 
@@ -141,9 +141,9 @@ def runOnSingleCamera(video_file):
 
         if not is_similar(img, previousImg):
 
-            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-
             displayImage = img
+
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
             fgmask = mog.apply(img)
 
@@ -158,6 +158,9 @@ def runOnSingleCamera(video_file):
 
                 originalx = x
                 originaly = y
+
+                originalw = w
+                originalh = h
 
                 x = int(max(0, x - padding / 100.0 * w))
                 y = int(max(0, y - padding / 100.0 * h))
@@ -196,7 +199,7 @@ def runOnSingleCamera(video_file):
                             newPerson = Person(0)
                             newPerson.addPrevious(personROI)
                             people.append(newPerson)
-                            draw_detections(displayImage, originalx, originaly, w,h, newPerson.getColour(), 3)
+                            draw_detections(displayImage, originalx, originaly, originalw,originalh, newPerson.getColour(), 3)
                         else:
                             closest = 100
                             closestPerson = 100
@@ -214,13 +217,13 @@ def runOnSingleCamera(video_file):
                             if closest < 0.5:
                                 person = people[closestPerson]
                                 person.addPrevious(personROI)
-                                draw_detections(displayImage, originalx, originaly, w, h, person.getColour(), 3)
+                                draw_detections(displayImage, originalx, originaly, originalw, originalh, person.getColour(), 3)
                                 print("REID")
                             else:
                                 newPerson = Person(len(people))
                                 newPerson.addPrevious(personROI)
                                 people.append(newPerson)
-                                draw_detections(displayImage, originalx, originaly, w, h, newPerson.getColour(), 3)
+                                draw_detections(displayImage, originalx, originaly, originalw, originalh, newPerson.getColour(), 3)
                                 print("NEW")
             # display image
 
@@ -239,4 +242,4 @@ def runOnSingleCamera(video_file):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    runOnSingleCamera("newData/1/2018-03-16T12.10.29ASM-input.avi")
+    runOnSingleCamera("/home/tom/Documents/fourthYearWork/reidThermalTLD/src/oldData/Dataset1/deltaInput.webm")
