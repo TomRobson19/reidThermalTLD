@@ -1915,8 +1915,81 @@ we don’t have to require all positive pairs holding smaller distances than
  all negative pairs regardless of query images.
  Instead, what we want is for each query image, its positive pairs have
  smaller distances than its negative ones.
- There-
+ - THINK ABOUT THIS
 \end_layout
 
+\begin_layout Itemize
+Person objects are clones of each other, unknown why - fixed now
+\end_layout
+
+\begin_layout Itemize
+Transfer learning results weren't great, grid searching the closed world
+ section now
+\end_layout
+
+\begin_layout Itemize
+Video writer problems are to do with the way my results videos are output,
+ original videos can be combined fine.
+\end_layout
+
+\begin_layout Itemize
+Sleep is wrong, each iteration needs to take a set amount of time - done
+ now
+\end_layout
+
+\begin_layout Itemize
+Cameras gamma and beta have overlapping FOVs
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+remove activity condition??
+\end_layout
+
+\begin_layout Itemize
+crop out one of the FOVs??
+\end_layout
+
+\begin_layout Itemize
+delay start of gamma (video editing) to ensure boudary, will also have less
+ time between leaving gamma and arriving in alpha.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+TLD targets appear to be jumping between people.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+zero jumped to wrong person for a couple of frames, new tracker object created
+ in its place, jumped back...
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Old python rewrite not showing promising things for the network
+\end_layout
+
+\begin_layout Itemize
+NEW TO DO
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sync up data, weird things have happened, written on paper
+\end_layout
+
+\begin_layout Itemize
+network optimisation
+\end_layout
+
+\begin_layout Itemize
+re-id optimisation (threshold, how many to save etc.) - THIS WILL BE IMPORTANT,
+ NETWORK ACCURACY IS ALREADY PRETTY GOOD
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
