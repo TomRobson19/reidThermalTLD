@@ -1319,6 +1319,146 @@ Results
 The Dataset
 \end_layout
 
+\begin_layout Standard
+The data used to evaluate the features that have been implemented here was
+ gathered with three cameras at Durham University.
+ The cameras and their fields of view are arranged as they are in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Setup-of-Cameras"
+
+\end_inset
+
+(a), with the cameras labelled as camera 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, 
+\begin_inset Formula $\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ respectively, and their fields of view shown by the matching coloured lines.
+ The images seen by the cameras are shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Setup-of-Cameras"
+
+\end_inset
+
+(b).
+ The dataset contains five people.
+ 
+\end_layout
+
+\begin_layout Standard
+CHANGE THIS FIGURE WHEN ALL RUNS CORRECTLY
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../../../old/thirdYearWork/Project/reidThermal/General/datasetDiagram.png
+	scale 34
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../../../old/thirdYearWork/Project/reidThermal/General/viewpoints.png
+	scale 16
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Setup-of-Cameras"
+
+\end_inset
+
+Position and field of view of the cameras used to record our data 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The Deep Learning System
+\end_layout
+
+\begin_layout Standard
+Train/test results, tensorboard grpahs, TNSE plots, excel plots of distances.
+\end_layout
+
 \begin_layout Subsection
 Re-Identification Performance
 \end_layout
