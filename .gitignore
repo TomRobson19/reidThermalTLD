@@ -100,3 +100,5 @@ src/test/
 src/newData/
 
 src/oldData/
+
+src/oldCode/__pycache__/

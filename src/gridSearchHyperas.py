@@ -67,13 +67,13 @@ def create_pairs(x, digit_indices):
     '''
     pairs = []
     labels = []
-    n = min([len(digit_indices[d]) for d in range(8)]) - 1
-    for d in range(8):
+    n = min([len(digit_indices[d]) for d in range(9)]) - 1
+    for d in range(9):
         for i in range(n):
             z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
             pairs += [[x[z1], x[z2]]]
-            inc = random.randrange(1, 8)
-            dn = (d + inc) % 8
+            inc = random.randrange(1, 9)
+            dn = (d + inc) % 9
             z1, z2 = digit_indices[d][i], digit_indices[dn][i]
             pairs += [[x[z1], x[z2]]]
             labels += [1, 0]
@@ -183,7 +183,7 @@ def data():
 
     for target in img_groups:
         for img_file in img_groups[target]:
-            if int(target) < 8:
+            if int(target) < 9:
                 img = cv2.imread(os.path.join(image_dir, target, img_file))
                 img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
                 if np.random.random() < 0.8:
@@ -209,10 +209,10 @@ def data():
     num_epochs = 50
 
     # create training+test positive and negative pairs
-    digit_indices = [np.where(y_train == i)[0] for i in range(8)]
+    digit_indices = [np.where(y_train == i)[0] for i in range(9)]
     tr_pairs, tr_y = create_pairs(x_train, digit_indices)
 
-    digit_indices = [np.where(y_test == i)[0] for i in range(8)]
+    digit_indices = [np.where(y_test == i)[0] for i in range(9)]
     te_pairs, te_y = create_pairs(x_test, digit_indices)
 
     x_train = [tr_pairs[:, 0], tr_pairs[:, 1]]
