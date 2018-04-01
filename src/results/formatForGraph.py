@@ -3,7 +3,7 @@ import numpy as np
 positiveArray = []
 negativeArray = []
 
-with open('te_predictions_new.csv', 'r') as csvfile:
+with open('te_predictions_aug2.csv', 'r') as csvfile:
      reader = csv.reader(csvfile, delimiter=',')
      counter = 0
      for row in reader:
@@ -14,7 +14,7 @@ with open('te_predictions_new.csv', 'r') as csvfile:
      		negativeArray.append(row)
      	counter += 1
 
-with open('tr_predictions_new.csv', 'r') as csvfile:
+with open('tr_predictions_aug2.csv', 'r') as csvfile:
      reader = csv.reader(csvfile, delimiter=',')
      counter = 0
      for row in reader:
@@ -26,5 +26,5 @@ with open('tr_predictions_new.csv', 'r') as csvfile:
      	counter += 1
          
 
-np.savetxt("positive.csv",positiveArray, delimiter=",")
-np.savetxt("negative.csv",negativeArray, delimiter=",")
+np.savetxt("positive_aug2.csv",positiveArray, delimiter=",")
+np.savetxt("negative_aug2.csv",negativeArray, delimiter=",")
