@@ -5,8 +5,8 @@
 #SBATCH -p short
 #SBATCH --job-name=transfer
 
-#SBATCH -e stderr-filename
-#SBATCH -o stdout-filename
+#SBATCH -e stderr-transfer
+#SBATCH -o stdout-transfer
 
 #SBATCH --mem=8g
 #SBATCH -t 24:00:00

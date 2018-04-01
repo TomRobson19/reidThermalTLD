@@ -265,7 +265,7 @@ print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 
 save_dir = os.path.join(os.getcwd(), 'saved_models')
-model_name = 'openWorld.h5'
+model_name = 'transfer.h5'
 if not os.path.isdir(save_dir):
     os.makedirs(save_dir)
 model_path = os.path.join(save_dir, model_name)
