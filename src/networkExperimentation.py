@@ -66,29 +66,6 @@ def create_pairs(x, digit_indices):
             labels += [1, 0]
     return np.array(pairs), np.array(labels)
 
-
-# def create_eval_pairs(x, digit_indices):
-#     '''Positive and negative pair creation.
-#     Alternates between positive and negative pairs.
-#     '''
-#     pairs = []
-#     labels = []
-#     n = min([len(digit_indices[d]) for d in range(8,10)]) - 1
-#     for d in range(8,10):
-#         for i in range(n):
-#             z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-#             pairs += [[x[z1], x[z2]]]
-#             inc = random.randrange(8, 9)
-#             dn = (d + inc) % 2
-#             z1, z2 = digit_indices[d][i], digit_indices[dn][i]
-#             pairs += [[x[z1], x[z2]]]
-#             labels += [1, 0]
-#     return np.array(pairs), np.array(labels)
-
-# shape = 0
-# def flatten_bodge(x):
-#     return tf.reshape(x, [tf.shape(x)[0],tf.shape(x)[1]*tf.shape(x)[2]*tf.shape(x)[3]])
-
 def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction)
 
@@ -102,14 +79,6 @@ def create_base_network(input_shape):
     x = Conv2D(32, (7,7), activation='tanh')(x)
     x = MaxPooling2D(pool_size=(3,3))(x)
     x = Dropout(0.25)(x)
-
-    # x = Lambda(flatten_bodge, dtype='float32')(x)
-
-    # a,b,c,d = x.get_shape().as_list()
-    # a = b*c*d
-
-    # # x = Permute([1, 2, 3])(x)  # Indicate NHWC data layout
-    # x = Reshape((a,))(x)
 
     x = Flatten()(x)
     x = Dense(16, activation='relu')(x)
@@ -264,62 +233,3 @@ test = vectorTest.predict([te_pairs[:, 0], te_pairs[:, 1]])
 
 np.savetxt("vectors1.csv",test[0], delimiter=",")
 np.savetxt("vectors2.csv",test[1], delimiter=",")
-
-# x_eval = []
-# y_eval = []
-
-# for target in img_groups:
-#     for img_file in img_groups[target]:
-#         if int(target) >= 8:
-#             img = cv2.imread(os.path.join(image_dir, target, img_file))
-#             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-#             x_eval.append(img)
-#             y_eval.append(int(target))
-
-# x_eval = np.array(x_eval)
-# y_eval = np.array(y_eval)
-# x_eval = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-# x_eval = x_train.astype('float32')
-# x_eval /= 255
-
-# digit_indices = [np.where(y_eval == i)[0] for i in range(8,10)]
-# eval_pairs, ev_y = create_eval_pairs(x_eval, digit_indices)
-
-# pred = model.predict([eval_pairs[:, 0], eval_pairs[:, 1]])
-# eval_acc = compute_accuracy(ev_y, pred)
-# print('* Accuracy on evaluation set: %0.2f%%' % (100 * eval_acc))
-
-
-
-
-
-# intermediate_layer_model = Model(inputs=model.input,
-#                                  outputs=model.get_layer(name="model_1_1/final/Relu").output)
-# intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
-
-# np.savetxt("intermediate_output1.csv",intermediate_output,delimiter=",")
-
-# intermediate_layer_model = Model(inputs=model.input,
-#                                  outputs=model.get_layer(name="final/Relu").output)
-# intermediate_output = intermediate_layer_model.predict([te_pairs[:, 0], te_pairs[:, 1]])
-
-# np.savetxt("intermediate_output2.csv",intermediate_output,delimiter=",")
-
-
-
-
-
-
-
-
-# sess = K.get_session()
-
-# #[print(x.op.name) for x in model.outputs]
-
-# constant_graph = tf.graph_util.convert_variables_to_constants(sess, sess.graph.as_graph_def(),['lambda_1/Sqrt'])
-# tf.train.write_graph(constant_graph, "", "graph.pb", as_text=False)
-
-# import cv2 as cv
-
-# net = cv.dnn.readNetFromTensorflow('graph.pb')
-# print("Success")
