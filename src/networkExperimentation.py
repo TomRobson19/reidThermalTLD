@@ -4,6 +4,7 @@ import numpy as np
 np.random.seed(1337)  # for reproducibility
 
 import random
+from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.datasets import mnist
 from keras.models import Sequential, Model
@@ -111,16 +112,42 @@ for person in os.listdir(image_dir):
         else:
             img_groups[person]=[img_file]
 
+datagen = ImageDataGenerator(
+        featurewise_center=False,  # set input mean to 0 over the dataset
+        samplewise_center=False,  # set each sample mean to 0
+        featurewise_std_normalization=False,  # divide inputs by std of the dataset
+        samplewise_std_normalization=False,  # divide each input by its std
+        rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
+        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+        horizontal_flip=True,  # randomly flip images
+        vertical_flip=False)  # randomly flip images
+
+# datagen = ImageDataGenerator(
+#     featurewise_center=True,
+#     featurewise_std_normalization=True,
+#     rotation_range=20,
+#     width_shift_range=0.2,
+#     height_shift_range=0.2,
+#     horizontal_flip=True)
+
+
 for target in img_groups:
     for img_file in img_groups[target]:
         if int(target) < 9:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
+            aug = datagen.random_transform(img)
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+            aug = cv2.cvtColor(aug, cv2.COLOR_RGB2GRAY)
             if np.random.random() < 0.8:
                 x_train.append(img)
                 y_train.append(int(target))
+                x_train.append(aug)
+                y_train.append(int(target))
             else:
                 x_test.append(img)
+                y_test.append(int(target))
+                x_test.append(aug)
                 y_test.append(int(target))
 
 x_train = np.array(x_train)
@@ -137,6 +164,22 @@ x_train /= 255
 x_test /= 255  
 
 num_epochs = 100
+
+# print("augmentation")
+
+
+# lenTrain = len(x_train)
+# lenTest = len(x_test)
+
+# for i in range(lenTrain):
+#     augmented = datagen.random_transform(x_train[i])
+#     np.append(x_train,augmented)
+
+# for i in range(lenTest):
+#     augmented = datagen.random_transform(x_test[i])
+#     np.append(x_test,augmented)
+
+# print("augmentation done")
 
 # create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(9)]
@@ -176,6 +219,7 @@ distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([proc
 model = Model(inputs=[input_a, input_b], outputs=distance)
 
 model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=[calc_accuracy])
+
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
