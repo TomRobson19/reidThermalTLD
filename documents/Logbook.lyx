@@ -1995,5 +1995,27 @@ Video merging code
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Transfer
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+* Accuracy on training set: 99.52%
+\end_layout
+
+\begin_layout Itemize
+* Accuracy on test set: 94.68% 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Retraining current best architecture (non transfer with simple augs) 
+\end_layout
+
+\begin_layout Itemize
+fixed tld issue with disappearing targets (i think)
+\end_layout
+
 \end_body
 \end_document
