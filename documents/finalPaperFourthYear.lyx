@@ -899,10 +899,11 @@ key "Almazan2018"
 
  do not propose a novel architecture as such, but instead propose a set
  of good practices that should be followed for effective re-identification,
- such as a state of the art model architecture and a sufficiently large
- and complex dataset.
- we will endeavour to follow this where possible.
- REMOVE IF i DON'T FOLLOW THESE
+ such as pre-training for identity classification, sufficiently large image
+ resolution, state of the-art base architecture and dataset augmentation
+ with difficult examples.
+ We will endeavour to follow these guidelines in our work in this project
+ wherever possible.
 \end_layout
 
 \begin_layout Subsection
@@ -1070,7 +1071,7 @@ key "opencv_library"
 
  has been used to allow us to use stable, well tested code.
  However, the implementation of TLD code in OpenCV is suboptimal, so we
- have used the existing open source Multi Object implementation of TLD from
+ have used the existing open source multi object implementation of TLD from
  
 \begin_inset CommandInset citation
 LatexCommand cite
