@@ -47,6 +47,7 @@ void MultiObjectTLDTracker::deleteTarget(int personID)
     num= write(fifo, nameChar, strlen(nameChar));
 
     close(fifo);
+    deletionCounter++;
 }
 void MultiObjectTLDTracker::update(Mat image)
 {
@@ -74,10 +75,9 @@ void MultiObjectTLDTracker::update(Mat image)
         {
             if(newObjectBoxes[i].personID == previousObjectBoxes[j].personID)
             {
-                if((abs(newObjectBoxes[i].x - previousObjectBoxes[j].x) > 50) || (abs(newObjectBoxes[i].y - previousObjectBoxes[j].y)) > 50)
+                if((abs(newObjectBoxes[i].x - previousObjectBoxes[j].x) > 20) || (abs(newObjectBoxes[i].y - previousObjectBoxes[j].y)) > 20)
                 {
                     deleteTarget(newObjectBoxes[i].personID);
-                   
                 }
             }
         }
@@ -130,4 +130,9 @@ std::vector<rectangleAndID> MultiObjectTLDTracker::getObjectRectangles()
     std::sort(objects.begin(), objects.end());
 
     return objects;
+}
+
+int MultiObjectTLDTracker::finalDeletionCounter()
+{
+    return deletionCounter;
 }

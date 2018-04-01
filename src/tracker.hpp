@@ -38,6 +38,8 @@ class MultiObjectTLDTracker// : public GenericTracker
 private:
     const MOTLDSettings settings = MOTLDSettings(0);
     MultiObjectTLD tracker = MultiObjectTLD(1280,960,settings);
+    int deletionCounter = 0;
+    int currentHighest = -1;
 public:
     MultiObjectTLDTracker(); 
     void initialise(int width, int height);
@@ -47,6 +49,7 @@ public:
     void drawBoxes(Mat image);
     int getNumberOfObjects();
     std::vector<rectangleAndID> getObjectRectangles();
+    int finalDeletionCounter();
 };
 
 #endif

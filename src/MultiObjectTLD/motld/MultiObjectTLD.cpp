@@ -204,22 +204,22 @@ void MultiObjectTLD::processFrame(unsigned char *img)
                         bestCluster = curPatch;
                     }
                 }
-            if (bestConf > tConf[o] && bestConf > 0.65 && (!ivDefined[o]
-                    || rectangleOverlap(ivLastDetectionClusters[bestId].box, ivCurrentBoxes[o]) < 0.7))
-            {
-                //if there is a (better) cluster of detections away from tracker result / and tracker failed
-                ivCurrentBoxes[o] = ivLastDetectionClusters[bestId].box;
-                ivCurrentPatches[o] = bestCluster;
-#if DEBUG
-                std::cout << "DETECTOR: changed object " << o << " box to ("
-                          << round(ivCurrentBoxes[o].x) << "," << round(ivCurrentBoxes[o].y) << ", "
-                          << round(ivCurrentBoxes[o].width) << "," << round(ivCurrentBoxes[o].height)
-                          << ") with conf=" << bestConf << std::endl;
-#endif
-                ivDefined[o] = true;
-                if (bestConf > 0.65)
-                    ivValid[o] = true;
-            }
+//             if (bestConf > tConf[o] && bestConf > 0.65 && (!ivDefined[o]
+//                     || rectangleOverlap(ivLastDetectionClusters[bestId].box, ivCurrentBoxes[o]) < 0.7))
+//             {
+//                 //if there is a (better) cluster of detections away from tracker result / and tracker failed
+//                 ivCurrentBoxes[o] = ivLastDetectionClusters[bestId].box;
+//                 ivCurrentPatches[o] = bestCluster;
+// #if DEBUG
+//                 std::cout << "DETECTOR: changed object " << o << " box to ("
+//                           << round(ivCurrentBoxes[o].x) << "," << round(ivCurrentBoxes[o].y) << ", "
+//                           << round(ivCurrentBoxes[o].width) << "," << round(ivCurrentBoxes[o].height)
+//                           << ") with conf=" << bestConf << std::endl;
+// #endif
+//                 ivDefined[o] = true;
+//                 if (bestConf > 0.65)
+//                     ivValid[o] = true;
+//             }
 #else //no clustering, process detections directly
             for (unsigned int i = 0; i < ivLastDetections.size(); ++i)
                 if (ivLastDetections[i].box.objectId == o && ivLastDetections[i].confidence > bestConf)

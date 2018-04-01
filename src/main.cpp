@@ -93,7 +93,7 @@ void deleteUsingFIFO(int personID) {
 
 int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 {
-	VideoWriter video(file+"results.avi",CV_FOURCC('M','J','P','G'),50, Size(1280, 960),true);
+	VideoWriter video(file+"results.avi",CV_FOURCC('X','V','I','D'),50, Size(1280, 960),true);
 	// Read video
 	VideoCapture input(file);
 
@@ -345,7 +345,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		if(multipleCameras == 1)
 		{
 			video.write(displayImage);
-			cout << cameras[cameraID] << endl;
+			//cout << cameras[cameraID] << endl;
 			//doesn't need to sleep, need to run for this time total
 
 			int elapsed = 1000 - (int)((clock()-start)/(CLOCKS_PER_SEC*1000));
