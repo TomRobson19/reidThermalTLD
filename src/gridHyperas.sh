@@ -9,7 +9,7 @@
 #SBATCH -e stderr-grid
 #SBATCH -o stdout-grid
 
-#SBATCH --mem=8g
+#SBATCH --mem=10g
 
 module load cuda/8.0-cudnn6
 module load opencv/3.4-py3
