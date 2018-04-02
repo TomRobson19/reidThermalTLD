@@ -115,8 +115,8 @@ Although use of thermal imagery currently poses significant advantages for
  24/7 surveillance in terms of the visibility of targets under all environmental
  conditions, a key limitation is the lack of colour information.
  Person re-identification across multiple cameras is a key research problem
- within the domain of visual surveillance and a key challenge for the future
- deployment of thermal sensing as an autonomous sensor technology.
+ within the domain of visual surveillance and a important challenge for
+ the future deployment of thermal sensing as an autonomous sensor technology.
  Many current approaches to the problem rely on colour features 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -177,13 +177,13 @@ Method
 The first step for this is to be able to detect a person within thermal
  imagery in real time, distinguish a person from other objects and track
  a person moving through a scene in real time.
- This is done using a combination of a Mixture of Gaussians (MoG) Background
- Subtractor, a Histogram of Oriented Gradients (HOG) person detector and
+ This is done using a combination of a Mixture of Gaussians (MoG) background
+ subtractor, a Histogram of Oriented Gradients (HOG) person detector and
  a Track-Learn-Detect (TLD) tracker.
- We then use a Siamese Convolutional Neural Network to determine if a pair
+ We then use a siamese Convolutional Neural Network to determine if a pair
  of images contains the same person or two different people.
- This architecture has been chosen as it enables us to deploy the system
- of any camera system with any human targets, enabling us to achieve our
+ This architecture has been chosen as it enables us to deploy our solution
+ on any camera system with any human targets, enabling us to achieve our
  aim of solving the open world re-identification problem.
 \end_layout
 
@@ -269,7 +269,7 @@ key "Layne"
  However, in the modern world, thermal imagery is often used for 24/7 surveillan
 ce when varying environmental conditions are present.
  Therefore, it is important that an effective re-identification system is
- developed to utilise this area of surveillance, as this problem is yet
+ developed to utilise this area of surveillance, as this problem has yet
  to be effectively solved.
 \end_layout
 
@@ -280,9 +280,9 @@ ons.
  The surveillance data that a system like this can provide would be critical
  for crime-prevention, forensic analysis, and counter-terrorism activities
  in both civilian and governmental agencies alike.
- While this is currently widely used by human operators, these operators
- have to be trained, which offsets the utility of this approach with training
- and staffing costs.
+ While this surveillance data is currently widely used by human operators,
+ these operators have to be trained, which offsets the utility of this approach
+ with training and staffing costs.
  The implementation of an automated re-identification system is therefore
  of great interest, as it would be very useful in supporting these human
  operators and enabling them to achieve better results more efficiently.
@@ -623,7 +623,7 @@ Related Work
 \end_layout
 
 \begin_layout Subsection
-Feature-Based Attempts at Re-Identification
+Feature-based Attempts at Re-Identification
 \end_layout
 
 \begin_layout Standard
@@ -811,7 +811,7 @@ reference "fig:openVsClosed"
 
 .
  They refer to the closed world problem as Identification and the open world
- problem as Verification, with the justification that in close world, the
+ problem as Verification, with the justification that in closed world, the
  aim is to identify which of a given set of people the target is, where
  as in open world, the aim is to verify whether two targets are the same
  or not.
@@ -872,9 +872,9 @@ key "Wang2016a"
  proposes a similar deep siamese CNN architecture, but also retains the
  single image representation.
  The purpose of this is to reduce the amount of computational work that
- must be done on both images together, as well as jointly optimising the
- single image representation and cross image representation for improved
- accuracy at a lower computational cost.
+ must be done on both images together, as well to joint optimise the single
+ image representation and cross image representation for improved accuracy
+ at a lower computational cost.
  The authors claim to outperform the majority of the state of the art methods
  at the time of writing.
  The work presented in 
@@ -935,7 +935,7 @@ key "Kalal2010"
 \end_inset
 
 .
- The idea of this tracker is to break down the person tracking task into
+ The idea of this tracker is to break down the person-tracking task into
  tracking, learning and detection.
  The tracker follows the object between frames.
  The detector corrects the tracker if necessary based on previous observations.
@@ -948,7 +948,7 @@ key "Kalal2010"
  such as people.
  During our early experimentation, we found that is was sufficiently capable
  of tracking a person through a single camera frame, but could not re-identify
- people accross multiple cameras, or even returning from behind an obstruction.
+ people across multiple cameras, or even returning from behind an obstruction.
 \end_layout
 
 \begin_layout Subsection
@@ -1113,8 +1113,9 @@ Real Time Person Detection
 \begin_layout Standard
 Before we can start concerning ourselves with deep learning based person
  re-identification, we must be able to identify whether a person is present
- in the image at all, so we have a region of interest to pass to the neural
- network, and so we can use TLD to track targets through single camera views.
+ in the image at all, so that we have a region of interest to pass to the
+ neural network, and so we can use TLD to track targets through single camera
+ views.
  
 \end_layout
 
@@ -1148,8 +1149,8 @@ key "Zivkovic2004,Zivkovic"
  is updated, is far more memory efficient than storing all the pixel values
  across the entire video capture.
  This update rate is determined by the trade off between being fast enough
- to absorb objects that have become stationary into the background, and
- being slow enough to allow the detection of slow moving objects.
+ to absorb objects that have become stationary into the background and being
+ slow enough to allow the detection of slow moving objects.
 \end_layout
 
 \begin_layout Standard
@@ -1157,8 +1158,7 @@ As the program runs through the video, during each new frame, a Gaussian
  for each pixel is evaluated using a simple heuristic to determine which
  is most likely to correspond to the background model.
  Pixels that do not match closely enough with these background Gaussians
- are classified as foreground elements, and added to a new image in the
- code.
+ are classified as foreground elements and added to a new image in the code.
  Once these foreground pixels are identified and built into a foreground
  mask, erosion and dilation image operators 
 \begin_inset CommandInset citation
@@ -1168,7 +1168,7 @@ key "solomonbreckon10fundamentals"
 \end_inset
 
  are used to clean up these results.
- From here, we use the contour detection to find the connected components,
+ From here, we use the contour detection to find the connected components
  and draw bounding boxes around these contours.
  
 \end_layout
@@ -1200,7 +1200,7 @@ key "Dalal"
  This HOG descriptor is then passed to a pre-trained machine learning algorithm,
  in this case a Support Vector Machine (SVM).
  If this comes up with a positive identification, then it is classified
- as a person, and will be given an associated TLD tracker object.
+ as a person and will be given an associated TLD tracker object.
  
 \end_layout
 
@@ -1251,7 +1251,7 @@ Therefore, in this implementation, each person currently present in any
  If either of these conditions occurs, the TLD object is deleted.
  In the case of no HoG identification being present, this indicated that
  the tracker has incorrectly predicted the position or rate of movement
- of the person, and has lost them.
+ of the person and has lost them.
  A new tracker will then be created to replace it in the next frame when
  HoG detects this person again.
  
@@ -1348,18 +1348,28 @@ The convolutional layers operate directly on the image to reduce the complexity
  This resolves the vanishing or exploding gradients problem that would otherwise
  occur.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+explain vanishing and exploding gradients
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 Pooling layers then down-sample their input, looking at a neighbourhood
- of pixels and, in the case of max pooling that we have used here, outputs
+ of pixels and, in the case of max pooling that we have used here, output
  the maximum.
  The aim of this is to provide robustness to the changes in the spatial
  location of features across the dataset and to reduce input dimensionality.
  This is also an effective tool to control overfitting, as it reduces the
  number of training parameters and ensures that it is the general regions
  where features are present that are learned, not the specific pixels of
- the images in the training set that they are present in.
+ the images in the training set in which they are present.
  
 \end_layout
 
