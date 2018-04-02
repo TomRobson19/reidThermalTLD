@@ -1435,7 +1435,15 @@ Results
 \end_layout
 
 \begin_layout Subsection
-The Dataset
+The Deep Learning System
+\end_layout
+
+\begin_layout Standard
+Train/test results, tensorboard grpahs, TNSE plots, excel plots of distances.
+\end_layout
+
+\begin_layout Subsection
+The Re-Identification System Dataset
 \end_layout
 
 \begin_layout Standard
@@ -1568,14 +1576,6 @@ Position and field of view of the cameras used to record our data
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-The Deep Learning System
-\end_layout
-
-\begin_layout Standard
-Train/test results, tensorboard grpahs, TNSE plots, excel plots of distances.
 \end_layout
 
 \begin_layout Subsection
