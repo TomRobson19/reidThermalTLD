@@ -1305,11 +1305,22 @@ These files were then formed into positive and negative pairs of images,
  pairs, giving a balanced dataset.
  These pairs were assigned binary labels, 1 for positive pairs and 0 for
  negative pairs.
- 
-\end_layout
+ We then applied some data augmentation to the images, following the advice
+ of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Almazan2018"
 
-\begin_layout Standard
-DATASET AUMENTATION IF DONE
+\end_inset
+
+.
+ This involved applying a random transformation to each image, effectively
+ doubling the size of the dataset.
+ These transformations consisted of a horizontal flip, small shifts vertically
+ or horizonatally, and a small rotation.
+ The aim of this is to introduce more variation into our dataset and enable
+ it to cope better with difficult real world situations.
+ 
 \end_layout
 
 \begin_layout Section
