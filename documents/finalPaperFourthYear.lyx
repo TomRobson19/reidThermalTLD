@@ -1071,7 +1071,7 @@ key "opencv_library"
 
  has been used to allow us to use stable, well tested code.
  However, the implementation of TLD code in OpenCV is suboptimal, so we
- have used the existing open source multi object implementation of TLD from
+ have used the existing open source multi-object implementation of TLD from
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1185,7 +1185,7 @@ key "Dalal"
  This HOG descriptor is then passed to a pre-trained machine learning algorithm,
  in this case a Support Vector Machine (SVM).
  If this comes up with a positive identification, then it is classified
- as a person.
+ as a person, and will be given an associated TLD tracker object.
  
 \end_layout
 
@@ -1252,21 +1252,128 @@ Network Architecture
 
 \begin_layout Standard
 Taking inspiration from the state of the art literature in the area of open
- world person re-identification, our network architecture is a deep siamese
+ world person re-identification, our network architecture is a Deep Siamese
  CNN.
  This means that the network is trained on pairs of images, and attempts
  to determine whether these images show the same person or a different person.
+ The two networks which are each fed an image have exactly the same architecture
+ and weights, as they are trained together.
+ Our CNN consists of convolutional layers, pooling layers and fully connected
+ layers.
  
 \end_layout
 
 \begin_layout Standard
+The convolutional layers operate directly on the image to reduce the complexity
+ of the input in a manner that is both meaningful and structured.
+ This enables the network to have fewer neurons than a traditional fully
+ connected feedforward network would have if operating on an image.
+ This enables the convolutional neural network to be far deeper with fewer
+ parameters.
+ This resolves the vanishing or exploding gradients problem that would otherwise
+ occur.
+ 
+\end_layout
+
+\begin_layout Standard
+Pooling layers then down-sample their input, looking at a neighbourhood
+ of pixels and, in the case of max pooling that we have used here, outputs
+ the maximum.
+ The aim of this is to provide robustness to the changes in the spatial
+ location of features across the dataset and to reduce input dimensionality.
+ This is also an effective tool to control overfitting, as it reduces the
+ number of training parameters and ensures that it is the general regions
+ where features are present that are learned, not the specific pixels of
+ the images in the training set that they are present in.
+ 
+\end_layout
+
+\begin_layout Standard
+Finally, we flatten the output of our last pooling layer to a single dimension
+ and then pass it to a fully connected layer.
+ The high dimensional vector output of this layer will be the representation
+ of this image, and we will use the euclidean distances between these vectors
+ to determine whether the inputs show the same person or different people.
+ 
+\end_layout
+
+\begin_layout Standard
+At various stages of the network, we have some dropout layers.
+ The purpose of dropout is to eliminate a proportion of the training data
+ at each epoch to help to prevent overfitting, as the network is being trained
+ on a different dataset each epoch.
+ The goal is therefore to force the network to learn more robust features
+ that are useful in conjunction with random subsets of the other neurons
+ so that good performance is still achieved when some neurons are removed.
+\end_layout
+
+\begin_layout Standard
+The loss function to be used for this network was proposed by the authors
+ of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Hadsell2006"
 
 \end_inset
 
- for method used in siamese example
+.
+ This paper defines a contrastive loss function, which maps high dimensional
+ inputs to lower dimensional outputs, given distances between samples in
+ its input space.
+ These distances between samples are supplied by the euclidean distance.
+ The formula for this function is given by equation (1) below, where Y is
+ the label (0 or 1), m is the margin that determines the the maximum euclidean
+ distance between two points that will influence the loss function.
+ The purpose of this is to ensure that vastly different images do not have
+ a disproportional effect on the learning outcome.
+ D is the euclidean distance, which is defined here by equation (2) below,
+ where X1 and X2 are the input images and F represents the feature vectors
+ output by the siamese pair of identical CNNs.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+L=(1-Y)\frac{1}{2}(D)^{2}+Y\frac{1}{2}\{max(0,m-D)\}^{2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+D=\sqrt{\{F(X1)-F(X2)\}^{2}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The actual architecture chosen was two convolutional layers, a max pooling
+ layer, a dropout layer, two convolutional layers, a max pooling layer,
+ a dropout layer, a flatten layer, a dropout layer and a dense fully connected
+ layer.
+ The parameters for these layers such as the activation functions, the convoluti
+onal kernel sizes, stride sizes, pooling width, dropout rates and size of
+ the dense layer were all determined by an exhaustive grid search using
+ the Hyperas library 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pumperla2017"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+FIGURE HERE FROM TENSORBOARD ONCE FINALISED
 \end_layout
 
 \begin_layout Subsubsection
@@ -1316,8 +1423,8 @@ key "Almazan2018"
 .
  This involved applying a random transformation to each image, effectively
  doubling the size of the dataset.
- These transformations consisted of a horizontal flip, small shifts vertically
- or horizonatally, and a small rotation.
+ The possible transformations consisted of a horizontal flip, small shifts
+ vertically or horizontally, and a small rotation.
  The aim of this is to introduce more variation into our dataset and enable
  it to cope better with difficult real world situations.
  
