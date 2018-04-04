@@ -623,7 +623,7 @@ Related Work
 \end_layout
 
 \begin_layout Subsection
-Feature-based Attempts at Re-Identification
+Feature-Based Attempts at Re-Identification
 \end_layout
 
 \begin_layout Standard
@@ -739,8 +739,8 @@ key "Liu2014"
  for each person individually on the fly.
  This is achieved through the use of a random forest classifier, and functions
  well in an open world setting.
- However, since the time of publication of this paper, the state of the
- art of this area has moved on to deep learning.
+ However, since the time of publication of this work, the state of the art
+ of this area has moved on to deep learning.
  
 \end_layout
 
@@ -754,7 +754,8 @@ key "Robson2017"
 
  attempted to use features that a human would consider useful to re-identify
  people, such as an approximation of the shape of the target, an analysis
- of their gait and a measure of where each person's thermal 'hotspots' were.
+ of their gait and a measure of where the thermal hotspots of each person
+ were.
  This performed resonably well for some features, but its inaccuracy in
  many situations led us to explore an alternative approach, using deep learning,
  based on the current state of the art in the area.
@@ -1201,6 +1202,18 @@ key "Dalal"
  in this case a Support Vector Machine (SVM).
  If this comes up with a positive identification, then it is classified
  as a person and will be given an associated TLD tracker object.
+ In our previous work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+, we had a tradeoff between HOG and Haar cascades due to HOG being slower.
+ However, as we are using a TLD tracker this year, there will be far fewer
+ calls to the person detector so we can use the superior performance of
+ HOG without fear of the slower runtime making a large impact on the overall
+ performance.
  
 \end_layout
 
@@ -1243,17 +1256,17 @@ key "Kalal2010"
 \begin_layout Standard
 Therefore, in this implementation, each person currently present in any
  of the camera views has an associated TLD tracker object, which is created
- on the first HoG identification in this neighbourhood, and classified by
+ on the first HOG identification in this neighbourhood, and classified by
  the neural network.
  The tracker then follows this person through the frame until either the
- person leaves the frame or HoG is no longer getting a positive identification
+ person leaves the frame or HOG is no longer getting a positive identification
  within the tracker.
  If either of these conditions occurs, the TLD object is deleted.
- In the case of no HoG identification being present, this indicated that
+ In the case of no HOG identification being present, this indicated that
  the tracker has incorrectly predicted the position or rate of movement
  of the person and has lost them.
  A new tracker will then be created to replace it in the next frame when
- HoG detects this person again.
+ HOG detects this person again.
  
 \end_layout
 
@@ -1321,6 +1334,10 @@ key "Almazan2018"
  
 \end_layout
 
+\begin_layout Standard
+TALK ABOUT THE SPLIT OF THE DATASET
+\end_layout
+
 \begin_layout Subsubsection
 Network Architecture
 \end_layout
@@ -1346,18 +1363,10 @@ The convolutional layers operate directly on the image to reduce the complexity
  This enables the convolutional neural network to be far deeper with fewer
  parameters.
  This resolves the vanishing or exploding gradients problem that would otherwise
- occur.
+ occur, as a greater number of training parameters in the early layers of
+ the network would make it unstable, and prone to the weights becoming much
+ too large (exploding gradients) or much too small (vanishing gradients).
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-explain vanishing and exploding gradients
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1471,7 +1480,8 @@ The Deep Learning System
 \end_layout
 
 \begin_layout Standard
-Train/test results, tensorboard grpahs, TNSE plots, excel plots of distances.
+Train/test results, tensorboard grpahs, TNSE plots, excel plots of distances,
+ different thresholds.
 \end_layout
 
 \begin_layout Subsection
@@ -1628,6 +1638,56 @@ We will now evaluate the strengths, weaknesses and limitations of the research
 Real Time Person Detection System
 \end_layout
 
+\begin_layout Standard
+The inclusion of the TLD tracker has greatly improved the performance of
+ our person tracking system in comparison to our previous work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+.
+ We are getting far fewer misclassifications from HOG as it is being called
+ far fewer times due to the TLD tracker.
+ The tracker performs particularly well on cameras 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+, but less well on camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+ This seems to be due to the fact that each person is moving directly across
+ the field of view of camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
+, which the tracker seems to be less able to deal with than cameras 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+, where the people are moving away from or towards the camera as well as
+ across its field of view.
+ Through all of our preliminary testing on various datasets, the trend that
+ we observed was that directly horizontal movement caused problems for the
+ tracker.
+ SUGGEST WHY
+\end_layout
+
+\begin_layout Standard
+IMAGES OF DIFFERENT MOVEMENT DIRECTIONS
+\end_layout
+
 \begin_layout Subsection
 Deep Learning System
 \end_layout
@@ -1638,6 +1698,18 @@ Re-Identification System
 
 \begin_layout Subsection
 Appraisal of Project Organisation
+\end_layout
+
+\begin_layout Standard
+TLD rewrite
+\end_layout
+
+\begin_layout Standard
+DNN and FIFO
+\end_layout
+
+\begin_layout Standard
+Full testing not untill late because of FIFO
 \end_layout
 
 \begin_layout Section
