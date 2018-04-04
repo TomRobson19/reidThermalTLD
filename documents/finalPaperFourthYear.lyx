@@ -1480,8 +1480,12 @@ The Deep Learning System
 \end_layout
 
 \begin_layout Standard
-Train/test results, tensorboard grpahs, TNSE plots, excel plots of distances,
+Train/test results, tensorboard graphs, TNSE plots, excel plots of distances,
  different thresholds.
+\end_layout
+
+\begin_layout Standard
+for tensorboard graphs, use results not using validation_split
 \end_layout
 
 \begin_layout Subsection
@@ -1701,15 +1705,29 @@ Appraisal of Project Organisation
 \end_layout
 
 \begin_layout Standard
-TLD rewrite
-\end_layout
+In the implementation of this system we have used a modular approach, implementi
+ng each major component separately.
+ The multi-object implementation of TLD from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lutz2015"
 
-\begin_layout Standard
-DNN and FIFO
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Full testing not untill late because of FIFO
+ was originally written in C as a header-file based library, which was incompati
+ble with the rest of our C++ codebase.
+ We therefore had to spend considerable time rewriting this library so it
+ was compatible with our system, as well as refactoring and adding new functions
+ to suppress the erroneous attempts at re-identification and to enable us
+ to delete TLD objects from the system.
+ Also, as Keras uses Tensorflow as its backend, and OpenCV has the ability
+ to read and use Tensorflow networks.
+ However, this turned out to be incompatible, which required us to spend
+ much time trying to import it correctly, before deciding that the superior
+ method was to use both C++ and python for the separate components and connect
+ them at system level.
+ Despite this issue, and our aims were accomplished, enabling us to contribute
+ to the state of the art.
 \end_layout
 
 \begin_layout Section
