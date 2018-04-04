@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 import numpy as np
-np.random.seed(1337)  # for reproducibility
+np.random.seed(1)  # for reproducibility
 
 import random
 from keras.preprocessing.image import ImageDataGenerator
@@ -82,6 +82,7 @@ def create_base_network(input_shape):
     x = Dropout(0.25)(x)
 
     x = Flatten()(x)
+    #x = Dropout(0.25)(x)
     x = Dense(16, activation='relu')(x)
 
     model = Model(inputs=input_main, outputs=x)
@@ -123,14 +124,6 @@ datagen = ImageDataGenerator(
         horizontal_flip=True,  # randomly flip images
         vertical_flip=False)  # randomly flip images
 
-# datagen = ImageDataGenerator(
-#     featurewise_center=True,
-#     featurewise_std_normalization=True,
-#     rotation_range=20,
-#     width_shift_range=0.2,
-#     height_shift_range=0.2,
-#     horizontal_flip=True)
-
 
 for target in img_groups:
     for img_file in img_groups[target]:
@@ -165,41 +158,12 @@ x_test /= 255
 
 num_epochs = 100
 
-# print("augmentation")
-
-
-# lenTrain = len(x_train)
-# lenTest = len(x_test)
-
-# for i in range(lenTrain):
-#     augmented = datagen.random_transform(x_train[i])
-#     np.append(x_train,augmented)
-
-# for i in range(lenTest):
-#     augmented = datagen.random_transform(x_test[i])
-#     np.append(x_test,augmented)
-
-# print("augmentation done")
-
 # create training+test positive and negative pairs
 digit_indices = [np.where(y_train == i)[0] for i in range(9)]
 tr_pairs, tr_y = create_pairs(x_train, digit_indices)
 
 digit_indices = [np.where(y_test == i)[0] for i in range(9)]
 te_pairs, te_y = create_pairs(x_test, digit_indices)
-
-# s = np.arange(tr_pairs.shape[0])
-# np.random.shuffle(s)
-
-# tr_pairs = tr_pairs[s]
-# tr_y = tr_y[s]
-
-# s = np.arange(te_pairs.shape[0])
-# np.random.shuffle(s)
-
-# te_pairs = te_pairs[s]
-# te_y = te_y[s]
-
 
 # network definition
 base_network = create_base_network(input_shape)
@@ -221,7 +185,8 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=[calc_accuracy])
 
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
-          validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
+          #validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
+          validation_split=0.2,
           batch_size=128,
           epochs=num_epochs,
           verbose=2,
