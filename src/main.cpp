@@ -19,6 +19,8 @@
 using namespace cv;
 using namespace std;
 
+#define CASCADE_TO_USE "classifiers/people_thermal_23_07_casALL16x32_stump_sym_24_n4.xml"
+
 #define imagesFIFO "/tmp/images.fifo" 
 #define intsFIFO "/tmp/ints.fifo" 
 #define imagesDirectory "/tmp/imgs/"
@@ -43,7 +45,7 @@ void writeToFIFO(Mat img) {
 	
 	strcpy(nameChar, name.c_str());
 
-	char fileName[256]; // <- danger, only storage for 256 characters.
+	char fileName[1024]; // <- danger, only storage for 256 characters.
 	strncpy(fileName, imagesDirectory, sizeof(fileName));
 	strncat(fileName, nameChar, sizeof(fileName));
 	strncat(fileName, extension, sizeof(fileName));
@@ -91,7 +93,7 @@ void deleteUsingFIFO(int personID) {
 
 int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 {
-	VideoWriter video(file+"results.avi",CV_FOURCC('M','J','P','G'),50, Size(1280, 960),true);
+	VideoWriter video(file+"results.avi",CV_FOURCC('X','V','I','D'),50, Size(1280, 960),true);
 	// Read video
 	VideoCapture input(file);
 
@@ -252,7 +254,12 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 			{
 				cout << "deletion border" << objectRectangles[i].personID << endl;
 
+				// pthread_mutex_lock(&myLock);
 				tracker.deleteTarget(objectRectangles[i].personID);
+
+				// deleteUsingFIFO(objectRectangles[i].personID);
+
+				// pthread_mutex_unlock(&myLock);
 
 				// std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 			}
@@ -291,7 +298,12 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 				{
 					cout << "deletion hog" << objectRectangles[i].personID << endl;
 
+					// pthread_mutex_lock(&myLock);
 					tracker.deleteTarget(objectRectangles[i].personID);
+
+					// deleteUsingFIFO(objectRectangles[i].personID);
+
+					// pthread_mutex_unlock(&myLock);
 
 					// std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 				}
@@ -299,7 +311,12 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 				{
 					cout << "deletion size" << objectRectangles[i].personID << endl;
 
+					// pthread_mutex_lock(&myLock);
 					tracker.deleteTarget(objectRectangles[i].personID);
+
+					// deleteUsingFIFO(objectRectangles[i].personID);
+
+					// pthread_mutex_unlock(&myLock);
 
 					// std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 				}
@@ -328,10 +345,10 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		if(multipleCameras == 1)
 		{
 			video.write(displayImage);
-			cout << cameras[cameraID] << endl;
+			//cout << cameras[cameraID] << endl;
+			//doesn't need to sleep, need to run for this time total
 
-			int elapsed = 1000 - (int)((clock()-start)/(CLOCKS_PER_SEC));
-
+			int elapsed = 1000 - (int)((clock()-start)/(CLOCKS_PER_SEC*1000));
 			if(elapsed < 0)
 			{
 				cout << "runtime too long" << endl;
@@ -361,40 +378,29 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 
 void postProcessing(String alphaFile, String betaFile, String gammaFile, String directory)
 {
-	VideoWriter video(directory+"/fullResults.avi",CV_FOURCC('M','J','P','G'),25, Size(1920,480),true);
+	VideoWriter video(directory+"/fullResults.avi",CV_FOURCC('M','J','P','G'),50, Size(1920,480),true);
 	unsigned char key;
 
 	Mat imgAlpha, imgBeta, imgGamma;
-	VideoCapture capAlpha, capBeta, capGamma;
+	// VideoCapture capAlpha, capBeta, capGamma;
 
-	capAlpha.open(alphaFile+"results.avi");
-	capBeta.open(betaFile+"results.avi");
-	capGamma.open(gammaFile+"results.avi");
-
-	// capAlpha.open("data/newAlpha.avi");
-	// capBeta.open("data/newBeta.avi");
-	// capGamma.open("data/newGamma.avi");
+	VideoCapture capAlpha(alphaFile+"results.avi");
+	VideoCapture capBeta(betaFile+"results.avi");
+	VideoCapture capGamma(gammaFile+"results.avi");
 
 	if(!capAlpha.isOpened())
 	{
 		cout << "Could not read video file" << endl;
 	}
 
-	while(true)
+	while(capAlpha.read(imgAlpha) && capBeta.read(imgBeta) && capGamma.read(imgGamma))
 	{	
-		capAlpha >> imgAlpha;
-		capBeta >> imgBeta;
-		capGamma >> imgGamma;
+		// cout << "1" << endl; 
+		// capAlpha >> imgAlpha;
+		// capBeta >> imgBeta;
+		// capGamma >> imgGamma;
+		// cout << "2" << endl;
 
-		if(imgAlpha.empty() || imgBeta.empty() || imgGamma.empty())
-		{
-			std::cerr << "End of video file reached" << std::endl;
-			exit(0);
-		}
-
-		resize(imgAlpha, imgAlpha, Size(640, 480));
-		resize(imgBeta, imgBeta, Size(640, 480));
-		resize(imgGamma, imgGamma, Size(640, 480));
 
 		if(imgAlpha.empty() || imgBeta.empty() || imgGamma.empty())
 		{
@@ -413,9 +419,8 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 	    imgAlpha.copyTo(roiAlpha);
 	    imgBeta.copyTo(roiBeta);
 	    imgGamma.copyTo(roiGamma);
-		imshow("output",out);
+		//imshow("output",out);
 		video.write(out);
-		key = waitKey(1);
 	}
 		video.release();
 }
@@ -436,9 +441,9 @@ int main(int argc,char** argv)
 
 	String directory = "data";
 
-	String alphaFile = directory + "/newAlpha.avi";
-	String betaFile = directory + "/newBeta.avi";
-	String gammaFile = directory + "/newGamma.avi";
+	String alphaFile = directory + "/alpha.avi";
+	String betaFile = directory + "/beta.avi";
+	String gammaFile = directory + "/gamma.avi";
 
 	if(testing == 1)
 	{
