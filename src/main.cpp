@@ -36,28 +36,23 @@ static const char* keys =
 
 
 void writeToFIFO(Mat img) { 
-	int num, fifo; 
-	char extension[]=".jpg"; 
-	char newLine[]="\n"; 
+	string extension =".jpg"; 
+	string newLine="\n"; 
 
-	std::string name = std::to_string(fileNameCounter);
-	char nameChar[name.length()+1]; 
-	
-	strcpy(nameChar, name.c_str());
+	FILE * fifo;
 
-	char fileName[1024]; // <- danger, only storage for 256 characters.
-	strncpy(fileName, imagesDirectory, sizeof(fileName));
-	strncat(fileName, nameChar, sizeof(fileName));
-	strncat(fileName, extension, sizeof(fileName));
-	strncat(fileName, newLine, sizeof(fileName));
+	fifo = fopen (imagesFIFO,"w");
 
-	imwrite(fileName, img);
+	string name = to_string(fileNameCounter);
 
-	fifo = open(imagesFIFO, O_WRONLY);
+	string toSend = imagesDirectory+name+extension+newLine;
 
-	num= write(fifo, fileName, strlen(fileName));
+	imwrite(toSend, img);
 
-	close(fifo);
+	fprintf(fifo, "%s", toSend.c_str());
+
+	//close(fifo);
+	fclose(fifo);
 	fileNameCounter++;
 }
 
@@ -67,42 +62,24 @@ int readFromFIFO(){
 
 	fifo = open(intsFIFO, O_RDONLY);
 
+	//pFile = fopen (intsFIFO,"r");
+
 	num = read(fifo, temp, sizeof(temp));
 	
 	close(fifo);
 
-	return stoi(temp);
+	int person = stoi(temp);
+
+	return person;
 }   
-
-void deleteUsingFIFO(int personID) { 
-	int num, fifo; 
-	char newLine[]="\n"; 
-
-	std::string idToDelete = std::to_string(personID);
-	char nameChar[idToDelete.length()+1]; 
-	
-	strcpy(nameChar, idToDelete.c_str());
-	strncat(nameChar, newLine, sizeof(nameChar));
-
-	fifo = open(imagesFIFO, O_WRONLY);
-
-	num= write(fifo, nameChar, strlen(nameChar));
-
-	close(fifo);
-}
 
 int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 {
-	VideoWriter video(file+"results.avi",CV_FOURCC('X','V','I','D'),50, Size(1280, 960),true);
+	VideoWriter video(file+"results.avi",CV_FOURCC('M','J','P','G'),25, Size(1280, 960),true);
 	// Read video
-	VideoCapture input(file);
+	VideoCapture cap;
 
-	// Check video is open
-	if(!input.isOpened())
-	{
-		cout << "Could not read video file" << endl;
-		return 1;
-	}
+	bool keepProcessing = true;
 
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
@@ -117,25 +94,36 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 	HOGDescriptor hog;
 	hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
 
-	Mat frame;
+	Mat frame, displayImage;
 
 	MultiObjectTLDTracker tracker = MultiObjectTLDTracker();
 
-	while(input.read(frame))
+	cap.open(file);
+
+	while(keepProcessing)
 	{  
+		if(!cap.isOpened())
+		{
+			cout << "Could not read video file" << endl;
+			break;
+		}
+
+		cap >> frame;
+		
+		if(frame.empty())
+		{
+			std::cerr << cameraID << " End of video file reached" << std::endl;
+			break;
+		}
 	    clock_t start = std::clock();
 		
 		resize(frame, frame, Size(1280, 960));
 
-		pthread_mutex_lock(&myLock);
-		tracker.update(frame);
-		pthread_mutex_unlock(&myLock);
-
-		Mat displayImage = frame.clone();
+		displayImage = frame.clone();
 
 		cvtColor(frame, frame, CV_BGR2GRAY);
 
-		// tracker.drawBoxes(displayImage);
+		tracker.update(frame);
 
 		Mat foreground;
 		MoG->apply(frame, foreground, (double)(1.0 / learning));
@@ -151,9 +139,9 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 
 		//make new image from bitwise and of frame and foreground
-		for(int idx = 0; idx >= 0; idx = hierarchy[idx][0])
+		for(int i = 0; i < contours.size(); i++)
 		{
-			Rect r = boundingRect(contours[idx]);
+			Rect r = boundingRect(contours[i]); 
 
 			// adjust bounding rectangle to be padding% larger
 			// around the object
@@ -344,17 +332,16 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		unsigned char key;
 		if(multipleCameras == 1)
 		{
-			video.write(displayImage);
-			//cout << cameras[cameraID] << endl;
-			//doesn't need to sleep, need to run for this time total
-
-			int elapsed = 1000 - (int)((clock()-start)/(CLOCKS_PER_SEC*1000));
+			int elapsed = 500 - (int)((clock()-start)/(CLOCKS_PER_SEC));
 			if(elapsed < 0)
 			{
 				cout << "runtime too long" << endl;
 				return 0;
 			}
 			std::this_thread::sleep_for(std::chrono::milliseconds(elapsed));
+
+			video.write(displayImage);
+			cout << cameras[cameraID] << endl;
 		}
 		else 
 		{
@@ -366,7 +353,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		{
 			// if user presses "x" then exit
 			std::cout << "Keyboard exit requested : exiting now - bye!" << std::endl;
-			break;
+			keepProcessing = false;
 		}
 	}
 	String cameras[3] = {"Alpha", "Beta", "Gamma"};
@@ -382,11 +369,11 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 	unsigned char key;
 
 	Mat imgAlpha, imgBeta, imgGamma;
-	// VideoCapture capAlpha, capBeta, capGamma;
+	VideoCapture capAlpha, capBeta, capGamma;
 
-	VideoCapture capAlpha(alphaFile+"results.avi");
-	VideoCapture capBeta(betaFile+"results.avi");
-	VideoCapture capGamma(gammaFile+"results.avi");
+	capAlpha.open(alphaFile+"results.avi");//);
+	capBeta.open(betaFile+"results.avi");//);
+	capGamma.open(gammaFile+"results.avi");//);
 
 	if(!capAlpha.isOpened())
 	{
@@ -395,13 +382,6 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 
 	while(capAlpha.read(imgAlpha) && capBeta.read(imgBeta) && capGamma.read(imgGamma))
 	{	
-		// cout << "1" << endl; 
-		// capAlpha >> imgAlpha;
-		// capBeta >> imgBeta;
-		// capGamma >> imgGamma;
-		// cout << "2" << endl;
-
-
 		if(imgAlpha.empty() || imgBeta.empty() || imgGamma.empty())
 		{
 			std::cerr << "End of video file reached" << std::endl;
@@ -409,6 +389,10 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 		}
 
 	    Mat out = Mat(480, 1920, CV_8UC3);
+
+	    resize(imgAlpha, imgAlpha, Size(640, 480));
+	    resize(imgBeta, imgBeta, Size(640, 480));
+	    resize(imgGamma, imgGamma, Size(640, 480));
 
 	    
 	    //order of this year's data
@@ -419,7 +403,6 @@ void postProcessing(String alphaFile, String betaFile, String gammaFile, String 
 	    imgAlpha.copyTo(roiAlpha);
 	    imgBeta.copyTo(roiBeta);
 	    imgGamma.copyTo(roiGamma);
-		//imshow("output",out);
 		video.write(out);
 	}
 		video.release();
@@ -462,13 +445,13 @@ int main(int argc,char** argv)
 
 		cout << "processing stage" << endl;
 
-		std::thread t1(runOnSingleCamera, alphaFile, 0, 1);
-		std::thread t2(runOnSingleCamera, betaFile, 1, 1);
-		std::thread t3(runOnSingleCamera, gammaFile, 2, 1);
-		t1.join();
-		t2.join();
-		t3.join();
-		pthread_mutex_destroy(&myLock);
+		// std::thread t1(runOnSingleCamera, alphaFile, 0, 1);
+		// std::thread t2(runOnSingleCamera, betaFile, 1, 1);
+		// std::thread t3(runOnSingleCamera, gammaFile, 2, 1);
+		// t1.join();
+		// t2.join();
+		// t3.join();
+		// pthread_mutex_destroy(&myLock);
 
 		cout << "post processing stage" << endl;
 

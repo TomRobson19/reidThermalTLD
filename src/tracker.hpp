@@ -19,27 +19,11 @@ struct rectangleAndID {
     }
 };
 
-class GenericTracker
-{
-public:
-	virtual ~GenericTracker();
-    virtual void initialise(int width, int height);
-    virtual void addTarget(Rect boundingBox, int personID);
-    virtual void deleteTarget(int personID);
-    virtual void update(Mat image);
-    virtual void drawBoxes(Mat image);
-    virtual int getNumberOfObjects();
-    virtual std::tuple<std::vector<Rect>,std::vector<int>> getObjectRectangles();
-
-};
-
-class MultiObjectTLDTracker// : public GenericTracker
+class MultiObjectTLDTracker
 {
 private:
     const MOTLDSettings settings = MOTLDSettings(0);
     MultiObjectTLD tracker = MultiObjectTLD(1280,960,settings);
-    int deletionCounter = 0;
-    int currentHighest = -1;
 public:
     MultiObjectTLDTracker(); 
     void initialise(int width, int height);

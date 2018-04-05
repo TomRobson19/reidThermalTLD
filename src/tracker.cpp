@@ -33,21 +33,25 @@ void MultiObjectTLDTracker::deleteTarget(int personID)
 {
     tracker.deleteObject(personID);
 
-    int num, fifo; 
-    char newLine[]="\n"; 
+    string newLine="\n"; 
 
-    std::string idToDelete = std::to_string(personID);
-    char nameChar[idToDelete.length()+1]; 
-    
-    strcpy(nameChar, idToDelete.c_str());
-    strncat(nameChar, newLine, sizeof(nameChar));
+    FILE * fifo;
 
-    fifo = open(imagesFIFO, O_WRONLY);
+    fifo = fopen (imagesFIFO,"w");
 
-    num= write(fifo, nameChar, strlen(nameChar));
+    string person = to_string(personID);
 
-    close(fifo);
-    deletionCounter++;
+    string toSend = person+newLine;
+
+    fprintf(fifo, "%s", toSend.c_str());
+
+    fclose(fifo);
+
+    // if (tracker.getObjectBoxes().size() == 0)
+    // {
+    //     cout << "reinit" << endl;
+    //     MultiObjectTLD tracker = MultiObjectTLD(1280,960,settings);
+    // }
 }
 void MultiObjectTLDTracker::update(Mat image)
 {
@@ -57,14 +61,13 @@ void MultiObjectTLDTracker::update(Mat image)
 
     int size = image.cols * image.rows;
 
-    unsigned char img[size * 3];
+    unsigned char img[size];
 
     for(int j = 0; j < size; j++)
     {
-        img[j] = frame.imageData[j * 3 + 2];
-        img[j + size] = frame.imageData[j * 3 + 1];
-        img[j + 2 * size] = frame.imageData[j * 3];
+        img[j] = frame.imageData[j];
     }
+
     tracker.processFrame(img);
 
     std::vector<ObjectBox> newObjectBoxes = tracker.getObjectBoxes();
@@ -130,9 +133,4 @@ std::vector<rectangleAndID> MultiObjectTLDTracker::getObjectRectangles()
     std::sort(objects.begin(), objects.end());
 
     return objects;
-}
-
-int MultiObjectTLDTracker::finalDeletionCounter()
-{
-    return deletionCounter;
 }
