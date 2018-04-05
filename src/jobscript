@@ -3,7 +3,7 @@
 #SBATCH -c 1
 #SBATCH --gres=gpu:pascal:1
 
-#SBATCH -p gpu-small
+#SBATCH -p gpu-large
 #SBATCH --qos=short
 
 #SBATCH --job-name=thermalReID
