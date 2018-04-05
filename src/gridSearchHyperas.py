@@ -4,6 +4,7 @@ import numpy as np
 np.random.seed(1337)  # for reproducibility
 
 import random
+from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.datasets import mnist
 from keras.models import Sequential, Model
@@ -97,16 +98,28 @@ def data():
             else:
                 img_groups[person]=[img_file]
 
+    datagen = ImageDataGenerator(
+        rotation_range=5,  # randomly rotate images in the range (degrees, 0 to 180)
+        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+        horizontal_flip=True)  # randomly flip images
+
     for target in img_groups:
         for img_file in img_groups[target]:
             if int(target) < 9:
                 img = cv2.imread(os.path.join(image_dir, target, img_file))
+                aug = datagen.random_transform(img)
                 img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+                aug = cv2.cvtColor(aug, cv2.COLOR_RGB2GRAY)
                 if np.random.random() < 0.8:
                     x_train.append(img)
                     y_train.append(int(target))
+                    x_train.append(aug)
+                    y_train.append(int(target))
                 else:
                     x_test.append(img)
+                    y_test.append(int(target))
+                    x_test.append(aug)
                     y_test.append(int(target))
 
     x_train = np.array(x_train)
@@ -140,19 +153,34 @@ def data():
 def kerasClassifier(x_train, y_train, x_test, y_test):
     input_shape = (256, 128, 1)
 
-    input_main = Input(shape=input_shape, dtype='float32')
-    x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(input_main)
-    x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(x)
-    x = MaxPooling2D(pool_size={{choice([1,2,3,4,5,6,7,8,9,10])}})(x)
-    x = Dropout(0.25)(x)
+    # input_main = Input(shape=input_shape, dtype='float32')
+    # x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(input_main)
+    # x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(x)
+    # x = MaxPooling2D(pool_size={{choice([1,2,3,4,5,6,7,8,9,10])}})(x)
+    # x = Dropout(0.25)(x)
 
-    x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(x)
-    x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(x)
-    x = MaxPooling2D(pool_size={{choice([1,2,3,4,5,6,7,8,9,10])}})(x)
-    x = Dropout(0.25)(x)
+    # x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(x)
+    # x = Conv2D({{choice([16,32,64])}}, {{choice([1,2,3,4,5,6,7,8,9,10])}}, padding='same', activation={{choice(['relu', 'tanh'])}})(x)
+    # x = MaxPooling2D(pool_size={{choice([1,2,3,4,5,6,7,8,9,10])}})(x)
+    # x = Dropout(0.25)(x)
+
+    # x = Flatten()(x)
+    # x = Dense({{choice([16,32,64,128, 256])}}, activation={{choice(['relu', 'tanh'])}})(x)
+
+    input_main = Input(shape=input_shape, dtype='float32')
+    x = Conv2D(32, (3, 3), padding='same', activation='tanh')(input_main)
+    x = Conv2D(16, (5, 5), activation='tanh')(x)
+    x = MaxPooling2D(pool_size=(5,5))(x)
+    x = Dropout({{choice([0,0,0.1,0.2,0.3,0.4,0.5])}})(x)
+
+    x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
+    x = Conv2D(32, (7,7), activation='tanh')(x)
+    x = MaxPooling2D(pool_size=(3,3))(x)
+    x = Dropout({{choice([0,0,0.1,0.2,0.3,0.4,0.5])}})(x)
 
     x = Flatten()(x)
-    x = Dense({{choice([16,32,64,128, 256])}}, activation={{choice(['relu', 'tanh'])}})(x)
+    x = Dropout({{choice([0,0,0.1,0.2,0.3,0.4,0.5])}})(x)
+    x = Dense(16, activation='relu')(x)
 
     base_network = Model(inputs=input_main, outputs=x)
 
@@ -168,7 +196,7 @@ def kerasClassifier(x_train, y_train, x_test, y_test):
     model = Model(inputs=[input_a, input_b], outputs=distance)
     model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=[calc_accuracy])
 
-    model.fit(x_train,y_train,validation_data=(x_test,y_test),batch_size=128,epochs=num_epochs, verbose=2)
+    model.fit(x_train,y_train,validation_split={{choice([0.2,0.3,0.4,0.5])}},batch_size=128,epochs=num_epochs, verbose=2)
 
     score, acc = model.evaluate(x_test, y_test, verbose=0)
     print('Test accuracy:', acc)
@@ -180,7 +208,7 @@ def kerasClassifier(x_train, y_train, x_test, y_test):
 best_run, best_model = optim.minimize(model=kerasClassifier,
                                           data=data,
                                           algo=tpe.suggest,
-                                          max_evals=100,
+                                          max_evals=10,
                                           functions=[euclidean_distance,eucl_dist_output_shape, contrastive_loss, calc_accuracy, create_pairs],
                                           eval_space=True,
                                           trials=Trials())
