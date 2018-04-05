@@ -1335,7 +1335,9 @@ key "Almazan2018"
 \end_layout
 
 \begin_layout Standard
-TALK ABOUT THE SPLIT OF THE DATASET
+This dataset was then split into train, validation and test splits to enable
+ us to train the network and evaluate it on unseen data.
+ TALK ABOUT THE SPLIT OF THE DATASET
 \end_layout
 
 \begin_layout Subsubsection
