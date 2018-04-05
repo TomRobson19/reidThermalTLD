@@ -6,8 +6,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     // Read video
-    VideoCapture video("data/exampleVideos/running20140319.webm");
-    string filenameExtension = "delta8 ";
+    VideoCapture video("data/gamma.avi");
+    string filenameExtension = "gamma ";
     // Check video is open
     if(!video.isOpened())
     {
@@ -42,8 +42,6 @@ int main(int argc, char **argv)
         tracker.update(frame);
 
         Mat displayImage = frame.clone();
-
-        tracker.drawBoxes(displayImage);
 
         Mat foreground;
         MoG->apply(frame, foreground, (double)(1.0 / learning));
@@ -149,7 +147,7 @@ int main(int argc, char **argv)
                         resize(imgToSave, imgToSave, Size(128,256));
 
                         cout << "saving" << endl;
-                        imwrite("people/"+ std::to_string(personToSaveAs-48)+"/"+ filenameExtension + std::to_string(filenameCounter)+".jpg", imgToSave);
+                        imwrite("newPeople/"+ std::to_string(personToSaveAs-48)+"/"+ filenameExtension + std::to_string(filenameCounter)+".jpg", imgToSave);
                         cout << "saved" << endl;
                         filenameCounter++;
                     }
@@ -168,7 +166,7 @@ int main(int argc, char **argv)
                 cout << "deleted" << endl;
                 personCounter --;
 
-                std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+                //std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 
                 cout << objectRectangles.size() << endl;
             }
@@ -179,7 +177,7 @@ int main(int argc, char **argv)
                 Mat roi = frame(r);
                 vector<Rect> found, found_filtered;
 
-                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(8,16), 1.05, 2);
+                hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,16), 1.05, 2);
 
                 for(int j = 0; j < found.size(); j++ )
                 {
@@ -211,7 +209,7 @@ int main(int argc, char **argv)
 
                     personCounter --;
 
-                    std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+                    //std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                     cout << objectRectangles.size() << endl;
                 }
                 else if (found_filtered[0].area()*5 < objectRectangles[i].rectangle.area())
@@ -222,7 +220,7 @@ int main(int argc, char **argv)
 
                     personCounter --;
 
-                    std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+                    //std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
                     cout << objectRectangles.size() << endl;
                 }
                 else
@@ -234,10 +232,10 @@ int main(int argc, char **argv)
                 }
             }
         }
-
+        tracker.drawBoxes(displayImage);
         // Display result
         imshow("Tracking", displayImage);
-        unsigned char key = waitKey(10);
+        unsigned char key = waitKey(1);
         if (key == 'x')
         {
             // if user presses "x" then exit
