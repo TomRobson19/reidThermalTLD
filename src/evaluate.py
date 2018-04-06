@@ -155,5 +155,5 @@ print("predicting")
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
 tr_acc = compute_accuracy(tr_y, pred)
 
-np.savetxt("tr_predictions.csv",pred, delimiter=",")
-print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
+np.savetxt("eval_predictions.csv",pred, delimiter=",")
+print('* Accuracy on eval set: %0.2f%%' % (100 * tr_acc))

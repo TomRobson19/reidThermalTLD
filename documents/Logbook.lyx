@@ -2025,5 +2025,10 @@ fixed memory leak and post processing problems
 coming to the end of network experimentation
 \end_layout
 
+\begin_layout Itemize
+CONCAT AND SAVE POSITIVE AND NEGATIVE IMAGE PAIRS FROM RE-ID SYSTEM TO PRESENT
+ - WRITE DISTANCE ON THE IMAGE, MAKE THESE INTO VIDEO
+\end_layout
+
 \end_body
 \end_document
