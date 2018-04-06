@@ -185,8 +185,7 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 model.compile(loss=contrastive_loss, optimizer='adadelta', metrics=[calc_accuracy])
 
 model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
-          #validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
-          validation_split=0.2,
+          validation_data=([te_pairs[:, 0], te_pairs[:, 1]], te_y),
           batch_size=128,
           epochs=num_epochs,
           verbose=2,
