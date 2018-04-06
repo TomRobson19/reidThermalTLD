@@ -3,7 +3,10 @@ import numpy as np
 positiveArray = []
 negativeArray = []
 
-with open('te_predictions_aug2.csv', 'r') as csvfile:
+positiveEval = []
+negativeEval = []
+
+with open('te_predictions.csv', 'r') as csvfile:
      reader = csv.reader(csvfile, delimiter=',')
      counter = 0
      for row in reader:
@@ -14,7 +17,7 @@ with open('te_predictions_aug2.csv', 'r') as csvfile:
      		negativeArray.append(row)
      	counter += 1
 
-with open('tr_predictions_aug2.csv', 'r') as csvfile:
+with open('tr_predictions.csv', 'r') as csvfile:
      reader = csv.reader(csvfile, delimiter=',')
      counter = 0
      for row in reader:
@@ -25,6 +28,19 @@ with open('tr_predictions_aug2.csv', 'r') as csvfile:
      		negativeArray.append(row)
      	counter += 1
          
+with open('eval_predictions.csv', 'r') as csvfile:
+     reader = csv.reader(csvfile, delimiter=',')
+     counter = 0
+     for row in reader:
+          row = float(row[0])
+          if counter % 2 == 0:
+               positiveEval.append(row)
+          else:
+               negativeEval.append(row)
+          counter += 1
 
-np.savetxt("positive_aug2.csv",positiveArray, delimiter=",")
-np.savetxt("negative_aug2.csv",negativeArray, delimiter=",")
+np.savetxt("positive.csv",positiveArray, delimiter=",")
+np.savetxt("negative.csv",negativeArray, delimiter=",")
+
+np.savetxt("positiveEval.csv",positiveEval, delimiter=",")
+np.savetxt("negativeEval.csv",negativeEval, delimiter=",")
