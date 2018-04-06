@@ -2,16 +2,7 @@
 \lyxformat 474
 \begin_document
 \begin_header
-\textclass article
-\begin_preamble
-\usepackage{durhampaper}
-
-
-\title{Deep Learning Enabled Open World Thermal Re-Identification}
-\student{T.A. Robson}
-\supervisor{T.P. Breckon}
-\degree{MEng Computer Science}
-\end_preamble
+\textclass IEEEtran
 \use_default_options true
 \maintain_unincluded_children false
 \language british
@@ -86,28 +77,15 @@
 
 \begin_body
 
-\begin_layout Standard
-
-\lang english
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-maketitle
+\begin_layout Title
+On the use of Deep Learning for Open World Person Re-Identification in Thermal
+ Imagery
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Abstract
-
-\series bold
-Context/Background
+\begin_layout Author
+T.A.
+ Robson (Student), T.P.
+ Breckon (Supervisor)
 \end_layout
 
 \begin_layout Abstract
@@ -138,12 +116,6 @@ key "Robson2017"
 \end_layout
 
 \begin_layout Abstract
-
-\series bold
-Aims
-\end_layout
-
-\begin_layout Abstract
 The aim of this project is to develop a system that would build upon and
  extend the range of existing thermal image detection, tracking and classificati
 on approaches.
@@ -168,12 +140,6 @@ key "Zheng2016"
 \end_layout
 
 \begin_layout Abstract
-
-\series bold
-Method
-\end_layout
-
-\begin_layout Abstract
 The first step for this is to be able to detect a person within thermal
  imagery in real time, distinguish a person from other objects and track
  a person moving through a scene in real time.
@@ -188,19 +154,13 @@ The first step for this is to be able to detect a person within thermal
 \end_layout
 
 \begin_layout Abstract
+\begin_inset Note Note
+status open
 
-\series bold
-Results
+\begin_layout Plain Layout
+make this flow better and add results/conclusions content
 \end_layout
 
-\begin_layout Abstract
-
-\series bold
-Conclusions
-\end_layout
-
-\begin_layout Abstract
-\begin_inset VSpace bigskip
 \end_inset
 
 
@@ -224,7 +184,17 @@ ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
 \end_layout
 
 \begin_layout Section
-Introduction
+Introduction 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+make sure references to self are all relevent
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -274,9 +244,8 @@ ce when varying environmental conditions are present.
 \end_layout
 
 \begin_layout Standard
-There are many potential applications for this technology, but the most
- important in the modern world would be to support human intelligence organisati
-ons.
+There are many potential applications for this technology but the most important
+ in the modern world would be to support human intelligence organisations.
  The surveillance data that a system like this can provide would be critical
  for crime-prevention, forensic analysis, and counter-terrorism activities
  in both civilian and governmental agencies alike.
@@ -300,10 +269,10 @@ reference "fig:Example-of-Thermal"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement H
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -484,53 +453,6 @@ Several frames showing the same person that our system must re-identify
 \end_layout
 
 \begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement R
-overhang 0in
-width "40col%"
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename images/open vs closed.png
-	scale 30
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-The difference between closed world (a) and open world (b) re-identification
- systems, from 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Zheng2016"
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:openVsClosed"
-
-\end_inset
-
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Whilst thermal imagery has many advantages, it is not able to identify colour,
  making features that rely on colour useless.
  Therefore, alternative features are required to facilitate re-identification.
@@ -552,8 +474,8 @@ key "Robson2017"
 \end_inset
 
 , the attention of the researchers of re-identification has shifted to deep
- learning based solutions, as shall be discussed in more detail in the Related
- Work section.
+ learning based solutions, as shall be discussed in more detail in section
+ 2.
  These deep learning approaches can be split into two categories: closed
  world, where the system is trained and tested on the same set of people
  from a pre defined dataset, and open world, where the system is trained
@@ -620,6 +542,11 @@ Achievements of the Project
 
 \begin_layout Section
 Related Work
+\end_layout
+
+\begin_layout Standard
+We will now examine the previous work that has been done relating to the
+ person re-identification problem.
 \end_layout
 
 \begin_layout Subsection
@@ -764,11 +691,31 @@ key "Robson2017"
 
 \begin_layout Subsection
 Use of Deep Learning for Re-Identification
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+what is the actual state of the art?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 The use of deep learning to facilitate re-identification has been the driving
- force in the research community in this area in recent times.
+ force in the research community in this area in recent times
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ref - do i need here if going to talk about a load of papers??
+\end_layout
+
+\end_inset
+
+.
  As our ability to train deeper and deeper networks on larger and larger
  datasets has increased, largely thanks to modern improvements in graphics
  hardware, these approaches become more and more relevant and powerful.
@@ -831,6 +778,59 @@ key "Zheng2016"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/open vs closed.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The difference between closed world (a) and open world (b) re-identification
+ systems, from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zheng2016"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:openVsClosed"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 A solution to the open world problem is attempted in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -843,7 +843,17 @@ key "Zhang2014"
  one framework, which is a deep siamese CNN with an SVM placed on top of
  the network, after the last layer, to attempt open world re-identification.
  The results of this are promising for the potential use of such an architecture
-, but fall short of the state of the art at time of writing.
+, but fall short of the state of the art at time of writing
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+change phrase, toby suggested contemporaru
+\end_layout
+
+\end_inset
+
+.
  The apparent reason for this is overfitting to the dataset used to train
  the architecture, and the authors hypothesise that if they could use a
  dataset with wider variation of people, improved results could be achieved.
@@ -920,6 +930,17 @@ key "Almazan2018"
  with difficult examples.
  We will endeavour to follow these guidelines in our work in this project
  wherever possible.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+more detail here, and state what we will use, shall I mention stuff and
+ reference later sections where I do it?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -940,8 +961,8 @@ key "Kalal2010"
  tracking, learning and detection.
  The tracker follows the object between frames.
  The detector corrects the tracker if necessary based on previous observations.
- The learning estimates detector’s errors and updates it to avoid these
- errors in the future.
+ The learning estimates the errors made by the detector and updates it to
+ avoid these errors in the future.
  However, the main purpose of TLD is to be able to consistently follow the
  same object through as changing background, for example a car driving along
  a road being recorded from a helicopter.
@@ -1005,7 +1026,18 @@ Having established the problem that we want to solve, we will now break
 \end_layout
 
 \begin_layout Subsection
-Implementation Structure and Tools Used
+Implementation Structure and Tools Used 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+make more reference to flow chart, label descision points and refer to them,
+ will help understanding of diagram
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1021,7 +1053,7 @@ The implementation will begin by opening each video file, or live camera
  observations, and these are used to facilitate the comparison between targets,
  and are updated each time the target is successfully identified.
  This continues frame by frame until the video file or camera feed ends,
- as shown in figure 
+ as shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Logic-of-our"
@@ -1033,8 +1065,8 @@ reference "fig:Logic-of-our"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement H
-wide false
+placement t
+wide true
 sideways false
 status collapsed
 
@@ -1076,9 +1108,22 @@ Logic of our Re-Identification System
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+shorten this bit
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Many of the computer vision techniques that will be described in the next
  section are complex to implement.
- Therefore, version 3 of the OpenCV library 
+ Therefore, the OpenCV library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "opencv_library"
@@ -1114,9 +1159,10 @@ Real Time Person Detection
 \begin_layout Standard
 Before we can start concerning ourselves with deep learning based person
  re-identification, we must be able to identify whether a person is present
- in the image at all, so that we have a region of interest to pass to the
- neural network, and so we can use TLD to track targets through single camera
- views.
+ in the image at all.
+ This will give us a region of interest to pass to the neural network for
+ re-identification, and so we can use TLD to track targets through single
+ camera views.
  
 \end_layout
 
@@ -1218,7 +1264,18 @@ key "Robson2017"
 \end_layout
 
 \begin_layout Subsubsection
-Person Tracking using Track-Learn-Detect
+Person Tracking using Track-Learn-Detect 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+figures and examples - screenshot of camExample with postive and negative
+ samples
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1282,6 +1339,16 @@ We can now move on to our approach to deep learning based re-identification,
 
 \begin_layout Subsubsection
 Training and Testing Dataset
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+shorten
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1295,10 +1362,7 @@ key "Robson2017"
 , as this contained video of multiple people, some similar and some greatly
  differing, from different views.
  The real time person detection system discussed previously was adapted
- into a data extraction system, where the identification of each person
- was performed by a key press, rather than the neural network.
- Each successive frame of each person was then saved to a file, labelled
- with which person it showed.
+ into a data extraction system.
  The size of these files was fixed at 258x128, to ensure that the size of
  the file had no effect on the training.
  This meant that the system was trained on varying resolutions, as some
@@ -1341,7 +1405,17 @@ This dataset was then split into train, validation and test splits to enable
 \end_layout
 
 \begin_layout Subsubsection
-Network Architecture
+Network Architecture 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need architecture diagram, make changes to equation sections
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1416,7 +1490,7 @@ key "Hadsell2006"
  This paper defines a contrastive loss function, which maps high dimensional
  inputs to lower dimensional outputs, given distances between samples in
  its input space.
- These distances between samples are supplied by the euclidean distance.
+ These distances between samples are supplied by the Euclidean distance.
  The formula for this function is given by equation (1) below, where Y is
  the label (0 or 1), m is the margin that determines the the maximum euclidean
  distance between two points that will influence the loss function.
@@ -1475,19 +1549,6 @@ FIGURE HERE FROM TENSORBOARD ONCE FINALISED
 
 \begin_layout Section
 Results
-\end_layout
-
-\begin_layout Subsection
-The Deep Learning System
-\end_layout
-
-\begin_layout Standard
-Train/test results, tensorboard graphs, TNSE plots, excel plots of distances,
- different thresholds.
-\end_layout
-
-\begin_layout Standard
-for tensorboard graphs, use results not using validation_split
 \end_layout
 
 \begin_layout Subsection
@@ -1624,6 +1685,19 @@ Position and field of view of the cameras used to record our data
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+The Deep Learning System
+\end_layout
+
+\begin_layout Standard
+Train/test results, tensorboard graphs, TNSE plots, excel plots of distances,
+ different thresholds.
+\end_layout
+
+\begin_layout Standard
+for tensorboard graphs, use results not using validation_split
 \end_layout
 
 \begin_layout Subsection
