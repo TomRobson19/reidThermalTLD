@@ -49,22 +49,26 @@ def calc_accuracy(labels, predictions):
 
 def convertForKeras(img):
     newImg = np.array(img)
-    newImg = newImg.reshape(newImg.shape[0], newImg.shape[1],1)
+    newImg = newImg.reshape(256, 128,1)
     newImg = newImg.astype('float32')
     newImg /= 255
     return newImg
 
 def queryNeuralNetwork(img1, img2):
-    img1 = cv2.resize(img1,(128,256))
-    img2 = cv2.resize(img2,(128,256))
-    
-    img1 = img1.reshape(256,128,1)
-    img2 = img2.reshape(256,128,1)
+    concat = np.concatenate((img1, img2), axis=1)
+    concat *= 255
 
     img1 = np.array([img1])
     img2 = np.array([img2])
 
     prediction = model.predict([img1,img2])
+
+    if(prediction[0][0] < 0.5):
+        cv2.imwrite("classifications/positive/"+str(prediction[0][0])+".jpg",concat)
+    else:
+        cv2.imwrite("classifications/negative/"+str(prediction[0][0])+".jpg",concat)
+
+
     return prediction[0][0]
 
 def whichPerson(img):
@@ -91,13 +95,11 @@ def whichPerson(img):
                         closest = prediction
                         closestPerson = currentPerson
         if closest < 0.5:
-            for person in people:
-                if person.getIdentifier() == closestPerson:
-                    person.addPrevious(personROI)
-                    return person.getIdentifier()
+            person = people[closestPerson]
+            person.addPrevious(personROI)
+            return person.getIdentifier()
         else:
-            iden = len(people)
-            nextPerson = Person(iden)
+            nextPerson = Person(len(people))
             nextPerson.addPrevious(personROI)
             people.append(nextPerson)
             return nextPerson.getIdentifier()
