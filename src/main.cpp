@@ -19,8 +19,6 @@
 using namespace cv;
 using namespace std;
 
-#define CASCADE_TO_USE "classifiers/people_thermal_23_07_casALL16x32_stump_sym_24_n4.xml"
-
 #define imagesFIFO "/tmp/images.fifo" 
 #define intsFIFO "/tmp/ints.fifo" 
 #define imagesDirectory "/tmp/imgs/"
@@ -68,7 +66,30 @@ int readFromFIFO(){
 	
 	close(fifo);
 
-	int person = stoi(temp);
+	int person;
+
+	try {
+		person = stoi(temp);
+
+	}
+	 catch (const std::invalid_argument& ia) {
+		std::cerr << "Invalid argument: " << ia.what() << '\n';
+		std::cerr << temp << endl;
+
+		string str(temp);
+
+		size_t i = 0;
+		size_t len = str.length();
+		while(i < len){
+		    if (!isalnum(str[i]) || str[i] == ' '){
+		        str.erase(i,1);
+		        len--;
+		    }else
+		        i++;
+		}
+
+		person = stoi(str);
+	}
 
 	return person;
 }   
@@ -211,7 +232,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 
 						//image to be sent to the neural network
 						Mat imgToUse = frame(rec);
-						resize(imgToUse, imgToUse, Size(256,512));
+						resize(imgToUse, imgToUse, Size(128,256));
 
 						//imshow("being classified", imgToUse);
 
@@ -365,7 +386,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 
 void postProcessing(String alphaFile, String betaFile, String gammaFile, String directory)
 {
-	VideoWriter video(directory+"/fullResults.avi",CV_FOURCC('M','J','P','G'),50, Size(1920,480),true);
+	VideoWriter video(directory+"/fullResults.avi",CV_FOURCC('M','J','P','G'),25, Size(1920,480),true);
 	unsigned char key;
 
 	Mat imgAlpha, imgBeta, imgGamma;
@@ -445,13 +466,13 @@ int main(int argc,char** argv)
 
 		cout << "processing stage" << endl;
 
-		// std::thread t1(runOnSingleCamera, alphaFile, 0, 1);
-		// std::thread t2(runOnSingleCamera, betaFile, 1, 1);
-		// std::thread t3(runOnSingleCamera, gammaFile, 2, 1);
-		// t1.join();
-		// t2.join();
-		// t3.join();
-		// pthread_mutex_destroy(&myLock);
+		std::thread t1(runOnSingleCamera, alphaFile, 0, 1);
+		std::thread t2(runOnSingleCamera, betaFile, 1, 1);
+		std::thread t3(runOnSingleCamera, gammaFile, 2, 1);
+		t1.join();
+		t2.join();
+		t3.join();
+		pthread_mutex_destroy(&myLock);
 
 		cout << "post processing stage" << endl;
 
