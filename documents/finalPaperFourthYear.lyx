@@ -84,8 +84,8 @@ On the use of Deep Learning for Open World Person Re-Identification in Thermal
 
 \begin_layout Author
 T.A.
- Robson (Student), T.P.
- Breckon (Supervisor)
+ Robson, supervised by T.P.
+ Breckon
 \end_layout
 
 \begin_layout Abstract
@@ -116,14 +116,16 @@ key "Robson2017"
 \end_layout
 
 \begin_layout Abstract
-The aim of this project is to develop a system that would build upon and
- extend the range of existing thermal image detection, tracking and classificati
-on approaches.
- We want to build a system that can detect a person within thermal imagery
- in real time, distinguish a person from other objects and track a person
- moving through a scene in real time.
+The aim of this project is to build a system that can detect a person within
+ thermal imagery in real time, distinguish a person from other objects and
+ track a person moving through a scene in real time.
+ This is done using a combination of a Mixture of Gaussians (MoG) background
+ subtractor, a Histogram of Oriented Gradients (HOG) person detector and
+ a Track-Learn-Detect (TLD) tracker.
  We must then be able to re-identify people based on those our system has
- already seen.
+ already seen, which is done using a siamese Convolutional Neural Network
+ (CNN) to determine if a pair of images contains the same person or two
+ different people..
  It will be trained on a set dataset, and then tested on a set of different
  people.
  This means that we are aiming to solve the open world re-identification
@@ -136,21 +138,8 @@ key "Zheng2016"
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Abstract
-The first step for this is to be able to detect a person within thermal
- imagery in real time, distinguish a person from other objects and track
- a person moving through a scene in real time.
- This is done using a combination of a Mixture of Gaussians (MoG) background
- subtractor, a Histogram of Oriented Gradients (HOG) person detector and
- a Track-Learn-Detect (TLD) tracker.
- We then use a siamese Convolutional Neural Network to determine if a pair
- of images contains the same person or two different people.
- This architecture has been chosen as it enables us to deploy our solution
- on any camera system with any human targets, enabling us to achieve our
- aim of solving the open world re-identification problem.
+ This enables us to deploy our solution on any camera system with any human
+ targets.
 \end_layout
 
 \begin_layout Abstract
@@ -161,6 +150,13 @@ status open
 make this flow better and add results/conclusions content
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\begin_inset VSpace bigskip
 \end_inset
 
 
@@ -185,16 +181,6 @@ ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
 
 \begin_layout Section
 Introduction 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-make sure references to self are all relevent
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -269,7 +255,7 @@ reference "fig:Example-of-Thermal"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement t
+placement b
 wide false
 sideways false
 status open
@@ -282,8 +268,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/Screenshot from running20140319.webm.png
-	scale 12
+	filename images/alpha 38.jpg
+	scale 30
 
 \end_inset
 
@@ -313,8 +299,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/Screenshot from running20140319.webm - 2.png
-	scale 12
+	filename images/alpha 147.jpg
+	scale 30
 
 \end_inset
 
@@ -344,8 +330,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/Screenshot from running20140319.webm - 3.png
-	scale 12
+	filename images/beta 86.jpg
+	scale 30
 
 \end_inset
 
@@ -375,8 +361,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/Screenshot from walking20140319.webm.png
-	scale 12
+	filename images/gamma 26.jpg
+	scale 30
 
 \end_inset
 
@@ -406,8 +392,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/Screenshot from walking20140319.webm - 1.png
-	scale 12
+	filename images/gamma 1825.jpg
+	scale 30
 
 \end_inset
 
@@ -438,8 +424,8 @@ name "fig:Example-of-Thermal"
 
 \end_inset
 
-Several frames showing the same person that our system must re-identify
- as the same person
+Several images showing the same person that our system must be able to re-identi
+fy as the same person
 \end_layout
 
 \end_inset
@@ -695,7 +681,7 @@ Use of Deep Learning for Re-Identification
 status open
 
 \begin_layout Plain Layout
-what is the actual state of the art?
+what is the actual state of the art? - give numbers
 \end_layout
 
 \end_inset
@@ -843,17 +829,7 @@ key "Zhang2014"
  one framework, which is a deep siamese CNN with an SVM placed on top of
  the network, after the last layer, to attempt open world re-identification.
  The results of this are promising for the potential use of such an architecture
-, but fall short of the state of the art at time of writing
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-change phrase, toby suggested contemporaru
-\end_layout
-
-\end_inset
-
-.
+, but fall short of the contemporary state of the art.
  The apparent reason for this is overfitting to the dataset used to train
  the architecture, and the authors hypothesise that if they could use a
  dataset with wider variation of people, improved results could be achieved.
@@ -868,7 +844,7 @@ key "Ahmed2015"
 \end_inset
 
 , who have implemented architecture and trained on a larger dataset which
- consistently outperforms the state of the art at the time of its writing.
+ consistently outperforms the contemporary state of the art.
  
 \end_layout
 
@@ -886,8 +862,8 @@ key "Wang2016a"
  must be done on both images together, as well to joint optimise the single
  image representation and cross image representation for improved accuracy
  at a lower computational cost.
- The authors claim to outperform the majority of the state of the art methods
- at the time of writing.
+ The authors claim to outperform the majority of contemporary state of the
+ art methods.
  The work presented in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -934,8 +910,7 @@ key "Almazan2018"
 status open
 
 \begin_layout Plain Layout
-more detail here, and state what we will use, shall I mention stuff and
- reference later sections where I do it?
+more detail here, and state what we will use
 \end_layout
 
 \end_inset
@@ -1031,7 +1006,7 @@ Implementation Structure and Tools Used
 status open
 
 \begin_layout Plain Layout
-make more reference to flow chart, label descision points and refer to them,
+make more reference to flow chart, label decision points and refer to them,
  will help understanding of diagram
 \end_layout
 
@@ -1074,7 +1049,7 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename Project Activity Diagram Fourth Year.png
+	filename images/Project Activity Diagram Fourth Year.png
 	scale 50
 
 \end_inset
@@ -1365,19 +1340,10 @@ key "Robson2017"
  into a data extraction system.
  The size of these files was fixed at 258x128, to ensure that the size of
  the file had no effect on the training.
- This meant that the system was trained on varying resolutions, as some
- regions of interest had to be enlarged, and others had to be shrunk.
- This would help the ability of the system to re-identify at different distances
- away from the cameras.
- 
-\end_layout
-
-\begin_layout Standard
-These files were then formed into positive and negative pairs of images,
+ These files were then formed into positive and negative pairs of images,
  where positive pairs were both images of the same person and negative pairs
  were not.
- We took care to ensure we had an equal number of positive and negative
- pairs, giving a balanced dataset.
+ We took care to ensure we had a balanced dataset.
  These pairs were assigned binary labels, 1 for positive pairs and 0 for
  negative pairs.
  We then applied some data augmentation to the images, following the advice
@@ -1391,8 +1357,6 @@ key "Almazan2018"
 .
  This involved applying a random transformation to each image, effectively
  doubling the size of the dataset.
- The possible transformations consisted of a horizontal flip, small shifts
- vertically or horizontally, and a small rotation.
  The aim of this is to introduce more variation into our dataset and enable
  it to cope better with difficult real world situations.
  
@@ -1405,12 +1369,19 @@ This dataset was then split into train, validation and test splits to enable
 \end_layout
 
 \begin_layout Subsubsection
-Network Architecture 
+Network Architecture
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 need architecture diagram, make changes to equation sections
+\end_layout
+
+\begin_layout Plain Layout
+draw siamese network diagram in powerpoint or something
 \end_layout
 
 \end_inset
@@ -1486,19 +1457,42 @@ key "Hadsell2006"
 
 \end_inset
 
-.
+, and is given by Equation (1) below.
  This paper defines a contrastive loss function, which maps high dimensional
  inputs to lower dimensional outputs, given distances between samples in
  its input space.
  These distances between samples are supplied by the Euclidean distance.
- The formula for this function is given by equation (1) below, where Y is
- the label (0 or 1), m is the margin that determines the the maximum euclidean
- distance between two points that will influence the loss function.
+ The formula for this function is given by Equation (1) below, where 
+\begin_inset Formula $Y$
+\end_inset
+
+ is the label (0 or 1), 
+\begin_inset Formula $m$
+\end_inset
+
+ is the margin that determines the the maximum euclidean distance between
+ two points that will influence the loss function.
  The purpose of this is to ensure that vastly different images do not have
  a disproportional effect on the learning outcome.
- D is the euclidean distance, which is defined here by equation (2) below,
- where X1 and X2 are the input images and F represents the feature vectors
- output by the siamese pair of identical CNNs.
+ 
+\begin_inset Formula $D$
+\end_inset
+
+ is the euclidean distance, which is defined here by equation (2) below,
+ where 
+\begin_inset Formula $X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{2}$
+\end_inset
+
+ are the input images and 
+\begin_inset Formula $F$
+\end_inset
+
+ represents the feature vectors output by the siamese pair of identical
+ CNNs.
  
 \end_layout
 
@@ -1516,7 +1510,7 @@ L=(1-Y)\frac{1}{2}(D)^{2}+Y\frac{1}{2}\{max(0,m-D)\}^{2}
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-D=\sqrt{\{F(X1)-F(X2)\}^{2}}
+D=\sqrt{\{F(X_{1})-F(X_{2})\}^{2}}
 \end{equation}
 
 \end_inset
