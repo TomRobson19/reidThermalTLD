@@ -1023,33 +1023,21 @@ Having established the problem that we want to solve, we will now break
 
 \begin_layout Subsection
 Implementation Structure and Tools Used 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-make more reference to flow chart, label decision points and refer to them,
- will help understanding of diagram
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-The implementation will begin by opening each video file, or live camera
+The structure of our implementation is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Logic-of-our"
+
+\end_inset
+
+.The implementation will begin by opening each video file, or live camera
  feed, and concurrently running the real time target detection code on these.
- Each time this code identifies a person that does not currently have a
- TLD tracker object associated with them, it compares this person to the
- other people that have been seen previously using the siamese CNN, and
- if they are deemed to be sufficiently similar to one of these people, then
- they are re-identified as the same person, else the system creates a new
- person object.
- Each of these person objects has an associated TLD tracker and set of previous
- observations, and these are used to facilitate the comparison between targets,
- and are updated each time the target is successfully identified.
- This continues frame by frame until the video file or camera feed ends,
- as shown in Figure 
+ Each time this code identifies a person, it checks whether it has a TLD
+ tracker object associated with them or not.
+ This is decision point [A] in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Logic-of-our"
@@ -1057,6 +1045,22 @@ reference "fig:Logic-of-our"
 \end_inset
 
 .
+ If not, a new TLD tracker object is created and this person is compared
+ to the other people that have been seen previously using the siamese CNN,
+ and if they are deemed to be sufficiently similar to one of these people,
+ then they are re-identified as the same person, else the system creates
+ a new person object.
+ This is decision point [B] in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Logic-of-our"
+
+\end_inset
+
+.
+ Each of these person objects has an associated TLD tracker and set of previous
+ observations, and these are used to facilitate the comparison between targets,
+ and are updated each time the target is successfully identified.
 \end_layout
 
 \begin_layout Standard
@@ -1096,19 +1100,6 @@ Logic of our Re-Identification System
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-shorten this bit
 \end_layout
 
 \end_inset
@@ -1432,13 +1423,7 @@ key "Almazan2018"
 
 , with the aim of introducing more variation into our dataset and enable
  it to cope better with difficult real world situations.
- 
-\end_layout
-
-\begin_layout Standard
-This dataset was then split into train, validation and test splits to enable
- us to train the network and evaluate it on unseen data.
- TALK ABOUT THE SPLIT OF THE DATASET
+ This data was then split 80:20 into a train and test set.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1619,7 +1604,7 @@ Results
 \end_layout
 
 \begin_layout Subsection
-The Re-Identification System Dataset
+The Dataset
 \end_layout
 
 \begin_layout Standard
@@ -1659,15 +1644,11 @@ reference "fig:Setup-of-Cameras"
 \end_layout
 
 \begin_layout Standard
-CHANGE THIS FIGURE WHEN ALL RUNS CORRECTLY
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
