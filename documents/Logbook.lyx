@@ -2030,5 +2030,15 @@ CONCAT AND SAVE POSITIVE AND NEGATIVE IMAGE PAIRS FROM RE-ID SYSTEM TO PRESENT
  - WRITE DISTANCE ON THE IMAGE, MAKE THESE INTO VIDEO
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+also useful to debug re-id system
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Get outliers from training as figures
+\end_layout
+
 \end_body
 \end_document
