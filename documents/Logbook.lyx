@@ -2040,5 +2040,10 @@ also useful to debug re-id system
 Get outliers from training as figures
 \end_layout
 
+\begin_layout Itemize
+RE-ID MIGHT BE WORSE BECAUSE IT IS CALLED WHEN HOG LOSES PERSON OBJECT,
+ SO DIFFICULT POSE
+\end_layout
+
 \end_body
 \end_document

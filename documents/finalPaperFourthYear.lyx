@@ -147,7 +147,7 @@ key "Zheng2016"
 status open
 
 \begin_layout Plain Layout
-make this flow better and add results/conclusions content
+Add results/conclusions content
 \end_layout
 
 \end_inset
@@ -258,7 +258,7 @@ reference "fig:Example-of-Thermal"
 placement b
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -677,27 +677,14 @@ key "Robson2017"
 
 \begin_layout Subsection
 Use of Deep Learning for Re-Identification
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-what is the actual state of the art? - give numbers
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 The use of deep learning to facilitate re-identification has been the driving
- force in the research community in this area in recent times
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ref - do i need here if going to talk about a load of papers??
-\end_layout
+ force in the research community in this area in recent times 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Matsukawa2017,Zheng2016,Zhang2014,Wang2016a,Almazan2018,Chung2017,Qian2017,Ahmed2015"
 
 \end_inset
 
@@ -901,9 +888,10 @@ key "Almazan2018"
 
  do not propose a novel architecture as such, but instead propose a set
  of good practices that should be followed for effective re-identification,
- such as pre-training for identity classification, sufficiently large image
- resolution, state of the-art base architecture and dataset augmentation
- with difficult examples.
+ and implement these in their siamese CNN.
+ These recommended good practices are pre-training for identity classification,
+ sufficiently large image resolution, state of the-art base architecture
+ and dataset augmentation with difficult examples.
  We will endeavour to follow these guidelines in our work in this project
  wherever possible.
 \begin_inset Note Note
@@ -911,6 +899,39 @@ status open
 
 \begin_layout Plain Layout
 more detail here, and state what we will use
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Numerical state of the art from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Almazan2018"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+All of these are not used as part of a full system
 \end_layout
 
 \end_inset
@@ -1040,8 +1061,8 @@ reference "fig:Logic-of-our"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement t
-wide true
+placement b
+wide false
 sideways false
 status collapsed
 
@@ -1050,7 +1071,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/Project Activity Diagram Fourth Year.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -1096,8 +1117,7 @@ shorten this bit
 \end_layout
 
 \begin_layout Standard
-Many of the computer vision techniques that will be described in the next
- section are complex to implement.
+Many of the computer vision techniques that we use are complex to implement.
  Therefore, the OpenCV library 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1107,8 +1127,7 @@ key "opencv_library"
 
  has been used to allow us to use stable, well tested code.
  However, the implementation of TLD code in OpenCV is suboptimal, so we
- have used the existing open source multi-object implementation of TLD from
- 
+ have used the multi-object implementation of TLD from 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Lutz2015"
@@ -1244,8 +1263,7 @@ Person Tracking using Track-Learn-Detect
 status open
 
 \begin_layout Plain Layout
-figures and examples - screenshot of camExample with postive and negative
- samples
+figures and examples
 \end_layout
 
 \end_inset
@@ -1299,7 +1317,70 @@ Therefore, in this implementation, each person currently present in any
  of the person and has lost them.
  A new tracker will then be created to replace it in the next frame when
  HOG detects this person again.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:An-example-of"
+
+\end_inset
+
+ shows the TLD system in action, as well as displaying the positive and
+ negative patches used during the tracking.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+more explanation of figure and the patches
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/TLD.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+An example of TLD tracking a person through a scene.
+ The images on the left are negative patches, and the images on the right
+ are positive patches
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:An-example-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1334,18 +1415,13 @@ key "Robson2017"
 
 \end_inset
 
-, as this contained video of multiple people, some similar and some greatly
- differing, from different views.
- The real time person detection system discussed previously was adapted
- into a data extraction system.
- The size of these files was fixed at 258x128, to ensure that the size of
- the file had no effect on the training.
- These files were then formed into positive and negative pairs of images,
- where positive pairs were both images of the same person and negative pairs
- were not.
+, as this contained video of multiple people from different views.
+ The size of these images was fixed at 258x128, to ensure that the size
+ of the file had no effect on the training.
+ These images were then formed into positive and negative pairs, where positive
+ pairs were both images of the same person and negative pairs were not.
  We took care to ensure we had a balanced dataset.
- These pairs were assigned binary labels, 1 for positive pairs and 0 for
- negative pairs.
+ These pairs were labelled 1 for positive pairs and 0 for negative pairs.
  We then applied some data augmentation to the images, following the advice
  of 
 \begin_inset CommandInset citation
@@ -1354,10 +1430,7 @@ key "Almazan2018"
 
 \end_inset
 
-.
- This involved applying a random transformation to each image, effectively
- doubling the size of the dataset.
- The aim of this is to introduce more variation into our dataset and enable
+, with the aim of introducing more variation into our dataset and enable
  it to cope better with difficult real world situations.
  
 \end_layout
@@ -1377,7 +1450,7 @@ Network Architecture
 status open
 
 \begin_layout Plain Layout
-need architecture diagram, make changes to equation sections
+need architecture diagram
 \end_layout
 
 \begin_layout Plain Layout
@@ -1594,19 +1667,19 @@ CHANGE THIS FIGURE WHEN ALL RUNS CORRECTLY
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename ../../../old/thirdYearWork/Project/reidThermal/General/datasetDiagram.png
-	scale 34
+	filename images/dataset.png
+	scale 15
 
 \end_inset
 
@@ -1632,12 +1705,12 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename ../../../old/thirdYearWork/Project/reidThermal/General/viewpoints.png
-	scale 16
+	filename images/datasetEmpty.png
+	scale 13
 
 \end_inset
 
@@ -1668,7 +1741,8 @@ name "fig:Setup-of-Cameras"
 
 \end_inset
 
-Position and field of view of the cameras used to record our data 
+Position (a) and field of view (b) of the cameras used to record our data
+ 
 \end_layout
 
 \end_inset
