@@ -894,16 +894,30 @@ key "Almazan2018"
  and dataset augmentation with difficult examples.
  We will endeavour to follow these guidelines in our work in this project
  wherever possible.
+ 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-more detail here, and state what we will use
+more detail here, and state what we used
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The work of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Almazan2018"
+
+\end_inset
+
+ also compares several state of the art approaches on multiple datasets.
+ The results of these are quoted in terms of precision, and the best are
+ ........
 \end_layout
 
 \begin_layout Standard
@@ -931,7 +945,8 @@ key "Almazan2018"
 status open
 
 \begin_layout Plain Layout
-All of these are not used as part of a full system
+All of these solutions from papers are not used as part of a full re-id
+ system
 \end_layout
 
 \end_inset
@@ -974,8 +989,17 @@ Relation to this Project
 \end_layout
 
 \begin_layout Standard
-In this project we use elements from many of the papers discussed in this
- section.
+In this project we use elements from many of the papers
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+which ones?
+\end_layout
+
+\end_inset
+
+ discussed in this section.
  The TLD tracker will be used simply for tracking a person for as long as
  they remain visible in one camera view.
  Whether this person has been previously observed by the system or not will
@@ -993,7 +1017,7 @@ key "Wang2016a"
  However, many of these papers that propose such a network only show results
  when it is trained and tested on a specific dataset of still images.
  They do not integrate it with a tracking system to see how it can perform
- in the real world.
+ in the real world, as we propose to do.
  Also, this previous work has all been done on colour imagery.
  Very little work has been done to try and solve the re-identification problem
  in thermal imagery, save for our own previous work 
@@ -1250,16 +1274,6 @@ key "Robson2017"
 
 \begin_layout Subsubsection
 Person Tracking using Track-Learn-Detect 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-figures and examples
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1316,7 +1330,7 @@ reference "fig:An-example-of"
 \end_inset
 
  shows the TLD system in action, as well as displaying the positive and
- negative patches used during the tracking.
+ negative patches used to inform the tracking.
  
 \begin_inset Note Note
 status open
@@ -1386,16 +1400,6 @@ We can now move on to our approach to deep learning based re-identification,
 
 \begin_layout Subsubsection
 Training and Testing Dataset
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-shorten
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1409,10 +1413,10 @@ key "Robson2017"
 , as this contained video of multiple people from different views.
  The size of these images was fixed at 258x128, to ensure that the size
  of the file had no effect on the training.
- These images were then formed into positive and negative pairs, where positive
- pairs were both images of the same person and negative pairs were not.
- We took care to ensure we had a balanced dataset.
- These pairs were labelled 1 for positive pairs and 0 for negative pairs.
+ These images were then formed into a balanced dataset of positive and negative
+ pairs.
+ The positive pairs contain two images of the same person, labelled 1, and
+ negative pairs contain different people, labelled 0.
  We then applied some data augmentation to the images, following the advice
  of 
 \begin_inset CommandInset citation
@@ -1436,10 +1440,6 @@ status open
 
 \begin_layout Plain Layout
 need architecture diagram
-\end_layout
-
-\begin_layout Plain Layout
-draw siamese network diagram in powerpoint or something
 \end_layout
 
 \end_inset
@@ -1741,6 +1741,275 @@ The Deep Learning System
 \end_layout
 
 \begin_layout Standard
+When designing our network we did many training runs to determine the best
+ architecture, and then performed extensive grid searches to determine the
+ best parameters.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/train_loss.png
+	scale 15
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Loss on the train dataset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/train_acc.png
+	scale 15
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Accuracy on the train dataset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/test_loss.png
+	scale 15
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Loss on the test dataset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/test_acc.png
+	scale 15
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Accuracy on the test dataset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Loss and Accuracy results during training of the network
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Loss-and-Accuracy"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/trainTestResults.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Results of the network on the train and test datsets
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/evalResults.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Results of the network on the evaluation dataset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Results of the CNN
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Results-of-the"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Train/test results, tensorboard graphs, TNSE plots, excel plots of distances,
  different thresholds.
 \end_layout
@@ -1856,7 +2125,7 @@ ble with the rest of our C++ codebase.
 \end_layout
 
 \begin_layout Section
-Conclusion 
+Conclusion
 \end_layout
 
 \begin_layout Standard
