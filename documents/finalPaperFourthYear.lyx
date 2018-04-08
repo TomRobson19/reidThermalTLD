@@ -1399,7 +1399,7 @@ We can now move on to our approach to deep learning based re-identification,
 \end_layout
 
 \begin_layout Subsubsection
-Training and Testing Dataset
+Training and Validation Dataset
 \end_layout
 
 \begin_layout Standard
@@ -1427,7 +1427,7 @@ key "Almazan2018"
 
 , with the aim of introducing more variation into our dataset and enable
  it to cope better with difficult real world situations.
- This data was then split 80:20 into a train and test set.
+ This data was then split 80:20 into a train and validation set.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1536,7 +1536,7 @@ key "Hadsell2006"
 \begin_inset Formula $D$
 \end_inset
 
- is the euclidean distance, which is defined here by equation (2) below,
+ is the Euclidean distance, which is defined here by equation (2) below,
  where 
 \begin_inset Formula $X_{1}$
 \end_inset
@@ -1603,8 +1603,13 @@ FIGURE HERE FROM TENSORBOARD ONCE FINALISED
 Results
 \end_layout
 
+\begin_layout Standard
+We now present the performance that our system has been able to acheive,
+ both as a standalone CNN and as part of a full re-identification system.
+\end_layout
+
 \begin_layout Subsection
-The Dataset
+The Evaluation Dataset
 \end_layout
 
 \begin_layout Standard
@@ -1640,6 +1645,9 @@ reference "fig:Setup-of-Cameras"
 
 (b).
  The dataset contains five people.
+ These videos make up the data we will use to test the full re-identification
+ system, and the person images extracted from them make up the evaluation
+ dataset for the CNN.
  
 \end_layout
 
@@ -1738,12 +1746,46 @@ Position (a) and field of view (b) of the cameras used to record our data
 
 \begin_layout Subsection
 The Deep Learning System
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CHANGE ALL USES OF TEST TO VALIDATION
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 When designing our network we did many training runs to determine the best
  architecture, and then performed extensive grid searches to determine the
  best parameters.
+ While training the network, we were mainly concerned about the loss, from
+ the contrastive loss function defined in Section 3, and the accuracy.
+ We calculate the accuracy based on a re-identification threshold of 0.5.
+ This means that a pair of images with a Euclidean distance of less than
+ 0.5 would be classified as the same person, whereas a pair with a Euclidean
+ distance of greater than 0.5 would be classified as a different person.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Loss-and-Accuracy"
+
+\end_inset
+
+ shows how the loss and accuracy varied on our training and validation sets
+ as the network was trained over 100 epochs.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Results-of-the"
+
+\end_inset
+
+ is a graphical representation of the Euclidean distances reported by the
+ network on the train, validation and evaluation dataset.
  
 \end_layout
 
@@ -1751,7 +1793,7 @@ When designing our network we did many training runs to determine the best
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -1835,7 +1877,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Loss on the test dataset
+Loss on the validation dataset
 \end_layout
 
 \end_inset
@@ -1867,7 +1909,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Accuracy on the test dataset
+Accuracy on the validation dataset
 \end_layout
 
 \end_inset
@@ -1884,7 +1926,7 @@ Accuracy on the test dataset
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Loss and Accuracy results during training of the network
+Loss and Accuracy results during training of the network over 100 epochs
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Loss-and-Accuracy"
@@ -1908,7 +1950,7 @@ name "fig:Loss-and-Accuracy"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -1919,7 +1961,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/trainTestResults.png
+	filename images/trainResults.png
 	scale 25
 
 \end_inset
@@ -1928,7 +1970,43 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Results of the network on the train and test datsets
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/validationResults.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -1964,15 +2042,11 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Results of the network on the evaluation dataset
+
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -1985,7 +2059,7 @@ Results of the network on the evaluation dataset
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Results of the CNN
+Results of the CNN on the Train, Validation and Evaluation Dataset
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Results-of-the"
@@ -2007,15 +2081,6 @@ name "fig:Results-of-the"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Train/test results, tensorboard graphs, TNSE plots, excel plots of distances,
- different thresholds.
-\end_layout
-
-\begin_layout Standard
-for tensorboard graphs, use results not using validation_split
 \end_layout
 
 \begin_layout Subsection
