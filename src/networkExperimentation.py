@@ -71,13 +71,13 @@ def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction)
 
     input_main = Input(shape=input_shape, dtype='float32')
-    x = Conv2D(32, (3, 3), padding='same', activation='tanh')(input_main)
-    x = Conv2D(16, (5, 5), activation='tanh')(x)
+    x = Conv2D(32, (3, 3), padding='same', activation='relu')(input_main)
+    x = Conv2D(16, (5, 5), activation='relu')(x)
     x = MaxPooling2D(pool_size=(5, 5))(x)
     x = Dropout(0.25)(x)
 
     x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
-    x = Conv2D(32, (7, 7), activation='tanh')(x)
+    x = Conv2D(32, (7, 7), activation='relu')(x)
     x = MaxPooling2D(pool_size=(3, 3))(x)
     x = Dropout(0.25)(x)
 
