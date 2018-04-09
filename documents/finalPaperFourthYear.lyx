@@ -1561,14 +1561,11 @@ D=\sqrt{\{F(X_{1})-F(X_{2})\}^{2}}
 \end_layout
 
 \begin_layout Standard
-The actual architecture chosen was two convolutional layers, a max pooling
- layer, a dropout layer, two convolutional layers, a max pooling layer,
- a dropout layer, a flatten layer, a dropout layer and a dense fully connected
- layer.
- The parameters for these layers such as the activation functions, the convoluti
-onal kernel sizes, stride sizes, pooling width, dropout rates and size of
- the dense layer were all determined by an exhaustive grid search using
- the Hyperas library 
+The architecture that we chose to use is made up of two convolutional layers,
+ a max pooling layer, a dropout layer, two convolutional layers, a max pooling
+ layer, a dropout layer, a flatten layer and a dense fully connected layer.
+ The parameters for these layers were all determined by an exhaustive grid
+ search using the Hyperas library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Pumperla2017"
@@ -1576,7 +1573,71 @@ key "Pumperla2017"
 \end_inset
 
 .
+ For the convolutional layers the parameters we were experimenting with
+ were the dimensionality of the output space (i.e.
+ the number of output filters in the convolution) and the kernel size, specifyin
+g the width and height of the 2D convolution window.
+ For the poolling layers we experimented with the pool size, which gave
+ the factors to downscale the input by.
+ For the dropout layers we experimented with how much of the dataset should
+ be removed at each point, and for the dense layer we experimented with
+ the dimensionality of the input space.
+ The chosen parameters are shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-architecture-of"
+
+\end_inset
+
+.
+ We also experimented with various activation functions for the convolutional
+ layers and the dense layers, before settling on the rectified linear unit
+ (ReLU) activation function.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+explain ReLU
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The architecture of our CNN
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-architecture-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1599,6 +1660,10 @@ grid search said so
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+units: Positive integer, dimensionality of the output space.
 \end_layout
 
 \begin_layout Section
@@ -1769,9 +1834,6 @@ reference "fig:Loss-and-Accuracy"
 
  shows how the loss and accuracy varied on our training and validation sets
  as the network was trained over 100 epochs.
- This shows use that the training and validation patterns of the network
- matched very closely, with the loss steadily decreasing and the accuracy
- steadily increasing before both flattened out towards the end of training.
  
 \end_layout
 
@@ -1933,6 +1995,38 @@ name "fig:Loss-and-Accuracy"
 \end_layout
 
 \begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrices"
+
+\end_inset
+
+ shows the confusion matrices of the network when predicting all three datasets.
+ These compare the output of the network against our ground truth labels
+ and report the number of true positives (TP), where a pair is correctly
+ classified as the same person, false positives (FP), where a pair is wrongly
+ classified as the same person, false negatives (FN), where a pair is wrongly
+ classified as different people and true negatives (TN), where a pair is
+ correctly classified as different people.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Classification-Reports"
+
+\end_inset
+
+ shows the classification reports for these datasets, reporting the accuracy,
+ which is the percentage of the dataset that was correctly classified, precision
+, which is the percentage of the pairs that we labeled the same person actually
+ were the same person, recall, which is the percentage of the pairs that
+ were the same person that we correctly labelled and F1-Score, which is
+ the average of precision and recall, taking into account both false positives
+ and false negatives.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -1976,7 +2070,7 @@ status collapsed
 \begin_inset Text
 
 \begin_layout Plain Layout
-True Label
+Predicted Label
 \end_layout
 
 \end_inset
@@ -2034,7 +2128,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-Predicted Label
+Ground Truth
 \end_layout
 
 \end_inset
@@ -2052,7 +2146,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-5809
+TP = 5809
 \end_layout
 
 \end_inset
@@ -2061,7 +2155,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+FN = 2
 \end_layout
 
 \end_inset
@@ -2090,7 +2184,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+FP = 2
 \end_layout
 
 \end_inset
@@ -2099,7 +2193,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-5809
+TN = 5809
 \end_layout
 
 \end_inset
@@ -2169,7 +2263,7 @@ status collapsed
 \begin_inset Text
 
 \begin_layout Plain Layout
-True Label
+Predicted Label
 \end_layout
 
 \end_inset
@@ -2227,7 +2321,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-Predicted Label
+Ground Truth
 \end_layout
 
 \end_inset
@@ -2245,7 +2339,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-1229
+TP = 1229
 \end_layout
 
 \end_inset
@@ -2254,7 +2348,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-26
+FN = 52
 \end_layout
 
 \end_inset
@@ -2283,7 +2377,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-52
+FP = 26
 \end_layout
 
 \end_inset
@@ -2292,7 +2386,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-1255
+TN = 1255
 \end_layout
 
 \end_inset
@@ -2358,7 +2452,7 @@ status collapsed
 \begin_inset Text
 
 \begin_layout Plain Layout
-True Label
+Predicted Label
 \end_layout
 
 \end_inset
@@ -2416,7 +2510,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-Predicted Label
+Ground Truth
 \end_layout
 
 \end_inset
@@ -2434,7 +2528,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-3807
+TP = 3807
 \end_layout
 
 \end_inset
@@ -2443,7 +2537,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-194
+FN = 138
 \end_layout
 
 \end_inset
@@ -2472,7 +2566,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-138
+FP = 194
 \end_layout
 
 \end_inset
@@ -2481,7 +2575,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-3751
+TN = 3751
 \end_layout
 
 \end_inset
@@ -2546,7 +2640,7 @@ status collapsed
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2678,7 +2772,7 @@ Classification report for training set
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2810,7 +2904,7 @@ Classification report for validation set
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2892,7 +2986,7 @@ Value
 \begin_inset Text
 
 \begin_layout Plain Layout
-95.15%
+96.50%
 \end_layout
 
 \end_inset
@@ -2901,7 +2995,7 @@ Value
 \begin_inset Text
 
 \begin_layout Plain Layout
-96.50%
+95.15%
 \end_layout
 
 \end_inset
@@ -2971,7 +3065,21 @@ reference "fig:Results-of-the"
 
  is a graphical representation of the Euclidean distances reported by the
  network on the train, validation and evaluation dataset.
+ These graphs show a clear split between the pairs of images of the same
+ person and pairs of images of different people.
+ The split for the training set is more clear than the split for the validation
+ and evaluation set.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+explain what this shows
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3181,6 +3289,52 @@ IMAGES OF DIFFERENT MOVEMENT DIRECTIONS
 
 \begin_layout Subsection
 Deep Learning System
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Loss-and-Accuracy"
+
+\end_inset
+
+ shows use that the training and validation patterns of the network matched
+ very closely, with the loss steadily decreasing and the accuracy steadily
+ increasing before both flattened out towards the end of training.
+ 
+\end_layout
+
+\begin_layout Standard
+The results from Tables 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrices"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Classification-Reports"
+
+\end_inset
+
+ are encouraging, as all are high percentages across all datasets, and the
+ fact that precision and recall are close together means that the numbers
+ of false positives and false negatives are fairly close, as shown by Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrices"
+
+\end_inset
+
+.
+ As missclassifying different people as the same person and missclassifying
+ the same person as different people are both reasonably destructive to
+ our full re-identification system, so the fact that all of these metrics
+ get similar and good results 
 \end_layout
 
 \begin_layout Subsection
