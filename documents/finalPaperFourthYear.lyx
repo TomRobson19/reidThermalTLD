@@ -2,7 +2,7 @@
 \lyxformat 474
 \begin_document
 \begin_header
-\textclass IEEEtran
+\textclass IEEEtran-CompSoc
 \use_default_options true
 \maintain_unincluded_children false
 \language british
@@ -88,7 +88,11 @@ T.A.
  Breckon
 \end_layout
 
-\begin_layout Abstract
+\begin_layout Section*
+Abstract
+\end_layout
+
+\begin_layout Standard
 Although use of thermal imagery currently poses significant advantages for
  24/7 surveillance in terms of the visibility of targets under all environmental
  conditions, a key limitation is the lack of colour information.
@@ -115,7 +119,7 @@ key "Robson2017"
  
 \end_layout
 
-\begin_layout Abstract
+\begin_layout Standard
 The aim of this project is to build a system that can detect a person within
  thermal imagery in real time, distinguish a person from other objects and
  track a person moving through a scene in real time.
@@ -142,7 +146,7 @@ key "Zheng2016"
  targets.
 \end_layout
 
-\begin_layout Abstract
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -155,14 +159,14 @@ Add results/conclusions content
 
 \end_layout
 
-\begin_layout Abstract
+\begin_layout Standard
 \begin_inset VSpace bigskip
 \end_inset
 
 
 \end_layout
 
-\begin_layout Abstract
+\begin_layout Standard
 
 \series bold
 Keywords: 
@@ -1307,7 +1311,68 @@ key "Kalal2010"
  The detector corrects the tracker if necessary based on previous observations.
  The learning estimates detector’s errors and updates it to avoid these
  errors in the future.
- In our early experimentation, we found that the learning part of this algorithm
+ The relationship between these components is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block-diagram-of"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/TLDDiagram.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Block diagram of the TLD framework, from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kalal2010"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block-diagram-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In our early experimentation, we found that the learning part of this algorithm
  meant that it was attempting to perform re-identification when people left
  and re-entered a video stream, or appeared in a different one.
  Therefore, we had to cut some of the functionality out of TLD for this
@@ -1321,10 +1386,10 @@ key "Kalal2010"
 \end_layout
 
 \begin_layout Standard
-Therefore, in this implementation, each person currently present in any
- of the camera views has an associated TLD tracker object, which is created
- on the first HOG identification in this neighbourhood, and classified by
- the neural network.
+Consequently, in our this implementation each person currently present in
+ any of the camera views has an associated TLD tracker object, which is
+ created on the first HOG identification in this neighbourhood, and classified
+ by the neural network.
  The tracker then follows this person through the frame until either the
  person leaves the frame or HOG is no longer getting a positive identification
  within the tracker.
@@ -1341,19 +1406,14 @@ reference "fig:An-example-of"
 
 \end_inset
 
- shows the TLD system in action, as well as displaying the positive and
- negative patches used to inform the learning part of TLD.
+ shows the TLD system in action following a human target through a frame,
+ as well as displaying the positive and negative patches used to inform
+ the learning part of TLD.
+ The dotted boxes represent other possible areas that the TLD system thinks
+ the target may be in, while the blue tracking points show the features
+ on the person that the system is looking for in each frame.
+ Some are not found, so the region containing the best of these is chosen.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-more explanation of figure and the patches
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1608,12 +1668,15 @@ reference "fig:The-architecture-of"
  We also experimented with various activation functions for the convolutional
  layers and the dense layers, before settling on the rectified linear unit
  (ReLU) activation function.
+ This was chosen as we do not require negative values for these layers,
+ and this activation function offers quick training as well as quick adjustments
+ to the positive weights.
  
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-explain ReLU
+explain ReLU better
 \end_layout
 
 \end_inset
@@ -1623,11 +1686,20 @@ explain ReLU
 
 \begin_layout Standard
 \begin_inset Float figure
-wide false
+placement t
+wide true
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/architecture.jpg
+	scale 35
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -1660,8 +1732,8 @@ name "fig:The-architecture-of"
 status open
 
 \begin_layout Plain Layout
-Network architecture diagrams here when complete, need to ensure the parameters
- chosen as justifiable and explained, without simply saying 
+Need to ensure the parameters chosen as justifiable and explained, without
+ simply saying 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1675,10 +1747,6 @@ grid search said so
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-units: Positive integer, dimensionality of the output space.
 \end_layout
 
 \begin_layout Section
@@ -1859,6 +1927,7 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Float figure
 wide false
 sideways false
@@ -2048,6 +2117,7 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Float table
 wide false
 sideways false
@@ -2652,6 +2722,7 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Float table
 wide false
 sideways false
@@ -3084,17 +3155,12 @@ reference "fig:Results-of-the"
  person and pairs of images of different people.
  The split for the training set is more clear than the split for the validation
  and evaluation set.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-explain what this shows
-\end_layout
-
-\end_inset
-
-
+ This improved performance on the training set is expected, as these are
+ the exact images the network was trained on so some level of overfitting
+ was expected.
+ The fact that the validation set and evaluation set distribution is similar
+ shows that this overfitting was to the actual training images, rather than
+ the dataset they were taken from, as the also includes the validation dataset.
 \end_layout
 
 \begin_layout Standard
@@ -3295,11 +3361,30 @@ key "Robson2017"
  Through all of our preliminary testing on various datasets, the trend that
  we observed was that directly horizontal movement caused problems for the
  tracker.
- SUGGEST WHY
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+SUGGEST WHY
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 IMAGES OF DIFFERENT MOVEMENT DIRECTIONS
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3317,6 +3402,9 @@ reference "fig:Loss-and-Accuracy"
  shows use that the training and validation patterns of the network matched
  very closely, with the loss steadily decreasing and the accuracy steadily
  increasing before both flattened out towards the end of training.
+ The use of 100 epochs gave both the loss and the accuracy time to stabilise,
+ and ensure that the results we got for these, and the trained network as
+ a whole were the best that could be attained.
  
 \end_layout
 
@@ -3335,8 +3423,10 @@ reference "tab:Classification-Reports"
 
 \end_inset
 
- are encouraging, as all are high percentages across all datasets, and the
- fact that precision and recall are close together means that the numbers
+ are encouraging, as all are high percentages across all datasets, giving
+ us confidence that our system is working well and has learnt useful features
+ that work on multiple datasets.
+ The fact that precision and recall are close together means that the numbers
  of false positives and false negatives are fairly close, as shown by Table
  
 \begin_inset CommandInset ref
@@ -3348,8 +3438,22 @@ reference "tab:Confusion-Matrices"
 .
  As missclassifying different people as the same person and missclassifying
  the same person as different people are both reasonably destructive to
- our full re-identification system, so the fact that all of these metrics
- get similar and good results 
+ our full re-identification system, the fact that all of these metrics get
+ good results means that we have not sacrificed proficiency in one of these
+ cases for the other.
+ 
+\end_layout
+
+\begin_layout Standard
+The graphs from Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Results-of-the"
+
+\end_inset
+
+ show that there is some overfitting to the training set, but given that
+ the validation set is based on the same videos as the training set, 
 \end_layout
 
 \begin_layout Subsection
