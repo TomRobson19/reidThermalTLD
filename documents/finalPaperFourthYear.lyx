@@ -951,6 +951,21 @@ NUMBERS
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+New paper (Consistent-Aware Deep Learning for Person Re-identification in
+ a Camera Network) does try over full camera network, write paragraph about
+ this, and others not doing it
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 TLD Tracker
 \end_layout
