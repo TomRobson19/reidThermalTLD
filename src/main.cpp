@@ -68,11 +68,13 @@ int readFromFIFO(){
 
 	int person;
 
-	try {
+	try 
+	{
 		person = stoi(temp);
 
 	}
-	 catch (const std::invalid_argument& ia) {
+	catch (const std::invalid_argument& ia) 
+	{
 		std::cerr << "Invalid argument: " << ia.what() << '\n';
 		std::cerr << temp << endl;
 
@@ -80,12 +82,17 @@ int readFromFIFO(){
 
 		size_t i = 0;
 		size_t len = str.length();
-		while(i < len){
-		    if (!isalnum(str[i]) || str[i] == ' '){
+		while(i < len)
+		{
+		    if (!isalnum(str[i]) || str[i] == ' ')
+		    {
 		        str.erase(i,1);
 		        len--;
-		    }else
+		    }
+		    else
+		    {
 		        i++;
+		    }
 		}
 
 		person = stoi(str);

@@ -6,6 +6,7 @@ import sys
 import numpy as np
 from multiprocessing import Process
 from threading import Thread
+import shutil
 
 from person import Person
 
@@ -55,18 +56,18 @@ def convertForKeras(img):
     return newImg
 
 def queryNeuralNetwork(img1, img2):
-    concat = np.concatenate((img1, img2), axis=1)
-    concat *= 255
+    # concat = np.concatenate((img1, img2), axis=1)
+    # concat *= 255
 
     img1 = np.array([img1])
     img2 = np.array([img2])
 
     prediction = model.predict([img1,img2])
 
-    if(prediction[0][0] < 0.5):
-        cv2.imwrite("classifications/positive/"+str(prediction[0][0])+".jpg",concat)
-    else:
-        cv2.imwrite("classifications/negative/"+str(prediction[0][0])+".jpg",concat)
+    # if(prediction[0][0] < 0.5):
+    #     cv2.imwrite("classifications/positive/"+str(prediction[0][0])+".jpg",concat)
+    # else:
+    #     cv2.imwrite("classifications/negative/"+str(prediction[0][0])+".jpg",concat)
 
 
     return prediction[0][0]
@@ -135,19 +136,33 @@ model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_los
 
 
 if __name__ == '__main__':
+
+    # os.remove(imagesFIFO)
+    # os.remove(intsFIFO)
+    # os.rmdir("/tmp/imgs")
+    # os.remove("/tmp/imgs/*")
+
+
     try:
+        os.remove(imagesFIFO)
         os.mkfifo(imagesFIFO)
     except:
-        print("image fifo exists")
+        print("making new imagesFIFO")
+        os.mkfifo(imagesFIFO)
 
     try:
+        os.remove(intsFIFO)
         os.mkfifo(intsFIFO)
     except:
-        print("ints fifo exists")
+        print("making new intsFIFO")
+        os.mkfifo(intsFIFO)
 
     try:
+        shutil.rmtree("/tmp/imgs")
         os.mkdir("/tmp/imgs")
     except:
-        print("directory exists")
+        print("making new directory")
+        os.mkdir("/tmp/imgs")
 
+    print("processing")
     processImage()
