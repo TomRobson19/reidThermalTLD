@@ -1323,7 +1323,7 @@ reference "fig:Block-diagram-of"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1668,20 +1668,31 @@ reference "fig:The-architecture-of"
  We also experimented with various activation functions for the convolutional
  layers and the dense layers, before settling on the rectified linear unit
  (ReLU) activation function.
- This was chosen as we do not require negative values for these layers,
- and this activation function offers quick training as well as quick adjustments
- to the positive weights.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-explain ReLU better
 \end_layout
+
+\begin_layout Standard
+The reason that ReLU was chosen as our activation function is that it is
+ a good approximator, and can be used to approxmate any function by stacking
+ layers, as we have in this architecture.
+ Also, the fact that ReLU only activates on positive weights leads to sparse
+ activation and a lighter network.
+ This, combined with the fact that ReLu is less computationally expensive
+ than other activation functions such as tanh and sigmoid because it involves
+ simpler mathematical operations, makes the network quicker and easier to
+ train and query.
+ Also the fact that ReLU is a good general classifier that can approximate
+ any function is important for this purpose, as we do not know exactly what
+ function we are trying to learn for effective re-identification in thermal
+ imagery as a consequence of our previous work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
 
 \end_inset
 
-
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1756,6 +1767,20 @@ Results
 \begin_layout Standard
 We now present the performance that our system has been able to acheive,
  both as a standalone CNN and as part of a full re-identification system.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+maybe some TLD results, unclear as to what, maybe some images or stats for
+ frames active compared to number of classifications etc
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3366,7 +3391,7 @@ key "Robson2017"
 status open
 
 \begin_layout Plain Layout
-SUGGEST WHY
+THIS IS HOG NOT TLD 
 \end_layout
 
 \end_inset
@@ -3437,10 +3462,19 @@ reference "tab:Confusion-Matrices"
 
 .
  As missclassifying different people as the same person and missclassifying
- the same person as different people are both reasonably destructive to
- our full re-identification system, the fact that all of these metrics get
- good results means that we have not sacrificed proficiency in one of these
- cases for the other.
+ the same person as different people are both destructive
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why?
+\end_layout
+
+\end_inset
+
+ to our full re-identification system, the fact that all of these metrics
+ get good results means that we have not sacrificed proficiency in one of
+ these cases for the other.
  
 \end_layout
 
@@ -3453,7 +3487,14 @@ reference "fig:Results-of-the"
 \end_inset
 
  show that there is some overfitting to the training set, but given that
- the validation set is based on the same videos as the training set, 
+ the validation set was extracted from the same videos as the training set,
+ the fact that this has a similar distribution to the evaluation set, which
+ was extracted from different videos, suggests that the overfitting that
+ occured was to the specific images of the training set, not something specific
+ to the dataset.
+ The results on the validation and evaluation set are also very good, showing
+ that the network was learning good features for re-identification.
+ 
 \end_layout
 
 \begin_layout Subsection
