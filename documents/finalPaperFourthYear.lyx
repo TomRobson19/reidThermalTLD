@@ -185,16 +185,6 @@ ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
 
 \begin_layout Section
 Introduction 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ENSURE ALL FIGURE HEADINGS ARE NOT IN TITLE CASE
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -995,17 +985,8 @@ Relation to this Project
 \end_layout
 
 \begin_layout Standard
-In this project we use elements from many of the papers
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-which ones?
-\end_layout
-
-\end_inset
-
- discussed in this section.
+In this project we use elements from many of the papers discussed in this
+ section.
  The TLD tracker will be used simply for tracking a person from frame to
  frame for as long as they remain visible in the same area one camera view.
  We will disable some of the re-dentification based capability of TLD Whether
@@ -1150,7 +1131,7 @@ name "fig:Logic-of-our"
 
 \end_inset
 
-Logic of our Re-Identification System
+Logic of our re-identification system
 \end_layout
 
 \end_inset
@@ -1754,35 +1735,13 @@ name "fig:The-architecture-of"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Need to ensure the parameters chosen as justifiable and explained, without
- simply saying 
-\begin_inset Quotes eld
-\end_inset
-
-grid search said so
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Results 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-TRY AND FINISH ALL NON RE-ID RESULTS AND EVAL TOMORROW
+TRY AND FINISH ALL NON RE-ID RESULTS AND EVAL
 \end_layout
 
 \end_inset
@@ -1864,7 +1823,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -1895,7 +1854,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -1931,8 +1890,8 @@ name "fig:Setup-of-Cameras"
 
 \end_inset
 
-Position (a) and field of view (b) of the cameras used to record our data
- 
+Position (a) and field of view (b) of the cameras used to record our the
+ evaluation dataset 
 \end_layout
 
 \end_inset
@@ -3327,7 +3286,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Results of the CNN on the Train, Validation and Evaluation Dataset
+Results of the CNN on the Train, Validation and Evaluation Datasets
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Results-of-the"
@@ -3339,10 +3298,6 @@ name "fig:Results-of-the"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
