@@ -721,7 +721,7 @@ key "Matsukawa2017"
  The result from the network is an ordered vector for the presence or absence
  of these features.
  However, as our previous work showed that we were unable to choose suitably
- descriminitive features for thermal re-identification, we will not be able
+ discriminative features for thermal re-identification, we will not be able
  to follow this approach.
  
 \end_layout
@@ -920,54 +920,44 @@ key "Zheng2016,Zhang2014,Almazan2018,Wang2016a,Chung2017"
  resolution, but using a size large enough so that the network has plenty
  of information to learn from, but small enough so that each person is shown
  with sufficient detail and clarity.
- 
-\end_layout
-
-\begin_layout Standard
-These recommended good practices are pre-training for identity classification,
- sufficiently large image resolution, state of the-art base architecture
- and dataset augmentation with difficult examples.
- We will endeavour to follow these guidelines in our work in this project
- wherever possible.
- 
-\end_layout
-
-\begin_layout Standard
-The work of 
+ The work of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Almazan2018"
 
 \end_inset
 
- also compares several state of the art approaches on multiple datasets.
- The results of these are quoted in terms of precision, and the best are
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-NUMBERS
-\end_layout
-
-\end_inset
-
-
+ also compares several state of the art approaches on multiple complex datasets.
+ The results of these are quoted in terms of maiximum average precision,
+ and the best of these is 91.2%.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-New paper (Consistent-Aware Deep Learning for Person Re-identification in
- a Camera Network) does try over full camera network, write paragraph about
- this, and others not doing it
-\end_layout
+A notable observation we have taken from many of these papers is that they
+ train and test their networks on predefined datasets of images, but do
+ not test it as part of a full re-identification system on multiple video
+ files.
+ This is done by the authors of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lin2017"
 
 \end_inset
 
-
+, who argue that obtaining the maximum correct matches across a distributed
+ camera network is important on top of the ability to determine whether
+ two images of pedestrians are the same person or not.
+ They argue that pairwise re-identification methods cannot obtain globally
+ optimal re-identification results for a whole camera network, as people
+ may have vastly differing profiles across different cameras.
+ To try and achieve this, the authors use a gradient descent algorithm to
+ obtain a globally optimal matching by maximizing the sum of similarity
+ values for all camera pairs.
+ After obtaining this, they then propagate the difference to adjust their
+ CNN.
+ They report good performance varying between 80% and 99% form different
+ datasets, differing but complexity and number of cameras.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1016,11 +1006,12 @@ which ones?
 \end_inset
 
  discussed in this section.
- The TLD tracker will be used simply for tracking a person for as long as
- they remain visible in one camera view.
- Whether this person has been previously observed by the system or not will
- be determined by an open world siamese CNN, with an architecture similar
- to the related work.
+ The TLD tracker will be used simply for tracking a person from frame to
+ frame for as long as they remain visible in the same area one camera view.
+ We will disable some of the re-dentification based capability of TLD Whether
+ this person has been previously observed by the system or not will be determine
+d by an open world siamese CNN, with an architecture similar to the related
+ work.
  We take inspiration from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1030,11 +1021,36 @@ key "Wang2016a"
 
  and will extract the features of each individual image before comparison
  between them.
- However, many of these papers that propose such a network only show results
+ We will also incorporate the recommendations for effective re-identification
+ from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Almazan2018"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+However, many of these papers that propose such a network only show results
  when it is trained and tested on a specific dataset of still images.
  They do not integrate it with a tracking system to see how it can perform
  in the real world, as we propose to do.
- Also, this previous work has all been done on colour imagery.
+ Even the work presented in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lin2017"
+
+\end_inset
+
+ does not employ their network on a full system on real time video, although
+ they do take the importance of different camera views into account.
+\end_layout
+
+\begin_layout Standard
+Furthermore, this previous work has all been done on colour imagery.
  Very little work has been done to try and solve the re-identification problem
  in thermal imagery, save for our own previous work 
 \begin_inset CommandInset citation
@@ -1761,7 +1777,17 @@ grid search said so
 \end_layout
 
 \begin_layout Section
-Results
+Results 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TRY AND FINISH ALL NON RE-ID RESULTS AND EVAL TOMORROW
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
