@@ -109,6 +109,8 @@ documents/Adv-Project-L4-Oral-Mark-Form-Individual\.pdf
 
 src/newPeople/
 
-src/classifications/
+src/classificationsCNN/
+
+src/classificationsREID/
 
 documents/images/
