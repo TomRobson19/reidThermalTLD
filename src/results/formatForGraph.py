@@ -1,7 +1,10 @@
 import csv
 import numpy as np
-positiveArray = []
-negativeArray = []
+positiveTrain= []
+negativeTrain = []
+
+positiveTest = []
+negativeTest = []
 
 positiveEval = []
 negativeEval = []
@@ -12,9 +15,9 @@ with open('te_predictions.csv', 'r') as csvfile:
      for row in reader:
      	row = float(row[0])
      	if counter % 2 == 0:
-     		positiveArray.append(row)
+     		positiveTest.append(row)
      	else:
-     		negativeArray.append(row)
+     		negativeTest.append(row)
      	counter += 1
 
 with open('tr_predictions.csv', 'r') as csvfile:
@@ -23,9 +26,9 @@ with open('tr_predictions.csv', 'r') as csvfile:
      for row in reader:
      	row = float(row[0])
      	if counter % 2 == 0:
-     		positiveArray.append(row)
+     		positiveTrain.append(row)
      	else:
-     		negativeArray.append(row)
+     		negativeTrain.append(row)
      	counter += 1
          
 with open('eval_predictions.csv', 'r') as csvfile:
@@ -39,8 +42,11 @@ with open('eval_predictions.csv', 'r') as csvfile:
                negativeEval.append(row)
           counter += 1
 
-np.savetxt("positive.csv",positiveArray, delimiter=",")
-np.savetxt("negative.csv",negativeArray, delimiter=",")
+np.savetxt("positiveTrain.csv",positiveTrain, delimiter=",")
+np.savetxt("negativeTrain.csv",negativeTrain, delimiter=",")
+
+np.savetxt("positiveTest.csv",positiveTest, delimiter=",")
+np.savetxt("negativeTest.csv",negativeTest, delimiter=",")
 
 np.savetxt("positiveEval.csv",positiveEval, delimiter=",")
 np.savetxt("negativeEval.csv",negativeEval, delimiter=",")
