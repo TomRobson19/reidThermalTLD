@@ -375,13 +375,12 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		{
 			imshow(file, displayImage);
 			key = waitKey(1);
-		}
-
-		if (key == 'x')
-		{
-			// if user presses "x" then exit
-			std::cout << "Keyboard exit requested : exiting now - bye!" << std::endl;
-			keepProcessing = false;
+			if (key == 'x')
+			{
+				// if user presses "x" then exit
+				std::cout << "Keyboard exit requested : exiting now - bye!" << std::endl;
+				keepProcessing = false;
+			}
 		}
 	}
 	String cameras[3] = {"Alpha", "Beta", "Gamma"};

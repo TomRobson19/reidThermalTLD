@@ -16,7 +16,7 @@ class Person:
 		return self.personColour
 
 	def addPrevious(self, roi):
-		if len(self.previous)<5:
+		if len(self.previous)<1:
 			self.previous.append(roi)
 		# else:
 		# 	self.previous = self.previous[1:]
