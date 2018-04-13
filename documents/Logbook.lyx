@@ -2041,15 +2041,6 @@ Get outliers from training as figures
 \end_layout
 
 \begin_layout Itemize
-RE-ID MIGHT BE WORSE BECAUSE IT IS CALLED WHEN HOG LOSES PERSON OBJECT,
- SO DIFFICULT POSE
-\end_layout
-
-\begin_layout Itemize
-THRESHOLD EXPERIMENTATION FOR FULL RE-ID
-\end_layout
-
-\begin_layout Itemize
 NETWORK HAS OVERFITTED TO TRAIN DATA, THIS IS THE PROBLEM WITH RE-ID SYSTEM
 \end_layout
 
@@ -2086,5 +2077,15 @@ more data (augmentation)
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+reg - 0.0001 ------> * Accuracy on training set: 97.07% * Accuracy on test
+ set: 95.57% * Accuracy on eval set: 69.06% 
+\end_layout
+
+\begin_layout Itemize
+when trained on new data, get * Accuracy on training set: 90.52% * Accuracy
+ on test set: 89.57% * Accuracy on eval set: 90.31% - data is doable
+\end_layout
+
 \end_body
 \end_document
