@@ -28,7 +28,6 @@
   \title[Thermal Re-ID]{Camera-to-Camera Tracking for Person Re-identification within Thermal Imagery}
   \author[G Ingram]{Thomas Robson - Supervised by Dr Toby Breckon}
   \institute[Durham]{School of Computer Science, Durham University}
-  \date{16th April 2012}
 
   \begin{document}
   \begin{frame}{} 
@@ -50,23 +49,30 @@ The intent of this project is answer the question "Which features of a human tar
 
         	\item Person Identification. This is done by performing contour dectection on a foreground target and using the Histogram of Oriented Gradients (HOG) to determine whether this target is a person.
         	
-        	\item TLD Tracker
+        	\item TLD Tracker.  This breaks down the person-tracking task into tracking (following the object between frames), learning (estimating the errors made by the detector and updating it) and detection (correcting the tracker if necessary based on previous observations). 
           \end{itemize}
         \end{block}
        
 
 
         \begin{block}{Network Architecture}
-		explain arch
-		add in arch diagram
+        Our network architecture is a Deep Siamese CNN. This means that the network is trained on pairs of images, and determines whether these images show the same person or not. Our CNN consists of convolutional layers, pooling layers and fully connected layers. 
+        
+		explain arch add in arch diagram
           
         \end{block}
 	
         \begin{block}{Network Results 1}
-		training graphs
-		classification report and confusion matrices
+		training graphs classification report and confusion matrices
 
         \end{block}
+        
+                    \begin{block}{References}
+			\scriptsize
+		
+    \end{block}
+    
+    
 	 \end{column}
 	 \begin{column}{.49\linewidth}
  		\begin{block}{Network Results 2}
@@ -90,14 +96,14 @@ The intent of this project is answer the question "Which features of a human tar
         %\includegraphics[width=.44\linewidth]{../deltaProb2.png}  
         \end{block}
         
-       
-      \end{column}
-    \end{columns}
-     \begin{block}{Conclusion}
+       	\begin{block}{Conclusion}
 
         
         \end{block}
 
+      \end{column}
+    \end{columns}
+     
 
   \end{frame}
 \end{document}
