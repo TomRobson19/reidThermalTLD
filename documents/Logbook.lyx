@@ -2049,5 +2049,42 @@ RE-ID MIGHT BE WORSE BECAUSE IT IS CALLED WHEN HOG LOSES PERSON OBJECT,
 THRESHOLD EXPERIMENTATION FOR FULL RE-ID
 \end_layout
 
+\begin_layout Itemize
+NETWORK HAS OVERFITTED TO TRAIN DATA, THIS IS THE PROBLEM WITH RE-ID SYSTEM
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+running new grid search to optimise for eval data
+\end_layout
+
+\begin_layout Itemize
+maybe try cutting beginning and end off eval files, these seem to be the
+ most difficult bits
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+mitigating overfitting
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+more dropout - experimenting in grid search
+\end_layout
+
+\begin_layout Itemize
+reduce network complexity, experimenting now
+\end_layout
+
+\begin_layout Itemize
+regularisation
+\end_layout
+
+\begin_layout Itemize
+more data (augmentation)
+\end_layout
+
+\end_deeper
 \end_body
 \end_document

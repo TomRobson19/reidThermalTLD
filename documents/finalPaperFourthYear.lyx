@@ -1277,11 +1277,12 @@ key "Robson2017"
 
 \end_inset
 
-, we had a tradeoff between HOG and Haar cascades due to HOG being slower.
+, we had a tradeoff between HOG and one of its alternatives, Haar cascades,
+ due to HOG being slower.
  However, as we are using a TLD tracker this year, there will be far fewer
  calls to the person detector so we can use the superior performance of
- HOG without fear of the slower runtime making a large impact on the overall
- performance.
+ HOG when compared to Haar Cascades without fear of the slower runtime making
+ a large impact on the overall performance.
  
 \end_layout
 
@@ -1690,6 +1691,16 @@ key "Robson2017"
 
 .
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+details of overfitting mitigation strategies if they work
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1905,15 +1916,27 @@ Position (a) and field of view (b) of the cameras used to record our the
 \end_layout
 
 \begin_layout Subsection
-The Deep Learning System
+The Deep Learning System 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+will need a rewrite
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 When designing our network we did many training runs to determine the best
  architecture, and then performed extensive grid searches to determine the
  best parameters.
- While training the network, we were mainly concerned about the loss, from
- the contrastive loss function defined in Section 3, and the accuracy.
+ While training the network, the metrics that we were mainly concerned about
+ were the loss, from the contrastive loss function defined in Section 3,
+ and the accuracy, meaning the percentage of the image pairs that were classifie
+d correctly.
  We calculate the accuracy based on a re-identification threshold of 0.5.
  This means that a pair of images with a Euclidean distance of less than
  0.5 would be classified as the same person, whereas a pair with a Euclidean
@@ -2112,11 +2135,11 @@ reference "tab:Classification-Reports"
 
  shows the classification reports for these datasets, reporting the accuracy,
  which is the percentage of the dataset that was correctly classified, precision
-, which is the percentage of the pairs that we labeled the same person actually
- were the same person, recall, which is the percentage of the pairs that
- were the same person that we correctly labelled and F1-Score, which is
- the average of precision and recall, taking into account both false positives
- and false negatives.
+, which is the percentage of the pairs that we labelled the same person
+ actually were the same person, recall, which is the percentage of the pairs
+ that were the same person that we correctly labelled and F1-Score, which
+ is the average of precision and recall, taking into account both false
+ positives and false negatives.
  
 \end_layout
 
@@ -3306,8 +3329,90 @@ name "fig:Results-of-the"
 
 \end_layout
 
+\begin_layout Standard
+It is interesting at this point to note which of the image pairs were the
+ missclassififcations, and also to establish which were very close and which
+ were very far apart.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+ shows a few examples of these images, with their Euclidean distances in
+ the Figure captions.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Image pairs and their Euclidean distances
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Image-pairs-and"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+paragraph and figures here about closest matches, furthest away matches
+ and missclassifications
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Re-Identification Performance
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For this section, need some numerical estimate of accuracy, as well are
+ screenshots of it performing well, 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -3395,6 +3500,16 @@ IMAGES OF DIFFERENT MOVEMENT DIRECTIONS
 
 \begin_layout Subsection
 Deep Learning System
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+will need a rewrite
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3478,6 +3593,19 @@ reference "fig:Results-of-the"
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What do the image pairs show
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Re-Identification System
 \end_layout
@@ -3509,7 +3637,17 @@ ble with the rest of our C++ codebase.
  method was to use both C++ and python for the separate components and connect
  them at system level.
  Despite this issue, and our aims were accomplished, enabling us to contribute
- to the state of the art.
+ valuable information to the state of the art.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+what we have contributed
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
