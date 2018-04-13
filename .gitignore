@@ -114,3 +114,5 @@ src/classificationsCNN/
 src/classificationsREID/
 
 documents/images/
+
+documents/Poster/\.poster\.tex\.swp

@@ -17,6 +17,6 @@
 # 4. Run this file
 
 while true; do  
-  rsync -azr --exclude "*.swp" --exclude 'main' --exclude '/oldData' --exclude '/data' --exclude '/classifications' --exclude 'dataExtraction' --exclude '__pycache__' --exclude 'people/' --exclude 'newPeople/' --exclude '/output' --exclude '/saved_models' --exclude '/env' --exclude 'stdout-grid' --exclude 'stderr-grid' --exclude 'stdout-filename' --exclude 'stderr-filename' src/ hzwr87@ncc.clients.dur.ac.uk:~/reidSource --delete
+  rsync -azr --exclude "*.swp" --exclude 'main' --exclude '/oldData' --exclude '/data' --exclude '/classificationsCNN' --exclude '/classificationsREID' --exclude 'dataExtraction' --exclude '__pycache__' --exclude 'people/' --exclude 'newPeople/' --exclude '/output' --exclude '/saved_models' --exclude '/env' --exclude 'stdout-grid' --exclude 'stderr-grid' --exclude 'stdout-filename' --exclude 'stderr-filename' src/ hzwr87@ncc.clients.dur.ac.uk:~/reidSource --delete
   inotifywait -r -e modify,attrib,close_write,move,create,delete src
 done
