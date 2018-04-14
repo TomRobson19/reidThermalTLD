@@ -2087,5 +2087,47 @@ when trained on new data, get * Accuracy on training set: 90.52% * Accuracy
  on test set: 89.57% * Accuracy on eval set: 90.31% - data is doable
 \end_layout
 
+\begin_layout Itemize
+TRY TRAINING ON TRAIN+TEST AND VAL ON EVAL 
+\end_layout
+
+\begin_layout Itemize
+List of tests
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+full aug + simple net - 64773
+\end_layout
+
+\begin_layout Itemize
+full aug + full net - 64774
+\end_layout
+
+\begin_layout Itemize
+dropout after every layer - 64775
+\end_layout
+
+\begin_layout Itemize
+larger layers - 128 - 64776
+\end_layout
+
+\begin_layout Itemize
+larger layers - 256 - 64777
+\end_layout
+
+\begin_layout Itemize
+larger layers - 512 - 64778
+\end_layout
+
+\begin_layout Itemize
+l1 reg - 64779
+\end_layout
+
+\begin_layout Itemize
+20 epochs (early stopping) - 64780
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
