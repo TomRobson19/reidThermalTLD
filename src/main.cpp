@@ -166,99 +166,6 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		// get connected components from the foreground
 		findContours(foreground, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 
-		//make new image from bitwise and of frame and foreground
-		for(int i = 0; i < contours.size(); i++)
-		{
-			Rect r = boundingRect(contours[i]); 
-
-			// adjust bounding rectangle to be padding% larger
-			// around the object
-			r.x = max(0, r.x - (int) (padding / 100.0 * (double) r.width));
-			r.y = max(0, r.y - (int) (padding / 100.0 * (double) r.height));
-
-			r.width = min(frame.cols - 1, (r.width + 2 * (int) (padding / 100.0 * (double) r.width)));
-			r.height = min(frame.rows - 1, (r.height + 2 * (int) (padding / 100.0 * (double) r.height)));
-
-			// draw rectangle if greater than width/height constraints and if
-			// also still inside image
-			if ((r.width >= width) && (r.height >= height) && (r.x + r.width < frame.cols) && (r.y + r.height < frame.rows))
-			{
-				vector<Rect> found, found_filtered;
-
-				//rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
-
-				Mat roi = frame(r);
-
-				vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
-
-				bool alreadyTarget = false;
-
-				for (int i = 0; i < objectRectangles.size(); i++)
-				{
-					if ((r & objectRectangles[i].rectangle).area() > 0) 
-					{
-						alreadyTarget = true;
-					}
-				}
-
-				if (!alreadyTarget)
-				{
-					hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,16), 1.05, 2);
-
-					for(size_t i = 0; i < found.size(); i++ )
-					{
-						Rect rec = found[i];
-
-						rec.x += r.x;
-						rec.y += r.y;
-
-						bool save = true;
-						for (int j = 0; j < found.size(); j++ )
-						{
-							Rect currentComparison = found[j];
-							currentComparison.x += r.x;
-							currentComparison.y += r.y;
-
-							Rect combination = rec & currentComparison;
-
-							if ( ((combination.area() > 0) || (combination.area() == rec.area())) && i != j )
-							{
-								save = false;
-								break;
-							}
-						}
-						if (save == true)
-						{
-							found_filtered.push_back(rec);
-						}
-					}
-
-					for (int i = 0; i < found_filtered.size(); i++)
-					{
-						Rect rec = found_filtered[i];
-
-						//image to be sent to the neural network
-						Mat imgToUse = frame(rec);
-						resize(imgToUse, imgToUse, Size(128,256));
-
-						//imshow("being classified", imgToUse);
-
-						pthread_mutex_lock(&myLock);
-
-						writeToFIFO(imgToUse);
-
-						int personID = readFromFIFO();
-
-						pthread_mutex_unlock(&myLock);
-						cout << "classified as " << personID << endl;
-
-						//don't use the resized version here!
-						tracker.addTarget(rec, personID);
-					}
-					
-				}
-			}
-		}
 
 		std::vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
 
@@ -352,6 +259,111 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		}
 
 		pthread_mutex_unlock(&myLock);
+
+
+
+		//make new image from bitwise and of frame and foreground
+		for(int i = 0; i < contours.size(); i++)
+		{
+			Rect r = boundingRect(contours[i]); 
+
+			// adjust bounding rectangle to be padding% larger
+			// around the object
+			r.x = max(0, r.x - (int) (padding / 100.0 * (double) r.width));
+			r.y = max(0, r.y - (int) (padding / 100.0 * (double) r.height));
+
+			r.width = min(frame.cols - 1, (r.width + 2 * (int) (padding / 100.0 * (double) r.width)));
+			r.height = min(frame.rows - 1, (r.height + 2 * (int) (padding / 100.0 * (double) r.height)));
+
+			// draw rectangle if greater than width/height constraints and if
+			// also still inside image
+			if ((r.width >= width) && (r.height >= height) && (r.x + r.width < frame.cols) && (r.y + r.height < frame.rows))
+			{
+				vector<Rect> found, found_filtered;
+
+				//rectangle(displayImage, r, Scalar(0, 0, 255), 2, 1 );
+
+				Mat roi = frame(r);
+
+				vector<rectangleAndID> objectRectangles = tracker.getObjectRectangles();
+
+				bool alreadyTarget = false;
+
+				for (int i = 0; i < objectRectangles.size(); i++)
+				{
+					if ((r & objectRectangles[i].rectangle).area() > 0) 
+					{
+						alreadyTarget = true;
+					}
+				}
+
+				if (!alreadyTarget)
+				{
+					hog.detectMultiScale(roi, found, 0, Size(8,8), Size(16,16), 1.05, 2);
+
+					for(size_t i = 0; i < found.size(); i++ )
+					{
+						Rect rec = found[i];
+
+						rec.x += r.x;
+						rec.y += r.y;
+
+						bool save = true;
+						for (int j = 0; j < found.size(); j++ )
+						{
+							Rect currentComparison = found[j];
+							currentComparison.x += r.x;
+							currentComparison.y += r.y;
+
+							Rect combination = rec & currentComparison;
+
+							if ( ((combination.area() > 0) || (combination.area() == rec.area())) && i != j )
+							{
+								save = false;
+								break;
+							}
+						}
+						if (save == true)
+						{
+							found_filtered.push_back(rec);
+						}
+					}
+
+					for (int i = 0; i < found_filtered.size(); i++)
+					{
+						Rect rec = found_filtered[i];
+
+						//image to be sent to the neural network
+						Mat imgToUse = frame(rec);
+						resize(imgToUse, imgToUse, Size(128,256));
+
+						//imshow("being classified", imgToUse);
+
+						pthread_mutex_lock(&myLock);
+
+						writeToFIFO(imgToUse);
+
+						int personID = readFromFIFO();
+
+						pthread_mutex_unlock(&myLock);
+						cout << "classified as " << personID << endl;
+
+						//don't use the resized version here!
+						tracker.addTarget(rec, personID);
+
+
+						Point2f center = Point2f(float(rec.x + rec.width/2.0), float(rec.y + rec.height/2.0));
+						char str[200];
+						sprintf(str,"Person %d",personID);
+
+						putText(displayImage, str, center, FONT_HERSHEY_SIMPLEX,1,(0,0,0));
+					}
+					
+				}
+			}
+		}
+
+		
 		String cameras[3] = {"Alpha", "Beta", "Gamma"};
 
 		putText(displayImage, cameras[cameraID], Point2f(20,50), FONT_HERSHEY_SIMPLEX,1,(0,0,0));
