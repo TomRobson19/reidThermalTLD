@@ -45,9 +45,9 @@ The intent of this project is answer the question "Which features of a human tar
         \begin{block}{Person Detection and Tracking}
         	The process of Person detection and Tracking employed in this Project can be broken down into multiple stages. 
         	\begin{itemize}
-        	\item Background Subtraction. This is done using the Mixture of Gaussians (MOG) method, allowing the system to learn a background model and comparing each new frame to this. 
+        	\item Background Subtraction. This is done using the Mixture of Gaussians (MOG) [1] method, allowing the system to learn a background model and comparing each new frame to this. 
 
-        	\item Person Identification. This is done by performing contour dectection on a foreground target and using the Histogram of Oriented Gradients (HOG) to determine whether this target is a person.
+        	\item Person Identification. This is done by performing contour dectection on a foreground target and using the Histogram of Oriented Gradients (HOG) [2] to determine whether this target is a person.
         	
         	\item TLD Tracker.  This breaks down the person-tracking task into tracking (following the object between frames), learning (estimating the errors made by the detector and updating it) and detection (correcting the tracker if necessary based on previous observations). 
           \end{itemize}
@@ -57,18 +57,23 @@ The intent of this project is answer the question "Which features of a human tar
 
         \begin{block}{Network Architecture}
         Our network architecture is a Deep Siamese CNN. This means that the network is trained on pairs of images, and determines whether these images show the same person or not. Our CNN consists of convolutional layers, pooling layers and fully connected layers. 
-        
-		explain arch add in arch diagram
-          
+        % more explanation here if room
+        \includegraphics[width=.95\linewidth]{../images/architecture.jpg}
         \end{block}
 	
         \begin{block}{Network Results 1}
-		training graphs classification report and confusion matrices
+		% maybe loss and acc graphs, but probs not
+		
+		%tables for conf mat and class rep
 
         \end{block}
         
-                    \begin{block}{References}
-			\scriptsize
+        \begin{block}{References}
+		\scriptsize
+		
+[1] Zoran Zivkovic. Improved Adaptive Gaussian Mixture Model for Background Subtraction. Proceedings of the 17th International Conference on Pattern Recognition, 2004.
+    
+[2] Navneet Dalal and Bill Triggs. Histograms of Oriented Gradients for Human Detection. In IEEE Computer Society Conference on Computer Vision and Pattern Recognition, 2005.
 		
     \end{block}
     
@@ -76,10 +81,13 @@ The intent of this project is answer the question "Which features of a human tar
 	 \end{column}
 	 \begin{column}{.49\linewidth}
  		\begin{block}{Network Results 2}
- 		euclidean distance plots
+ 		%euclidean distance plots
  		
- 		%\includegraphics[width=.90\linewidth]{../combo.png}  
-         
+ 		\includegraphics[width=.32\linewidth]{../images/trainResults.png}  
+ 		\hspace{.001cm}
+ 		\includegraphics[width=.32\linewidth]{../images/validationResults.png}
+ 		\hspace{.001cm}
+        \includegraphics[width=.32\linewidth]{../images/evalResults.png}
         \end{block}
         
         \begin{block}{The Re-Identification System}
