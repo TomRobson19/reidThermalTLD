@@ -1102,8 +1102,8 @@ reference "fig:Logic-of-our"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement b
-wide false
+placement !t
+wide true
 sideways false
 status collapsed
 
@@ -1112,7 +1112,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/Project Activity Diagram Fourth Year.png
-	scale 35
+	scale 40
 
 \end_inset
 
@@ -1755,20 +1755,6 @@ We now present the performance that our system has been able to acheive,
  both as a standalone CNN and as part of a full re-identification system.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-maybe some TLD results, unclear as to what, maybe some images or stats for
- frames active compared to number of classifications etc
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 The Evaluation Dataset
 \end_layout
@@ -1911,7 +1897,7 @@ The Deep Learning System
 status open
 
 \begin_layout Plain Layout
-will need a rewrite
+will need a rewrite because of overfitting
 \end_layout
 
 \end_inset
@@ -3321,7 +3307,7 @@ name "fig:Results-of-the"
 
 \begin_layout Standard
 It is interesting at this point to note which of the image pairs were the
- missclassififcations, and also to establish which were very close and which
+ missclassifications, and also to establish which were very close and which
  were very far apart.
  Figure 
 \begin_inset CommandInset ref
@@ -3331,7 +3317,7 @@ reference "fig:Image-pairs-and"
 \end_inset
 
  shows a few examples of these images, with their Euclidean distances in
- the Figure captions.
+ the captions.
  
 \end_layout
 
@@ -3340,10 +3326,6 @@ reference "fig:Image-pairs-and"
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3392,12 +3374,23 @@ Re-Identification Performance
 \end_layout
 
 \begin_layout Standard
+Having trained and evaluated the CNN, we then integrate this with our person
+ detection system to form a full re-identification system, and run this
+ on our evaluation dataset.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 For this section, need some numerical estimate of accuracy, as well are
  screenshots of it performing well, 
+\end_layout
+
+\begin_layout Plain Layout
+Include TLD in this
 \end_layout
 
 \end_inset
@@ -3431,7 +3424,7 @@ key "Robson2017"
 .
  We are getting far fewer misclassifications from HOG as it is being called
  far fewer times due to the TLD tracker.
- The tracker performs particularly well on cameras 
+ The person detection system performs particularly well on cameras 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -3444,30 +3437,20 @@ key "Robson2017"
 \end_inset
 
 .
- This seems to be due to the fact that each person is moving directly across
- the field of view of camera 
+ This seems to be due to the fact that HOG seems to be worse at person identific
+ation from the side than from the front.
+ This inferior performance is also due to the fact that many of the people
+ present in camera 
 \begin_inset Formula $\gamma$
 \end_inset
 
-, which the tracker seems to be less able to deal with than cameras 
-\begin_inset Formula $\alpha$
-\end_inset
-
- and 
-\begin_inset Formula $\beta$
-\end_inset
-
-, where the people are moving away from or towards the camera as well as
- across its field of view.
- Through all of our preliminary testing on various datasets, the trend that
- we observed was that directly horizontal movement caused problems for the
- tracker.
+ are partially obstructed by other objects.
  
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-THIS IS HOG NOT TLD 
+ENSURE I HAVE A FIGURE ELSEWHERE TO REFERENCE HERE
 \end_layout
 
 \end_inset
@@ -3480,7 +3463,20 @@ THIS IS HOG NOT TLD
 status open
 
 \begin_layout Plain Layout
-IMAGES OF DIFFERENT MOVEMENT DIRECTIONS
+FOR PERFORMANCE OF THIS, REFERENCE FIGURES FROM RE-IDENTIFICATION SECTIONS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+GET A COUNT OF +VE HOG FRAMES VS NN CLASSIFICATIONS
 \end_layout
 
 \end_inset
@@ -3547,20 +3543,12 @@ reference "tab:Confusion-Matrices"
 \end_inset
 
 .
- As missclassifying different people as the same person and missclassifying
- the same person as different people are both destructive
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-why?
-\end_layout
-
-\end_inset
-
- to our full re-identification system, the fact that all of these metrics
- get good results means that we have not sacrificed proficiency in one of
- these cases for the other.
+ Both missclassifying different people as the same person and missclassifying
+ the same person as different people are destructive to our full re-identificati
+on system, as this can lead to coppurption of a persons data in the first
+ case, or create unnecessary new targets in the second case.
+ Therefore, the fact that all of these metrics get good results means that
+ we have not sacrificed proficiency in one of these cases for the other.
  
 \end_layout
 
