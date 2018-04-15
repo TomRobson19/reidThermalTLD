@@ -19,6 +19,10 @@ import sklearn
 from sklearn import metrics
 #import scikitplot as skplt
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 def euclidean_distance(vects):
     x, y = vects
 
@@ -58,26 +62,26 @@ def create_pairs(x, digit_indices):
             labels += [1, 0]
     return np.array(pairs), np.array(labels)
 
-def create_base_network(input_shape):
-    #Base network to be shared (eq. to feature extraction)
+# def create_base_network(input_shape):
+#     #Base network to be shared (eq. to feature extraction)
 
-    input_main = Input(shape=input_shape, dtype='float32')
-    x = Conv2D(32, (3, 3), padding='same', activation='tanh')(input_main)
-    x = Conv2D(16, (5, 5), activation='tanh')(x)
-    x = MaxPooling2D(pool_size=(5,5))(x)
-    x = Dropout(0.25)(x)
+#     input_main = Input(shape=input_shape, dtype='float32')
+#     x = Conv2D(32, (3, 3), padding='same', activation='relu')(input_main)
+#     x = Conv2D(16, (5, 5), activation='relu')(x)
+#     x = MaxPooling2D(pool_size=(5,5))(x)
+#     x = Dropout(0.25)(x)
 
-    x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
-    x = Conv2D(32, (7,7), activation='tanh')(x)
-    x = MaxPooling2D(pool_size=(3,3))(x)
-    x = Dropout(0.25)(x)
+#     x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
+#     x = Conv2D(32, (7,7), activation='relu')(x)
+#     x = MaxPooling2D(pool_size=(3,3))(x)
+#     x = Dropout(0.25)(x)
 
-    x = Flatten()(x)
-    #x = Dropout(0.25)(x)
-    x = Dense(16, activation='relu')(x)
+#     x = Flatten()(x)
+#     #x = Dropout(0.25)(x)
+#     x = Dense(16, activation='relu')(x)
 
-    model = Model(inputs=input_main, outputs=x)
-    return model
+#     model = Model(inputs=input_main, outputs=x)
+#     return model
 
 
 def calc_accuracy(labels, predictions):
@@ -90,10 +94,10 @@ def compute_accuracy(labels, predictions):
     return np.mean(np.equal(predictions.ravel() < 0.5, labels))
 
 # the data, shuffled and split between train and test sets
-x_train = []
-y_train = []
+x_eval = []
+y_eval = []
 
-image_dir = "people"
+image_dir = "newPeople"
 img_groups = {}
 for person in os.listdir(image_dir): 
     for img_file in os.listdir(image_dir + "/" + person):
@@ -122,38 +126,61 @@ for target in img_groups:
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             aug = cv2.cvtColor(aug, cv2.COLOR_RGB2GRAY)
 
-            x_train.append(img)
-            y_train.append(int(target))
-            x_train.append(aug)
-            y_train.append(int(target))
+            x_eval.append(img)
+            y_eval.append(int(target))
+            x_eval.append(aug)
+            y_eval.append(int(target))
 
-x_train = np.array(x_train)
-y_train = np.array(y_train)
+x_eval = np.array(x_eval)
+y_eval = np.array(y_eval)
 
 input_shape = (256, 128, 1)
-x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-x_train = x_train.astype('float32')
-x_train /= 255
+x_eval = x_eval.reshape(x_eval.shape[0], x_eval.shape[1], x_eval.shape[2], 1)
+x_eval = x_eval.astype('float32')
+x_eval /= 255
 
-num_epochs = 100
+# y_eval = y_eval[]
+# x_eval = x_eval[]
 
 # create training+test positive and negative pairs
-digit_indices = [np.where(y_train == i)[0] for i in range(5)]
-tr_pairs, tr_y = create_pairs(x_train, digit_indices)
+digit_indices = [np.where(y_eval == i)[0] for i in range(5)]
+ev_pairs, ev_y = create_pairs(x_eval, digit_indices)
 
-s = np.arange(tr_pairs.shape[0]) 
-np.random.shuffle(s) 
+# s = np.arange(ev_pairs.shape[0]) 
+# np.random.shuffle(s) 
  
-tr_pairs = tr_pairs[s] 
-tr_y = tr_y[s] 
+# ev_pairs = ev_pairs[s] 
+# ev_y = ev_y[s] 
 
 model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_loss': contrastive_loss, 'calc_accuracy': calc_accuracy, 'euclidean_distance': euclidean_distance, 'eucl_dist_output_shape': eucl_dist_output_shape})
 
 print("predicting")
 
-# compute final accuracy on training and test sets
-pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
-tr_acc = compute_accuracy(tr_y, pred)
+#compute final accuracy on training and test sets
+pred = model.predict([ev_pairs[:, 0], ev_pairs[:, 1]])
 
-np.savetxt("eval_predictions.csv",pred, delimiter=",")
-print('* Accuracy on eval set: %0.2f%%' % (100 * tr_acc))
+# print(pred)
+ev_acc = compute_accuracy(ev_y, pred)
+
+# np.savetxt("eval_predictions.csv",pred, delimiter=",")
+print('* Accuracy on eval set: %0.2f%%' % (100 * ev_acc))
+
+def queryNeuralNetwork(img1, img2):
+    concat = np.concatenate((img1, img2), axis=1)
+    concat *= 255
+
+    img1 = np.array([img1])
+    img2 = np.array([img2])
+
+    prediction = model.predict([img1,img2])
+
+    if(prediction[0][0] < 0.5):
+        cv2.imwrite("classificationsCNN/positiveEval/"+str(prediction[0][0])+".jpg",concat)
+    else:
+        cv2.imwrite("classificationsCNN/negativeEval/"+str(prediction[0][0])+".jpg",concat)
+
+
+    return prediction[0][0]
+
+for i in ev_pairs:
+    prediction = queryNeuralNetwork(i[0],i[1])
