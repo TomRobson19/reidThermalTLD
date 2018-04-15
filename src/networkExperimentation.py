@@ -8,8 +8,9 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.datasets import mnist
 from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten, Reshape, Permute
+from keras.layers import Dense, Dropout, Input, Lambda, Conv2D, MaxPooling2D, Activation, Flatten, Reshape, Permute, BatchNormalization
 from keras.optimizers import RMSprop
+from keras.regularizers import l1, l2, l1_l2
 from keras import backend as K
 import os
 import cv2
@@ -72,22 +73,27 @@ def create_base_network(input_shape):
 
     input_main = Input(shape=input_shape, dtype='float32')
     x = Conv2D(32, (3, 3), padding='same', activation='relu')(input_main)
+    # x = BatchNormalization(axis=-1)(x)
     x = Conv2D(16, (5, 5), activation='relu')(x)
+    # x = BatchNormalization(axis=-1)(x)
     x = MaxPooling2D(pool_size=(5, 5))(x)
-    x = Dropout(0.25)(x)
+    x = Dropout(0.5)(x)
 
     x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
+    # x = BatchNormalization(axis=-1)(x)
     x = Conv2D(32, (7, 7), activation='relu')(x)
+    # x = BatchNormalization(axis=-1)(x)
     x = MaxPooling2D(pool_size=(3, 3))(x)
-    x = Dropout(0.25)(x)
+    x = Dropout(0.5)(x)
 
     x = Flatten()(x)
-    #x = Dropout(0.25)(x)
+    #x = Dropout(0.5)(x)
     x = Dense(16, activation='relu')(x)
 
     model = Model(inputs=input_main, outputs=x)
     return model
 
+#kernel_regularizer=l2(0.005)
 
 def calc_accuracy(labels, predictions):
     '''accuracy function for compilation'''
@@ -113,6 +119,11 @@ for person in os.listdir(image_dir):
         else:
             img_groups[person]=[img_file]
 
+# datagen = ImageDataGenerator(
+#         rotation_range=5,  # randomly rotate images in the range (degrees, 0 to 180)
+#         width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+#         height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+#         horizontal_flip=True)  # randomly flip images
 datagen = ImageDataGenerator(
         featurewise_center=False,  # set input mean to 0 over the dataset
         samplewise_center=False,  # set each sample mean to 0
