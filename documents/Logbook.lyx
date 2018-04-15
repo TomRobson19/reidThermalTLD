@@ -2084,7 +2084,7 @@ reg - 0.0001 ------> * Accuracy on training set: 97.07% * Accuracy on test
 
 \begin_layout Itemize
 when trained on new data, get * Accuracy on training set: 90.52% * Accuracy
- on test set: 89.57% * Accuracy on eval set: 90.31% - data is doable
+ on test set: 89.57% * Accuracy on eval set(same set): 90.31% - data is doable
 \end_layout
 
 \begin_layout Itemize
@@ -2092,40 +2092,100 @@ TRY TRAINING ON TRAIN+TEST AND VAL ON EVAL
 \end_layout
 
 \begin_layout Itemize
-List of tests
+\begin_inset Quotes eld
+\end_inset
+
+I almost hesitate to call it over-fitting because sometimes the test results
+ are acceptable
+\begin_inset Quotes erd
+\end_inset
+
+ - some bloke on Stack Overflow
+\end_layout
+
+\begin_layout Itemize
+Validation set does not decrease, so not overfitting that much
+\end_layout
+
+\begin_layout Itemize
+List of tests - run separately
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-full aug + simple net - 64773
+full aug + simple net
 \end_layout
 
 \begin_layout Itemize
-full aug + full net - 64774
+full aug + full net
 \end_layout
 
 \begin_layout Itemize
-dropout after every layer - 64775
+dropout after every layer
 \end_layout
 
 \begin_layout Itemize
-larger layers - 128 - 64776
+larger layers - 128
 \end_layout
 
 \begin_layout Itemize
-larger layers - 256 - 64777
+larger layers - 256
 \end_layout
 
 \begin_layout Itemize
-larger layers - 512 - 64778
+larger layers - 512
 \end_layout
 
 \begin_layout Itemize
-l1 reg - 64779
+l1 reg
 \end_layout
 
 \begin_layout Itemize
-20 epochs (early stopping) - 64780
+Batch Normalisation - RUNNING NOW - not good, changed axis
+\end_layout
+
+\begin_layout Itemize
+reduce batch size
+\end_layout
+
+\begin_layout Itemize
+higher droput rates (90%)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+SHALL I RECORD ANOTHER ROOFTOP DATASET AND USE THE EXISTING ONE TO TRAIN
+ AND THAT ONE TO EVAL?
+\end_layout
+
+\begin_layout Itemize
+Am I overfitting?
+\end_layout
+
+\begin_layout Itemize
+Train 99, val 96, eval 70(ish)
+\end_layout
+
+\begin_layout Itemize
+val not decreasing at end of training
+\end_layout
+
+\begin_layout Itemize
+70 still better than random
+\end_layout
+
+\begin_layout Itemize
+CAN I ZOOM THE THERMAL CAMERAS?
+\end_layout
+
+\begin_layout Itemize
+FOR THE TRAIN
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+currently have new predictions and new model locally, update spreadsheet
+ and try full re-id
 \end_layout
 
 \end_deeper
