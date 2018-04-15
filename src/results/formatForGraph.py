@@ -6,8 +6,8 @@ negativeTrain = []
 positiveTest = []
 negativeTest = []
 
-positiveEval = []
-negativeEval = []
+positiveVal = []
+negativeVal = []
 
 with open('te_predictions.csv', 'r') as csvfile:
      reader = csv.reader(csvfile, delimiter=',')
@@ -31,15 +31,15 @@ with open('tr_predictions.csv', 'r') as csvfile:
      		negativeTrain.append(row)
      	counter += 1
          
-with open('eval_predictions.csv', 'r') as csvfile:
+with open('val_predictions.csv', 'r') as csvfile:
      reader = csv.reader(csvfile, delimiter=',')
      counter = 0
      for row in reader:
           row = float(row[0])
           if counter % 2 == 0:
-               positiveEval.append(row)
+               positiveVal.append(row)
           else:
-               negativeEval.append(row)
+               negativeVal.append(row)
           counter += 1
 
 np.savetxt("positiveTrain.csv",positiveTrain, delimiter=",")
@@ -48,5 +48,5 @@ np.savetxt("negativeTrain.csv",negativeTrain, delimiter=",")
 np.savetxt("positiveTest.csv",positiveTest, delimiter=",")
 np.savetxt("negativeTest.csv",negativeTest, delimiter=",")
 
-np.savetxt("positiveEval.csv",positiveEval, delimiter=",")
-np.savetxt("negativeEval.csv",negativeEval, delimiter=",")
+np.savetxt("positiveVal.csv",positiveVal, delimiter=",")
+np.savetxt("negativeVal.csv",negativeVal, delimiter=",")
