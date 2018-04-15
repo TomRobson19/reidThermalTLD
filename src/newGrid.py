@@ -49,26 +49,7 @@ def contrastive_loss(y_true, y_pred):
     margin = 1 
     return K.mean(y_true * K.square(y_pred) + (1 - y_true) * K.square(K.maximum(margin - y_pred, 0)))
 
-
 def create_pairs(x, digit_indices):
-    '''Positive and negative pair creation.
-    Alternates between positive and negative pairs.
-    '''
-    pairs = []
-    labels = []
-    n = min([len(digit_indices[d]) for d in range(9)]) - 1
-    for d in range(9):
-        for i in range(n):
-            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
-            pairs += [[x[z1], x[z2]]]
-            inc = random.randrange(1, 9)
-            dn = (d + inc) % 9
-            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
-            pairs += [[x[z1], x[z2]]]
-            labels += [1, 0]
-    return np.array(pairs), np.array(labels)
-
-def create_eval_pairs(x, digit_indices):
     '''Positive and negative pair creation.
     Alternates between positive and negative pairs.
     '''
@@ -103,78 +84,11 @@ from hyperopt import Trials, STATUS_OK, tpe
 def data():
 
     x_train = []
+    x_val = []
     x_test = []
-    x_eval = []
     y_train = []
+    y_val = []
     y_test = []
-    y_eval = []
-
-    image_dir = "people"
-    img_groups = {}
-    for person in os.listdir(image_dir): 
-        for img_file in os.listdir(image_dir + "/" + person):
-            if person in img_groups:
-                img_groups[person].append(img_file)
-            else:
-                img_groups[person]=[img_file]
-
-
-    datagen = ImageDataGenerator(
-        featurewise_center=False,  # set input mean to 0 over the dataset
-        samplewise_center=False,  # set each sample mean to 0
-        featurewise_std_normalization=False,  # divide inputs by std of the dataset
-        samplewise_std_normalization=False,  # divide each input by its std
-        rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
-        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
-        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
-        horizontal_flip=True,  # randomly flip images
-        vertical_flip=False)  # randomly flip images
-
-    for target in img_groups:
-        for img_file in img_groups[target]:
-            if int(target) < 9:
-                img = cv2.imread(os.path.join(image_dir, target, img_file))
-                # aug = datagen.random_transform(img)
-                img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-                # aug = cv2.cvtColor(aug, cv2.COLOR_RGB2GRAY)
-                if np.random.random() < 0.8:
-                    x_train.append(img)
-                    y_train.append(int(target))
-                    # x_train.append(aug)
-                    # y_train.append(int(target))
-                else:
-                    x_test.append(img)
-                    y_test.append(int(target))
-                    # x_test.append(aug)
-                    # y_test.append(int(target))
-
-    x_train = np.array(x_train)
-    x_test = np.array(x_test)
-    y_train = np.array(y_train)
-    y_test = np.array(y_test)
-
-    input_shape = (256, 128, 1)
-    x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-    x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
-    x_train = x_train.astype('float32')
-    x_test = x_test.astype('float32')
-    x_train /= 255
-    x_test /= 255  
-
-    num_epochs = 50
-
-    # create training+test positive and negative pairs
-    digit_indices = [np.where(y_train == i)[0] for i in range(9)]
-    tr_pairs, tr_y = create_pairs(x_train, digit_indices)
-
-    digit_indices = [np.where(y_test == i)[0] for i in range(9)]
-    te_pairs, te_y = create_pairs(x_test, digit_indices)
-
-    x_train = [tr_pairs[:, 0], tr_pairs[:, 1]]
-    y_train = tr_y
-    x_test = [te_pairs[:, 0], te_pairs[:, 1]]
-    y_test = te_y
-
 
     image_dir = "newPeople"
     img_groups = {}
@@ -185,32 +99,80 @@ def data():
             else:
                 img_groups[person]=[img_file]
 
+    datagen = ImageDataGenerator(
+            featurewise_center=False,  # set input mean to 0 over the dataset
+            samplewise_center=False,  # set each sample mean to 0
+            featurewise_std_normalization=False,  # divide inputs by std of the dataset
+            samplewise_std_normalization=False,  # divide each input by its std
+            rotation_range=5,  # randomly rotate images in the range (degrees, 0 to 180)
+            width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+            height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+            horizontal_flip=True,  # randomly flip images
+            vertical_flip=False)  # randomly flip images
+
+
     for target in img_groups:
         for img_file in img_groups[target]:
             if int(target) < 5:
                 img = cv2.imread(os.path.join(image_dir, target, img_file))
-                # aug = datagen.random_transform(img)
+                aug = datagen.random_transform(img)
                 img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-                # aug = cv2.cvtColor(aug, cv2.COLOR_RGB2GRAY)
+                aug = cv2.cvtColor(aug, cv2.COLOR_RGB2GRAY)
 
-                x_eval.append(img)
-                y_eval.append(int(target))
-                # x_eval.append(aug)
-                # y_eval.append(int(target))
+                rand = np.random.random()
+                if rand < 0.6:
+                    x_train.append(img)
+                    y_train.append(int(target))
+                    x_train.append(aug)
+                    y_train.append(int(target))
+                elif rand > 0.6 and rand < 0.8:
+                    x_val.append(img)
+                    y_val.append(int(target))
+                    x_val.append(aug)
+                    y_val.append(int(target))
+                else:
+                    x_test.append(img)
+                    y_test.append(int(target))
+                    x_test.append(aug)
+                    y_test.append(int(target))
 
-    x_eval = np.array(x_eval)
-    y_eval = np.array(y_eval)
+    x_train = np.array(x_train)
+    x_val = np.array(x_val)
+    x_test = np.array(x_test)
+    y_train = np.array(y_train)
+    y_val = np.array(y_val)
+    y_test = np.array(y_test)
 
     input_shape = (256, 128, 1)
-    x_eval = x_eval.reshape(x_eval.shape[0], x_eval.shape[1], x_eval.shape[2], 1)
-    x_eval = x_eval.astype('float32')
-    x_eval /= 255
+    x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
+    x_val = x_val.reshape(x_val.shape[0], x_val.shape[1], x_val.shape[2], 1)
+    x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
+    x_train = x_train.astype('float32')
+    x_val = x_val.astype('float32')
+    x_test = x_test.astype('float32')
+    x_train /= 255
+    x_val /= 255  
+    x_test /= 255
 
-    digit_indices = [np.where(y_eval == i)[0] for i in range(5)]
-    ev_pairs, ev_y = create_eval_pairs(x_eval, digit_indices)
+    num_epochs = 50
 
-    x_eval = [ev_pairs[:, 0], ev_pairs[:, 1]]
-    y_eval = ev_y
+    # create training+test positive and negative pairs
+    digit_indices = [np.where(y_train == i)[0] for i in range(5)]
+    tr_pairs, tr_y = create_pairs(x_train, digit_indices)
+
+    digit_indices = [np.where(y_val == i)[0] for i in range(5)]
+    val_pairs, val_y = create_pairs(x_val, digit_indices)
+
+    digit_indices = [np.where(y_test == i)[0] for i in range(5)]
+    te_pairs, te_y = create_pairs(x_test, digit_indices)
+
+    x_train = [tr_pairs[:, 0], tr_pairs[:, 1]]
+    y_train = tr_y
+    x_test = [val_pairs[:, 0], val_pairs[:, 1]]
+    y_test = val_y
+
+    x_eval = [te_pairs[:, 0], te_pairs[:, 1]]
+    y_eval = te_y
 
     return x_train, y_train, x_test, y_test, x_eval, y_eval
 
@@ -259,7 +221,7 @@ best_run, best_model = optim.minimize(model=kerasClassifier,
                                           data=data,
                                           algo=tpe.suggest,
                                           max_evals=25,
-                                          functions=[euclidean_distance,eucl_dist_output_shape, contrastive_loss, calc_accuracy, create_pairs, create_eval_pairs],
+                                          functions=[euclidean_distance,eucl_dist_output_shape, contrastive_loss, calc_accuracy, create_pairs],
                                           eval_space=True,
                                           trials=Trials())
 print(best_run)
