@@ -1463,24 +1463,11 @@ Deep Learning
 \end_layout
 
 \begin_layout Standard
-We can now move on to our approach to deep learning based re-identification,
- considering our dataset and our architecture choices.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Training and Validation Dataset
-\end_layout
-
-\begin_layout Standard
-The model was trained on the dataset collected for our previous work 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Robson2017"
-
-\end_inset
-
-, as this contained video of multiple people from different views.
+Taking inspiration from the state of the art literature in the area of open
+ world person re-identification, our network architecture is a deep siamese
+ CNN.
+ This means that the network is trained on pairs of images, and attempts
+ to determine whether these images show the same person or a different person.
  The size of these images was fixed at 258x128, to ensure that the size
  of the file had no effect on the training.
  These images were then formed into a balanced dataset of positive and negative
@@ -1497,23 +1484,27 @@ key "Almazan2018"
 
 , with the aim of introducing more variation into our dataset and enable
  it to cope better with difficult real world situations.
- This data was then split 80:20 into a train and validation set.
-\end_layout
-
-\begin_layout Subsubsection
-Network Architecture
+ This data is split 60:20:20 into training, validation and testing sets
+ respectively.
+ The purpose of the training set is to be the actual data that we use to
+ train the model.
+ The validation set is the sample of data used to provide an evaluation
+ of the model during training, whereas the test set is made up of previously
+ unseen data that is used to provide an unbiased evaluation of a final model.
 \end_layout
 
 \begin_layout Standard
-Taking inspiration from the state of the art literature in the area of open
- world person re-identification, our network architecture is a Deep Siamese
- CNN.
- This means that the network is trained on pairs of images, and attempts
- to determine whether these images show the same person or a different person.
- The two networks which are each fed an image have exactly the same architecture
- and weights, as they are trained together.
- Our CNN consists of convolutional layers, pooling layers and fully connected
- layers.
+The two sister networks which make up the siamese network have exactly the
+ same architecture and weights, as they are trained together.
+ Our CNN architecture consists of convolutional layers, pooling layers and
+ fully connected layers, as seen in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-architecture-of"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -1695,7 +1686,8 @@ key "Robson2017"
 status open
 
 \begin_layout Plain Layout
-details of overfitting mitigation strategies if they work
+details of overfitting mitigation strategies if they end up being used to
+ improve the generic performance of the classifier
 \end_layout
 
 \end_inset
@@ -1756,7 +1748,7 @@ We now present the performance that our system has been able to acheive,
 \end_layout
 
 \begin_layout Subsection
-The Evaluation Dataset
+The Dataset
 \end_layout
 
 \begin_layout Standard
@@ -1793,8 +1785,8 @@ reference "fig:Setup-of-Cameras"
 (b).
  The dataset contains five people.
  These videos make up the data we will use to test the full re-identification
- system, and the person images extracted from them make up the evaluation
- dataset for the CNN.
+ system, and the person images extracted from them make up the dataset for
+ the CNN.
  
 \end_layout
 
@@ -1877,8 +1869,8 @@ name "fig:Setup-of-Cameras"
 
 \end_inset
 
-Position (a) and field of view (b) of the cameras used to record our the
- evaluation dataset 
+Position (a) and field of view (b) of the cameras used to record our this
+ dataset 
 \end_layout
 
 \end_inset
@@ -1897,7 +1889,18 @@ The Deep Learning System
 status open
 
 \begin_layout Plain Layout
-will need a rewrite because of overfitting
+report results from same camera configurations and different config, conclude
+ that works well if trained on any data from that configuration
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+change evaluation to test here
 \end_layout
 
 \end_inset
@@ -2117,6 +2120,20 @@ reference "tab:Classification-Reports"
  is the average of precision and recall, taking into account both false
  positives and false negatives.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+update tables - figure will happen automatically when replaced by different
+ files
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2683,7 +2700,7 @@ TN = 3751
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Confusion matrix for evaluation set
+Confusion matrix for test set
 \end_layout
 
 \end_inset
@@ -3113,7 +3130,7 @@ Value
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Classification report for evaluation set
+Classification report for test set
 \end_layout
 
 \end_inset
@@ -3159,17 +3176,17 @@ reference "fig:Results-of-the"
 \end_inset
 
  is a graphical representation of the Euclidean distances reported by the
- network on the train, validation and evaluation dataset.
+ network on the train, validation and test datasets.
  These graphs show a clear split between the pairs of images of the same
  person and pairs of images of different people.
  The split for the training set is more clear than the split for the validation
- and evaluation set.
+ and testing set.
  This improved performance on the training set is expected, as these are
  the exact images the network was trained on so some level of overfitting
  was expected.
- The fact that the validation set and evaluation set distribution is similar
- shows that this overfitting was to the actual training images, rather than
- the dataset they were taken from, as the also includes the validation dataset.
+ The fact that the validation set and test set distribution is similar shows
+ that this overfitting was to the actual training images, rather than the
+ dataset they were taken from, as the also includes the validation dataset.
 \end_layout
 
 \begin_layout Standard
@@ -3285,7 +3302,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Results of the CNN on the Train, Validation and Evaluation Datasets
+Results of the CNN on the Train, Validation and Test Datasets
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Results-of-the"
@@ -3369,6 +3386,19 @@ paragraph and figures here about closest matches, furthest away matches
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+mention that at doesn't work well on other camera locations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Re-Identification Performance
 \end_layout
@@ -3376,7 +3406,7 @@ Re-Identification Performance
 \begin_layout Standard
 Having trained and evaluated the CNN, we then integrate this with our person
  detection system to form a full re-identification system, and run this
- on our evaluation dataset.
+ on our dataset.
  
 \end_layout
 
@@ -3386,7 +3416,7 @@ status open
 
 \begin_layout Plain Layout
 For this section, need some numerical estimate of accuracy, as well are
- screenshots of it performing well, 
+ screenshots of it 
 \end_layout
 
 \begin_layout Plain Layout
@@ -3560,15 +3590,7 @@ reference "fig:Results-of-the"
 
 \end_inset
 
- show that there is some overfitting to the training set, but given that
- the validation set was extracted from the same videos as the training set,
- the fact that this has a similar distribution to the evaluation set, which
- was extracted from different videos, suggests that the overfitting that
- occured was to the specific images of the training set, not something specific
- to the dataset.
- The results on the validation and evaluation set are also very good, showing
- that the network was learning good features for re-identification.
- 
+ show 
 \end_layout
 
 \begin_layout Standard
@@ -3620,7 +3642,7 @@ ble with the rest of our C++ codebase.
 status open
 
 \begin_layout Plain Layout
-what we have contributed
+what have we contributed?
 \end_layout
 
 \end_inset
