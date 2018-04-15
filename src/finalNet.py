@@ -135,7 +135,7 @@ datagen = ImageDataGenerator(
 
 for target in img_groups:
     for img_file in img_groups[target]:
-        if int(target) < 9:
+        if int(target) < 5:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
             aug = datagen.random_transform(img)
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -221,7 +221,7 @@ tr_acc = compute_accuracy(tr_y, pred)
 np.savetxt("tr_predictions.csv",pred, delimiter=",")
 
 pred = model.predict([val_pairs[:, 0], val_pairs[:, 1]])
-te_acc = compute_accuracy(val_y, pred)
+val_acc = compute_accuracy(val_y, pred)
 
 np.savetxt("val_predictions.csv",pred, delimiter=",")
 
@@ -231,7 +231,7 @@ te_acc = compute_accuracy(te_y, pred)
 np.savetxt("te_predictions.csv",pred, delimiter=",")
 
 print('* Accuracy on training set: %0.2f%%' % (100 * tr_acc))
-print('* Accuracy on val set: %0.2f%%' % (100 * te_acc))
+print('* Accuracy on val set: %0.2f%%' % (100 * val_acc))
 print('* Accuracy on test set: %0.2f%%' % (100 * te_acc))
 
 def queryNeuralNetwork(img1, img2):
