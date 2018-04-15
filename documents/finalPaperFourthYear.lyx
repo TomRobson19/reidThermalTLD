@@ -1930,6 +1930,16 @@ reference "fig:Loss-and-Accuracy"
  shows how the loss and accuracy varied on our training and validation sets
  as the network was trained over 100 epochs.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+not overfitting as validation doesn't tail off
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2088,6 +2098,16 @@ name "fig:Loss-and-Accuracy"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+don't forget to update this figure from tensorboard
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2127,7 +2147,7 @@ reference "tab:Classification-Reports"
 status open
 
 \begin_layout Plain Layout
-update tables - figure will happen automatically when replaced by different
+update tables - graphs will happen automatically when replaced by different
  files
 \end_layout
 
@@ -3575,7 +3595,7 @@ reference "tab:Confusion-Matrices"
 .
  Both missclassifying different people as the same person and missclassifying
  the same person as different people are destructive to our full re-identificati
-on system, as this can lead to coppurption of a persons data in the first
+on system, as this can lead to corruption of a persons data in the first
  case, or create unnecessary new targets in the second case.
  Therefore, the fact that all of these metrics get good results means that
  we have not sacrificed proficiency in one of these cases for the other.
