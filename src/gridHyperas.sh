@@ -7,8 +7,8 @@
 #SBATCH --qos=long-high-prio
 #SBATCH --job-name=gridHyp 
 
-# SBATCH -t 48:00:00
-# SBATCH --mem=28g
+#SBATCH --mem=28g
+#SBATCH -t 04-00:00:00
 
 module load cuda/8.0-cudnn6
 module load opencv/3.4-py3
