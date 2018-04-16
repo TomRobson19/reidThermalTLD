@@ -2193,5 +2193,14 @@ currently have new predictions and new model locally, update spreadsheet
 New network does not plateau like the old network, will need more epochs
 \end_layout
 
+\begin_layout Itemize
+Re-ID system works fairly well, missclassifications seem to be due to hog
+ classifications smaller than a person
+\end_layout
+
+\begin_layout Itemize
+Grid search ran out of memory
+\end_layout
+
 \end_body
 \end_document
