@@ -2189,5 +2189,9 @@ currently have new predictions and new model locally, update spreadsheet
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+New network does not plateau like the old network, will need more epochs
+\end_layout
+
 \end_body
 \end_document
