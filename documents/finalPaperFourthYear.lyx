@@ -3204,7 +3204,7 @@ reference "fig:Results-of-the"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -3313,7 +3313,8 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Results of the CNN on the Train, Validation and Test Datasets
+Euclidean distance results of the CNN on the Train, Validation and Test
+ Datasets
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Results-of-the"
@@ -3422,7 +3423,7 @@ key "Robson2017"
 .
  The cameras for this dataset are placed in different locations to our main
  dataset, and the profiles of the people are different.
- the results for this dataset are shown below.
+ The results that the network gave for this dataset are shown below.
  
 \end_layout
 
@@ -3438,7 +3439,7 @@ width "100col%"
 special "none"
 height "1in"
 height_special "totalheight"
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float table
@@ -3615,7 +3616,7 @@ TN = 5809
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Confusion Matrix
 \end_layout
 
 \end_inset
@@ -3751,7 +3752,7 @@ Value
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Classification Report
 \end_layout
 
 \end_inset
@@ -3783,7 +3784,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Euclidean distance results
 \end_layout
 
 \end_inset
