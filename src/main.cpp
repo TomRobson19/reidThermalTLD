@@ -103,6 +103,10 @@ int readFromFIFO(){
 
 int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 {
+	int nnCounter = 0;
+	int hogCounter = 0;
+
+
 	VideoWriter video(file+"results.avi",CV_FOURCC('M','J','P','G'),25, Size(1280, 960),true);
 	// Read video
 	VideoCapture cap;
@@ -296,6 +300,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 						alreadyTarget = true;
 					}
 				}
+				hogCounter++;
 
 				if (!alreadyTarget)
 				{
@@ -338,6 +343,8 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 						resize(imgToUse, imgToUse, Size(128,256));
 
 						//imshow("being classified", imgToUse);
+
+						nnCounter++;
 
 						pthread_mutex_lock(&myLock);
 
@@ -396,7 +403,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		}
 	}
 	String cameras[3] = {"Alpha", "Beta", "Gamma"};
-	cout << cameras[cameraID] << " done" << endl;
+	cout << cameras[cameraID] << " done  " << hogCounter << "   " << nnCounter << endl; 
 	video.release();
 	return 0;
 }
