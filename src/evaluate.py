@@ -50,13 +50,13 @@ def create_pairs(x, digit_indices):
     '''
     pairs = []
     labels = []
-    n = min([len(digit_indices[d]) for d in range(5)]) - 1
-    for d in range(5):
+    n = min([len(digit_indices[d]) for d in range(9)]) - 1
+    for d in range(9):
         for i in range(n):
             z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
             pairs += [[x[z1], x[z2]]]
-            inc = random.randrange(1, 5)
-            dn = (d + inc) % 5
+            inc = random.randrange(1, 9)
+            dn = (d + inc) % 9
             z1, z2 = digit_indices[d][i], digit_indices[dn][i]
             pairs += [[x[z1], x[z2]]]
             labels += [1, 0]
@@ -97,7 +97,7 @@ def compute_accuracy(labels, predictions):
 x_eval = []
 y_eval = []
 
-image_dir = "newPeople"
+image_dir = "people"
 img_groups = {}
 for person in os.listdir(image_dir): 
     for img_file in os.listdir(image_dir + "/" + person):
@@ -120,7 +120,7 @@ datagen = ImageDataGenerator(
 
 for target in img_groups:
     for img_file in img_groups[target]:
-        if int(target) < 5:
+        if int(target) < 9:
             img = cv2.imread(os.path.join(image_dir, target, img_file))
             aug = datagen.random_transform(img)
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -143,7 +143,7 @@ x_eval /= 255
 # x_eval = x_eval[]
 
 # create training+test positive and negative pairs
-digit_indices = [np.where(y_eval == i)[0] for i in range(5)]
+digit_indices = [np.where(y_eval == i)[0] for i in range(9)]
 ev_pairs, ev_y = create_pairs(x_eval, digit_indices)
 
 # s = np.arange(ev_pairs.shape[0]) 
@@ -158,29 +158,29 @@ print("predicting")
 
 #compute final accuracy on training and test sets
 pred = model.predict([ev_pairs[:, 0], ev_pairs[:, 1]])
-
+np.savetxt("other_data_predictions.csv",pred, delimiter=",")
 # print(pred)
 ev_acc = compute_accuracy(ev_y, pred)
 
 # np.savetxt("eval_predictions.csv",pred, delimiter=",")
 print('* Accuracy on eval set: %0.2f%%' % (100 * ev_acc))
 
-def queryNeuralNetwork(img1, img2):
-    concat = np.concatenate((img1, img2), axis=1)
-    concat *= 255
+# def queryNeuralNetwork(img1, img2):
+#     concat = np.concatenate((img1, img2), axis=1)
+#     concat *= 255
 
-    img1 = np.array([img1])
-    img2 = np.array([img2])
+#     img1 = np.array([img1])
+#     img2 = np.array([img2])
 
-    prediction = model.predict([img1,img2])
+#     prediction = model.predict([img1,img2])
 
-    if(prediction[0][0] < 0.5):
-        cv2.imwrite("classificationsCNN/positiveEval/"+str(prediction[0][0])+".jpg",concat)
-    else:
-        cv2.imwrite("classificationsCNN/negativeEval/"+str(prediction[0][0])+".jpg",concat)
+#     if(prediction[0][0] < 0.5):
+#         cv2.imwrite("classificationsCNN/positiveTrainTest/"+str(prediction[0][0])+".jpg",concat)
+#     else:
+#         cv2.imwrite("classificationsCNN/negativeTrainTest/"+str(prediction[0][0])+".jpg",concat)
 
 
-    return prediction[0][0]
+#     return prediction[0][0]
 
-for i in ev_pairs:
-    prediction = queryNeuralNetwork(i[0],i[1])
+# for i in ev_pairs:
+#     prediction = queryNeuralNetwork(i[0],i[1])

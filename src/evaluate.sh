@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -N 1
-#SBATCH -c 1
+#SBATCH -c 2
 #SBATCH --gres=gpu:pascal:1
 
 #SBATCH -p gpu-small
@@ -8,10 +8,7 @@
 
 #SBATCH --job-name=eval
 
-#SBATCH -e stderr-filename
-#SBATCH -o stdout-filename
-
-#SBATCH --mem=10g
+#SBATCH --mem=12g
 # SBATCH -t 01:00:00
 
 module load cuda/8.0-cudnn6
