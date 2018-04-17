@@ -393,6 +393,7 @@ int runOnSingleCamera(String file, int cameraID, int multipleCameras)
 		else 
 		{
 			imshow(file, displayImage);
+			video.write(displayImage);
 			key = waitKey(1);
 			if (key == 'x')
 			{
