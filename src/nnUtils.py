@@ -84,9 +84,12 @@ def whichPerson(img):
     else:
         closest = 100
         closestPerson = 100
+        closestFrame = None
+        save = False
         for person in people:
             print(str(person.getIdentifier()) + " activity is " + str(person.isActive()))
             if not person.isActive():
+                save=True
                 currentPerson = person.getIdentifier()
                 previous = person.getPrevious()
                 for previousFrame in previous:
@@ -95,6 +98,15 @@ def whichPerson(img):
                     if prediction < closest:
                         closest = prediction
                         closestPerson = currentPerson
+                        closestFrame = previousFrame
+        if save:
+
+            concat = np.concatenate((personROI, closestFrame), axis=1)
+            concat *= 255
+            cv2.imwrite("classificationsREID/"+str(closest)+".jpg",concat)
+
+        # count the number of times these are different people and <0.5, or the same person and >0.5
+
         if closest < 0.5:
             person = people[closestPerson]
             person.addPrevious(personROI)
