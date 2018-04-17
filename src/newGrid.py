@@ -211,6 +211,7 @@ def kerasClassifier(x_train, y_train, x_test, y_test, x_eval, y_eval):
     model.fit(x_train,y_train,validation_data=(x_test,y_test),batch_size=128,epochs=num_epochs, verbose=2)
 
     score, acc = model.evaluate(x_eval, y_eval, verbose=0)
+    print(model.summary())
     print('Test accuracy:', acc)
 
     K.clear_session()
@@ -220,7 +221,7 @@ def kerasClassifier(x_train, y_train, x_test, y_test, x_eval, y_eval):
 best_run, best_model = optim.minimize(model=kerasClassifier,
                                           data=data,
                                           algo=tpe.suggest,
-                                          max_evals=25,
+                                          max_evals=10,
                                           functions=[euclidean_distance,eucl_dist_output_shape, contrastive_loss, calc_accuracy, create_pairs],
                                           eval_space=True,
                                           trials=Trials())
