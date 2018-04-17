@@ -1091,17 +1091,17 @@ reference "fig:Logic-of-our"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement t
-wide true
+placement H
+wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
-	filename images/Project Activity Diagram Fourth Year.png
-	scale 50
+	filename images/Project Activity Diagram Fourth Year.pdf
+	scale 25
 
 \end_inset
 
@@ -4533,7 +4533,14 @@ reference "fig:Image-pairs-and-1"
 
 \end_inset
 
- are higher resolution 
+ are higher resolution.
+ This tells us that while our network performs very well on the camera views
+ that it was trained on, its ability as a general re-identification system
+ on any camera network is limited.
+ We hypothesise that this could be solved by using an optical zoom to ensure
+ that all video streams give us images of person targets with similar resolution
+s.
+ 
 \begin_inset Note Note
 status open
 
