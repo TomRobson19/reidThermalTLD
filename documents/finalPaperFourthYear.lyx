@@ -1091,6 +1091,7 @@ reference "fig:Logic-of-our"
 
 \begin_layout Standard
 \begin_inset Float figure
+placement t
 wide true
 sideways false
 status collapsed
@@ -2375,23 +2376,9 @@ reference "tab:Classification-Reports"
 \end_layout
 
 \begin_layout Standard
-The results from Tables 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Confusion-Matrices"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Classification-Reports"
-
-\end_inset
-
- are encouraging, as all are high percentages across all datasets, giving
- us confidence that our system is working well and has learnt useful features
- that work on multiple datasets.
+The results from these are encouraging, as all are high percentages across
+ all datasets, giving us confidence that our system is working well and
+ has learnt useful features for re-identification.
  The fact that precision and recall are close together means that the numbers
  of false positives and false negatives are fairly close, as shown by Table
  
@@ -2409,16 +2396,6 @@ on system, as this can lead to corruption of a persons data in the first
  Therefore, the fact that all of these metrics get good results means that
  we have not sacrificed proficiency in one of these cases for the other.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-rewrite this para
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -3481,20 +3458,8 @@ reference "fig:Results-of-the"
  and testing set.
  This improved performance on the training set is expected, as these are
  the exact images the network was trained on so some level of overfitting
- was expected.
- The fact that the validation set and test set distribution is similar shows
- that this overfitting was to the actual training images, rather than the
- dataset they were taken from, as the also includes the validation dataset.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-rewrite
-\end_layout
-
-\end_inset
-
-
+ to the specific training data was expected.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4559,6 +4524,29 @@ name "fig:Image-pairs-and-1"
 \end_layout
 
 \begin_layout Standard
+As we can see from these results, the performance of the system on this
+ dataset is substantially worse.
+ As we can clearly see, the images in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+ are higher resolution 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+big eval bullshit
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -4572,14 +4560,30 @@ update these figures appropriately
 \end_layout
 
 \begin_layout Subsection
-Re-Identification System
+Single Camera Re-Identification System
 \end_layout
 
 \begin_layout Standard
 Having trained and evaluated the CNN, we then integrate this with our person
  detection system to form a full re-identification system, and run this
  on our dataset.
+ First, we consider the performance of the system when run on a single camera
+ view.
+ This enables use to simply and effectively test and evaluate our re-identificat
+ion system on one camera viewpoint to remove the potential missclassifications
+ that could result from examining all of the camera views at once.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reference figure from previous section showing missclassification from different
+ viewpoint
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4588,12 +4592,21 @@ status open
 
 \begin_layout Plain Layout
 For this section, need some numerical estimate of accuracy, as well are
- screenshots of it 
+ screenshots from each camera
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Multi-Camera Re-Identification System
+\end_layout
+
+\begin_layout Standard
+We now move on to running the system on all of the camera views at once.
+ 
 \end_layout
 
 \begin_layout Section
