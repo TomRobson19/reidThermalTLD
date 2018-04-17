@@ -2,7 +2,7 @@
 \lyxformat 474
 \begin_document
 \begin_header
-\textclass IEEEtran-CompSoc
+\textclass IEEEtran
 \use_default_options true
 \maintain_unincluded_children false
 \language british
@@ -88,11 +88,7 @@ T.A.
  Breckon
 \end_layout
 
-\begin_layout Section*
-Abstract
-\end_layout
-
-\begin_layout Standard
+\begin_layout Abstract
 Although use of thermal imagery currently poses significant advantages for
  24/7 surveillance in terms of the visibility of targets under all environmental
  conditions, a key limitation is the lack of colour information.
@@ -119,7 +115,7 @@ key "Robson2017"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Abstract
 The aim of this project is to build a system that can detect a person within
  thermal imagery in real time, distinguish a person from other objects and
  track a person moving through a scene in real time.
@@ -146,7 +142,7 @@ key "Zheng2016"
  targets.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Abstract
 \begin_inset Note Note
 status open
 
@@ -159,14 +155,14 @@ Add results/conclusions content
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Abstract
 \begin_inset VSpace bigskip
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Abstract
 
 \series bold
 Keywords: 
@@ -174,13 +170,6 @@ Keywords:
 Deep Learning, Siamese Network, Open World, Computer Vision, Person Re-Identific
 ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
  Video
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -262,7 +251,7 @@ reference "fig:Example-of-Thermal"
 placement b
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -1102,7 +1091,6 @@ reference "fig:Logic-of-our"
 
 \begin_layout Standard
 \begin_inset Float figure
-placement !t
 wide true
 sideways false
 status collapsed
@@ -1112,7 +1100,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/Project Activity Diagram Fourth Year.png
-	scale 40
+	scale 50
 
 \end_inset
 
@@ -1376,7 +1364,7 @@ In our early experimentation, we found that the learning part of this algorithm
  Therefore, we had to cut some of the functionality out of TLD for this
  implementation, so that each object was deleted when it left the scene
  or became obstructed.
- This eliminated the miss-classifications that the limited re-identification
+ This eliminated the missclassifications that the limited re-identification
  capabilities of this algorithm were causing, enabling us to effectively
  track people across the scene, whilst using our neural network for the
  re-identification.
@@ -1744,7 +1732,10 @@ Results
 
 \begin_layout Standard
 We now present the performance that our system has been able to acheive,
- both as a standalone CNN and as part of a full re-identification system.
+ both as a standalone CNN and as part of a full re-identification system
+ and evaluate the strengths, weaknesses and limitations of the research
+ that has been presented here.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1884,6 +1875,230 @@ Position (a) and field of view (b) of the cameras used to record our this
 \end_layout
 
 \begin_layout Subsection
+Real Time Person Detection System
+\end_layout
+
+\begin_layout Standard
+The inclusion of the TLD tracker has greatly improved the performance of
+ our person tracking system in comparison to our previous work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+.
+ We are getting far fewer missclassifications from HOG as it is being called
+ far fewer times due to the TLD tracker.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Performance-gains-from"
+
+\end_inset
+
+ shows the number of images from each camera view that contain a person
+ and the number of these images that were passed to the CNN for re-identificatio
+n.
+ The remainder of the images were handled by the TLD tracker as the people
+ were within one of the TLD objects, and did not need to be re-identified.
+ Without TLD, all of the frames would have to be passed to the CNN, which
+ would increase runtime and the amount of computational resources used,
+ as well as lead to the possibility of more missclassifications.
+ As the results in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Performance-gains-from"
+
+\end_inset
+
+ show, the person detection system performs particularly well on cameras
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+, but less well on camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+ This seems to be due to the fact that HOG is worse at person identification
+ from the side than from the front.
+ This inferior performance is also due to the fact that many of the people
+ present in camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ are partially obstructed by other objects, leading to the TLD objects being
+ deleted.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Camera
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Frames with person present
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Calls to CNN
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Alpha
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1259
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+65
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Beta
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1863
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+114
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gamma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2454
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+339
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Performance gains from TLD 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Performance-gains-from"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 The Deep Learning System 
 \begin_inset Note Note
 status open
@@ -1925,6 +2140,33 @@ status open
 
 \begin_layout Plain Layout
 not overfitting as validation doesn't tail off
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Loss-and-Accuracy"
+
+\end_inset
+
+ shows use that the training and validation patterns of the network matched
+ very closely, with the loss steadily decreasing and the accuracy steadily
+ increasing before both flattened out towards the end of training.
+ The use of 100 epochs gave both the loss and the accuracy time to stabilise,
+ and ensure that the results we got for these, and the trained network as
+ a whole were the best that could be attained.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+rewrite this para
 \end_layout
 
 \end_inset
@@ -2133,13 +2375,58 @@ reference "tab:Classification-Reports"
 \end_layout
 
 \begin_layout Standard
+The results from Tables 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrices"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Classification-Reports"
+
+\end_inset
+
+ are encouraging, as all are high percentages across all datasets, giving
+ us confidence that our system is working well and has learnt useful features
+ that work on multiple datasets.
+ The fact that precision and recall are close together means that the numbers
+ of false positives and false negatives are fairly close, as shown by Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrices"
+
+\end_inset
+
+.
+ Both missclassifying different people as the same person and missclassifying
+ the same person as different people are destructive to our full re-identificati
+on system, as this can lead to corruption of a persons data in the first
+ case, or create unnecessary new targets in the second case.
+ Therefore, the fact that all of these metrics get good results means that
+ we have not sacrificed proficiency in one of these cases for the other.
+ 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-update tables - graphs will happen automatically when replaced by different
- files - maybe only report test set from graphs - update tables after grid
- search is done
+rewrite this para
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+update tables after grid search is done
 \end_layout
 
 \end_inset
@@ -3198,13 +3485,23 @@ reference "fig:Results-of-the"
  The fact that the validation set and test set distribution is similar shows
  that this overfitting was to the actual training images, rather than the
  dataset they were taken from, as the also includes the validation dataset.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+rewrite
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -3332,6 +3629,16 @@ name "fig:Results-of-the"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+update graphs after grid search is done
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3347,6 +3654,9 @@ reference "fig:Image-pairs-and"
 
  shows a few examples of these images, with their Euclidean distances in
  the captions.
+ As before, those with a distance less than 0.5 were classified as the same
+ person, while those with a distance greater that 0.5 were classified as
+ different people.
  
 \end_layout
 
@@ -3357,6 +3667,188 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/alpha 38.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/alpha 147.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/beta 86.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/gamma 26.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/gamma 1825.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/gamma 1825.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -3423,16 +3915,47 @@ key "Robson2017"
 .
  The cameras for this dataset are placed in different locations to our main
  dataset, and the profiles of the people are different.
- The results that the network gave for this dataset are shown below.
+ The results that the network gave for this dataset are shown below in Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrix-other"
+
+\end_inset
+
+ , Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Classification-Report-other"
+
+\end_inset
+
+ and Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euclidean-distance-results-other"
+
+\end_inset
+
+.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+ shows a few examples of these images, with their Euclidean distances in
+ the captions.
  
 \end_layout
 
 \begin_layout Standard
 \begin_inset Box Frameless
-position "t"
+position "c"
 hor_pos "c"
 has_inner_box 1
-inner_pos "t"
+inner_pos "c"
 use_parbox 0
 use_makebox 0
 width "100col%"
@@ -3617,6 +4140,13 @@ TN = 5809
 
 \begin_layout Plain Layout
 Confusion Matrix
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Confusion-Matrix-other"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3752,7 +4282,14 @@ Value
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Classification Report
+Classification Report 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Classification-Report-other"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3785,7 +4322,9 @@ status collapsed
 
 \begin_layout Plain Layout
 Euclidean distance results
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Euclidean-distance-results-other"
 
 \end_inset
 
@@ -3800,11 +4339,231 @@ Euclidean distance results
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/alpha 38.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/alpha 147.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/beta 86.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/gamma 26.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/gamma 1825.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/gamma 1825.jpg
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Image pairs and their Euclidean distances
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Image-pairs-and-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-label and update this figure appropriately
+update these figures appropriately
 \end_layout
 
 \end_inset
@@ -3813,7 +4572,7 @@ label and update this figure appropriately
 \end_layout
 
 \begin_layout Subsection
-Re-Identification Performance
+Re-Identification System
 \end_layout
 
 \begin_layout Standard
@@ -3832,199 +4591,27 @@ For this section, need some numerical estimate of accuracy, as well are
  screenshots of it 
 \end_layout
 
-\begin_layout Plain Layout
-Include TLD in this
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Section
-Evaluation
-\end_layout
-
-\begin_layout Standard
-We will now evaluate the strengths, weaknesses and limitations of the research
- that has been presented here.
- 
-\end_layout
-
-\begin_layout Subsection
-Real Time Person Detection System
-\end_layout
-
-\begin_layout Standard
-The inclusion of the TLD tracker has greatly improved the performance of
- our person tracking system in comparison to our previous work in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Robson2017"
-
-\end_inset
-
-.
- We are getting far fewer misclassifications from HOG as it is being called
- far fewer times due to the TLD tracker.
- The person detection system performs particularly well on cameras 
-\begin_inset Formula $\alpha$
-\end_inset
-
- and 
-\begin_inset Formula $\beta$
-\end_inset
-
-, but less well on camera 
-\begin_inset Formula $\gamma$
-\end_inset
-
-.
- This seems to be due to the fact that HOG seems to be worse at person identific
-ation from the side than from the front.
- This inferior performance is also due to the fact that many of the people
- present in camera 
-\begin_inset Formula $\gamma$
-\end_inset
-
- are partially obstructed by other objects.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ENSURE I HAVE A FIGURE ELSEWHERE TO REFERENCE HERE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-FOR PERFORMANCE OF THIS, REFERENCE FIGURES FROM RE-IDENTIFICATION SECTIONS
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-GET A COUNT OF +VE HOG FRAMES VS NN CLASSIFICATIONS
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Deep Learning System
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-will need a rewrite
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Loss-and-Accuracy"
-
-\end_inset
-
- shows use that the training and validation patterns of the network matched
- very closely, with the loss steadily decreasing and the accuracy steadily
- increasing before both flattened out towards the end of training.
- The use of 100 epochs gave both the loss and the accuracy time to stabilise,
- and ensure that the results we got for these, and the trained network as
- a whole were the best that could be attained.
- 
-\end_layout
-
-\begin_layout Standard
-The results from Tables 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Confusion-Matrices"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Classification-Reports"
-
-\end_inset
-
- are encouraging, as all are high percentages across all datasets, giving
- us confidence that our system is working well and has learnt useful features
- that work on multiple datasets.
- The fact that precision and recall are close together means that the numbers
- of false positives and false negatives are fairly close, as shown by Table
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Confusion-Matrices"
-
-\end_inset
-
-.
- Both missclassifying different people as the same person and missclassifying
- the same person as different people are destructive to our full re-identificati
-on system, as this can lead to corruption of a persons data in the first
- case, or create unnecessary new targets in the second case.
- Therefore, the fact that all of these metrics get good results means that
- we have not sacrificed proficiency in one of these cases for the other.
- 
-\end_layout
-
-\begin_layout Standard
-The graphs from Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Results-of-the"
-
-\end_inset
-
- show 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-What do the image pairs show
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Re-Identification System
+Conclusion
 \end_layout
 
 \begin_layout Subsection
 Appraisal of Project Organisation
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+where should this go (should it exist at all?)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4044,7 +4631,8 @@ ble with the rest of our C++ codebase.
  to suppress the erroneous attempts at re-identification and to enable us
  to delete TLD objects from the system.
  Also, as Keras uses Tensorflow as its backend, and OpenCV has the ability
- to read and use Tensorflow networks.
+ to read and use Tensorflow networks, we assumed OpenCV would be able to
+ read the network directly.
  However, this turned out to be incompatible, which required us to spend
  much time trying to import it correctly, before deciding that the superior
  method was to use both C++ and python for the separate components and connect
@@ -4061,10 +4649,6 @@ what have we contributed?
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Conclusion
 \end_layout
 
 \begin_layout Standard

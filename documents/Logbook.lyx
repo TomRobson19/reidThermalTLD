@@ -2190,6 +2190,10 @@ currently have new predictions and new model locally, update spreadsheet
 
 \end_deeper
 \begin_layout Itemize
+##############################
+\end_layout
+
+\begin_layout Itemize
 New network does not plateau like the old network, will need more epochs
 \end_layout
 
@@ -2202,5 +2206,27 @@ Re-ID system works fairly well, missclassifications seem to be due to hog
 Grid search ran out of memory
 \end_layout
 
+\begin_layout Itemize
+HoG:NN
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Alpha 1259:65
+\end_layout
+
+\begin_layout Itemize
+Beta 1863:114
+\end_layout
+
+\begin_layout Itemize
+Gamma 2454:339
+\end_layout
+
+\begin_layout Itemize
+This ^ is the reason for speed difference - everything in a mutex??
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
