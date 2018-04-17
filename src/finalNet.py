@@ -26,8 +26,11 @@ plt.switch_backend("Agg")
 outputFolder = "output"
 import time
 ts = time.time()
-outputFolder = outputFolder+"/"+str(ts).split(".")[0]
+ts = "".join(str(ts).split("."))
+outputFolder = outputFolder+"/"+ts
 tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
+checkpointCallback = keras.callbacks.ModelCheckpoint("saved_models"+ts+".hdf5", monitor='val_calc_accuracy', verbose=0, save_best_only=True, mode='max')
+
 
 def euclidean_distance(vects):
     x, y = vects
@@ -212,7 +215,11 @@ model.fit([tr_pairs[:, 0], tr_pairs[:, 1]], tr_y,
           batch_size=128,
           epochs=num_epochs,
           verbose=2,
-          callbacks=[tbCallBack])
+          callbacks=[tbCallBack,checkpointCallback])
+
+
+runModel.load_weights("../weights"+ts+".hdf5")
+os.unlink("../weights"+ts+".hdf5")
 
 # compute final accuracy on training and val sets
 pred = model.predict([tr_pairs[:, 0], tr_pairs[:, 1]])
