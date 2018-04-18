@@ -75,23 +75,23 @@ def create_base_network(input_shape):
     #Base network to be shared (eq. to feature extraction)
 
     input_main = Input(shape=input_shape, dtype='float32')
-    x = Conv2D(32, (3, 3), padding='same', activation='relu')(input_main)
+    x = Conv2D(8, (3, 3), padding='same', activation='relu')(input_main) #tanh
     # x = BatchNormalization(axis=-1)(x)
-    x = Conv2D(16, (5, 5), activation='relu')(x)
+    x = Conv2D(16, (3, 3), activation='relu')(x) #tanh
     # x = BatchNormalization(axis=-1)(x)
     x = MaxPooling2D(pool_size=(5, 5))(x)
-    x = Dropout(0.5)(x)
+    x = Dropout(0.4)(x)
 
-    x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
+    x = Conv2D(64, (10, 10), padding='same', activation='relu')(x)
     # x = BatchNormalization(axis=-1)(x)
-    x = Conv2D(32, (7, 7), activation='relu')(x)
+    x = Conv2D(16, (7, 7), activation='relu')(x) #tanh
     # x = BatchNormalization(axis=-1)(x)
-    x = MaxPooling2D(pool_size=(3, 3))(x)
-    x = Dropout(0.5)(x)
+    x = MaxPooling2D(pool_size=(5,5))(x)
+    x = Dropout(0.2)(x)
 
     x = Flatten()(x)
     #x = Dropout(0.5)(x)
-    x = Dense(16, activation='relu')(x)
+    x = Dense(256, activation='relu')(x)
 
     model = Model(inputs=input_main, outputs=x)
     return model
