@@ -91,14 +91,17 @@ void MultiObjectTLDTracker::drawBoxes(Mat image)
 {
     std::vector<ObjectBox> boxes = tracker.getObjectBoxes();
 
+    std::vector<int> colours = {255,0,0, 0,255,0, 0,0,255, 255,255,0, 0,255,255, 255,0,255, 255,255,255, 0,0,0, 125,0,0, 0,125,0, 0,0,125, 125,125,0, 0,125,125, 125,0,125, 125,125,125};
+
     for (int i = 0; i < boxes.size(); i++)
     {
         Rect rec (boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
         int personID = boxes[i].personID;
 
-        srand(personID*10);
+        //srand(1+personID*10000);
 
-        rectangle(image, rec, Scalar(rand() % 255, rand() % 255, rand() % 255), 2, 1 );
+        //rectangle(image, rec, Scalar(rand() % 255, rand() % 255, rand() % 255), 2, 1 );
+        rectangle(image, rec, Scalar(colours[personID*3],colours[(personID*3)+1],colours[(personID*3)+2]), 2, 1 );
     }
 }
 
