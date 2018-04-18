@@ -149,12 +149,6 @@ model = load_model("saved_models/openWorld.h5", custom_objects={'contrastive_los
 
 if __name__ == '__main__':
 
-    # os.remove(imagesFIFO)
-    # os.remove(intsFIFO)
-    # os.rmdir("/tmp/imgs")
-    # os.remove("/tmp/imgs/*")
-
-
     try:
         os.remove(imagesFIFO)
         os.mkfifo(imagesFIFO)

@@ -19,3 +19,5 @@
 {'activation_2': 'relu', 'activation_3': 'tanh', 'Conv2D': 32, 'Conv2D_3': 32, 'activation_4': 'relu', 'activation_1': 'tanh', 'pool_size_5': 3, 'Conv2D_1': 16, 'pool_size_3': 3, 'pool_size_2': 5, 'pool_size_4': 7, 'pool_size': 3, 'Conv2D_2': 64, 'pool_size_1': 5, 'activation': 'tanh', 'Dense': 16}
 
 {'activation_2': 'tanh', 'Conv2D_3': 32, 'pool_size_3': 5, 'Conv2D_1': 16, 'pool_size_1': 3, 'pool_size_2': 3, 'pool_size_5': 7, 'Conv2D': 64, 'pool_size_4': 10, 'activation_1': 'relu', 'Dropout_1': 0.3, 'Dropout_2': 0.4, 'validation_split': 0.2, 'Conv2D_2': 16, 'Dropout': 0.4, 'activation_3': 'tanh', 'activation': 'tanh', 'activation_4': 'relu', 'Dense': 128, 'pool_size': 4}
+
+{'pool_size_1': 3, 'pool_size': 3, 'activation': 'tanh', 'Dropout_1': 0.2, 'Dropout': 0.4, 'Conv2D': 8, 'pool_size_3': 10, 'activation_1': 'tanh', 'Dropout_2': 0, 'pool_size_4': 7, 'pool_size_2': 5, 'Conv2D_2': 64, 'Dense': 256, 'Conv2D_3': 16, 'activation_4': 'relu', 'Conv2D_1': 16, 'activation_3': 'tanh', 'pool_size_5': 5, 'activation_2': 'relu'}
