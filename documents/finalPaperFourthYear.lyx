@@ -147,16 +147,22 @@ key "Zheng2016"
 \end_layout
 
 \begin_layout Abstract
+Our CNN achieved 99% accuracy on our test dataset and our full re-identification
+ system works very well.
+ 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Add results/conclusions content
+NUMBER
 \end_layout
 
 \end_inset
 
-
+Therefore, we conclude that it is possible to use deep learning an effective
+ re-identification system in thermal imagery, and show the effective performance
+ of this on a varied dataset.
+ 
 \end_layout
 
 \begin_layout Abstract
@@ -3682,17 +3688,22 @@ reference "fig:Image-pairs-and"
  As before, those with a distance less than 0.5 were classified as the same
  person, while those with a distance greater that 0.5 were classified as
  different people.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-explain each one in turn
-\end_layout
+ Subfigures (a) and (b) of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
 
 \end_inset
 
-
+ show true positive classifications with very small Euclidean distances.
+ Subfigures (c) and (d) show false negatives, where (c) is a difficult classific
+ation as the two images are very similar, and (d) has a Euclidean distance
+ on the boundary of a positive or negative classification.
+ Subfigure (e) is the other side of this boundary, showing a close false
+ negative.
+ Subfigure (f) is another false negative, which seems to be a difficult
+ classification due to a different viewpoint and resolution.
+ Figures (g) and (h) then show comfortable true negative classifications.
 \end_layout
 
 \begin_layout Standard
@@ -4015,8 +4026,7 @@ reference "fig:Image-pairs-and-1"
 
 \end_inset
 
- shows a few examples of these images, with their Euclidean distances in
- the captions.
+ shows a few examples of these images in the same format as before.
  
 \begin_inset Note Note
 status open
@@ -4042,7 +4052,7 @@ width "100col%"
 special "none"
 height "1in"
 height_special "totalheight"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float table
@@ -4717,17 +4727,6 @@ reference "fig:Image-pairs-and-1"
  We hypothesise that this could be solved by using an optical zoom to ensure
  that all video streams give us images of person targets with similar resolution
 s.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-big eval bullshit
-\end_layout
-
-\end_inset
-
-
 \begin_inset Note Note
 status open
 
@@ -4872,6 +4871,10 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Camera 
+\begin_inset Formula $\alpha$
+\end_inset
+
 
 \end_layout
 
@@ -4990,6 +4993,10 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Camera 
+\begin_inset Formula $\beta$
+\end_inset
+
 
 \end_layout
 
@@ -5108,6 +5115,10 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
 
 \end_layout
 
@@ -5297,6 +5308,27 @@ status collapsed
 
 \begin_layout Section
 Conclusion
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+todo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "https://tinyurl.com/ycmsfsce"
+target "https://tinyurl.com/ycmsfsce"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
