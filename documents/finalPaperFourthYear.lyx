@@ -3,6 +3,7 @@
 \begin_document
 \begin_header
 \textclass IEEEtran
+\options hidelinks
 \use_default_options true
 \maintain_unincluded_children false
 \language british
@@ -120,18 +121,16 @@ key "Robson2017"
 \end_layout
 
 \begin_layout Abstract
-The aim of this project is to build a system that can detect a person within
- thermal imagery in real time, distinguish a person from other objects and
- track a person moving through a scene in real time.
+The aim of this project is to build a real time system that can detect a
+ person within thermal imagery, distinguish a person from other objects
+ and track a person moving through a scene.
  This is done using a combination of a Mixture of Gaussians (MoG) background
  subtractor, a Histogram of Oriented Gradients (HOG) person detector and
  a Track-Learn-Detect (TLD) tracker.
  We must then be able to re-identify people based on those our system has
  already seen, which is done using a siamese Convolutional Neural Network
  (CNN) to determine if a pair of images contains the same person or two
- different people..
- It will be trained on a set dataset, and then tested on a set of different
- people.
+ different people.
  This means that we are aiming to solve the open world re-identification
  problem, rather than simply to train and test in a closed world on the
  same set of people, as many previous approaches have 
@@ -160,9 +159,9 @@ NUMBER
 \end_inset
 
 Therefore, we conclude that it is possible to use deep learning an effective
- re-identification system in thermal imagery, and show the effective performance
+ re-identification system in thermal imagery, and we show the strong performance
  of this on a varied dataset.
- 
+ We have therefore 
 \end_layout
 
 \begin_layout Abstract
@@ -184,6 +183,16 @@ ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
 
 \begin_layout Section
 Introduction 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CAPITALISE SIAMESE?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -427,8 +436,7 @@ name "fig:Example-of-Thermal"
 
 \end_inset
 
-Several images showing the same person that our system must be able to re-identi
-fy as the same person
+Sample thermal images of the same person
 \end_layout
 
 \end_inset
@@ -453,8 +461,7 @@ key "Robson2017"
 \end_inset
 
 , we attempted to use features that a human would think were distinctive
- enough to facilitate re-identification.
- This had only limited success.
+ enough to facilitate re-identification, but this achieved limited success.
  Since our work in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -463,22 +470,14 @@ key "Robson2017"
 \end_inset
 
 , the attention of the researchers of re-identification has shifted to deep
- learning based solutions, as shall be discussed in more detail in section
+ learning based solutions, as shall be discussed in more detail in Section
  2.
  These deep learning approaches can be split into two categories: closed
  world, where the system is trained and tested on the same set of people
  from a pre defined dataset, and open world, where the system is trained
  to learn what makes people different, so it can be applied to any dataset
  of people.
- Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:openVsClosed"
-
-\end_inset
-
- shows the difference between these two possible approaches to deep learning
- enabled re-identification.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -510,23 +509,36 @@ Aims of the Project
 \end_layout
 
 \begin_layout Standard
-The intent of this project is to develop a system that can utilise an open
- world deep neural network, paired with a real time person detection system
- and TLD tracker, to solve the thermal re-identification problem, and improve
- on the performance of state of the art solutions, including our own previous
- work 
+This project has three main aims: to extend and improve the real time person
+ detection system from our previous work in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Robson2017"
 
 \end_inset
 
-.
+ to include a TLD tracker; to develop, train and test a deep siamese CNN
+ to determine whether a pair of images show the same person or different
+ people and to combine these into a fully functional re-identification system;
+ and to test this on single cameras and a network of multiple cameras.
+ This will enable us to solve the open world thermal re-identification problem
+ and set a new standard for the state of the art.
  
 \end_layout
 
 \begin_layout Subsection
 Achievements of the Project
+\end_layout
+
+\begin_layout Standard
+We have achieved our aims, the person detection system functions far better
+ than in our previous work due to the inclusion of TLD, we have achieved
+ 99% accuracy on a siamese CNN.
+ These have then been combined into a re-identification system and work
+ very well on our dataset.
+ We have therefore set the state of the art for thermal re-identification,
+ and shown it can be done using deep learning.
+ 
 \end_layout
 
 \begin_layout Section
@@ -672,7 +684,7 @@ key "Robson2017"
  people, such as an approximation of the shape of the target, an analysis
  of their gait and a measure of where the thermal hotspots of each person
  were.
- This performed resonably well for some features, but its inaccuracy in
+ This performed reasonably well for some features, but its inaccuracy in
  many situations led us to explore an alternative approach, using deep learning,
  based on the current state of the art in the area.
  
@@ -750,7 +762,13 @@ key "Zheng2016"
 
  conclude, as we have, that the open world problem is more relevant to real
  world applications.
- 
+ Networks intended to solve the open world re-identification problem are
+ referred to as siamese networks, meaning that the overall architecture
+ contains two identical sister networks.
+ Each of these sister networks takes one of the images being compared as
+ input, and outputs a feature vector describing it.
+ These vectors are then compared and a decision is made as to whether the
+ people in the two images are the same or not.
 \end_layout
 
 \begin_layout Standard
@@ -876,8 +894,8 @@ key "Qian2017"
 
  is another siamese CNN with the particular aim of making it work for people
  represented at different scales.
- This would be an interesting addition to our work, but is currently out
- of scope for us.
+ This would be an interesting addition to our work, but is beyond the scope
+ of this project.
  
 \end_layout
 
@@ -988,10 +1006,10 @@ In this project we use elements from many of the papers discussed in this
  section.
  The TLD tracker will be used simply for tracking a person from frame to
  frame for as long as they remain visible in the same area one camera view.
- We will disable some of the re-dentification based capability of TLD Whether
- this person has been previously observed by the system or not will be determine
-d by an open world siamese CNN, with an architecture similar to the related
- work.
+ We will disable some of the re-identification based capability of TLD.
+ Whether this person has been previously observed by the system or not will
+ be determined by an open world siamese CNN, with an architecture similar
+ to the related work.
  We take inspiration from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1069,7 +1087,8 @@ reference "fig:Logic-of-our"
 
 \end_inset
 
-.The implementation will begin by opening each video file, or live camera
+.
+ The implementation will begin by opening each video file, or live camera
  feed, and concurrently running the real time target detection code on these.
  Each time this code identifies a person, it checks whether it has a TLD
  tracker object associated with them or not.
@@ -1522,9 +1541,9 @@ The convolutional layers operate directly on the image to reduce the complexity
 \end_layout
 
 \begin_layout Standard
-Pooling layers then down-sample their input, looking at a neighbourhood
- of pixels and, in the case of max pooling that we have used here, output
- the maximum.
+Pooling layers then downsample their input, looking at a neighbourhood of
+ pixels and, in the case of max pooling that we have used here, output the
+ maximum.
  The aim of this is to provide robustness to the changes in the spatial
  location of features across the dataset and to reduce input dimensionality.
  This is also an effective tool to control overfitting, as it reduces the
@@ -1554,8 +1573,17 @@ At various stages of the network, we have some dropout layers.
 \end_layout
 
 \begin_layout Standard
-The loss function to be used for this network was proposed by the authors
- of 
+The loss function
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+what is a loss function
+\end_layout
+
+\end_inset
+
+ to be used for this network was proposed by the authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Hadsell2006"
@@ -1660,9 +1688,9 @@ reference "fig:The-architecture-of"
 \end_layout
 
 \begin_layout Standard
-The reason that ReLU was chosen as our activation function is that it is
- a good approximator, and can be used to approximate any function by stacking
- layers, as we have in this architecture.
+ReLU was chosen as our activation function as it is a good approximator,
+ and can be used to approximate any function by stacking layers, as we have
+ in this architecture.
  Also, the fact that ReLU only activates on positive weights leads to sparse
  activation and a lighter network.
  This, combined with the fact that ReLu is less computationally expensive
@@ -1671,7 +1699,7 @@ The reason that ReLU was chosen as our activation function is that it is
  train and query.
  Also the fact that ReLU is a good general classifier that can approximate
  any function is important for this purpose, as we do not know exactly what
- function we are trying to learn for effective re-identification in thermal
+ features we are trying to learn for effective re-identification in thermal
  imagery as a consequence of our previous work in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1681,19 +1709,6 @@ key "Robson2017"
 
 .
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-change figure for new params, explain tanh
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1801,7 +1816,7 @@ The Dataset
 \begin_layout Standard
 The data used to evaluate the re-identification system was gathered with
  three cameras at Durham University.
- The cameras and their fields of view are arranged as they are in figure
+ The cameras and their fields of view are arranged as they are in Figure
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1822,7 +1837,7 @@ reference "fig:Setup-of-Cameras"
 \end_inset
 
  respectively, and their fields of view shown by the matching coloured lines.
- The images seen by the cameras are shown in figure 
+ The images seen by the cameras are shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Setup-of-Cameras"
@@ -1932,6 +1947,16 @@ Position (a) and field of view (b) of the cameras used to record our this
 
 \begin_layout Subsection
 Real Time Person Detection System
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+a few HOG problems
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2180,16 +2205,6 @@ reference "fig:Loss-and-Accuracy"
  shows how the loss and accuracy varied on our training and validation sets
  as the network was trained over 100 epochs.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-not overfitting as validation doesn't tail off
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2204,19 +2219,8 @@ reference "fig:Loss-and-Accuracy"
  very closely, with the loss steadily decreasing and the accuracy steadily
  increasing before both flattened out towards the end of training.
  The use of 100 epochs gave both the loss and the accuracy time to stabilise,
- and ensure that the results we got for these, and the trained network as
- a whole were the best that could be attained.
+ and ensured that the final values of the network weights were optimal.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-rewrite this para when have new graphs
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2236,7 +2240,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/train_loss.png
-	scale 15
+	width 100col%
 
 \end_inset
 
@@ -2268,7 +2272,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/train_acc.png
-	scale 15
+	width 100col%
 
 \end_inset
 
@@ -2299,8 +2303,8 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/test_loss.png
-	scale 15
+	filename images/val_loss.png
+	width 100col%
 
 \end_inset
 
@@ -2331,8 +2335,8 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/test_acc.png
-	scale 15
+	filename images/val_acc.png
+	width 100col%
 
 \end_inset
 
@@ -2375,16 +2379,6 @@ name "fig:Loss-and-Accuracy"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-don't forget to update this figure from tensorboard
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2395,7 +2389,8 @@ reference "tab:Confusion-Matrices"
 
 \end_inset
 
- shows the confusion matrices of the network when predicting all three datasets.
+ shows the confusion matrices of the network when predicting the training,
+ validation and testing data partitions.
  These compare the output of the network against our ground truth labels
  and report the number of true positives (TP), where a pair is correctly
  classified as the same person, false positives (FP), where a pair is wrongly
@@ -2410,20 +2405,20 @@ reference "tab:Classification-Reports"
 \end_inset
 
  shows the classification reports for these datasets, reporting the accuracy,
- which is the percentage of the dataset that was correctly classified, precision
-, which is the percentage of the pairs that we labelled the same person
- actually were the same person, recall, which is the percentage of the pairs
- that were the same person that we correctly labelled and F1-Score, which
- is the average of precision and recall, taking into account both false
- positives and false negatives.
+ which is the percentage of the image pairs that were correctly classified,
+ precision, which is the percentage of the pairs that we labelled the same
+ person actually were the same person, recall, which is the percentage of
+ the pairs that were the same person that we correctly labelled and F1-Score,
+ which is the average of precision and recall, taking into account both
+ false positives and false negatives.
  The equations of accuracy, precision, recall and F1-score are given below.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
+\begin{equation}
 Accuracy=\frac{TP+TN}{TP+FP+TN+FN}
-\]
+\end{equation}
 
 \end_inset
 
@@ -2432,9 +2427,9 @@ Accuracy=\frac{TP+TN}{TP+FP+TN+FN}
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
+\begin{equation}
 Precision=\frac{TP}{TP+FP}
-\]
+\end{equation}
 
 \end_inset
 
@@ -2443,9 +2438,9 @@ Precision=\frac{TP}{TP+FP}
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
+\begin{equation}
 Recall=\frac{TP}{TP+FN}
-\]
+\end{equation}
 
 \end_inset
 
@@ -2454,9 +2449,9 @@ Recall=\frac{TP}{TP+FN}
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
+\begin{equation}
 F1-Score=2\times\frac{Precision\times Recall}{Precision+Recall}
-\]
+\end{equation}
 
 \end_inset
 
@@ -3526,9 +3521,12 @@ reference "fig:Results-of-the"
 \end_inset
 
  is a graphical representation of the Euclidean distances reported by the
- network on the train, validation and test datasets.
+ network on the train, validation and test data splits.
  These graphs show a clear split between the pairs of images of the same
  person and pairs of images of different people.
+ This split is a good result because it shows that the Euclidean distances
+ of the positive image pairs were very different in almost all cases to
+ the Euclidean distances of the negative pairs.
  The split for the training set is more clear than the split for the validation
  and testing set.
  This improved performance on the training set is expected, as these are
@@ -3553,7 +3551,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/trainResults.png
-	scale 25
+	scale 28
 
 \end_inset
 
@@ -3561,7 +3559,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Train set results
 \end_layout
 
 \end_inset
@@ -3589,7 +3587,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/validationResults.png
-	scale 25
+	scale 28
 
 \end_inset
 
@@ -3597,7 +3595,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Validation set results
 \end_layout
 
 \end_inset
@@ -3625,7 +3623,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/testResults.png
-	scale 25
+	scale 28
 
 \end_inset
 
@@ -3633,7 +3631,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Test set results
 \end_layout
 
 \end_inset
@@ -3704,6 +3702,16 @@ ation as the two images are very similar, and (d) has a Euclidean distance
  Subfigure (f) is another false negative, which seems to be a difficult
  classification due to a different viewpoint and resolution.
  Figures (g) and (h) then show comfortable true negative classifications.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why are these like this? what does it mean?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3994,10 +4002,15 @@ key "Robson2017"
 \end_inset
 
 .
- The cameras for this dataset are placed in different locations to our main
- dataset, and the profiles of the people are different.
- The results that the network gave for this dataset are shown below in Table
- 
+ Henceforth, we shall refer to this dataset as the low level dataset, as
+ the cameras were located on the ground, compared to our main dataset, which
+ we shall refer to as the high level datsaset, as the cameras were situated
+ on the roof.
+ Therefore, as cameras for the low level dataset are placed in different
+ locations to the high level dataset, the profiles of the people are different
+ to in both resolution and viewing angle.
+ The results that the network gave for the low level dataset are shown below
+ in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Confusion-Matrix-other"
@@ -4019,25 +4032,7 @@ reference "fig:Euclidean-distance-results-other"
 \end_inset
 
 .
- Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Image-pairs-and-1"
-
-\end_inset
-
- shows a few examples of these images in the same format as before.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-explain each one in turn
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -4400,10 +4395,9 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-\align center
 \begin_inset Graphics
 	filename images/otherDatasetResults.png
-	scale 25
+	width 100col%
 
 \end_inset
 
@@ -4429,6 +4423,76 @@ name "fig:Euclidean-distance-results-other"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see from these results, the performance of the system on the low
+ level dataset is substantially worse than the high level dataset, which
+ the CNN was trained on.
+ We hypothesise that this is due to the different locations of the cameras.
+ The effect of this can be seen more clearly when the classified image pairs
+ of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+ are contrasted with those in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+.
+ Subfigures of (a) and (b) of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+ are true positive classifications, but have larger euclidean distances
+ than the true positive examples from the high level dataset.
+ Subfigures (c) and (d) again show false positives, but these seem to be
+ fairly easily identifiable as different people, as opposed to the false
+ positives from Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+, which appear to be some of the more difficult classifications.
+ The same is true for the false negatives, as those shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+ appear to be fairly easy to classify as the same person, whereas those
+ shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+ are more difficult classifications.
+ Subfigures (g) and (h) are true negatives, but seem to be of comparable
+ difficulty to the false positives.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why are these like this? what does it mean?
 \end_layout
 
 \end_inset
@@ -4711,9 +4775,7 @@ name "fig:Image-pairs-and-1"
 \end_layout
 
 \begin_layout Standard
-As we can see from these results, the performance of the system on this
- dataset is substantially worse.
- As we can clearly see, the images in Figure 
+As we can clearly see, the images in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Image-pairs-and-1"
@@ -4727,11 +4789,16 @@ reference "fig:Image-pairs-and-1"
  We hypothesise that this could be solved by using an optical zoom to ensure
  that all video streams give us images of person targets with similar resolution
 s.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-introduce dataset terminology for this bit
+doing this in reverse (train on low level, eval on high) gives same results
+ - shows datasets are of similar difficulty and it is the system that is
+ not general enough 
 \end_layout
 
 \end_inset
@@ -4746,19 +4813,107 @@ Single Camera Re-Identification System
 \begin_layout Standard
 Having trained and evaluated the CNN, we then integrate this with our person
  detection system to form a full re-identification system, and run this
- on our dataset.
+ on our high level dataset.
  First, we consider the performance of the system when run on a single camera
  view.
  This enables use to simply and effectively test and evaluate our re-identificat
 ion system on one camera viewpoint to remove the potential missclassifications
  that could result from examining all of the camera views at once.
+ Examples of such missclassifications from this dataset can be found in
+ Subfigures (d), (e) and (f) of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We ran the system on all three camera views from the high level dataset,
+ and selected images of the performance are shown in Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-a"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-b"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-g"
+
+\end_inset
+
+.
+ The output appears to be perfectly accurate, as each person is constantly
+ followed by their own associated bounding box, both with colour and number,
+ for as long as they are in the frame.
+ To a human observer watching these videos in real time, it would appear
+ to be almost 100% accurate.
+ However, there are a few blips
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+replace blips
+\end_layout
+
+\end_inset
+
+ where some of the people get missclassified as another person or get a
+ new target assotiated with them for a single frame, before they revert
+ to their correct target.
+ This is caused by errors from the HOG person classifier, where it has identifie
+d a small part of a person to be a complete person.
+ Examples of where this has occurred are shown in Subfigure (c) of Figures
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-a"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-b"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-g"
+
+\end_inset
+
+, while Subfigures (a) and (b) show the system performing well.
+ Footage of the system running on these cameras individually can be found
+ in a YouTube playlist at 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://tinyurl.com/ycmsfsce"
+target "https://tinyurl.com/ycmsfsce"
+
+\end_inset
+
+.
  
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-reference figure from previous section showing missclassification from different
- viewpoint
+NUMBERS??
 \end_layout
 
 \end_inset
@@ -4782,7 +4937,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/alpha1.png
-	scale 20
+	width 100col%
 
 \end_inset
 
@@ -4814,7 +4969,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/alpha2.png
-	scale 20
+	width 100col%
 
 \end_inset
 
@@ -4845,8 +5000,8 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/alpha3.png
-	scale 20
+	filename images/alphaErr.png
+	width 100col%
 
 \end_inset
 
@@ -4873,6 +5028,13 @@ status collapsed
 \begin_layout Plain Layout
 Camera 
 \begin_inset Formula $\alpha$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Camera-a"
+
 \end_inset
 
 
@@ -4904,7 +5066,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/beta1.png
-	scale 20
+	width 100col%
 
 \end_inset
 
@@ -4936,7 +5098,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/beta2.png
-	scale 20
+	width 100col%
 
 \end_inset
 
@@ -4967,8 +5129,8 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/beta3.png
-	scale 20
+	filename images/betaErr.png
+	width 100col%
 
 \end_inset
 
@@ -4995,6 +5157,13 @@ status collapsed
 \begin_layout Plain Layout
 Camera 
 \begin_inset Formula $\beta$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Camera-b"
+
 \end_inset
 
 
@@ -5026,39 +5195,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/gamma1.png
-	scale 20
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/gamma2.png
-	scale 20
+	width 100col%
 
 \end_inset
 
@@ -5090,7 +5227,39 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/gamma3.png
-	scale 20
+	width 100col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/gammaErr.png
+	width 100col%
 
 \end_inset
 
@@ -5120,7 +5289,9 @@ Camera
 \end_inset
 
 
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Camera-g"
 
 \end_inset
 
@@ -5130,14 +5301,6 @@ Camera
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-For this section, need some numerical estimate of accuracy
 \end_layout
 
 \end_inset
@@ -5151,6 +5314,66 @@ Multi-Camera Re-Identification System
 
 \begin_layout Standard
 We now move on to running the system on all of the camera views at once.
+ This introduces the different viewpoints alluded to previously that we
+ feared may cause some errors.
+ Some images of the results of this are shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Multi-camera-re-identification-r"
+
+\end_inset
+
+, and a video can be found in the YouTube playlist at 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://tinyurl.com/ycmsfsce"
+target "https://tinyurl.com/ycmsfsce"
+
+\end_inset
+
+.
+ The performance was very good once again
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+NUMBERS
+\end_layout
+
+\end_inset
+
+, with only a few errors, and these do not have a particularly damaging
+ impact on the performance of the the full system.
+ As previously discussed for the single camera system, there were a few
+ frames that caused missclassifications due to errors with HOG.
+ There were also some false negative classifications where additional targets
+ were created for some of the people present in the dataset.
+ This is fairly easy for a human operator to deal with, as these extra targets
+ still only ever identify a single person, so we can clearly determine that
+ one person in the video stream was represented by two person objects in
+ our system.
+ Examples of this are shown in Subfigure (c) of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Multi-camera-re-identification-r"
+
+\end_inset
+
+, where person 0 has become person 5, and in Subfigure (d) of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Multi-camera-re-identification-r"
+
+\end_inset
+
+, where person 1 has become person 8.
+ The majority of these new targets were created as the people moved through
+ camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
+, as this camera is at a different angle to the people and causes them to
+ have a different thermal profile.
  
 \end_layout
 
@@ -5172,7 +5395,8 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/full1.png
-	scale 25
+	width 85page%
+	height 18pheight%
 
 \end_inset
 
@@ -5204,7 +5428,8 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/full2.png
-	scale 25
+	width 85page%
+	height 18pheight%
 
 \end_inset
 
@@ -5236,7 +5461,8 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/full3.png
-	scale 25
+	width 85page%
+	height 18pheight%
 
 \end_inset
 
@@ -5268,7 +5494,8 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/full4.png
-	scale 25
+	width 85page%
+	height 18pheight%
 
 \end_inset
 
@@ -5293,6 +5520,13 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Multi-camera re-identification results
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Multi-camera-re-identification-r"
+
+\end_inset
+
 
 \end_layout
 
@@ -5308,24 +5542,61 @@ status collapsed
 
 \begin_layout Section
 Conclusion
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-todo
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
+In this paper, we have developed a fully functional thermal re-identification
+ system using a track-learn-detect (TLD) tracker and a deep siamese CNN
+ that performs very well on a varied dataset.
+ The figures shown in this paper and the videos at
 \begin_inset CommandInset href
 LatexCommand href
 name "https://tinyurl.com/ycmsfsce"
 target "https://tinyurl.com/ycmsfsce"
 
+\end_inset
+
+ verify this claim of good performance.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+NUMBERS
+\end_layout
+
+\end_inset
+
+As the there has been very little previous work on solving the re-identification
+ problem in thermal, we are defining the state of the art with this work,
+ and have shown that it is possible when using deep learning to extract
+ features that would not necessarily occur to a human observer when trying
+ to re-identify people.
+ Possible extensions to this work would be to make the network a better
+ generic classifier across multiple datasets and camera arrangements, as
+ we have shown that our network functions very well on our camera arrangement,
+ with 99% accuracy, but far worse on an alternative camera arrangement,
+ with only 67% accuracy.
+ Inspiration for this could be drawn from the previous work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Martinel2016"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Qian2017"
+
+\end_inset
+
+, where this problem is addressed for colour re-identification.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
