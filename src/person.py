@@ -18,9 +18,9 @@ class Person:
 	def addPrevious(self, roi):
 		if len(self.previous)<2:
 			self.previous.append(roi)
-		else:
-			self.previous = self.previous[1:]
-			self.previous.append(roi)
+		# else:
+		# 	self.previous = self.previous[1:]
+		# 	self.previous.append(roi)
 		self.active = True
 
 	def getPrevious(self):

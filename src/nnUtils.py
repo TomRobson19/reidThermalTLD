@@ -56,19 +56,10 @@ def convertForKeras(img):
     return newImg
 
 def queryNeuralNetwork(img1, img2):
-    # concat = np.concatenate((img1, img2), axis=1)
-    # concat *= 255
-
     img1 = np.array([img1])
     img2 = np.array([img2])
 
     prediction = model.predict([img1,img2])
-
-    # if(prediction[0][0] < 0.5):
-    #     cv2.imwrite("classifications/positive/"+str(prediction[0][0])+".jpg",concat)
-    # else:
-    #     cv2.imwrite("classifications/negative/"+str(prediction[0][0])+".jpg",concat)
-
 
     return prediction[0][0]
 
@@ -103,7 +94,7 @@ def whichPerson(img):
 
             concat = np.concatenate((personROI, closestFrame), axis=1)
             concat *= 255
-            cv2.imwrite("classificationsREID/"+str(closest)+".jpg",concat)
+            cv2.imwrite("classificationsREID/"+str(closest)+" "+str(closestPerson)+".jpg",concat)
 
         # count the number of times these are different people and <0.5, or the same person and >0.5
 
