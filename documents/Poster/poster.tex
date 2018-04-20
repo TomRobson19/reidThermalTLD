@@ -12,7 +12,7 @@
 
   \usefonttheme[onlymath]{serif}
   \boldmath
-  \usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}                       
+  \usepackage[orientation=portrait,size=a3,scale=1.4,debug]{beamerposter}                       
 
   % e.g. for DIN-A0 poster
   % \usepackage[orientation=portrait,size=a1,scale=1.4,grid,debug]{beamerposter}
@@ -22,22 +22,25 @@
   % e.g. for DIN-A0 poster with rwth-glossy-uv printer check ...
   %
 
-  \title[Thermal Re-ID]{Camera-to-Camera Tracking for Person Re-identification within Thermal Imagery}
-  \author[G Ingram]{Thomas Robson - Supervised by Dr Toby Breckon}
-  \institute[Durham]{School of Computer Science, Durham University}
+  \title[Thermal Re-ID]{On the Use of Deep Learning for Open World Person Re-Identification in Thermal Imagery}
+  \author{T.A. Robson - Supervised by T.P. Breckon}
+  \institute[Durham]{Department of Computer Science, Durham University}
 
   \begin{document}
   \begin{frame}{} 
 
-  \vfill
-  \begin{block}{Introduction}
-          A fundamental task for a distributed multi-camera surveillance system is Person Re-Identification, or to associate people across different camera views. This has been well researched in colour, but there has been very little research done on solving this problem in thermal, making our work state of the art. 
-
-The intent of this project is answer the question "Which features of a human target are appropriate to facilitate Re-Identification in thermal video?" and to develop a functioning Re-Identification system. The challenges associated with this are due to the increased complexity of thermal features compared to colour features.
-        \end{block}
+ 
+  
         
     \begin{columns}[t]
-      \begin{column}{.49\linewidth}
+      \begin{column}{.5\linewidth}
+      
+      	\begin{block}{Introduction}
+          A fundamental task for a distributed multi-camera surveillance system is Person Re-Identification, or to associate people across different camera views. This has been well researched in colour, but there has been very little research done on solving this problem in thermal, making our work state of the art. 
+          
+          Since our work in [1], the attention of the researchers of re-identification has shifted to deep learning based solutions, with much success. We are attempting to replicate this success in thermal imagery.
+          
+        \end{block}
         
         \begin{block}{Person Detection and Tracking}
         	The process of Person detection and Tracking employed in this Project can be broken down into multiple stages. 
@@ -53,60 +56,81 @@ The intent of this project is answer the question "Which features of a human tar
 
 
         \begin{block}{Network Architecture}
-        Our network architecture is a Deep Siamese CNN. This means that the network is trained on pairs of images, and determines whether these images show the same person or not. Our CNN consists of convolutional layers, pooling layers and fully connected layers. 
+        Our network architecture is a Deep Siamese CNN. This means that the network is trained on pairs of images, and determines whether these images show the same person or not, outputting a Euclidean distance which informs a binary classification. Our CNN consists of convolutional layers, pooling layers and fully connected layers. 
         % more explanation here if room
         \includegraphics[width=.95\linewidth]{../images/architectureDrawing.eps}
         \end{block}
 	
-        \begin{block}{Network Results 1}
-		% maybe loss and acc graphs, but probs not
+        \begin{block}{Network Results}
+        Here we present the performance of our network. We show the confusion matrices and classification reports for the training, valiation and testing splits. 
+		    \begin{columns}[t]
+		    
+				\begin{column}{.45\linewidth}
+				
+				The graphs show the distribution of Euclidean distances between pairs of the same person and different people. The clear split shows that our system is performing well.
+				
+				\vspace{1cm}
+				\includegraphics[width=.98\linewidth]{../images/conf.png}  
+				\vspace{.5cm}
+			 	\includegraphics[width=.98\linewidth]{../images/class.png}
+			 	  
+				\end{column}
 		
-		%tables for conf mat and class rep
-
+				\begin{column}{.45\linewidth}
+				
+					\includegraphics[width=.98\linewidth]{../images/graphs.png}
+					  
+				\end{column}
+		
+		
+			\end{columns}
+		
+ 		
         \end{block}
         
-        \begin{block}{References}
-		\scriptsize
-		
-[1] Zoran Zivkovic. Improved Adaptive Gaussian Mixture Model for Background Subtraction. Proceedings of the 17th International Conference on Pattern Recognition, 2004.
-    
-[2] Navneet Dalal and Bill Triggs. Histograms of Oriented Gradients for Human Detection. In IEEE Computer Society Conference on Computer Vision and Pattern Recognition, 2005.
-
-[3] Zdenek Kalal, Krystian Mikolajczyk, and Jiri Matas. Tracking-Learning-Detection. IEEE Transactions on Pattern Analysis and Machine Intelligence, 6, 2010.
-		
-    \end{block}
+        
     
     
 	 \end{column}
-	 \begin{column}{.49\linewidth}
- 		\begin{block}{Network Results 2}
- 		%euclidean distance plots
+	 \begin{column}{.5\linewidth}
  		
- 		\includegraphics[width=.32\linewidth]{../images/trainResults.png}  
- 		\hspace{.001cm}
- 		\includegraphics[width=.32\linewidth]{../images/validationResults.png}
- 		\hspace{.001cm}
-        \includegraphics[width=.32\linewidth]{../images/testResults.png}
+ 		\begin{block}{Network Classification Results}
+        We present some of the classification results of our network. The captions of each image shown here give the Euclidean distance between the image pair, as well as whether this classification was a True Positive, False Positive, False Negative or True Negative. 
+        
+ 		\includegraphics[width=0.47\linewidth]{../images/posterPairs1.png}  
+ 		\hspace{.1cm}
+ 		\includegraphics[width=0.47\linewidth]{../images/posterPairs2.png} 
+ 		
         \end{block}
         
         \begin{block}{The Re-Identification System}
-        estimated sucess rate and reasons
-        images of system in action
+        Here we show the performance of our re-identification system across our dataset of 3 cameras. It works very well, achieving and accuracy rate of 96.32\%. A video can be found in the playlist at https://tinyurl.com/ycmsfsce.
        
- 		%\includegraphics[width=.44\linewidth]{../prob1.png}  
- 		\hspace{.7cm}
-        %\includegraphics[width=.44\linewidth]{../prob2.png}  
-        
-        
-        %\includegraphics[width=.44\linewidth]{../deltaProb1.png}
-        \hspace{.7cm}
-        %\includegraphics[width=.44\linewidth]{../deltaProb2.png}  
+ 		\includegraphics[width=0.98\linewidth]{../images/full1.png}  
+ 		\vspace{.05cm}
+ 		\includegraphics[width=0.98\linewidth]{../images/full2.png}
+ 		\vspace{.05cm}
+        \includegraphics[width=0.98\linewidth]{../images/full3.png} 
+        \vspace{.05cm}
+        \includegraphics[width=0.98\linewidth]{../images/full4.png} 
         \end{block}
         
        	\begin{block}{Conclusion}
-
+		We have developed a fully functional thermal re-identification system using a track-learn-detect (TLD) tracker and a deep siamese CNN that performs very well on a varied dataset.As the there has been very little previous work on solving the re-identification problem in thermal imagery, we are defining the state of the art with this work, and have shown that it is possible when using deep learning to extract features that would not necessarily occur to a human observer.
         
         \end{block}
+        
+        \begin{block}{References}
+		\small
+[1] Thomas A. Robson and Toby P. Breckon. Camera-to-Camera Tracking for Person Re-identification within Thermal Imagery. Bachelors thesis, Durham University, 2017.
+
+[2] Zoran Zivkovic. Improved Adaptive Gaussian Mixture Model for Background Subtraction. Proceedings of the 17th International Conference on Pattern Recognition, 2004.
+    
+[3] Navneet Dalal and Bill Triggs. Histograms of Oriented Gradients for Human Detection. In IEEE Computer Society Conference on Computer Vision and Pattern Recognition, 2005.
+
+[4] Zdenek Kalal, Krystian Mikolajczyk, and Jiri Matas. Tracking-Learning-Detection. IEEE Transactions on Pattern Analysis and Machine Intelligence, 6, 2010.
+		
+    \end{block}
 
       \end{column}
     \end{columns}
