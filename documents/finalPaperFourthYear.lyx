@@ -129,8 +129,8 @@ The aim of this research is to build a real time system that can detect
  subtractor, a Histogram of Oriented Gradients (HOG) person detector and
  a Track-Learn-Detect (TLD) tracker.
  We then attempt to re-identify people using a siamese Convolutional Neural
- Network (CNN), which determines whether a pair of images contains the same
- person or two different people.
+ Network (CNN) architecture, which determines whether a pair of images contains
+ the same person or two different people.
  Therefore, this research tackles the open world re-identification problem,
  rather than simply training and testing in a closed world on the same set
  of people, as many previous approaches have done 
@@ -143,6 +143,16 @@ key "Zheng2016"
 .
  This enables us to deploy our solution on any camera system and with any
  human targets.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+a couple more sentences on how this works in detail
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -152,6 +162,16 @@ Our CNN achieved 99% accuracy on our test dataset and our full re-identification
 ication system in thermal imagery and we show the strong performance of
  this on a varied dataset.
   
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need to place work and achievements relative to current state of the art
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -173,6 +193,16 @@ ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
 
 \begin_layout Section
 Introduction 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+check formatting to ensure I have no huge whitespace holes
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -521,6 +551,16 @@ key "Robson2017"
 
 \begin_layout Subsection
 Achievements of the Project
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need to place work and achievements relative to current state of the art
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1817,6 +1857,16 @@ ble with the rest of our C++ codebase.
 
 \begin_layout Section
 Results 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ensure all figure captions are full sentences
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1829,6 +1879,17 @@ We now present the performance that our system has been able to acheive,
 
 \begin_layout Subsection
 The Dataset
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+discuss different camera views here so that discussing HOGs inferior side
+ on performance makes more sense later
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1955,6 +2016,16 @@ Position (a) and field of view (b) of the cameras used to record our this
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+remake these figures, greek letters on (a), label overlays on (b)
 \end_layout
 
 \end_inset
@@ -2364,10 +2435,56 @@ name "fig:Hog-Errors"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+improve this image caption to be a sentence
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 The Deep Learning System 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ensure this is present tense
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+throughout this section change Subfigure (a)....
+ to Figure 11(a)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+throughout - would it not be better to define this distance thresholds a
+ variable and the distance as a function? (greater than 0.5 etc.) - do this
+ in solution section and fix throughout 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2673,6 +2790,20 @@ reference "tab:Confusion-Matrices"
  to deal with, as we would be able to clearly determine that one person
  in the video stream was represented by two person objects in our system.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+change table captions to be sentences, remove TP= from conf mat, convert
+ these values to percentages
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3950,7 +4081,7 @@ reference "tab:Confusion-Matrix-other"
 
 \end_inset
 
- , Table 
+, Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Classification-Report-other"
@@ -4239,6 +4370,16 @@ name "fig:Image-pairs-and"
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+2 decimal places for Euclidean distances
 \end_layout
 
 \end_inset
@@ -4639,6 +4780,16 @@ name "fig:Euclidean-distance-results-other"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+same table changes as previously
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5003,6 +5154,16 @@ name "fig:Image-pairs-and-1"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+2 decimal places for Euclidean distances
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5175,6 +5336,16 @@ Single Camera Re-Identification System
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Single-Camera-Re-Identification"
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+use hyperref to make into an active url - look up what this means
+\end_layout
 
 \end_inset
 
@@ -5714,6 +5885,31 @@ name "sub:Multi-Camera-Re-Identification-S"
 
 \end_inset
 
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+get more multicam example figures up to 20 pages, do in page blocks of connected
+ images with dotted lines connecting people
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+place images above conclusion and references, as Toby how to make this work
+ with placement of this explanation section
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -5942,7 +6138,17 @@ name "fig:Multi-camera-re-identification-r"
 \end_layout
 
 \begin_layout Section
-Conclusion
+Conclusion 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need to place work and achievements relative to current state of the art
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5992,6 +6198,16 @@ key "Qian2017"
 LatexCommand bibtex
 bibfiles "My Collection"
 options "bibtotoc,plain"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIX REFERENCES AS PER TOP 10 DOCUMENT
+\end_layout
 
 \end_inset
 
