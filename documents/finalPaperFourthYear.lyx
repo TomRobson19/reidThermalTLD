@@ -94,11 +94,12 @@ Department of Computer Science, Durham University
 \end_layout
 
 \begin_layout Abstract
-Although use of thermal imagery currently poses significant advantages for
- 24/7 surveillance in terms of the visibility of targets under all environmental
- conditions, a key limitation is the lack of colour information.
+Thermal imagery provides significant advantages for round-the-clock surveillance
+, providing visibility of targets under all environmental conditions.
+ However, a key limitation of thermal imagery is the lack of colour information
+ available.
  Person re-identification across multiple cameras is a key research problem
- within the domain of visual surveillance and a important challenge for
+ within the domain of visual surveillance and an important challenge for
  the future deployment of thermal sensing as an autonomous sensor technology.
  Many current approaches to the problem rely on colour features 
 \begin_inset CommandInset citation
@@ -108,8 +109,8 @@ key "Gong2014"
 \end_inset
 
 .
- We have previously attempted to use a set of similar features to solve
- the thermal re-identification problem with little success 
+ We have previously attempted to use a set of comparable features in thermal
+ space to solve the re-identification problem with little success 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Robson2017"
@@ -121,19 +122,18 @@ key "Robson2017"
 \end_layout
 
 \begin_layout Abstract
-The aim of this project is to build a real time system that can detect a
- person within thermal imagery, distinguish a person from other objects
+The aim of this research is to build a real time system that can detect
+ a object within a thermal image, distinguish a person from other objects
  and track a person moving through a scene.
  This is done using a combination of a Mixture of Gaussians (MoG) background
  subtractor, a Histogram of Oriented Gradients (HOG) person detector and
  a Track-Learn-Detect (TLD) tracker.
- We must then be able to re-identify people based on those our system has
- already seen, which is done using a siamese Convolutional Neural Network
- (CNN) to determine if a pair of images contains the same person or two
- different people.
- This means that we are aiming to solve the open world re-identification
- problem, rather than simply to train and test in a closed world on the
- same set of people, as many previous approaches have 
+ We then attempt to re-identify people using a siamese Convolutional Neural
+ Network (CNN), which determines whether a pair of images contains the same
+ person or two different people.
+ Therefore, this research tackles the open world re-identification problem,
+ rather than simply training and testing in a closed world on the same set
+ of people, as many previous approaches have done 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Zheng2016"
@@ -141,16 +141,16 @@ key "Zheng2016"
 \end_inset
 
 .
- This enables us to deploy our solution on any camera system with any human
- targets.
+ This enables us to deploy our solution on any camera system and with any
+ human targets.
 \end_layout
 
 \begin_layout Abstract
 Our CNN achieved 99% accuracy on our test dataset and our full re-identification
- system works very well, achieving an accuracy of 96%.
- Therefore, we conclude that it is possible to use deep learning an effective
- re-identification system in thermal imagery, and we show the strong performance
- of this on a varied dataset.
+ system works well, achieving an accuracy of 96%.
+ We conclude that it is possible to use deep learning as an effective re-identif
+ication system in thermal imagery and we show the strong performance of
+ this on a varied dataset.
   
 \end_layout
 
@@ -193,11 +193,18 @@ key "Gong2014"
 
 \end_inset
 
- and is an interesting and important problem within the field of computer
+ and is an interesting and important research area within the field of computer
  vision.
- From the previous work, we can see that a substantial amount of research
- that has been done on person re-identification, mainly revolving around
- the use of features or attributes of a person 
+ From the previous work discussed in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Related-Work"
+
+\end_inset
+
+, we can see that a substantial amount of research has been done on person
+ re-identification, mainly revolving around the use of features or attributes
+ of a person 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Layne"
@@ -205,8 +212,8 @@ key "Layne"
 \end_inset
 
 .
- However, much of this relies on the visible spectrum, with attributes of
- the form “red shirt” 
+ However, much of this operates in the visible spectrum, with attributes
+ of the form “red shirt” 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Layne"
@@ -214,25 +221,25 @@ key "Layne"
 \end_inset
 
 .
- However, in the modern world, thermal imagery is often used for 24/7 surveillan
-ce when varying environmental conditions are present.
- Therefore, it is important that an effective re-identification system is
- developed to utilise this area of surveillance, as this problem has yet
- to be effectively solved.
+ In the modern world, thermal imagery is often used for round-the-clock
+ surveillance when varying environmental conditions are present.
+ It is important, therefore, that an effective re-identification system
+ is developed to utilise the data available from thermal surveillance, as
+ this problem has yet to be effectively solved.
 \end_layout
 
 \begin_layout Standard
-There are many potential applications for this technology but the most important
- in the modern world would be to support human intelligence organisations.
- The surveillance data that a system like this can provide would be critical
- for crime-prevention, forensic analysis, and counter-terrorism activities
- in both civilian and governmental agencies alike.
- While this surveillance data is currently widely used by human operators,
- these operators have to be trained, which offsets the utility of this approach
- with training and staffing costs.
+There are many potential applications for this technology, but the most
+ important in the modern world would be to support intelligence organisations.
+ The surveillance data that a system like this can provide is critical for
+ crime-prevention, forensic analysis, and counter-terrorism activities in
+ both civilian and governmental agencies alike.
+ While this surveillance data is widely used by human operators, these operators
+ have to be trained, which offsets the utility of this approach with training
+ and staffing costs.
  The implementation of an automated re-identification system is therefore
  of great interest, as it would be very useful in supporting these human
- operators and enabling them to achieve better results more efficiently.
+ operators and enabling them to achieve improved results more efficiently.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -240,8 +247,8 @@ reference "fig:Example-of-Thermal"
 
 \end_inset
 
- shows five different views of the same person that our features must be
- able to re-identify as being the same person.
+ shows five different views of the same person that our system is required
+ to re-identify as being the same person.
  
 \end_layout
 
@@ -449,27 +456,33 @@ key "Robson2017"
 
 \end_inset
 
-, the attention of the researchers of re-identification has shifted to deep
- learning based solutions, as shall be discussed in more detail in Section
- 2.
+, the attention of researchers in this area has shifted to deep learning
+ based solutions, as is discussed in more detail in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Related-Work"
+
+\end_inset
+
+.
  These deep learning approaches can be split into two categories: closed
  world, where the system is trained and tested on the same set of people
- from a pre defined dataset, and open world, where the system is trained
- to learn what makes people different, so it can be applied to any dataset
- of people.
+ from a pre-defined dataset; and open world, where the system is trained
+ to learn what makes people different, so that it can be applied to any
+ dataset of people.
  
 \end_layout
 
 \begin_layout Standard
-In order to improve the performance and runtime of our new approach, we
- are replacing the Kalman filter used in 
+To improve the performance and runtime of our new approach, we are replacing
+ the Kalman filter used in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Robson2017"
 
 \end_inset
 
- with an implementation of the Track-Learn-Detect (TLD) tracker, originally
+ with an implementation of the Track-Learn-Detect (TLD) algorithm, originally
  proposed by the authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -478,10 +491,10 @@ key "Kalal2010"
 \end_inset
 
 .
- The aim here is to ensure that we do not have to pass every frame to the
- neural network, but instead, when a person has been identified, they can
- then be tracked for as long as they remain unobscured in the frame, and
- continue to be labelled as the same person.
+ The aim is to ensure that we do not have to pass every frame to the neural
+ network, but instead, when a person has been identified, they can then
+ be tracked for as long as they remain unobscured in the frame, and continue
+ to be labelled as the same person.
 \end_layout
 
 \begin_layout Subsection
@@ -499,9 +512,9 @@ key "Robson2017"
 
  to include a TLD tracker; to develop, train and test a deep siamese CNN
  to determine whether a pair of images show the same person or different
- people and to combine these into a fully functional re-identification system;
- and to test this on single cameras and a network of multiple cameras.
- This will enable us to solve the open world thermal re-identification problem
+ people; and to combine these into a fully functional re-identification
+ system tested on both single cameras and a network of multiple cameras.
+ This enables us to solve the open world thermal re-identification problem
  and set a new standard for the state of the art.
  
 \end_layout
@@ -511,23 +524,31 @@ Achievements of the Project
 \end_layout
 
 \begin_layout Standard
-We have achieved our aims, the person detection system functions far better
- than in our previous work due to the inclusion of TLD, we have achieved
- 99% accuracy on a siamese CNN.
- These have then been combined into a re-identification system and work
- very well on our dataset, achieving an accuracy of 96%.
- We have therefore set the state of the art for thermal re-identification,
- and shown it can be done using deep learning.
+We have achieved our aims.
+ The person detection system functions far better than in our previous work
+ due to the inclusion of TLD and we have achieved 99% accuracy on a siamese
+ CNN.
+ These components have been combined into a re-identification system and
+ work well on our dataset, achieving an accuracy of 96%.
+ We have set the state of the art for thermal re-identification, and shown
+ it can be done using deep learning.
  
 \end_layout
 
 \begin_layout Section
 Related Work
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Related-Work"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 We will now examine the previous work that has been done relating to the
- person re-identification problem.
+ person re-identification problem, most of which concerns the visible spectrum.
 \end_layout
 
 \begin_layout Subsection
@@ -537,7 +558,7 @@ Feature-Based Attempts at Re-Identification
 \begin_layout Standard
 Re-identification in colour is a well researched area, particularly using
  distinctive features for this purpose.
- Many of these methods are discussed in 
+ Many of methods for utilising these features are discussed in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Gong2014"
@@ -555,14 +576,14 @@ key "Martinel2016"
 \end_inset
 
 .
- Here, the technique of distance vector routing is employed to get an idea
- of the relative locations of the cameras, enabling the system to prioritise
- the people seen most recently by the closest camera, as these are most
- likely to be correct.
- This is done by first analysing the overlap between cameras, and then computing
- distance vectors and probabilities of going from one camera to another,
- reducing the time complexity of the re-identification process in the majority
- of cases.
+ In this work, the authors employ the technique of distance vector routing
+ to understand the relative locations of the cameras and prioritise people
+ seen most recently by the closest camera, as these are most likely to correlate
+ with the new image.
+ This understanding is achieved by first analysing the overlap between cameras,
+ and then computing distance vectors and probabilities of a person going
+ from one camera to another, thus reducing the time complexity of the re-identif
+ication process in most cases.
  
 \end_layout
 
@@ -582,14 +603,15 @@ key "Martinel2016"
 \end_inset
 
 , but assumes a non-overlapping camera system.
- Each camera has entry and exit zones from its field of view, and if a person
- can get from one camera field of view to another they are directly connected.
+ Each camera has entry and exit zones from its field of view and if a person
+ can get from one camera field of view to another then the cameras are considere
+d to be directly connected.
  The system can then create what is referred to as a camera link model,
  using a temporal, spatial and appearance relation between the entry and
  exit zones of the cameras.
  These paths are obtained from training data, but the system itself learns
  how to recognise people by attributes, and uses the training data to estimate
- where they are most likely to have gone after leaving a given camera field
+ where they are most likely to reappear after leaving a given camera field
  of view.
  
 \end_layout
@@ -602,14 +624,15 @@ key "YiminWang2014"
 
 \end_inset
 
- propose a different method for feature based identification, using a feature
+ propose a different method for feature-based identification, using a feature
  projection matrix to project image features of one camera to the feature
  space of another, to effectively eliminate the difference of feature distributi
 ons between the two cameras.
  This feature projection matrix is obtained through supervised learning.
- The proposed method aims to use a simple gradient descent algorithm to
- accelerate and optimise the re-identification process by compensating for
- the inconsistency of feature distributions captured by different cameras.
+ The method emplyed by the authors aims to use a simple gradient descent
+ algorithm to accelerate and optimise the re-identification process by compensat
+ing for the inconsistency of feature distributions captured by different
+ cameras.
  
 \end_layout
 
@@ -622,15 +645,15 @@ key "Wu2012"
 \end_inset
 
  emphasises the importance of making good use of all images and video frames
- captured of a target.
- The system proposed here creates a gallery of images of known individuals,
- with more images increasing the accuracy of the system.
- When a gallery exists for a target, this is referred to as multi-shot re-identi
+ captured of a person.
+ The system proposed creates a gallery of images of known individuals, with
+ more images increasing the accuracy of the system.
+ When a gallery exists for a person, this is referred to as multi-shot re-identi
 fication, and single-shot re-identification when only one image is available
- in both the query and the gallery.
+ in the gallery.
  For multi-shot re-identification, the authors propose to use geometric
- distance in another way by collaboratively approximating the query sets
- using all galleries, a method known as Collaborative Sparse Approximation.
+ distance by collaboratively approximating the query sets using all available
+ images in the gallery, a method known as collaborative sparse approximation.
  
 \end_layout
 
@@ -642,13 +665,13 @@ key "Liu2014"
 
 \end_inset
 
-, relies not only on extracting a set of features to use to compare people,
- but also on determining which of these features is the most discriminative
- for each person individually on the fly.
- This is achieved through the use of a random forest classifier, and functions
+, relies not only on extracting a set of features to compare people, but
+ also on determining which of these features is the most discriminative
+ for each person.
+ This is achieved through the use of a random forest classifier and functions
  well in an open world setting.
- However, since the time of publication of this work, the state of the art
- of this area has moved on to deep learning.
+ However, since the publication of this work, the state of the art in this
+ area has moved on to deep learning.
  
 \end_layout
 
@@ -661,9 +684,9 @@ key "Robson2017"
 \end_inset
 
  attempted to use features that a human would consider useful to re-identify
- people, such as an approximation of the shape of the target, an analysis
- of their gait and a measure of where the thermal hotspots of each person
- were.
+ people, such as an approximation of the shape of the person, an analysis
+ of their gait and a measure of where an individual's the thermal hotspots
+ are located.
  This performed reasonably well for some features, but its inaccuracy in
  many situations led us to explore an alternative approach, using deep learning,
  based on the current state of the art in the area.
@@ -686,7 +709,7 @@ key "Matsukawa2017,Zheng2016,Zhang2014,Wang2016a,Almazan2018,Chung2017,Qian2017,
 .
  As our ability to train deeper and deeper networks on larger and larger
  datasets has increased, largely thanks to modern improvements in graphics
- hardware, these approaches become more and more relevant and powerful.
+ hardware, these approaches become increasingly relevant and powerful.
  As before, much of this research is focused on the colour spectrum.
  The work of 
 \begin_inset CommandInset citation
@@ -702,14 +725,14 @@ key "Matsukawa2017"
  The result from the network is an ordered vector for the presence or absence
  of these features.
  However, as our previous work showed that we were unable to choose suitably
- discriminative features for thermal re-identification, we will not be able
+ discriminative features for thermal re-identification, we have chosen not
  to follow this approach.
  
 \end_layout
 
 \begin_layout Standard
 Much of the rest of the previous deep learning work is split into open world
- and closed world.
+ and closed world problems.
  The work of 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -717,8 +740,7 @@ key "Zheng2016"
 
 \end_inset
 
- presents a useful comparison between these two problems, as shown in Figure
- 
+ presents a useful comparison between these two, as shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:openVsClosed"
@@ -728,11 +750,10 @@ reference "fig:openVsClosed"
 .
  They refer to the closed world problem as Identification and the open world
  problem as Verification, with the justification that in closed world, the
- aim is to identify which of a given set of people the target is, where
- as in open world, the aim is to verify whether two targets are the same
- or not.
- These two approaches differ greatly in terms of input method, feature extractio
-n and the loss function used.
+ aim is to identify which of a given set of people the subject is, where
+ as in open world, the aim is to verify whether two people are the same.
+ These two approaches differ greatly in terms of input method, network architect
+ure, feature extraction and the loss function used.
  The authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -746,9 +767,9 @@ key "Zheng2016"
  referred to as siamese networks, meaning that the overall architecture
  contains two identical sister networks.
  Each of these sister networks takes one of the images being compared as
- input, and outputs a feature vector describing it.
+ its input, and outputs a feature vector describing it.
  These vectors are then compared and a decision is made as to whether the
- people in the two images are the same or not.
+ people in the two images are the same.
 \end_layout
 
 \begin_layout Standard
@@ -814,25 +835,26 @@ key "Zhang2014"
 
 .
  The authors aim to combine feature learning and re-identification into
- one framework, which is a deep siamese CNN with an SVM placed on top of
- the network, after the last layer, to attempt open world re-identification.
+ one framework, which is a deep siamese CNN with an Support Vector Machine
+ (SVM) placed after the last layer of the CNN to attempt open world re-identific
+ation.
  The results of this are promising for the potential use of such an architecture
 , but fall short of the contemporary state of the art.
  The apparent reason for this is overfitting to the dataset used to train
  the architecture, and the authors hypothesise that if they could use a
- dataset with wider variation of people, improved results could be achieved.
+ dataset with a wider variation of people, improved results could be achieved.
  As this work is several years old, we can hypothesise that with modern
  graphics hardware, this model could realistically be trained on a much
  larger and more varied dataset, which should improve the results.
- This hypothesis is backed up by the authors of 
+ This hypothesis is reinforced by the authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ahmed2015"
 
 \end_inset
 
-, who have implemented architecture and trained on a larger dataset which
- consistently outperforms the contemporary state of the art.
+, who have implemented a similar architecture and trained on a larger dataset
+ which consistently outperforms the contemporary state of the art.
  
 \end_layout
 
@@ -847,7 +869,7 @@ key "Wang2016a"
  proposes a similar deep siamese CNN architecture, but also retains the
  single image representation.
  The purpose of this is to reduce the amount of computational work that
- must be done on both images together, as well to joint optimise the single
+ must be done on both images together, as well to jointly optimise the single
  image representation and cross image representation for improved accuracy
  at a lower computational cost.
  The authors claim to outperform the majority of contemporary state of the
@@ -863,8 +885,8 @@ key "Chung2017"
  to learn temporal information.
  These features are then weighted, as the authors claim that spatial features
  are more discriminative than temporal features.
- This method outperforms or shows comparable results to the existing best
- performing methods.
+ Depending on the dataset, this method outperforms or shows comparable results
+ to the existing best performing methods.
  The work in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -872,10 +894,10 @@ key "Qian2017"
 
 \end_inset
 
- is another siamese CNN with the particular aim of making it work for people
+ is another siamese CNN with the aim of improving performance for people
  represented at different scales.
  This would be an interesting addition to our work, but is beyond the scope
- of this project.
+ of our project.
  
 \end_layout
 
@@ -894,7 +916,7 @@ key "Almazan2018"
  augmentation, as this enables us to grow our dataset substantially whilst
  also introducing difficult examples that try to ensure that the network
  is not overfitting to a specific image format.
- We also will ensure that our network has a state of the art base architecture,
+ We also ensure that our network has a state of the art base architecture,
  taking inspiration from the architectures used in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -902,11 +924,10 @@ key "Zheng2016,Zhang2014,Almazan2018,Wang2016a,Chung2017"
 
 \end_inset
 
- to help us to design the most effective re-identification network possible.
+ to help us to design the most effective re-identification network.
  We also endeavour to follow the advice of using sufficiently large image
- resolution, but using a size large enough so that the network has plenty
- of information to learn from, but small enough so that each person is shown
- with sufficient detail and clarity.
+ resolution by using a size large enough so that the network has plenty
+ of information to learn from.
  The work of 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -915,7 +936,7 @@ key "Almazan2018"
 \end_inset
 
  also compares several state of the art approaches on multiple complex datasets.
- The results of these are quoted in terms of maiximum average precision,
+ The results of these are quoted in terms of maximum average precision,
  and the best of these is 91.2%.
 \end_layout
 
@@ -932,18 +953,18 @@ key "Lin2017"
 \end_inset
 
 , who argue that obtaining the maximum correct matches across a distributed
- camera network is important on top of the ability to determine whether
- two images of pedestrians are the same person or not.
- They argue that pairwise re-identification methods cannot obtain globally
- optimal re-identification results for a whole camera network, as people
- may have vastly differing profiles across different cameras.
+ camera network is as important as determining whether two images of pedestrians
+ are the same person or not.
+ They argue that existing pairwise re-identification methods cannot obtain
+ globally optimal re-identification results for a whole camera network,
+ as people may have vastly differing profiles across different cameras.
  To try and achieve this, the authors use a gradient descent algorithm to
  obtain a globally optimal matching by maximizing the sum of similarity
  values for all camera pairs.
  After obtaining this, they then propagate the difference to adjust their
  CNN.
- They report good performance varying between 80% and 99% form different
- datasets, differing but complexity and number of cameras.
+ They report good performance varying between 80% and 99% from different
+ datasets, differing in complexity and number of cameras.
  
 \end_layout
 
@@ -952,7 +973,7 @@ TLD Tracker
 \end_layout
 
 \begin_layout Standard
-The Track-Learn-Detect (TLD) tracker was first proposed by Zdenek Kalal
+The Track-Learn-Detect (TLD) algorithm was first proposed by Zdenek Kalal
  in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -961,20 +982,22 @@ key "Kalal2010"
 \end_inset
 
 .
- The idea of this tracker is to break down the person-tracking task into
+ The aim of this tracker is to break down the person-tracking task into
  tracking, learning and detection.
- The tracker follows the object between frames.
- The detector corrects the tracker if necessary based on previous observations.
- The learning estimates the errors made by the detector and updates it to
- avoid these errors in the future.
+ The tracking component predicts the location of the object in the next
+ frame.
+ The detection component corrects the tracker if necessary based on true
+ observations.
+ The learning component estimates the errors made by the detector and updates
+ it to avoid these errors in the future.
  However, the main purpose of TLD is to be able to consistently follow the
- same object through as changing background, for example a car driving along
- a road being recorded from a helicopter.
+ same object through a changing background, for example tracking a car as
+ it travels along a road using footage from a camera mounted on a helicopter.
  The authors have said that it performs sub optimally on varying targets
  such as people.
- During our early experimentation, we found that is was sufficiently capable
- of tracking a person through a single camera frame, but could not re-identify
- people across multiple cameras, or even returning from behind an obstruction.
+ During our early experimentation, we found that is was capable of tracking
+ a person passing through a single camera , but could not re-identify people
+ across multiple cameras, or even reappearing from behind an obstruction.
 \end_layout
 
 \begin_layout Subsection
@@ -982,14 +1005,15 @@ Relation to this Project
 \end_layout
 
 \begin_layout Standard
-In this project we use elements from many of the papers discussed in this
+In this research we use elements from many of the papers discussed in this
  section.
- The TLD tracker will be used simply for tracking a person from frame to
- frame for as long as they remain visible in the same area one camera view.
- We will disable some of the re-identification based capability of TLD.
- Whether this person has been previously observed by the system or not will
- be determined by an open world siamese CNN, with an architecture similar
- to the related work.
+ The TLD tracker is used for tracking a person from frame to frame for as
+ long as they remain visible in the camera view.
+ We disable some of the re-identification based capability of TLD, as this
+ was leading to erroneous results.
+ Whether this person has been previously observed by the system or not is
+ determined by an open world siamese CNN, with an architecture similar to
+ the related work.
  We take inspiration from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -997,9 +1021,9 @@ key "Wang2016a"
 
 \end_inset
 
- and will extract the features of each individual image before comparison
- between them.
- We will also incorporate the recommendations for effective re-identification
+ and extract the features of each individual image before comparison between
+ them.
+ We also incorporate the recommendations for effective re-identification
  from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1039,9 +1063,9 @@ key "Robson2017"
 
 .
  Therefore, the major research aim of our project, and where we are advancing
- the state of the art, is to see if such a network architecture can successfully
- be applied to thermal imagery, and whether it can perform effectively as
- a part of a full re-identification system in real time.
+ the state of the art, is to determine if such a network architecture can
+ successfully be applied to thermal imagery, and whether it can perform
+ effectively as a part of a full re-identification system in real time.
  
 \end_layout
 
@@ -1050,9 +1074,9 @@ Solution
 \end_layout
 
 \begin_layout Standard
-Having established the problem that we want to solve, we will now break
- down the most important elements of our solution, giving an overview of
- the structure of our implementation and a description of the elements used.
+Having established the problem that we want to solve, we now descibe the
+ most important elements of our solution, giving an overview of the structure
+ of our implementation and a description of the elements used.
 \end_layout
 
 \begin_layout Subsection
@@ -1068,10 +1092,10 @@ reference "fig:Logic-of-our"
 \end_inset
 
 .
- The implementation will begin by opening each video file, or live camera
- feed, and concurrently running the real time target detection code on these.
+ The implementation begins by opening each video stream and concurrently
+ running the real time person detection code on each stream.
  Each time this code identifies a person, it checks whether it has a TLD
- tracker object associated with them or not.
+ tracker object associated with them.
  This is decision point [A] in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1080,10 +1104,10 @@ reference "fig:Logic-of-our"
 \end_inset
 
 .
- If not, a new TLD tracker object is created and this person is compared
- to the other people that have been seen previously using the siamese CNN,
- and if they are deemed to be sufficiently similar to one of these people,
- then they are re-identified as the same person, else the system creates
+ If not, a new TLD tracker object is created and the siamese CNN is used
+ to compare this person with the other people that have been seen previously.
+ If this person is deemed to be sufficiently similar to one of these people,
+ then they are re-identified as the same person, otherwise the system creates
  a new person object.
  This is decision point [B] in Figure 
 \begin_inset CommandInset ref
@@ -1094,8 +1118,8 @@ reference "fig:Logic-of-our"
 
 .
  Each of these person objects has an associated TLD tracker and set of previous
- observations, and these are used to facilitate the comparison between targets,
- and are updated each time the target is successfully identified.
+ observations, and these are used to facilitate the comparison between people,
+ and are updated each time the person is successfully identified.
 \end_layout
 
 \begin_layout Standard
@@ -1180,10 +1204,16 @@ Real Time Person Detection
 Before we can start concerning ourselves with deep learning based person
  re-identification, we must be able to identify whether a person is present
  in the image at all.
- This will give us a region of interest to pass to the neural network for
- re-identification, and so we can use TLD to track targets through single
- camera views.
+ This will give us a region of interest to pass to the CNN for re-identification
+, and enable us to use TLD to track targets through single camera views.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -1191,8 +1221,8 @@ Background Subtraction
 \end_layout
 
 \begin_layout Standard
-The first stage of this process is background subtraction from the static
- camera viewpoint.
+The first stage of the person detection process is background subtraction
+ from the static camera viewpoint.
  We use the Mixture of Gaussians (MoG) technique to facilitate this, taking
  inspiration from 
 \begin_inset CommandInset citation
@@ -1215,7 +1245,7 @@ key "Zivkovic2004,Zivkovic"
  is given by a parameter specifying the rate at which the background model
  is updated, is far more memory efficient than storing all the pixel values
  across the entire video capture.
- This update rate is determined by the trade off between being fast enough
+ This update rate is determined by a trade-off between being fast enough
  to absorb objects that have become stationary into the background and being
  slow enough to allow the detection of slow moving objects.
 \end_layout
@@ -1240,13 +1270,20 @@ key "solomonbreckon10fundamentals"
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Person Identification
 \end_layout
 
 \begin_layout Standard
-Having identified the foreground objects, we must now determine whether
- they are people.
+Having identified the foreground objects, we now determine whether they
+ are people.
  The implementation uses Histogram of Oriented Gradients (HOG), discussed
  in 
 \begin_inset CommandInset citation
@@ -1262,12 +1299,12 @@ key "Dalal"
  filled by gradient magnitudes.
  These histograms are then used to create overlapping block histograms of
  the adjacent cells.
- These block histograms are then concatenated to give a HOG descriptor,
- a high dimensional vector.
+ These block histograms are then concatenated to give a a high dimensional
+ vector know as a HOG descriptor.
  This HOG descriptor is then passed to a pre-trained machine learning algorithm,
  in this case a Support Vector Machine (SVM).
- If this comes up with a positive identification, then it is classified
- as a person and will be given an associated TLD tracker object.
+ If this returns a positive identification, then it is classified as a person
+ and will be given an associated TLD tracker object.
  In our previous work in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1275,17 +1312,24 @@ key "Robson2017"
 
 \end_inset
 
-, we had a tradeoff between HOG and one of its alternatives, Haar cascades,
- due to HOG being slower.
- However, as we are using a TLD tracker this year, there will be far fewer
- calls to the person detector so we can use the superior performance of
- HOG when compared to Haar Cascades without fear of the slower runtime making
- a large impact on the overall performance.
+, we selected between HOG and one of its alternatives, Haar cascades, depending
+ on whether runtime or accuracy was more important.
+ However, as we are using a TLD tracker in this research, there will be
+ fewer calls to the person detector so we can use the superior performance
+ of HOG when compared to Haar Cascades without fear of the slower runtime
+ making an impact on the overall performance.
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-Person Tracking using Track-Learn-Detect 
+Person Tracking using Track-Learn-Detect (TLD)
 \end_layout
 
 \begin_layout Standard
@@ -1299,14 +1343,16 @@ key "Kalal2010"
 \end_inset
 
 .
- This algorithm was originally intended to facilitate the long term tracking
- of an unknown object in a video stream.
+ This algorithm was intended to facilitate the long term tracking of an
+ unknown object in a video stream.
  The algorithm works by breaking down the person tracking task into tracking,
  learning and detection.
- The tracker follows the object between frames.
- The detector corrects the tracker if necessary based on previous observations.
- The learning estimates detector’s errors and updates it to avoid these
- errors in the future.
+ The tracking component predicts the location of the object in the next
+ frame.
+ The detection component corrects the tracker if necessary based on true
+ observations.
+ The learning component estimates the errors made by the detector and updates
+ it to avoid these errors in the future.
  The relationship between these components is shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1369,32 +1415,30 @@ name "fig:Block-diagram-of"
 
 \begin_layout Standard
 In our early experimentation, we found that the learning part of this algorithm
- meant that it was attempting to perform re-identification when people left
- and re-entered a video stream, or appeared in a different one.
- Therefore, we had to cut some of the functionality out of TLD for this
- implementation, so that each object was deleted when it left the scene
- or became obstructed.
- This eliminated the missclassifications that the limited re-identification
+ was attempting to perform re-identification when people left and re-entered
+ a video stream, or appeared in a different one.
+ As the majority of these re-identifications were erroneous, we cut some
+ of the functionality out of TLD for this implementation, so that each object
+ was deleted when it left the scene or became obstructed.
+ This eliminated the misclassifications that the limited re-identification
  capabilities of this algorithm were causing, enabling us to effectively
- track people across the scene, whilst using our neural network for the
- re-identification.
+ track people across the scene, while using our CNN for the re-identification.
  
 \end_layout
 
 \begin_layout Standard
-Consequently, in our this implementation each person currently present in
- any of the camera views has an associated TLD tracker object, which is
- created on the first HOG identification in this neighbourhood, and classified
- by the neural network.
+Consequently, in our implementation each person currently present in any
+ of the camera views has an associated TLD tracker object, which is created
+ on the first HOG identification and classified by the CNN.
  The tracker then follows this person through the frame until either the
  person leaves the frame or HOG is no longer getting a positive identification
  within the tracker.
  If either of these conditions occurs, the TLD object is deleted.
- In the case of no HOG identification being present, this indicated that
- the tracker has incorrectly predicted the position or rate of movement
+ In the case of no HOG identification being present, this indicates that
+ the tracker has incorrectly predicted the position, or rate of movement,
  of the person and has lost them.
- A new tracker will then be created to replace it in the next frame when
- HOG detects this person again.
+ A new tracker will then be created to replace it when HOG detects this
+ person again.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1402,8 +1446,8 @@ reference "fig:An-example-of"
 
 \end_inset
 
- shows the TLD system in action following a human target through a frame,
- as well as displaying the positive and negative patches used to inform
+ shows the TLD system in action following a human target through a camera
+ view, as well as displaying the positive and negative matches used to inform
  the learning part of TLD.
  The dotted boxes represent other possible areas that the TLD system thinks
  the target may be in, while the blue tracking points show the features
@@ -1435,8 +1479,8 @@ status collapsed
 
 \begin_layout Plain Layout
 An example of TLD tracking a person through a scene.
- The images on the left are negative patches, and the images on the right
- are positive patches
+ The images on the left are negative matches, and the images on the right
+ are positive matches
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:An-example-of"
@@ -1457,7 +1501,14 @@ name "fig:An-example-of"
 \end_layout
 
 \begin_layout Subsection
-Deep Learning
+Deep Learning 
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Deep-Learning"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1479,14 +1530,14 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The architecture of our CNN
+The architecture of our CNN.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:The-architecture-of"
 
 \end_inset
 
-Diagram and colours inspired by GoogLeNet 
+ Diagram and colours inspired by GoogLeNet 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Szegedy2014"
@@ -1512,7 +1563,7 @@ Taking inspiration from the state of the art literature in the area of open
  CNN.
  This means that the network is trained on pairs of images, and attempts
  to determine whether these images show the same person or a different person.
- The size of these images was fixed at 258x128, to ensure that the size
+ The size of these images was fixed at 256x128, to ensure that the size
  of the file had no effect on the training.
  These images were then formed into a balanced dataset of positive and negative
  pairs.
@@ -1526,15 +1577,17 @@ key "Almazan2018"
 
 \end_inset
 
-, with the aim of introducing more variation into our dataset and enable
+, with the aim of introducing more variation into our dataset to enable
  it to cope better with difficult real world situations.
+ The possible augmentations include small rotations, translations and horizontal
+ reflection.
  This data is split 60:20:20 into training, validation and testing sets
  respectively.
- The purpose of the training set is to be the actual data that we use to
- train the model.
+ The purpose of the training set is to train the model.
  The validation set is the sample of data used to provide an evaluation
  of the model during training, whereas the test set is made up of previously
- unseen data that is used to provide an unbiased evaluation of a final model.
+ unseen data that is used to provide an unbiased evaluation of the final
+ model.
 \end_layout
 
 \begin_layout Standard
@@ -1567,9 +1620,10 @@ The convolutional layers operate directly on the image to reduce the complexity
 \end_layout
 
 \begin_layout Standard
-Pooling layers then downsample their input, looking at a neighbourhood of
- pixels and, in the case of max pooling that we have used here, output the
- maximum.
+Pooling layers then downsample their input, converting a neighbourhood of
+ pixels into a single value.
+ In the case of max pooling that we have used here, this is the maximum
+ value.
  The aim of this is to provide robustness to the changes in the spatial
  location of features across the dataset and to reduce input dimensionality.
  This is also an effective tool to control overfitting, as it reduces the
@@ -1583,7 +1637,7 @@ Pooling layers then downsample their input, looking at a neighbourhood of
 Finally, we flatten the output of our last pooling layer to a single dimension
  and then pass it to a fully connected layer.
  The high dimensional vector output of this layer will be the representation
- of this image, and we will use the euclidean distances between these vectors
+ of this image, and we will use the Euclidean distances between these vectors
  to determine whether the inputs show the same person or different people.
  
 \end_layout
@@ -1601,8 +1655,9 @@ At various stages of the network, we have some dropout layers.
 \begin_layout Standard
 We now consider the loss function used for our CNN.
  A loss function is a measure used to quantify the cost of a mistake in
- classification.The loss function that we have chose to use for this network
- was proposed by the authors of 
+ classification.
+ The loss function that we have chosen to use for this network was proposed
+ by the authors of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Hadsell2006"
@@ -1622,15 +1677,15 @@ key "Hadsell2006"
 \begin_inset Formula $m$
 \end_inset
 
- is the margin that determines the the maximum euclidean distance between
- two points that will influence the loss function.
+ is the margin that determines the maximum Euclidean distance between two
+ points that will influence the loss function.
  The purpose of this is to ensure that vastly different images do not have
  a disproportional effect on the learning outcome.
  
 \begin_inset Formula $D$
 \end_inset
 
- is the Euclidean distance, which is defined here by Equation (2) , where
+ is the Euclidean distance, which is defined here by Equation (2), where
  
 \begin_inset Formula $X_{1}$
 \end_inset
@@ -1686,9 +1741,9 @@ key "Pumperla2017"
  For the convolutional layers the parameters we were experimenting with
  were the dimensionality of the output space (i.e.
  the number of output filters in the convolution) and the kernel size, specifyin
-g the width and height of the 2D convolution window.
- For the poolling layers we experimented with the pool size, which gave
- the factors to downscale the input by.
+g the width and height of the convolution window.
+ For the pooling layers we experimented with the pool size, which gave the
+ factors by which to downscale the input.
  For the dropout layers we experimented with how much of the dataset should
  be removed at each point, and for the dense layer we experimented with
  the dimensionality of the input space.
@@ -1717,9 +1772,9 @@ ReLU was chosen as our activation function as it is a good approximator,
  simpler mathematical operations, makes the network quicker and easier to
  train and query.
  Also the fact that ReLU is a good general classifier that can approximate
- any function is important for this purpose, as we do not know exactly what
- features we are trying to learn for effective re-identification in thermal
- imagery as a consequence of our previous work in 
+ any function is important for this purpose, as we do not know what features
+ we are trying to learn for effective re-identification in thermal imagery
+ as a consequence of our previous work in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Robson2017"
@@ -1755,7 +1810,7 @@ ble with the rest of our C++ codebase.
  read the network directly.
  However, this turned out to be incompatible, which required us to spend
  much time trying to import it correctly, before deciding that the superior
- method was to use both C++ and python for the separate components and connect
+ method was to use both C++ and Python for the separate components and connect
  them at system level.
  
 \end_layout
@@ -1779,15 +1834,14 @@ The Dataset
 \begin_layout Standard
 The data used to evaluate the re-identification system was gathered with
  three cameras at Durham University.
- The cameras and their fields of view are arranged as they are in Figure
- 
+ The cameras and their fields of view are arranged as in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Setup-of-Cameras"
 
 \end_inset
 
-(a), with the cameras labelled as camera 
+ (a), with the cameras labelled as camera 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -1809,7 +1863,7 @@ reference "fig:Setup-of-Cameras"
 
 (b).
  The dataset contains five people.
- These videos make up the data we will use to test the full re-identification
+ These videos make up the data we use to test the full re-identification
  system, and the person images extracted from them make up the dataset for
  the CNN.
  
@@ -1929,8 +1983,8 @@ key "Robson2017"
 \end_inset
 
 .
- We are getting far fewer missclassifications from HOG as it is being called
- far fewer times due to the TLD tracker.
+ We are getting fewer misclassifications from HOG as it is being called
+ less frquently due to the TLD tracker.
  Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1945,7 +1999,7 @@ n.
  were within one of the TLD objects, and did not need to be re-identified.
  Without TLD, all of the frames would have to be passed to the CNN, which
  would increase runtime and the amount of computational resources used,
- as well as lead to the possibility of more missclassifications.
+ as well as lead to the possibility of more misclassifications.
  As the results in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1968,14 +2022,13 @@ reference "tab:Performance-gains-from"
 
 .
  This seems to be due to the fact that HOG is worse at person identification
- from the side than from the front.
+ from a side profile than from a front profile.
  This inferior performance is also due to the fact that many of the people
  present in camera 
 \begin_inset Formula $\gamma$
 \end_inset
 
- are partially obstructed by other objects, leading to the TLD objects being
- deleted.
+ are partially obstructed, leading to the TLD objects being deleted.
  We also encounter a few errors caused by HOG classifying a small part of
  a person as a full person, leading to errors from the CNN.
  The effect of these errors is discussed in Sections 
@@ -2318,13 +2371,19 @@ The Deep Learning System
 \end_layout
 
 \begin_layout Standard
-When designing our network we did many training runs to determine the best
- architecture, and then performed extensive grid searches to determine the
- best parameters.
- While training the network, the metrics that we were mainly concerned about
- were the loss, from the contrastive loss function defined in Section 3,
- and the accuracy, meaning the percentage of the image pairs that were classifie
-d correctly.
+When designing our network we did many training runs to determine the optimal
+ architecture, and then performed extensive grid searches to optimise the
+ parameters.
+ While training the network, the metrics with which we were primarily concerned
+ were the loss, from the contrastive loss function defined in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Deep-Learning"
+
+\end_inset
+
+, and the accuracy, meaning the percentage of the image pairs that were
+ classified correctly.
  We calculate the accuracy based on a re-identification threshold of 0.5.
  This means that a pair of images with a Euclidean distance of less than
  0.5 would be classified as the same person, whereas a pair with a Euclidean
@@ -2349,9 +2408,9 @@ reference "fig:Loss-and-Accuracy"
 
 \end_inset
 
- shows use that the training and validation patterns of the network matched
+ shows us that the training and validation patterns of the network matched
  very closely, with the loss steadily decreasing and the accuracy steadily
- increasing before both flattened out towards the end of training.
+ increasing before both settled towards the end of training.
  The use of 100 epochs gave both the loss and the accuracy time to stabilise,
  and ensured that the final values of the network weights were optimal.
  
@@ -2538,13 +2597,13 @@ reference "tab:Classification-Reports"
 
 \end_inset
 
- shows the classification reports for these datasets, reporting the accuracy,
- which is the percentage of the image pairs that were correctly classified,
- precision, which is the percentage of the pairs that we labelled the same
- person actually were the same person, recall, which is the percentage of
- the pairs that were the same person that we correctly labelled and F1-Score,
- which is the average of precision and recall, taking into account both
- false positives and false negatives.
+ shows the classification reports for these data partitions, reporting the
+ Accuracy, which is the percentage of the image pairs that were correctly
+ classified; Precision, which is the percentage of the pairs that we labelled
+ the same person actually were the same person; Recall, which is the percentage
+ of the pairs that were the same person that we correctly labelled; and
+ F1-Score, which is the average of precision and recall, taking into account
+ both false positives and false negatives.
  The equations of accuracy, precision, recall and F1-score are given in
  Equations (3), (4), (5) and (6).
 \end_layout
@@ -2595,8 +2654,8 @@ F1-Score=2\times\frac{Precision\times Recall}{Precision+Recall}
 
 \begin_layout Standard
 The results from these are encouraging, as all are high percentages across
- all datasets, giving us confidence that our system is working well and
- has learnt useful features for re-identification.
+ all data partitions, giving us confidence that our system is working well
+ and has learnt useful features for re-identification.
  Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2606,12 +2665,12 @@ reference "tab:Confusion-Matrices"
 
  shows that the number of false negatives is greater than the number of
  false positives, which is advantageous for our re-identification system,
- as missclassifying different people as the same person (FP) is more destructive
- to our re-identification system than missclassifying the same person as
+ as misclassifying different people as the same person (FP) is more destructive
+ to our re-identification system than misclassifying the same person as
  different people (FN), as false positives can lead to corruption of the
  data assotiated with a particular person.
- False negatives would create unnecessary new targets, but this is fairly
- easy to deal with, as we would be able to clearly determine that one person
+ False negatives would create unnecessary new targets, but this is easy
+ to deal with, as we would be able to clearly determine that one person
  in the video stream was represented by two person objects in our system.
  
 \end_layout
@@ -3657,23 +3716,23 @@ reference "fig:Results-of-the"
 
  is a graphical representation of the Euclidean distances reported by the
  network on the train, validation and test data splits.
- These graphs show a clear split between the pairs of images of the same
- person and pairs of images of different people.
- This split is a good result because it shows that the Euclidean distances
- of the positive image pairs were very different in almost all cases to
- the Euclidean distances of the negative pairs.
- The split for the training set is more clear than the split for the validation
- and testing set.
+ These graphs show a clear separation between the pairs of images of the
+ same person and pairs of images of different people.
+ This separation is a good result because it shows that the Euclidean distances
+ of the positive image pairs were much lower in almost all cases to the
+ Euclidean distances of the negative pairs.
+ The separation for the training set is more clear than the split for the
+ validation and testing set.
  This improved performance on the training set is expected, as these are
- the exact images the network was trained on so some level of overfitting
+ the exact images the network was trained on, so some level of overfitting
  to the specific training data was expected.
  
 \end_layout
 
 \begin_layout Standard
 It is interesting at this point to note which of the image pairs were the
- missclassifications, and also to establish which were very close and which
- were very far apart.
+ misclassifications, and also to establish which were close and which were
+ far apart.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3681,12 +3740,12 @@ reference "fig:Image-pairs-and"
 
 \end_inset
 
- shows a few examples of these images, with their Euclidean distances in
- the captions, as well as whether they were a true positive, false positive,
- false negative, or true negative.
- As before, those with a distance less than 0.5 were classified as the same
- person, while those with a distance greater that 0.5 were classified as
- different people.
+ shows examples of these images, with their Euclidean distances in the captions,
+ as well as whether they were a true positive, false positive, false negative,
+ or true negative.
+ As before, those with a Euclidean distance less than 0.5 were classified
+ as the same person, while those with a Euclidean distance greater than
+ 0.5 were classified as different people.
  Subfigures (a) and (b) of Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3707,10 +3766,11 @@ ation as the two images are very similar, and (d) has a Euclidean distance
 \end_layout
 
 \begin_layout Standard
-From these results, we can see that the few mistakes that our system makes
- on this dataset are due to low resolution images that are difficult to
- find differences between as in Subfigure (c), or due to differences in
- viewing angle and resolution as in Subfigures (d), (e) and (f).
+From these results, we can hypothesise that the small number of mistakes
+ that our system makes on this dataset are due to low resolution images
+ that are difficult to distinguish between as in Subfigure (c), or due to
+ differences in viewing angle and resolution as in Subfigures (d), (e) and
+ (f).
  These are due to the differing viewing angles between cameras 
 \begin_inset Formula $\alpha$
 \end_inset
@@ -3724,7 +3784,7 @@ From these results, we can see that the few mistakes that our system makes
 \end_inset
 
 , which is different.
- As the euclidean distances show, particularly in the cases of Subfigures
+ As the Euclidean distances show, particularly in the cases of Subfigures
  (d) and (e), these lie on the borderline of positive and negative classificatio
 ns, showing almost identical comparisons between images taken from different
  viewing angles at different resolutions.
@@ -3845,7 +3905,7 @@ Test set results
 
 \begin_layout Plain Layout
 Euclidean distance results of the CNN on the Train, Validation and Test
- Datasets
+ Data Partitions
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Results-of-the"
@@ -3866,8 +3926,8 @@ name "fig:Results-of-the"
 \end_layout
 
 \begin_layout Standard
-We also ran this on an alternative dataset, the dataset used for our work
- in 
+We also tested this system on an alternative dataset, the one used for our
+ work in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Robson2017"
@@ -3876,12 +3936,12 @@ key "Robson2017"
 
 .
  Henceforth, we shall refer to this dataset as the low level dataset, as
- the cameras were located on the ground, compared to our main dataset, which
- we shall refer to as the high level datsaset, as the cameras were situated
- on the roof.
- Therefore, as cameras for the low level dataset are placed in different
- locations to the high level dataset, the profiles of the people are different
- to in both resolution and viewing angle.
+ the cameras were located at ground level, compared to our main dataset,
+ which we shall refer to as the high level datsaset, as the cameras were
+ situated on the roof.
+ As cameras for the low level dataset are placed in different locations
+ to the high level dataset, the profiles of the people are different in
+ both resolution and viewing angle.
  The results that the network gave for the low level dataset are shown in
  Table 
 \begin_inset CommandInset ref
@@ -4665,7 +4725,7 @@ reference "fig:Image-pairs-and-1"
 
 \end_inset
 
- do not show an obvious trend to explain why the missclassifications have
+ do not show an obvious trend to explain why the misclassifications have
  occurred, as they seem relatively simple classifications to a human observer.
  We therefore conclude that the network does not perform well on this dataset.
  
@@ -5002,7 +5062,7 @@ Training Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-High Level
+High Level Accuracy
 \end_layout
 
 \end_inset
@@ -5011,7 +5071,7 @@ High Level
 \begin_inset Text
 
 \begin_layout Plain Layout
-Low Level
+Low Level Accuracy
 \end_layout
 
 \end_inset
@@ -5128,9 +5188,9 @@ Having trained and evaluated the CNN, we then integrate this with our person
  Each image that needs classification is paired up with each of the images
  already in the system.
  It is re-identified as the person whose data gives the best match of these,
- as long as this is less than 0.5.
- If this is over 0.5, then a new person object is created.
- Each person object has two previous images assotiated with them, which
+ as long as the Euclidean distance is less than 0.5.
+ If it is greater 0.5, then a new person object is created.
+ Each person object has two previous images associated with them, which
  update as the person moves though the cameras.
  We found this number of previous images to be the best compromise between
  runtime and accuracy.
@@ -5140,11 +5200,11 @@ Having trained and evaluated the CNN, we then integrate this with our person
 \begin_layout Standard
 First, we consider the performance of the system when run on a single camera
  view.
- This enables use to simply and effectively test and evaluate our re-identificat
-ion system on one camera viewpoint to remove the potential missclassifications
+ This enables us to simply and effectively test and evaluate our re-identificati
+on system on one camera viewpoint to remove the potential misclassifications
  that could result from examining all of the camera views at once.
- Examples of such missclassifications from this dataset can be found in
- Subfigures (d), (e) and (f) of Figure 
+ Examples of such misclassifications from this dataset can be found in Subfigure
+s (d), (e) and (f) of Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Image-pairs-and"
@@ -5179,13 +5239,13 @@ reference "fig:Camera-g"
 \end_inset
 
 .
- The output appears to be perfectly accurate, as each person is constantly
- followed by their own associated bounding box, both with colour and number,
- for as long as they are in the frame.
+ The output appears to be accurate, as each person is constantly followed
+ by their own associated bounding box, both with colour and number, for
+ as long as they are in the frame.
  To a human observer watching these videos in real time, it would appear
  to be almost 100% accurate.
  However, there are a few small errors where some of the people get missclassifi
-ed as another person or get a new target assotiated with them for a single
+ed as another person or get a new target associated with them for a single
  frame, before they revert to their correct target.
  This is caused by errors from the HOG person classifier, where it has identifie
 d a small part of a person to be a complete person, as previously dicussed
@@ -5658,7 +5718,7 @@ name "sub:Multi-Camera-Re-Identification-S"
 \end_layout
 
 \begin_layout Standard
-We now run on all of the camera views at once.
+We now run the system on all of the camera views at once.
  This introduces the different viewpoints that we feared may cause some
  errors.
  Some images of the results of this are shown in Figure 
@@ -5677,7 +5737,7 @@ target "https://tinyurl.com/ycmsfsce"
 \end_inset
 
 .
- The performance was very good once again, with only a few errors, and these
+ The performance was good once again, with only a few errors, and these
  do not have a particularly damaging impact on the performance of the the
  full system.
  The system made gave us an accuracy of 96.32%.
@@ -5686,7 +5746,7 @@ target "https://tinyurl.com/ycmsfsce"
 
 \begin_layout Standard
 As previously discussed for the single camera system, there were a few frames
- that caused missclassifications due to errors with HOG.
+ that caused misclassifications due to errors with HOG.
  There were also some false negative classifications where additional targets
  were created for some of the people present in the dataset.
  This is fairly easy for a human operator to deal with, as these extra targets
@@ -5888,7 +5948,7 @@ Conclusion
 \begin_layout Standard
 In this paper, we have developed a fully functional thermal re-identification
  system using a track-learn-detect (TLD) tracker and a deep siamese CNN
- that performs very well on a varied dataset.
+ that performs well on a varied dataset.
  The figures shown in this paper and the videos at
 \begin_inset CommandInset href
 LatexCommand href
@@ -5897,10 +5957,10 @@ target "https://tinyurl.com/ycmsfsce"
 
 \end_inset
 
- verify this claim of good performance, with an accuracy of 96.32% on the
- multi-camera system.
- As the there has been very little previous work on solving the re-identificatio
-n problem in thermal, we are defining the state of the art with this work,
+ verify this claim of performance, with an accuracy of 96.32% on the multi-camera
+ system.
+ As there has been very little previous work on solving the re-identification
+ problem in thermal, we are defining the state of the art with this work,
  and have shown that it is possible when using deep learning to extract
  features that would not necessarily occur to a human observer when trying
  to re-identify people.
