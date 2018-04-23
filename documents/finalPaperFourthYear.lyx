@@ -6080,12 +6080,14 @@ reference "fig:full4"
  shows the system encountering and recovering from false positives.
  All of these errors shown only last for a few frames before they are recovered
  from.
+ They are included to show under which situations the system encounters
+ errors.
  
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-can explain more here, also draw lines on diagrams
+can explain more here, DRAW LINES ON DIAGRAMS
 \end_layout
 
 \end_inset
@@ -6346,16 +6348,6 @@ key "Qian2017"
 LatexCommand bibtex
 bibfiles "My Collection"
 options "bibtotoc,plain"
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-FIX REFERENCES AS PER TOP 10 DOCUMENT
-\end_layout
 
 \end_inset
 
