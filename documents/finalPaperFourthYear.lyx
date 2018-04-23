@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass IEEEtran
+\begin_preamble
+\usepackage{url}
+\end_preamble
 \options hidelinks
 \use_default_options true
 \maintain_unincluded_children false
@@ -28,7 +31,17 @@
 \float_placement H
 \paperfontsize default
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor={black}, citecolor={red}, urlcolor={cyan}"
 \papersize default
 \use_geometry false
 \use_package amsmath 1
@@ -131,9 +144,14 @@ The aim of this research is to build a real time system that can detect
  We then attempt to re-identify people using a siamese Convolutional Neural
  Network (CNN) architecture, which determines whether a pair of images contains
  the same person or two different people.
- Therefore, this research tackles the open world re-identification problem,
- rather than simply training and testing in a closed world on the same set
- of people, as many previous approaches have done 
+ In our re-identification system, this compares a new person classification
+ to all of the previous classifications that the system has seen before,
+ and decides if the new person is sufficiently similar to one of them to
+ be re-identified or not.
+ This research tackles the open world re-identification problem, as we train
+ this on image pairs to determine similarity rather than simply training
+ and testing in a closed world on the same set of people, as many previous
+ approaches have done 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Zheng2016"
@@ -143,16 +161,6 @@ key "Zheng2016"
 .
  This enables us to deploy our solution on any camera system and with any
  human targets.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-a couple more sentences on how this works in detail
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Abstract
@@ -161,17 +169,9 @@ Our CNN achieved 99% accuracy on our test dataset and our full re-identification
  We conclude that it is possible to use deep learning as an effective re-identif
 ication system in thermal imagery and we show the strong performance of
  this on a varied dataset.
+ As this is currently the only successful solution to the re-identification
+ problem in thermal, we are defining the state of the art in this area.
   
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-need to place work and achievements relative to current state of the art
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Abstract
@@ -193,16 +193,6 @@ ation, Re-ID, Person Tracking, Track-Learn-Detect, Thermal Imagery, Thermal
 
 \begin_layout Section
 Introduction 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-check formatting to ensure I have no huge whitespace holes
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -544,23 +534,13 @@ key "Robson2017"
  to determine whether a pair of images show the same person or different
  people; and to combine these into a fully functional re-identification
  system tested on both single cameras and a network of multiple cameras.
- This enables us to solve the open world thermal re-identification problem
- and set a new standard for the state of the art.
- 
+ As this is currently the only successful solution to the re-identification
+ problem in thermal, we are defining the state of the art in this area.
+  
 \end_layout
 
 \begin_layout Subsection
 Achievements of the Project
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-need to place work and achievements relative to current state of the art
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1402,7 +1382,11 @@ reference "fig:Block-diagram-of"
 
 .
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
@@ -1411,7 +1395,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/TLDDiagram.png
-	scale 30
+	width 95col%
 
 \end_inset
 
@@ -1826,6 +1810,28 @@ key "Robson2017"
 \end_layout
 
 \begin_layout Subsection
+Re-Identification System
+\end_layout
+
+\begin_layout Standard
+We then combine the person detection system and the deep learning system
+ into a full re-identification system.
+ When HOG finds a person that is not already within a TLD object, it is
+ passed to the CNN for classification.
+ This image is paired up with each of the images already in the system.
+ It is re-identified as the person whose data gives the best match of these,
+ as long as the Euclidean distance is less than 0.5.
+ We refer to this as our re-identification threshold.
+ If the Euclidean distance is greater than the re-identification threshold,
+ then a new person object is created.
+ Each person object has two previous images associated with them, which
+ update as the person moves though the cameras.
+ We found this number of previous images to be the best compromise between
+ runtime and accuracy.
+ 
+\end_layout
+
+\begin_layout Subsection
 Implementation Issues
 \end_layout
 
@@ -1856,21 +1862,18 @@ ble with the rest of our C++ codebase.
 \end_layout
 
 \begin_layout Section
-Results 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ensure all figure captions are full sentences
-\end_layout
+Results
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Results"
 
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Standard
-We now present the performance that our system has been able to acheive,
+We now present the performance that our system has been able to achieve,
  both as a standalone CNN and as part of a full re-identification system
  and evaluate the strengths, weaknesses and limitations of the research
  that has been presented here.
@@ -1879,22 +1882,15 @@ We now present the performance that our system has been able to acheive,
 
 \begin_layout Subsection
 The Dataset
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-discuss different camera views here so that discussing HOGs inferior side
- on performance makes more sense later
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-The data used to evaluate the re-identification system was gathered with
+The data we use to evaluate the re-identification system was gathered with
  three cameras at Durham University.
+ The is made up of videos of five people.
+ These videos make up the data we use to test the full re-identification
+ system, and the person images extracted from them make up the dataset used
+ to train, validate and test the CNN.
  The cameras and their fields of view are arranged as in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1923,10 +1919,53 @@ reference "fig:Setup-of-Cameras"
 \end_inset
 
 (b).
- The dataset contains five people.
- These videos make up the data we use to test the full re-identification
- system, and the person images extracted from them make up the dataset for
- the CNN.
+ As we can see from Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Setup-of-Cameras"
+
+\end_inset
+
+(b), the fields of view and resulting thermal profiles of the people shown
+ in the camera views differ between cameras 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+, which look along the road in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Setup-of-Cameras"
+
+\end_inset
+
+ (a), and provide profiles of the front or back of a person, depending on
+ the direction of movement.
+ The viewpoint of camera 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ has a field of view perpendicular to the road in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Setup-of-Cameras"
+
+\end_inset
+
+ (a), and therefore provides profiles of the side of the people moving though
+ it.
+ This difference is important to consider in relations to the results presented
+ in the remainder of Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Results"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -1946,8 +1985,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/dataset.png
-	scale 15
+	filename images/dataset.eps
+	width 100col%
 
 \end_inset
 
@@ -1977,8 +2016,8 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/datasetEmpty.png
-	scale 13
+	filename images/datasetEmpty.eps
+	width 100col%
 
 \end_inset
 
@@ -2016,16 +2055,6 @@ Position (a) and field of view (b) of the cameras used to record our this
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-remake these figures, greek letters on (a), label overlays on (b)
 \end_layout
 
 \end_inset
@@ -2302,7 +2331,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/hog1.jpg
-	scale 45
+	width 48col%
 
 \end_inset
 
@@ -2333,7 +2362,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/hog2.jpg
-	scale 45
+	width 48col%
 
 \end_inset
 
@@ -2364,7 +2393,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/hog3.jpg
-	scale 45
+	width 48col%
 
 \end_inset
 
@@ -2395,7 +2424,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/hog4.jpg
-	scale 45
+	width 48col%
 
 \end_inset
 
@@ -2417,7 +2446,9 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Hog Errors
+Images illustrating the errors made by HOG leading to the classification
+ of parts of people as full people, and the re-identification difficulty
+ that ensues
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Hog-Errors"
@@ -2435,64 +2466,18 @@ name "fig:Hog-Errors"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-improve this image caption to be a sentence
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
 The Deep Learning System 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ensure this is present tense
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
+When designing our network we optimise the architecture using many training
+ runs, and optimise the hyperparameters using extensive grid searches.
+ While training the network, the metrics with which we are primarily concerned
+ with are the loss, from the contrastive loss function defined in Section
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-throughout this section change Subfigure (a)....
- to Figure 11(a)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-throughout - would it not be better to define this distance thresholds a
- variable and the distance as a function? (greater than 0.5 etc.) - do this
- in solution section and fix throughout 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-When designing our network we did many training runs to determine the optimal
- architecture, and then performed extensive grid searches to optimise the
- parameters.
- While training the network, the metrics with which we were primarily concerned
- were the loss, from the contrastive loss function defined in Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:Deep-Learning"
@@ -2502,10 +2487,7 @@ reference "sub:Deep-Learning"
 , and the accuracy, meaning the percentage of the image pairs that were
  classified correctly.
  We calculate the accuracy based on a re-identification threshold of 0.5.
- This means that a pair of images with a Euclidean distance of less than
- 0.5 would be classified as the same person, whereas a pair with a Euclidean
- distance of greater than 0.5 would be classified as a different person.
- Figure 
+  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Loss-and-Accuracy"
@@ -2793,20 +2775,6 @@ reference "tab:Confusion-Matrices"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-change table captions to be sentences, remove TP= from conf mat, convert
- these values to percentages
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -2927,7 +2895,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-TP = 5924
+0.9982
 \end_layout
 
 \end_inset
@@ -2936,7 +2904,7 @@ TP = 5924
 \begin_inset Text
 
 \begin_layout Plain Layout
-FN = 11
+0.0018
 \end_layout
 
 \end_inset
@@ -2965,7 +2933,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-FP = 2
+0.0003
 \end_layout
 
 \end_inset
@@ -2974,7 +2942,7 @@ FP = 2
 \begin_inset Text
 
 \begin_layout Plain Layout
-TN = 5933
+0.9997
 \end_layout
 
 \end_inset
@@ -3120,7 +3088,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-TP = 1675
+0.9882
 \end_layout
 
 \end_inset
@@ -3129,7 +3097,7 @@ TP = 1675
 \begin_inset Text
 
 \begin_layout Plain Layout
-FN = 20
+0.0118
 \end_layout
 
 \end_inset
@@ -3158,7 +3126,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-FP = 4
+0.0024
 \end_layout
 
 \end_inset
@@ -3167,7 +3135,7 @@ FP = 4
 \begin_inset Text
 
 \begin_layout Plain Layout
-TN = 1691
+0.9976
 \end_layout
 
 \end_inset
@@ -3309,7 +3277,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-TP = 2097
+0.9915
 \end_layout
 
 \end_inset
@@ -3318,7 +3286,7 @@ TP = 2097
 \begin_inset Text
 
 \begin_layout Plain Layout
-FN = 18
+0.0085
 \end_layout
 
 \end_inset
@@ -3347,7 +3315,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-FP = 9
+0.0043
 \end_layout
 
 \end_inset
@@ -3356,7 +3324,7 @@ FP = 9
 \begin_inset Text
 
 \begin_layout Plain Layout
-TN = 2106
+0.9957
 \end_layout
 
 \end_inset
@@ -3387,7 +3355,8 @@ Confusion matrix for test set
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Confusion Matrices
+Confusion matrices for the training, validation and testing sets, reporting
+ the predictions and ground truth values
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Confusion-Matrices"
@@ -3422,7 +3391,7 @@ status collapsed
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3475,7 +3444,7 @@ Recall
 \begin_inset Text
 
 \begin_layout Plain Layout
-F1 Score
+F1-Score
 \end_layout
 
 \end_inset
@@ -3554,7 +3523,7 @@ Classification report for training set
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3607,7 +3576,7 @@ Recall
 \begin_inset Text
 
 \begin_layout Plain Layout
-F1 Score
+F1-Score
 \end_layout
 
 \end_inset
@@ -3686,7 +3655,7 @@ Classification report for validation set
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3739,7 +3708,7 @@ Recall
 \begin_inset Text
 
 \begin_layout Plain Layout
-F1 Score
+F1-Score
 \end_layout
 
 \end_inset
@@ -3817,7 +3786,8 @@ Classification report for test set
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Classification Reports
+Classification reports for training, validation and testing sets, reporting
+ accuracy, precision, recall and F1-score
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Classification-Reports"
@@ -3874,34 +3844,110 @@ reference "fig:Image-pairs-and"
  shows examples of these images, with their Euclidean distances in the captions,
  as well as whether they were a true positive, false positive, false negative,
  or true negative.
- As before, those with a Euclidean distance less than 0.5 were classified
- as the same person, while those with a Euclidean distance greater than
- 0.5 were classified as different people.
- Subfigures (a) and (b) of Figure 
+ As before, those with a Euclidean distance less than the re-identification
+ threshold were classified as the same person, while those with a Euclidean
+ distance greater than the re-identification threshold were classified as
+ different people.
+ Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Image-pairs-and"
 
 \end_inset
 
- show true positive classifications with very small Euclidean distances.
- Subfigures (c) and (d) show false negatives, where (c) is a difficult classific
-ation as the two images are very similar, and (d) has a Euclidean distance
- on the boundary of a positive or negative classification.
- Subfigure (e) is the other side of this boundary, showing a close false
- negative.
- Subfigure (f) is another false negative, which seems to be a difficult
- classification due to a different viewpoint and resolution.
- Figures (g) and (h) then show comfortable true negative classifications.
+(a) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(b) show true positive classifications with very small Euclidean distances.
+ Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(c) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(d) show false negatives, where (c) is a difficult classification as the
+ two images are very similar, and (d) has a Euclidean distance on the boundary
+ of a positive or negative classification.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(e) is the other side of this boundary, showing a close false negative.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(f) is another false negative, which seems to be a difficult classification
+ due to a different viewpoint and resolution.
+ Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(g) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(h) then show comfortable true negative classifications.
  
 \end_layout
 
 \begin_layout Standard
 From these results, we can hypothesise that the small number of mistakes
  that our system makes on this dataset are due to low resolution images
- that are difficult to distinguish between as in Subfigure (c), or due to
- differences in viewing angle and resolution as in Subfigures (d), (e) and
- (f).
+ that are difficult to distinguish between as in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(c), or due to differences in viewing angle and resolution as in Figures
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(d), 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(e) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(f).
  These are due to the differing viewing angles between cameras 
 \begin_inset Formula $\alpha$
 \end_inset
@@ -3915,10 +3961,66 @@ From these results, we can hypothesise that the small number of mistakes
 \end_inset
 
 , which is different.
- As the Euclidean distances show, particularly in the cases of Subfigures
- (d) and (e), these lie on the borderline of positive and negative classificatio
-ns, showing almost identical comparisons between images taken from different
+ As the Euclidean distances show, particularly in the cases of Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(d) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(e), these lie on the borderline of positive and negative classifications,
+ showing almost identical comparisons between images taken from different
  viewing angles at different resolutions.
+ 
+\end_layout
+
+\begin_layout Standard
+We also tested this system on an alternative dataset, the one used for our
+ work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robson2017"
+
+\end_inset
+
+.
+ Henceforth, we shall refer to this dataset as the low level dataset, as
+ the cameras were located at ground level, compared to our main dataset,
+ which we shall refer to as the high level datsaset, as the cameras were
+ situated on the roof.
+ As cameras for the low level dataset are placed in different locations
+ to the high level dataset, the profiles of the people are different in
+ both resolution and viewing angle.
+ The results that the network gave for the low level dataset are shown in
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Confusion-Matrix-other"
+
+\end_inset
+
+, Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Classification-Report-other"
+
+\end_inset
+
+ and Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euclidean-distance-results-other"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -4057,49 +4159,6 @@ name "fig:Results-of-the"
 \end_layout
 
 \begin_layout Standard
-We also tested this system on an alternative dataset, the one used for our
- work in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Robson2017"
-
-\end_inset
-
-.
- Henceforth, we shall refer to this dataset as the low level dataset, as
- the cameras were located at ground level, compared to our main dataset,
- which we shall refer to as the high level datsaset, as the cameras were
- situated on the roof.
- As cameras for the low level dataset are placed in different locations
- to the high level dataset, the profiles of the people are different in
- both resolution and viewing angle.
- The results that the network gave for the low level dataset are shown in
- Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Confusion-Matrix-other"
-
-\end_inset
-
-, Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Classification-Report-other"
-
-\end_inset
-
- and Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Euclidean-distance-results-other"
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -4122,7 +4181,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.082241 (TP)
+0.08 (TP)
 \end_layout
 
 \end_inset
@@ -4153,7 +4212,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.119061 (TP)
+0.12 (TP)
 \end_layout
 
 \end_inset
@@ -4184,7 +4243,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.376771 (FP)
+0.38 (FP)
 \end_layout
 
 \end_inset
@@ -4215,7 +4274,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.498734 (FP)
+0.49 (FP)
 \end_layout
 
 \end_inset
@@ -4246,7 +4305,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.515469 (FN)
+0.51 (FN)
 \end_layout
 
 \end_inset
@@ -4277,7 +4336,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.697845 (FN)
+0.69 (FN)
 \end_layout
 
 \end_inset
@@ -4308,7 +4367,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.734032 (TN)
+0.73 (TN)
 \end_layout
 
 \end_inset
@@ -4339,7 +4398,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.960652 (TN)
+0.96 (TN)
 \end_layout
 
 \end_inset
@@ -4375,33 +4434,9 @@ name "fig:Image-pairs-and"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-2 decimal places for Euclidean distances
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status collapsed
-
-\begin_layout Plain Layout
 \begin_inset Float table
 wide false
 sideways false
@@ -4515,7 +4550,7 @@ Positive
 \begin_inset Text
 
 \begin_layout Plain Layout
-TP = 5738
+0.8132
 \end_layout
 
 \end_inset
@@ -4524,7 +4559,7 @@ TP = 5738
 \begin_inset Text
 
 \begin_layout Plain Layout
-FN = 1318
+0.1868
 \end_layout
 
 \end_inset
@@ -4553,7 +4588,7 @@ Negative
 \begin_inset Text
 
 \begin_layout Plain Layout
-FP = 3286
+0.4593
 \end_layout
 
 \end_inset
@@ -4562,7 +4597,7 @@ FP = 3286
 \begin_inset Text
 
 \begin_layout Plain Layout
-TN = 3815
+0.5407
 \end_layout
 
 \end_inset
@@ -4576,7 +4611,8 @@ TN = 3815
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Confusion Matrix
+Confusion matrix for this dataset reporting the predictions and ground truth
+ values
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Confusion-Matrix-other"
@@ -4598,10 +4634,9 @@ name "tab:Confusion-Matrix-other"
 \end_inset
 
 
-\begin_inset space \hfill{}
-\end_inset
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -4658,7 +4693,7 @@ Recall
 \begin_inset Text
 
 \begin_layout Plain Layout
-F1 Score
+F1 -Score
 \end_layout
 
 \end_inset
@@ -4719,7 +4754,8 @@ Value
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Classification Report 
+Classification report for this dataset reporting accuracy, precision, recall
+ and F1-score
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Classification-Report-other"
@@ -4737,10 +4773,9 @@ name "tab:Classification-Report-other"
 \end_inset
 
 
-\begin_inset space \hfill{}
-\end_inset
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -4777,21 +4812,6 @@ name "fig:Euclidean-distance-results-other"
 
 \end_layout
 
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-same table changes as previously
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 As we can see from these results, the performance of the system on the low
  level dataset is substantially worse than the high level dataset, which
@@ -4813,18 +4833,38 @@ reference "fig:Image-pairs-and-1"
 \end_inset
 
 .
- Subfigures of (a) and (b) of Figure 
+ Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Image-pairs-and-1"
 
 \end_inset
 
- are true positive classifications, but have larger euclidean distances
+(a) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+(b) are true positive classifications, but have larger euclidean distances
  than the true positive examples from the high level dataset.
- Subfigures (c) and (d) again show false positives, but these seem to be
- fairly easily identifiable as different people, as opposed to the false
- positives from Figure 
+ Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+(c) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+(d) again show false positives, but these seem to be fairly easily identifiable
+ as different people, as opposed to the false positives from Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Image-pairs-and"
@@ -4848,8 +4888,22 @@ reference "fig:Image-pairs-and"
 \end_inset
 
  are more difficult classifications.
- Subfigures (g) and (h) are true negatives, but seem to be of comparable
- difficulty to the false positives.
+ Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+(g) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and-1"
+
+\end_inset
+
+(h) are true negatives, but seem to be of comparable difficulty to the false
+ positives.
 \end_layout
 
 \begin_layout Standard
@@ -4905,7 +4959,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.269577 (TP)
+0.27 (TP)
 \end_layout
 
 \end_inset
@@ -4936,7 +4990,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.305773 (TP)
+0.31 (TP)
 \end_layout
 
 \end_inset
@@ -4967,7 +5021,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.171305 (FP)
+0.17 (FP)
 \end_layout
 
 \end_inset
@@ -4998,7 +5052,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.294058 (FP)
+0.29 (FP)
 \end_layout
 
 \end_inset
@@ -5029,7 +5083,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.568763 (FN)
+0.57 (FN)
 \end_layout
 
 \end_inset
@@ -5060,7 +5114,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.719429 (FN)
+0.72 (FN)
 \end_layout
 
 \end_inset
@@ -5091,7 +5145,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.848649 (TN)
+0.85 (TN)
 \end_layout
 
 \end_inset
@@ -5122,7 +5176,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-0.997519 (TN)
+0.99 (TN)
 \end_layout
 
 \end_inset
@@ -5154,16 +5208,6 @@ name "fig:Image-pairs-and-1"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-2 decimal places for Euclidean distances
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -5185,8 +5229,7 @@ reference "tab:Comparison-of-results"
  of this CNN to function as a general re-identification system on any location
  or camera layout is limited.
  Solving this is the natural extension to the work that we have presented
- here, as we have shown that a siamese CNN works well for re-identification,
- and now needs to improve as a generic classifier.
+ here.
  Due to the poor results achieved here on the low level dataset, we will
  only use the high level dataset to test our full re-identification system,
  as this will highlight any more problems that may arise and their effects,
@@ -5340,16 +5383,6 @@ name "sub:Single-Camera-Re-Identification"
 \end_inset
 
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-use hyperref to make into an active url - look up what this means
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -5359,8 +5392,9 @@ Having trained and evaluated the CNN, we then integrate this with our person
  Each image that needs classification is paired up with each of the images
  already in the system.
  It is re-identified as the person whose data gives the best match of these,
- as long as the Euclidean distance is less than 0.5.
- If it is greater 0.5, then a new person object is created.
+ as long as the Euclidean distance is less than the re-identification threshold.
+ If it is greater than the re-identification threshold, then a new person
+ object is created.
  Each person object has two previous images associated with them, which
  update as the person moves though the cameras.
  We found this number of previous images to be the best compromise between
@@ -5374,15 +5408,29 @@ First, we consider the performance of the system when run on a single camera
  This enables us to simply and effectively test and evaluate our re-identificati
 on system on one camera viewpoint to remove the potential misclassifications
  that could result from examining all of the camera views at once.
- Examples of such misclassifications from this dataset can be found in Subfigure
-s (d), (e) and (f) of Figure 
+ Examples of such misclassifications from this dataset can be found in Figures
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Image-pairs-and"
 
 \end_inset
 
-.
+(d), 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(e) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Image-pairs-and"
+
+\end_inset
+
+(f).
  
 \end_layout
 
@@ -5435,29 +5483,70 @@ reference "fig:Hog-Errors"
 \end_inset
 
 .
- Examples of where this has occurred are shown in Subfigure (c) of Figures
- 
+ Examples of where this has occurred are shown in Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Camera-a"
 
 \end_inset
 
-, 
+(c), 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Camera-b"
 
 \end_inset
 
- and 
+(c) and 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Camera-g"
 
 \end_inset
 
-, while Subfigures (a) and (b) show the system performing well.
+(c), while Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-a"
+
+\end_inset
+
+(a), 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-a"
+
+\end_inset
+
+(b), 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-b"
+
+\end_inset
+
+(a), 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-b"
+
+\end_inset
+
+(c), 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-g"
+
+\end_inset
+
+(a) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Camera-g"
+
+\end_inset
+
+(b) show the system performing well.
  Footage of the system running on these cameras individually can be found
  in a YouTube playlist at 
 \begin_inset CommandInset href
@@ -5588,7 +5677,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Camera 
+Re-identification results on camera 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -5717,7 +5806,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Camera 
+Re-identification results on camera 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -5846,7 +5935,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Camera 
+Re-identification results on camera 
 \begin_inset Formula $\gamma$
 \end_inset
 
@@ -5889,38 +5978,41 @@ name "sub:Multi-Camera-Re-Identification-S"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-get more multicam example figures up to 20 pages, do in page blocks of connected
- images with dotted lines connecting people
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-place images above conclusion and references, as Toby how to make this work
- with placement of this explanation section
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 We now run the system on all of the camera views at once.
  This introduces the different viewpoints that we feared may cause some
  errors.
- Some images of the results of this are shown in Figure 
+ Some images of the results of this are shown in Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Multi-camera-re-identification-r"
+reference "fig:full1"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full2"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full3"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full4"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full5"
 
 \end_inset
 
@@ -5949,51 +6041,69 @@ As previously discussed for the single camera system, there were a few frames
  still only ever identify a single person, so we can clearly determine that
  one person in the video stream was represented by two person objects in
  our system.
- Examples of this are shown in Subfigure (c) of Figure 
+ Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Multi-camera-re-identification-r"
+reference "fig:full1"
 
 \end_inset
 
-, where person 0 has become person 5, and in Subfigure (d) of Figure 
+ and 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Multi-camera-re-identification-r"
+reference "fig:full3"
 
 \end_inset
 
-, where person 1 has become person 8.
- The majority of these new targets were created as the people moved through
- camera 
-\begin_inset Formula $\gamma$
+ show examples of the system performing well, Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full2"
+
 \end_inset
 
-, as this camera is at a different angle to the people and causes them to
- have a different thermal profile.
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full5"
+
+\end_inset
+
+ show examples of the system encountering and recovering from false negatives,
+ whereas Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:full4"
+
+\end_inset
+
+ shows the system encountering and recovering from false positives.
+ All of these errors shown only last for a few frames before they are recovered
+ from.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+can explain more here, also draw lines on diagrams
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
-placement !t
+placement tp
 wide true
 sideways false
 status collapsed
 
 \begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
 \begin_inset Graphics
-	filename images/full1.png
-	width 85page%
-	height 18pheight%
+	filename images/sequence1.eps
+	scale 95
 
 \end_inset
 
@@ -6001,126 +6111,10 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/full2.png
-	width 85page%
-	height 18pheight%
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/full3.png
-	width 85page%
-	height 18pheight%
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/full4.png
-	width 85page%
-	height 18pheight%
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Multi-camera re-identification results
+Example of system performing well
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Multi-camera-re-identification-r"
+name "fig:full1"
 
 \end_inset
 
@@ -6132,6 +6126,165 @@ name "fig:Multi-camera-re-identification-r"
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide true
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/sequence2.eps
+	scale 95
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of false negative classifications and recovery from them
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:full2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide true
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/sequence3.eps
+	scale 95
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of the system performing well 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:full3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !p
+wide true
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/sequence5.eps
+	scale 95
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of false positive classifications and recovery from them 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:full4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide true
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/sequence6.eps
+	scale 95
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of false negative classifications and recovery from them
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:full5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -6139,23 +6292,13 @@ name "fig:Multi-camera-re-identification-r"
 
 \begin_layout Section
 Conclusion 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-need to place work and achievements relative to current state of the art
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 In this paper, we have developed a fully functional thermal re-identification
  system using a track-learn-detect (TLD) tracker and a deep siamese CNN
  that performs well on a varied dataset.
- The figures shown in this paper and the videos at
+ The figures shown in this paper and the videos at 
 \begin_inset CommandInset href
 LatexCommand href
 name "https://tinyurl.com/ycmsfsce"
@@ -6165,11 +6308,16 @@ target "https://tinyurl.com/ycmsfsce"
 
  verify this claim of performance, with an accuracy of 96.32% on the multi-camera
  system.
- As there has been very little previous work on solving the re-identification
- problem in thermal, we are defining the state of the art with this work,
+ As this is currently the only successful solution to the re-identification
+ problem in thermal, we are defining the state of the art in this area,
  and have shown that it is possible when using deep learning to extract
  features that would not necessarily occur to a human observer when trying
  to re-identify people.
+ When compared to the state of the art in colour, which varies between 80%
+ and 99% on datasets differing in complexity and number of cameras.
+ Our performance is at the top end of this range, most likely due to the
+ fact that our dataset is fairly simple in comparison with others used in
+ the state of the art work in colour.
  Possible extensions to this work would be to make the network a better
  generic classifier across multiple datasets and camera arrangements, as
  we have shown that our network functions very well on our camera arrangement,
