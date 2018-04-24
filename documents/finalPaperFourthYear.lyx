@@ -6041,7 +6041,11 @@ As previously discussed for the single camera system, there were a few frames
  still only ever identify a single person, so we can clearly determine that
  one person in the video stream was represented by two person objects in
  our system.
- Figures 
+ 
+\end_layout
+
+\begin_layout Standard
+Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:full1"
@@ -6078,21 +6082,11 @@ reference "fig:full4"
 \end_inset
 
  shows the system encountering and recovering from false positives.
+ The coloured arrows show re-identification of corresponding people.
+ Where the system makes an error is clearly labelled.
  All of these errors shown only last for a few frames before they are recovered
  from.
- They are included to show under which situations the system encounters
- errors.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-can explain more here, DRAW LINES ON DIAGRAMS
-\end_layout
-
-\end_inset
-
-
+ This recovery is also clearly labelled.
 \end_layout
 
 \begin_layout Standard
@@ -6103,9 +6097,10 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/sequence1.eps
-	scale 95
+	width 80page%
 
 \end_inset
 
@@ -6141,9 +6136,10 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/sequence2.eps
-	scale 95
+	width 80page%
 
 \end_inset
 
@@ -6179,9 +6175,10 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/sequence3.eps
-	scale 95
+	width 80page%
 
 \end_inset
 
@@ -6217,9 +6214,10 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/sequence5.eps
-	scale 95
+	width 80page%
 
 \end_inset
 
@@ -6255,9 +6253,10 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/sequence6.eps
-	scale 95
+	width 80page%
 
 \end_inset
 
