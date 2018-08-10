@@ -1,0 +1,21 @@
+Oral Exam Plan:
+
+Initial TLD investigation - was full plan initially, erroneous re-id
+
+OpenCV TLD testing (inadequate), move to MOTLD, rewriting header file library
+
+CNN research with MNIST and Keras
+
+Testing with NCC
+
+Grid search
+
+Multidataset testing
+
+DNN import problems 
+
+FIFO developement
+
+results and paper
+
+Deliverables - TLD system, CNN, combination

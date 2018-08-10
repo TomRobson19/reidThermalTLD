@@ -90,11 +90,11 @@ def whichPerson(img):
                         closest = prediction
                         closestPerson = currentPerson
                         closestFrame = previousFrame
-        if save:
+        # if save:
 
-            concat = np.concatenate((personROI, closestFrame), axis=1)
-            concat *= 255
-            cv2.imwrite("classificationsREID/"+str(closest)+" "+str(closestPerson)+".jpg",concat)
+        #     concat = np.concatenate((personROI, closestFrame), axis=1)
+        #     concat *= 255
+        #     cv2.imwrite("classificationsREID/"+str(closest)+" "+str(closestPerson)+".jpg",concat)
 
         # count the number of times these are different people and <0.5, or the same person and >0.5
 
